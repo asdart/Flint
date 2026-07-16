@@ -1,32 +1,27 @@
-import Hero from "./sections/Hero";
-import Clients from "./sections/Clients";
-import TwoWays from "./sections/TwoWays";
-import PartnersMap from "./sections/PartnersMap";
-import HowItWorks from "./sections/HowItWorks";
-import WhatWeOffer from "./sections/WhatWeOffer";
-import Testimonials from "./sections/Testimonials";
-import Blog from "./sections/Blog";
-import Cta from "./sections/Cta";
-import Footer from "./sections/Footer";
-import { useStaggerReveal } from "./hooks/useStaggerReveal";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import HomePage from "./pages/HomePage";
+import FacilitiesPage from "./pages/FacilitiesPage";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 export default function App() {
-  const revealRef = useStaggerReveal<HTMLDivElement>();
-
   return (
-    <div className="flex min-h-screen w-full flex-col items-center bg-white">
-      <div ref={revealRef} className="flex w-full flex-col">
-        <Hero />
-        <Clients />
-        <TwoWays />
-        <PartnersMap />
-        <HowItWorks />
-        <WhatWeOffer />
-        <Testimonials />
-        <Blog />
-        <Cta />
-        <Footer />
+    <BrowserRouter>
+      <ScrollToTop />
+      <div className="flex min-h-screen w-full flex-col items-center bg-white">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/facility-partners" element={<FacilitiesPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }

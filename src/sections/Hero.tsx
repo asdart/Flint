@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import {
-  animate,
   motion,
+  useAnimationFrame,
   useMotionValue,
   useReducedMotion,
   useTransform,
@@ -9,7 +10,13 @@ import {
 } from "framer-motion";
 import ApplyButton from "../components/ApplyButton";
 
-const NAV_LINKS = ["Services", "Candidates", "Facility partners", "About", "Blog"];
+const NAV_LINKS = [
+  { label: "Services", to: "/" },
+  { label: "Candidates", to: "/" },
+  { label: "Facility partners", to: "/facility-partners" },
+  { label: "About", to: "/" },
+  { label: "Blog", to: "/" },
+];
 
 const CARDS = [
   { src: "/assets/home/hero-04.png", name: "Andrew", flag: "/assets/home/flag-ng.svg" },
@@ -20,48 +27,62 @@ const CARDS = [
   { src: "/assets/home/hero-05.png", name: "Andrew", flag: "/assets/home/flag-ng.svg" },
 ];
 
-/** Arc slots left → right (card-center offsets from track center) */
-const SLOTS = [
-  { x: -682, y: 136, rotate: -26, z: 1 },
-  { x: -420, y: 44, rotate: -16, z: 2 },
-  { x: -145, y: 0, rotate: -6, z: 3 },
-  { x: 147, y: 0, rotate: 6, z: 3 },
-  { x: 433, y: 44, rotate: 16, z: 2 },
-  { x: 705, y: 136, rotate: 26, z: 1 },
-];
-
-const CARD_HALF = 100;
+const CARD_W = 220;
+const CARD_H = 264;
+const CARD_HALF = CARD_W / 2;
 const LOOP_SECONDS = 22;
 
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
-}
+/** Perfect circular arc — equal angle steps, symmetric about center */
+const ARC_COUNT = CARDS.length;
+const ARC_HALF_SPAN = 25; // degrees from center to each end (±25 → 10° steps)
+const ARC_RADIUS = 1680;
+const ARC_STEP = (2 * ARC_HALF_SPAN) / (ARC_COUNT - 1);
+const WRAP_OUT = 140;
 
-/** Sample position on the arc. t ∈ [0, 1). Wraps far-right → far-left with a short fade. */
-function sampleArc(t: number) {
-  const n = SLOTS.length;
-  const scaled = ((t % 1) + 1) % 1 * n;
-  const i0 = Math.floor(scaled) % n;
-  const i1 = (i0 + 1) % n;
-  const f = scaled - Math.floor(scaled);
-  const a = SLOTS[i0];
-  const b = SLOTS[i1];
-
-  // Edge wrap: don't travel across the stage — fade out and reappear
-  if (i0 === n - 1) {
-    if (f < 0.5) {
-      return { x: a.x, y: a.y, rotate: a.rotate, z: a.z, opacity: 1 - f * 2 };
-    }
-    return { x: b.x, y: b.y, rotate: b.rotate, z: b.z, opacity: (f - 0.5) * 2 };
-  }
-
+function poseAtAngle(deg: number) {
+  const rad = (deg * Math.PI) / 180;
   return {
-    x: lerp(a.x, b.x, f),
-    y: lerp(a.y, b.y, f),
-    rotate: lerp(a.rotate, b.rotate, f),
-    z: f < 0.5 ? a.z : b.z,
+    x: ARC_RADIUS * Math.sin(rad),
+    y: ARC_RADIUS * (1 - Math.cos(rad)),
+    rotate: deg,
+    z: 4 - Math.round(Math.abs(deg) / ARC_STEP),
     opacity: 1,
   };
+}
+
+/** Sample on the perfect arc. t ∈ [0, 1). Wraps far-right → far-left with continuous motion. */
+function sampleArc(t: number) {
+  const scaled = ((t % 1) + 1) % 1 * ARC_COUNT;
+
+  // Wrap segment between last and first slot
+  if (scaled >= ARC_COUNT - 1) {
+    const f = scaled - (ARC_COUNT - 1);
+    const end = poseAtAngle(ARC_HALF_SPAN);
+    const start = poseAtAngle(-ARC_HALF_SPAN);
+
+    if (f < 0.5) {
+      const u = f * 2;
+      return {
+        x: end.x + u * WRAP_OUT,
+        y: end.y + u * 48,
+        rotate: end.rotate + u * 10,
+        z: end.z,
+        opacity: 1 - u,
+      };
+    }
+    const u = (f - 0.5) * 2;
+    return {
+      x: start.x - (1 - u) * WRAP_OUT,
+      y: start.y + (1 - u) * 48,
+      rotate: start.rotate - (1 - u) * 10,
+      z: start.z,
+      opacity: u,
+    };
+  }
+
+  // Continuous angle along the circle — equal spacing forever
+  const angle = -ARC_HALF_SPAN + scaled * ARC_STEP;
+  return poseAtAngle(angle);
 }
 
 function ArcCard({
@@ -87,11 +108,15 @@ function ArcCard({
       className="absolute top-0 origin-center"
       style={{ left: "50%", x, y, rotate, opacity, zIndex }}
     >
-      <div className="relative h-[240px] w-[200px] overflow-clip rounded-[24px] bg-[#fee0db]">
+      <div
+        className="relative overflow-clip rounded-[26px] bg-[#fee0db]"
+        style={{ width: CARD_W, height: CARD_H }}
+      >
         <img
           src={card.src}
           alt=""
-          className="pointer-events-none absolute left-1/2 top-[-24px] h-[390px] w-[320px] max-w-none -translate-x-1/2 object-cover"
+          className="pointer-events-none absolute left-1/2 max-w-none -translate-x-1/2 object-cover"
+          style={{ top: -26, width: 352, height: 429 }}
         />
         <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-[32px] bg-white py-1 pl-1 pr-2.5">
           <img src={card.flag} alt="" className="size-5" />
@@ -106,6 +131,7 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const progress = useMotionValue(0);
   const reduceMotion = useReducedMotion();
+  const startRef = useRef<number | null>(null);
 
   useEffect(() => {
     const root = sectionRef.current;
@@ -117,32 +143,32 @@ export default function Hero() {
     });
   }, []);
 
-  useEffect(() => {
+  useAnimationFrame((time) => {
     if (reduceMotion) {
       progress.set(0);
+      startRef.current = null;
       return;
     }
-    const controls = animate(progress, 1, {
-      duration: LOOP_SECONDS,
-      ease: "linear",
-      repeat: Infinity,
-    });
-    return () => controls.stop();
-  }, [progress, reduceMotion]);
+    if (startRef.current === null) startRef.current = time;
+    const elapsed = (time - startRef.current) / 1000;
+    progress.set((elapsed / LOOP_SECONDS) % 1);
+  });
 
   return (
     <section ref={sectionRef} className="w-full p-4">
       <div className="relative h-[848px] w-full overflow-clip rounded-[24px] bg-secondary">
-        <img
-          src="/assets/wordmark.svg"
-          alt="Flint"
-          className="absolute left-4 top-[15px] h-6 w-[49px]"
-        />
+        <Link to="/" className="absolute left-4 top-[15px]">
+          <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
+        </Link>
         <nav className="absolute left-1/2 top-6 flex -translate-x-1/2 items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
           {NAV_LINKS.map((link) => (
-            <a key={link} href="#" className="whitespace-nowrap transition-colors hover:text-ink">
-              {link}
-            </a>
+            <Link
+              key={link.label}
+              to={link.to}
+              className="whitespace-nowrap transition-colors hover:text-ink"
+            >
+              {link.label}
+            </Link>
           ))}
         </nav>
         <div className="absolute right-4 top-[18px]">

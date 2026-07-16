@@ -1,8 +1,41 @@
+import { Link } from "react-router-dom";
+
 const LINK_GROUPS = [
-  { title: "Institutional", links: ["For nurses", "For facilities"] },
-  { title: "Resources", links: ["Blog", "Webinars", "About us", "Brand", "Careers"] },
-  { title: "Social", links: ["Instagram", "LinkeDin", "TikTok", "Facebook", "X"] },
-  { title: "Legal", links: ["Privacy", "Terms", "Cookie settings"] },
+  {
+    title: "Institutional",
+    links: [
+      { label: "For nurses", to: "/" },
+      { label: "For facilities", to: "/facility-partners" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "Blog", to: "/" },
+      { label: "Webinars", to: "/" },
+      { label: "About us", to: "/" },
+      { label: "Brand", to: "/" },
+      { label: "Careers", to: "/" },
+    ],
+  },
+  {
+    title: "Social",
+    links: [
+      { label: "Instagram", to: "/" },
+      { label: "LinkeDin", to: "/" },
+      { label: "TikTok", to: "/" },
+      { label: "Facebook", to: "/" },
+      { label: "X", to: "/" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy", to: "/" },
+      { label: "Terms", to: "/" },
+      { label: "Cookie settings", to: "/" },
+    ],
+  },
 ];
 
 export default function Footer() {
@@ -38,9 +71,14 @@ export default function Footer() {
               <p data-reveal className="font-medium text-white">{group.title}</p>
               <div className="flex flex-col gap-3 text-stone-100">
                 {group.links.map((link) => (
-                  <a key={link} data-reveal href="#" className="whitespace-nowrap transition-colors hover:text-white">
-                    {link}
-                  </a>
+                  <Link
+                    key={link.label}
+                    data-reveal
+                    to={link.to}
+                    className="whitespace-nowrap transition-colors hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
                 ))}
               </div>
             </div>
@@ -50,8 +88,12 @@ export default function Footer() {
         <hr className="w-full border-t border-white/20" />
 
         <div className="flex w-full items-center justify-between">
-          <img src="/assets/wordmark-white.svg" alt="Flint" className="h-6 w-[49px]" />
-          <p data-reveal className="text-[16px] leading-6 text-white/80">&copy; 2026 Flint. All rights reserved.</p>
+          <Link to="/">
+            <img src="/assets/wordmark-white.svg" alt="Flint" className="h-6 w-[49px]" />
+          </Link>
+          <p data-reveal className="text-[16px] leading-6 text-white/80">
+            &copy; 2026 Flint. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
