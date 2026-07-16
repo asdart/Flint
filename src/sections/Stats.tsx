@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform, type MotionStyle } from "framer-motion";
+import DigitPopIn from "../components/DigitPopIn";
 
 const STATS = [
   { value: "200+", label: "Roles placed" },
@@ -51,8 +52,12 @@ export default function Stats() {
         <div className="flex w-full max-w-[960px] items-center justify-between text-center">
           {STATS.map((stat) => (
             <div key={stat.label} className="flex w-[227px] flex-col items-center text-ink">
-              <p data-reveal className="font-serif text-[72px] leading-[80px] tracking-[-1.08px]">{stat.value}</p>
-              <p data-reveal className="whitespace-nowrap text-[18px] leading-7 opacity-80">{stat.label}</p>
+              <p className="font-serif text-[72px] leading-[80px] tracking-[-1.08px]">
+                <DigitPopIn value={stat.value} />
+              </p>
+              <p data-reveal className="whitespace-nowrap text-[18px] leading-7 opacity-80">
+                {stat.label}
+              </p>
             </div>
           ))}
         </div>
