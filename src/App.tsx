@@ -1,9 +1,11 @@
 import Hero from "./sections/Hero";
-import Stats from "./sections/Stats";
+import Clients from "./sections/Clients";
+import TwoWays from "./sections/TwoWays";
+import PartnersMap from "./sections/PartnersMap";
 import HowItWorks from "./sections/HowItWorks";
-import Benefits from "./sections/Benefits";
+import WhatWeOffer from "./sections/WhatWeOffer";
 import Testimonials from "./sections/Testimonials";
-import Faq from "./sections/Faq";
+import Blog from "./sections/Blog";
 import Cta from "./sections/Cta";
 import Footer from "./sections/Footer";
 import { useStaggerReveal } from "./hooks/useStaggerReveal";
@@ -15,11 +17,13 @@ export default function App() {
     <div className="flex min-h-screen w-full flex-col items-center bg-white">
       <div ref={revealRef} className="flex w-full flex-col">
         <Hero />
-        <Stats />
+        <Clients />
+        <TwoWays />
+        <PartnersMap />
         <HowItWorks />
-        <Benefits />
+        <WhatWeOffer />
         <Testimonials />
-        <Faq />
+        <Blog />
         <Cta />
         <Footer />
       </div>
