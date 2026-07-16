@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Country">
+<g clip-path="url(#clip0_0_264)">
+<rect width="32" height="32" rx="16" fill="var(--fill-0, white)"/>
+<path id="Element" fill-rule="evenodd" clip-rule="evenodd" d="M-6.39966 0H8.53367V32H-6.39966V0ZM23.467 0H38.4003V32H23.467V0Z" fill="var(--fill-0, #0A6A30)"/>
+</g>
+<rect x="0.5" y="0.5" width="31" height="31" rx="15.5" stroke="var(--stroke-0, #D3D7DE)"/>
+</g>
+<defs>
+<clipPath id="clip0_0_264">
+<rect width="32" height="32" rx="16" fill="white"/>
+</clipPath>
+</defs>
+</svg>

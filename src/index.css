@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "SN Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "STIX Two Text", ui-serif, Georgia, serif;
+
+  /* Flint design tokens (from Figma) */
+  --color-ink: #0f0e17; /* victoria/950 — headings & strong body */
+  --color-subtle: #61656a; /* rolling-stone/600 — subtle body */
+  --color-brand: #44386d; /* purple-brand / victoria/600 */
+  --color-brand-light: #f6f5f8; /* background-brand-light */
+  --color-tertiary: #fbf5f2; /* background-tertiary-light / zinnwaldite/50 */
+  --color-brand-foreground: #e0dcec; /* foreground-brand-light */
+  --color-stone-50: #edeff2; /* rolling-stone/50 */
+  --color-stone-100: #d3d7de; /* rolling-stone/100 */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: white;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Staggered scroll reveal — applied to elements marked with data-reveal.
+   Each element gets a per-element --reveal-delay set by useStaggerReveal. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal],
+  [data-hero-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  [data-reveal].is-visible,
+  [data-hero-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
