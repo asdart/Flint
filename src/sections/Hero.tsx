@@ -67,7 +67,7 @@ function sampleArc(t: number) {
         y: end.y + u * 48,
         rotate: end.rotate + u * 10,
         z: end.z,
-        opacity: 1 - u,
+        opacity: 1,
       };
     }
     const u = (f - 0.5) * 2;
@@ -76,7 +76,7 @@ function sampleArc(t: number) {
       y: start.y + (1 - u) * 48,
       rotate: start.rotate - (1 - u) * 10,
       z: start.z,
-      opacity: u,
+      opacity: 1,
     };
   }
 

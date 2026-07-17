@@ -74,33 +74,37 @@ export default function PartnersMap() {
         />
         <div className="absolute inset-0 bg-black/60" />
 
-        <p className="absolute left-[120px] top-1/2 -translate-y-1/2 font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-white whitespace-nowrap">
-          Our partners are in
-        </p>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="relative flex h-full items-center">
+            <p className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-white whitespace-nowrap">
+              Our partners are in
+            </p>
 
-        <div
-          className="absolute inset-y-0 left-[492px] w-[424px] overflow-hidden"
-          style={{
-            WebkitMaskImage:
-              "linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%)",
-            maskImage:
-              "linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%)",
-          }}
-        >
-          <motion.div style={{ y }} className="absolute left-[76px] top-1/2 flex flex-col">
-            {LOOP.map((state, i) => (
-              <motion.p
-                key={`${state}-${i}`}
-                className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-white whitespace-nowrap"
-                style={{ height: LINE }}
-                initial={false}
-                animate={{ opacity: i === index ? 1 : 0.2 }}
-                transition={reduceMotion ? { duration: 0 } : FADE}
-              >
-                {state}
-              </motion.p>
-            ))}
-          </motion.div>
+            <div
+              className="relative h-full w-[340px] overflow-hidden pl-5"
+              style={{
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%)",
+                maskImage:
+                  "linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%)",
+              }}
+            >
+              <motion.div style={{ y }} className="absolute left-5 top-1/2 flex flex-col">
+                {LOOP.map((state, i) => (
+                  <motion.p
+                    key={`${state}-${i}`}
+                    className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-white whitespace-nowrap"
+                    style={{ height: LINE }}
+                    initial={false}
+                    animate={{ opacity: i === index ? 1 : 0.2 }}
+                    transition={reduceMotion ? { duration: 0 } : FADE}
+                  >
+                    {state}
+                  </motion.p>
+                ))}
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
