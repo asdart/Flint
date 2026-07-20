@@ -68,7 +68,7 @@ export default function WhatWeOffer() {
           </p>
         </header>
 
-        <div className="absolute left-[104px] right-[104px] top-[284px] grid grid-cols-3 gap-2">
+        <div className="absolute left-1/2 top-[284px] grid w-[calc(100%-208px)] max-w-[1200px] -translate-x-1/2 grid-cols-3 gap-2">
           {OFFERS.map((offer) => (
             <article
               key={offer.title}
