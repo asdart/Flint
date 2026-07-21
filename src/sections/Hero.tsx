@@ -11,8 +11,9 @@ import {
 import ApplyButton from "../components/ApplyButton";
 
 const NAV_LINKS = [
+  { label: "Home", to: "/" },
   { label: "Services", to: "/" },
-  { label: "Candidates", to: "/" },
+  { label: "Candidates", to: "/candidates" },
   { label: "Facility partners", to: "/facility-partners" },
   { label: "About", to: "/" },
   { label: "Blog", to: "/" },
@@ -165,7 +166,9 @@ export default function Hero() {
             <Link
               key={link.label}
               to={link.to}
-              className="whitespace-nowrap transition-colors hover:text-ink"
+              className={`whitespace-nowrap transition-colors hover:text-ink ${
+                link.label === "Home" ? "text-ink" : ""
+              }`}
             >
               {link.label}
             </Link>

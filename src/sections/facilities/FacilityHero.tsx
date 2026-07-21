@@ -4,8 +4,9 @@ import ApplyButton from "../../components/ApplyButton";
 import ProximityOrbit from "../../components/ProximityOrbit";
 
 const NAV_LINKS = [
+  { label: "Home", to: "/" },
   { label: "Services", to: "/" },
-  { label: "Candidates", to: "/" },
+  { label: "Candidates", to: "/candidates" },
   { label: "Facility partners", to: "/facility-partners" },
   { label: "About", to: "/" },
   { label: "Blog", to: "/" },
@@ -45,7 +46,7 @@ export default function FacilityHero() {
               key={link.label}
               to={link.to}
               className={`whitespace-nowrap transition-colors hover:text-ink ${
-                link.to === "/facility-partners" ? "text-ink" : ""
+                link.label === "Candidates" ? "text-ink" : ""
               }`}
             >
               {link.label}

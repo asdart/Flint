@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import FacilitiesPage from "./pages/FacilitiesPage";
+import FacilityPartnersPage from "./pages/FacilityPartnersPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -18,7 +19,8 @@ export default function App() {
       <div className="flex min-h-screen w-full flex-col items-center bg-white">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/facility-partners" element={<FacilitiesPage />} />
+          <Route path="/candidates" element={<FacilitiesPage />} />
+          <Route path="/facility-partners" element={<FacilityPartnersPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

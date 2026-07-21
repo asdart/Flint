@@ -5,7 +5,7 @@ const LINK_GROUPS = [
     title: "Institutional",
     links: [
       { label: "For nurses", to: "/" },
-      { label: "For facilities", to: "/facility-partners" },
+      { label: "For facilities", to: "/candidates" },
     ],
   },
   {
