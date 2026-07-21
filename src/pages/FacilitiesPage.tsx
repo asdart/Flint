@@ -1,6 +1,6 @@
 import FacilityHero from "../sections/facilities/FacilityHero";
 import Stats from "../sections/Stats";
-import FacilityHowItWorks from "../sections/facilities/FacilityHowItWorks";
+import HowFlintWorks from "../sections/facilities/HowFlintWorks";
 import Benefits from "../sections/Benefits";
 import Testimonials from "../sections/Testimonials";
 import Faq from "../sections/Faq";
@@ -15,7 +15,7 @@ export default function FacilitiesPage() {
     <div ref={revealRef} className="flex w-full flex-col">
       <FacilityHero />
       <Stats />
-      <FacilityHowItWorks />
+      <HowFlintWorks />
       <Benefits />
       <Testimonials />
       <Faq />
