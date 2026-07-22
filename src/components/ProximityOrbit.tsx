@@ -47,6 +47,8 @@ type ProximityOrbitProps = {
   enterDistance?: number;
   /** Fired once this ring has finished assembling (before/at spin start). */
   onEntered?: () => void;
+  /** Optional per-image hover tooltip content (aligned to `images` order). */
+  tooltips?: { name: string; role: string; flag: string; location?: string }[];
   style?: React.CSSProperties;
 };
 
@@ -75,11 +77,12 @@ export default function ProximityOrbit({
   enterDuration = 700,
   enterDistance = 2.2,
   onEntered,
+  tooltips = [],
   style,
 }: ProximityOrbitProps) {
   const hoverType = hoverAnimation?.type ?? "none";
   const hoverSpeedMult = hoverAnimation?.speedMultiplier ?? 5;
-  const hoverScaleVal = hoverAnimation?.scale ?? 6;
+  const hoverScaleVal = hoverAnimation?.scale ?? 1.15;
   const hoverOpacityVal = hoverAnimation?.opacity ?? 100;
 
   const containerRef = useRef(null);
@@ -275,11 +278,12 @@ export default function ProximityOrbit({
           const isHovered = hoveredIndex === i;
           const applyHover = isHovered && hoverType === "pause";
 
-          const targetScale = applyHover ? hoverScaleVal / 5 : 1;
+          // Scale hovered thumbnail up regardless of hover behavior type.
+          const targetScale = isHovered ? hoverScaleVal : 1;
           const targetOpacity = applyHover ? hoverOpacityVal / 100 : opacity / 100;
 
           const baseZIndex = stackDirection === "firstToLast" ? i + 1 : n - i;
-          const zIndex = applyHover ? n + 10 : baseZIndex;
+          const zIndex = isHovered ? n + 10 : baseZIndex;
 
           const image = (
             <motion.div
@@ -309,6 +313,31 @@ export default function ProximityOrbit({
             </motion.div>
           );
 
+          const info = tooltips[i];
+          const tooltip = info ? (
+            <motion.div
+              className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2"
+              initial={false}
+              animate={{
+                opacity: isHovered ? 1 : 0,
+                y: isHovered ? 0 : 6,
+                scale: isHovered ? 1 : 0.96,
+              }}
+              transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+              style={{ zIndex: n + 20 }}
+            >
+              <div className="flex items-center gap-2 whitespace-nowrap rounded-[14px] border border-black/5 bg-white px-3 py-2 shadow-[0_12px_32px_rgba(0,0,0,0.14)]">
+                <img src={info.flag} alt="" className="size-5 shrink-0 rounded-full" />
+                <div className="flex flex-col text-left leading-tight">
+                  <span className="text-[14px] font-medium text-ink">{info.name}</span>
+                  <span className="text-[12px] text-subtle">
+                    {info.location ? `${info.role} · ${info.location}` : info.role}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          ) : null;
+
           return (
             <div
               key={i}
@@ -321,7 +350,10 @@ export default function ProximityOrbit({
               }}
             >
               {entered ? (
-                <div style={{ willChange: "transform", transform: `translate(${x}px, ${y}px)` }}>{image}</div>
+                <div style={{ position: "relative", willChange: "transform", transform: `translate(${x}px, ${y}px)` }}>
+                  {image}
+                  {tooltip}
+                </div>
               ) : (
                 <motion.div
                   initial={{ x: startX, y: startY, opacity: 0 }}

@@ -12,9 +12,35 @@ const NAV_LINKS = [
   { label: "Blog", to: "/" },
 ];
 
-const ORBIT_IMAGES = Array.from(
-  { length: 10 },
-  (_, i) => `/assets/avatar-${String(i + 1).padStart(2, "0")}.png`,
+const ORBIT_PEOPLE = [
+  // 01 — East Asian woman
+  { name: "Maria Santos", role: "RN", location: "Minnesota", flag: "/assets/flags/ph.svg" },
+  // 02 — Latino man
+  { name: "Diego Hernández", role: "ER RN", location: "Texas", flag: "/assets/flags/mx.svg" },
+  // 03 — East Asian woman
+  { name: "Linh Nguyen", role: "Med-Surg RN", location: "Wisconsin", flag: "/assets/flags/vn.svg" },
+  // 04 — Southeast Asian woman
+  { name: "Putri Wijaya", role: "LPN", location: "North Dakota", flag: "/assets/flags/id.svg" },
+  // 05 — South Asian man
+  { name: "Arjun Patel", role: "ICU RN", location: "Ohio", flag: "/assets/flags/in.svg" },
+  // 06 — Black African woman
+  { name: "Amara Okafor", role: "Oncology RN", location: "Georgia", flag: "/assets/flags/ng.svg" },
+  // 07 — Middle Eastern woman
+  { name: "Layla Haddad", role: "OR RN", location: "Michigan", flag: "/assets/flags/lb.svg" },
+  // 08 — East African man
+  { name: "Samuel Tesfaye", role: "CNA", location: "South Dakota", flag: "/assets/flags/et.svg" },
+  // 09 — Latina woman
+  { name: "Valentina Rojas", role: "L&D RN", location: "Florida", flag: "/assets/flags/co.svg" },
+  // 10 — Northern European man
+  { name: "Ryan Mitchell", role: "Cardiac RN", location: "Colorado", flag: "/assets/flags/ca.svg" },
+  // 11 — North African / Middle Eastern man
+  { name: "Omar Hassan", role: "CCRN", location: "Illinois", flag: "/assets/flags/eg.svg" },
+  // 12 — Persian / Middle Eastern woman
+  { name: "Yasmin Karimi", role: "NICU RN", location: "Washington", flag: "/assets/flags/ir.svg" },
+];
+
+const ORBIT_IMAGES = ORBIT_PEOPLE.map(
+  (_, i) => `/assets/candidates/orbit-${String(i + 1).padStart(2, "0")}.png`,
 );
 
 export default function FacilityHero() {
@@ -60,6 +86,7 @@ export default function FacilityHero() {
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ width: 840, height: 840 }}>
           <ProximityOrbit
             images={ORBIT_IMAGES}
+            tooltips={ORBIT_PEOPLE}
             orbitRadius={14}
             imageScale={4.5}
             rounded={8}
@@ -67,7 +94,7 @@ export default function FacilityHero() {
             speed={1}
             direction="clockwise"
             movementType="continuous"
-            hoverAnimation={{ type: "speedUp", speedMultiplier: 1.6 }}
+            hoverAnimation={{ type: "speedDown", speedMultiplier: 6 }}
             animateIn
             enterStagger={100}
             enterDuration={1100}
