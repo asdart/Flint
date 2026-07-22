@@ -57,7 +57,7 @@ export default function FacilityHero() {
           <ApplyButton variant="white" reveal={false} />
         </div>
 
-        <div className="absolute left-1/2 top-[72px] -translate-x-1/2" style={{ width: 840, height: 840 }}>
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ width: 840, height: 840 }}>
           <ProximityOrbit
             images={ORBIT_IMAGES}
             orbitRadius={14}
@@ -76,7 +76,7 @@ export default function FacilityHero() {
           />
         </div>
 
-        <div className="absolute left-1/2 top-[353px] flex w-[436px] -translate-x-1/2 flex-col items-center gap-8 text-center">
+        <div className="absolute left-1/2 top-1/2 flex w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 text-center">
           <div className="flex flex-col gap-4">
             <h1 data-hero-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink">
               Find the right sponsored healthcare role for you
