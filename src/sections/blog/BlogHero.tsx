@@ -74,7 +74,7 @@ export default function BlogHero() {
                   style={{ y: shouldReduceMotion ? 0 : flowerY }}
                 >
                   <div
-                    className="absolute -left-[718px] -top-4 size-[1160px] rotate-90 opacity-80"
+                    className="absolute -left-[1009px] top-[172px] size-[2019px] opacity-80"
                     style={{
                       maskImage: "url(/assets/stats-mask-1.svg)",
                       WebkitMaskImage: "url(/assets/stats-mask-1.svg)",
