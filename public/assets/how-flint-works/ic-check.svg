@@ -1,5 +1,10 @@
-<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 15.3889 11.2222" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Group">
-<path id="Vector" d="M0.75 6.30556L4.91667 10.4722L14.6389 0.75" stroke="var(--stroke-0, #04804E)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Check mapped from Figma 5564:26682: 20px frame with inset group -->
+  <path
+    d="M3.056 10.556L7.223 14.722L16.945 5"
+    stroke="#04804E"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
 </svg>

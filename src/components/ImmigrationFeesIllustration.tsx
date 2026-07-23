@@ -57,8 +57,14 @@ export default function ImmigrationFeesIllustration() {
                   delay: reduceMotion ? 0 : LOAD_DELAY + 0.4 + i * 0.1,
                 }}
               >
-                <span className="flex items-center justify-center rounded-full bg-[rgba(5,175,107,0.1)] p-1.5">
-                  <img src="/assets/how-flint-works/ic-check.svg" alt="" className="size-5" />
+                <span className="flex items-center rounded-full bg-[rgba(5,175,107,0.1)] p-[6px]">
+                  <span className="relative size-5 shrink-0 overflow-clip">
+                    <img
+                      src="/assets/how-flint-works/ic-check.svg"
+                      alt=""
+                      className="absolute inset-0 size-full"
+                    />
+                  </span>
                 </span>
                 <span className="text-[16px] leading-6 text-ink">{fee}</span>
               </motion.div>

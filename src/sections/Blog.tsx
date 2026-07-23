@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const POSTS = [
   {
     title: "How to Apply for Nurse Green Card Sponsorship (EB-3)",
@@ -28,12 +30,12 @@ export default function Blog() {
           </p>
         </div>
         <span data-reveal className="inline-flex">
-          <button
-            type="button"
+          <Link
+            to="/blog"
             className="relative flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-[#0a0a0a] shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-transform hover:scale-[1.03] active:scale-[0.98]"
           >
             See all posts
-          </button>
+          </Link>
         </span>
       </header>
 

@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { label: "Candidates", to: "/candidates" },
   { label: "Facility partners", to: "/facility-partners" },
   { label: "About", to: "/" },
-  { label: "Blog", to: "/" },
+  { label: "Blog", to: "/blog" },
 ];
 
 const OVERLAY =

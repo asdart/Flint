@@ -11,7 +11,7 @@ const LINK_GROUPS = [
   {
     title: "Resources",
     links: [
-      { label: "Blog", to: "/" },
+      { label: "Blog", to: "/blog" },
       { label: "Webinars", to: "/" },
       { label: "About us", to: "/" },
       { label: "Brand", to: "/" },
