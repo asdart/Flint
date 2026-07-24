@@ -2,15 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ApplyButton from "../../components/ApplyButton";
 import ProximityOrbit from "../../components/ProximityOrbit";
-
-const NAV_LINKS = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/" },
-  { label: "Candidates", to: "/candidates" },
-  { label: "Facility partners", to: "/facility-partners" },
-  { label: "About", to: "/" },
-  { label: "Blog", to: "/blog" },
-];
+import { NAV_LINKS } from "../../nav";
 
 const ORBIT_PEOPLE = [
   // 01 — East Asian woman
@@ -63,10 +55,10 @@ export default function FacilityHero() {
   return (
     <section ref={sectionRef} className="flex h-svh w-full flex-col bg-white p-4">
       <div className="relative min-h-0 w-full flex-1 overflow-clip rounded-[24px] bg-brand-light">
-        <Link to="/" className="absolute left-4 top-[15px]">
+        <Link to="/" className="absolute left-4 top-[15px] z-10">
           <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
         </Link>
-        <nav className="absolute left-1/2 top-6 flex -translate-x-1/2 items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
+        <nav className="absolute left-1/2 top-6 z-10 flex -translate-x-1/2 items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.label}
@@ -79,11 +71,14 @@ export default function FacilityHero() {
             </Link>
           ))}
         </nav>
-        <div className="absolute right-4 top-[18px]">
+        <div className="absolute right-4 top-[18px] z-10">
           <ApplyButton variant="white" reveal={false} />
         </div>
 
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ width: 840, height: 840 }}>
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{ width: 840, height: 840 }}
+        >
           <ProximityOrbit
             images={ORBIT_IMAGES}
             tooltips={ORBIT_PEOPLE}
@@ -103,7 +98,7 @@ export default function FacilityHero() {
           />
         </div>
 
-        <div className="absolute left-1/2 top-1/2 flex w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 text-center">
+        <div className="absolute left-1/2 top-1/2 z-10 flex w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 text-center">
           <div className="flex flex-col gap-4">
             <h1 data-hero-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink">
               Find the right sponsored healthcare role for you

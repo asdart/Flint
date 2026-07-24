@@ -10,7 +10,7 @@ export default function AllPosts() {
   return (
     <section className="w-full px-4 pt-4">
       <div className="flex w-full flex-col items-center overflow-clip rounded-[24px] bg-brand-light px-20 pb-12 pt-24">
-        <div className="flex w-full max-w-[1200px] flex-col gap-8">
+        <div className="flex w-full max-w-[1200px] flex-col">
           <h2
             data-reveal
             className="font-serif text-[40px] leading-[44px] tracking-[-0.8px] text-ink"
@@ -18,13 +18,13 @@ export default function AllPosts() {
             All posts
           </h2>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="mt-8 grid grid-cols-3 gap-8">
             {ALL_POSTS.map((post, i) => (
               <BlogPostCard key={i} post={post} />
             ))}
           </div>
 
-          <div className="flex w-full items-center justify-center gap-3 pt-4">
+          <div className="mt-16 flex w-full items-center justify-center gap-3">
             <button
               type="button"
               onClick={() => setPage((p) => Math.max(1, p - 1))}

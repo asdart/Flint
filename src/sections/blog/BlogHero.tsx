@@ -1,53 +1,35 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import ApplyButton from "../../components/ApplyButton";
-import BlogPostCard from "./BlogPostCard";
-import { FEATURED_POST, SIDE_POSTS } from "./posts";
-
-const NAV_LINKS = [
-  { label: "Services", to: "/" },
-  { label: "Candidates", to: "/candidates" },
-  { label: "Facility partners", to: "/facility-partners" },
-  { label: "About", to: "/" },
-  { label: "Blog", to: "/blog" },
-];
+import { FEATURED_POST } from "./posts";
+import { NAV_LINKS } from "../../nav";
 
 export default function BlogHero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-  const flowerY = useTransform(scrollYProgress, [0, 1], [0, 24]);
-
   return (
-    <section ref={sectionRef} className="w-full px-4 pt-4">
-      <div className="relative flex flex-col gap-16 overflow-clip rounded-[24px] bg-tertiary p-4">
-        {/* Nav */}
-        <nav className="relative z-10 mx-auto flex w-full max-w-[1200px] items-center justify-between">
-          <Link to="/">
-            <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
-          </Link>
-          <div className="flex items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                className={`whitespace-nowrap transition-colors hover:text-ink ${
-                  link.label === "Blog" ? "text-ink" : ""
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <ApplyButton variant="white" reveal={false} />
+    <section className="w-full px-4 pt-4">
+      <div className="relative overflow-clip rounded-[24px] bg-tertiary p-4">
+        <Link to="/" className="absolute left-4 top-[15px] z-20">
+          <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
+        </Link>
+        <nav className="absolute left-1/2 top-6 z-20 flex -translate-x-1/2 items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.label}
+              to={link.to}
+              className={`whitespace-nowrap transition-colors hover:text-ink ${
+                link.label === "Blog" ? "text-ink" : ""
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
+        <div className="absolute right-4 top-[18px] z-20">
+          <ApplyButton variant="white" reveal={false} />
+        </div>
 
-        {/* Hero content */}
-        <div className="relative z-10 flex w-full flex-col items-center pb-16">
+        {/* Hero content — top padding clears the absolute nav (same geometry
+            as Home / Candidates / Facility partners). */}
+        <div className="relative z-0 flex w-full flex-col items-center pb-16 pt-24">
           <div className="flex w-full max-w-[1200px] flex-col gap-12">
             <div className="flex max-w-[480px] flex-col gap-2">
               <h1
@@ -62,39 +44,64 @@ export default function BlogHero() {
               </p>
             </div>
 
-            <div className="flex w-full items-start gap-4">
-              <div className="relative min-w-0 flex-1">
-                {/* Decorative flower, scoped to the featured card so it peeks
-                    from behind its corners, with a subtle vertical parallax
-                    drift on scroll. The drift lives on an unrotated wrapper so
-                    it stays purely vertical and doesn't fight the inner
-                    rotate-90 transform. */}
-                <motion.div
-                  className="pointer-events-none absolute inset-0"
-                  style={{ y: shouldReduceMotion ? 0 : flowerY }}
-                >
+            {/* Featured banner — full-width photo with the post overlaid at the
+                bottom over a dark gradient. */}
+            <div data-reveal className="relative w-full">
+              <Link
+                to="/blog"
+                className="group relative block h-[560px] w-full cursor-pointer rounded-[24px] bg-white p-2"
+              >
+                <div className="relative size-full overflow-clip rounded-[20px]">
+                  <img
+                    src={FEATURED_POST.image}
+                    alt=""
+                    className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  />
+                  {/* Bottom gradient scrim + backdrop blur. The blur is masked
+                      with the same gradient so it's strong at the bottom and
+                      fades out by ~39% height, keeping the photo crisp up top
+                      (matching Figma's alpha-masked background blur). */}
                   <div
-                    className="absolute -left-[1009px] top-[172px] size-[2019px] opacity-80"
+                    className="pointer-events-none absolute inset-0 rounded-[20px]"
                     style={{
-                      maskImage: "url(/assets/stats-mask-1.svg)",
-                      WebkitMaskImage: "url(/assets/stats-mask-1.svg)",
-                      maskSize: "contain",
-                      WebkitMaskSize: "contain",
-                      maskRepeat: "no-repeat",
-                      WebkitMaskRepeat: "no-repeat",
+                      background:
+                        "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 39.43%)",
+                      backdropFilter: "blur(20px)",
+                      WebkitBackdropFilter: "blur(20px)",
+                      maskImage:
+                        "linear-gradient(to top, black 0%, rgba(0,0,0,0) 39.43%)",
+                      WebkitMaskImage:
+                        "linear-gradient(to top, black 0%, rgba(0,0,0,0) 39.43%)",
                     }}
                     aria-hidden
-                  >
-                    <img src="/assets/stats-bg.png" alt="" className="size-full object-cover" />
+                  />
+                  <div className="absolute inset-x-0 bottom-0 flex flex-col p-8">
+                    <div className="flex items-center gap-1 text-[16px] leading-6 tracking-[-0.23px] text-[#a2a9b3]">
+                      <span>{FEATURED_POST.date}</span>
+                      <span aria-hidden>·</span>
+                      <span>{FEATURED_POST.category}</span>
+                    </div>
+                    <h2 className="pt-1 text-[28px] leading-9 tracking-[-0.11px] text-white">
+                      {FEATURED_POST.title}
+                    </h2>
+                    <p className="max-w-[720px] pt-2 text-[16px] leading-6 tracking-[-0.23px] text-[#a2a9b3]">
+                      {FEATURED_POST.excerpt}
+                    </p>
+                    <div className="flex items-center gap-2 pt-4">
+                      <span className="size-6 shrink-0 overflow-clip rounded-full bg-[#e6e5e0]">
+                        <img
+                          src="/assets/blog/author.png"
+                          alt=""
+                          className="size-full object-cover"
+                        />
+                      </span>
+                      <span className="text-[16px] leading-6 tracking-[-0.23px] text-[#a2a9b3]">
+                        {FEATURED_POST.author} · {FEATURED_POST.readTime}
+                      </span>
+                    </div>
                   </div>
-                </motion.div>
-                <BlogPostCard post={FEATURED_POST} variant="featured" />
-              </div>
-              <div className="flex w-[427px] shrink-0 flex-col gap-2.5">
-                {SIDE_POSTS.map((post, i) => (
-                  <BlogPostCard key={i} post={post} />
-                ))}
-              </div>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

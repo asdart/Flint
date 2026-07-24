@@ -9,24 +9,26 @@ type ApplyButtonProps = {
   children?: React.ReactNode;
   /** When false, skips the staggered reveal wrapper. */
   reveal?: boolean;
+  type?: "button" | "submit" | "reset";
 };
 
 export default function ApplyButton({
   variant = "gradient",
   children = "Apply now",
   reveal = true,
+  type = "button",
 }: ApplyButtonProps) {
   const button =
     variant === "white" ? (
       <button
-        type="button"
+        type={type}
         className="relative flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-[14px] py-[6px] text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-transform hover:scale-[1.03] active:scale-[0.98]"
       >
         {children}
       </button>
     ) : (
       <button
-        type="button"
+        type={type}
         className="flex items-center justify-center rounded-[24px] px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0),0_0_0_0_rgba(68,55,109,0)] [background-position:0%_50%] [background-size:200%_100%] transition-[background-position,box-shadow] duration-700 ease-in-out hover:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2),0_6px_20px_0_rgba(68,55,109,0.22),0_2px_8px_0_rgba(92,119,224,0.12)] hover:[background-position:100%_50%] active:scale-[0.98]"
         style={{ backgroundImage: GRADIENT }}
       >

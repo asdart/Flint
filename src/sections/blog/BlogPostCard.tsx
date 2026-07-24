@@ -2,12 +2,9 @@ import type { BlogPost } from "./posts";
 
 type BlogPostCardProps = {
   post: BlogPost;
-  variant?: "default" | "featured";
 };
 
-export default function BlogPostCard({ post, variant = "default" }: BlogPostCardProps) {
-  const featured = variant === "featured";
-
+export default function BlogPostCard({ post }: BlogPostCardProps) {
   return (
     <article
       data-reveal
@@ -26,18 +23,10 @@ export default function BlogPostCard({ post, variant = "default" }: BlogPostCard
           <span aria-hidden>·</span>
           <span>{post.category}</span>
         </div>
-        <h3
-          className={`pt-1 tracking-[-0.11px] text-ink ${
-            featured ? "text-[28px] leading-9" : "text-[20px] leading-7"
-          }`}
-        >
+        <h3 className="pt-1 text-[20px] leading-7 tracking-[-0.11px] text-ink">
           {post.title}
         </h3>
-        <p
-          className={`pt-2 text-[16px] leading-6 tracking-[-0.23px] text-[rgba(38,37,30,0.6)] ${
-            featured ? "" : "line-clamp-2"
-          }`}
-        >
+        <p className="line-clamp-2 pt-2 text-[16px] leading-6 tracking-[-0.23px] text-[rgba(38,37,30,0.6)]">
           {post.excerpt}
         </p>
         <div className="mt-auto flex items-center gap-2 pt-4">

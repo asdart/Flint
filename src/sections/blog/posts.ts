@@ -24,27 +24,6 @@ export const FEATURED_POST: BlogPost = {
   readTime: READ,
 };
 
-export const SIDE_POSTS: BlogPost[] = [
-  {
-    image: "/assets/blog/post-01.png",
-    date: "July 17, 2026",
-    category: "Institutional",
-    title: "How hospitals sponsor nurses for green cards",
-    excerpt: EXCERPT,
-    author: AUTHOR,
-    readTime: READ,
-  },
-  {
-    image: "/assets/blog/post-02.png",
-    date: "July 17, 2026",
-    category: "Institutional",
-    title: "How hospitals sponsor nurses for green cards",
-    excerpt: EXCERPT,
-    author: AUTHOR,
-    readTime: READ,
-  },
-];
-
 export const ALL_POSTS: BlogPost[] = [
   {
     image: "/assets/blog/post-01.png",

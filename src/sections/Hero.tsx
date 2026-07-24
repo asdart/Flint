@@ -9,34 +9,31 @@ import {
   type MotionValue,
 } from "framer-motion";
 import ApplyButton from "../components/ApplyButton";
-
-const NAV_LINKS = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/" },
-  { label: "Candidates", to: "/candidates" },
-  { label: "Facility partners", to: "/facility-partners" },
-  { label: "About", to: "/" },
-  { label: "Blog", to: "/blog" },
-];
+import { NAV_LINKS } from "../nav";
 
 const CARDS = [
-  { src: "/assets/home/hero-04.png", name: "Andrew", flag: "/assets/home/flag-ng.svg" },
-  { src: "/assets/home/hero-03.png", name: "Andrew", flag: "/assets/home/flag-ng.svg" },
-  { src: "/assets/home/hero-01.png", name: "Andrew", flag: "/assets/home/flag-ng.svg" },
-  { src: "/assets/home/hero-02.png", name: "Chrismene", flag: "/assets/home/flag-ht.svg" },
-  { src: "/assets/home/hero-06.png", name: "Andrew", flag: "/assets/home/flag-ng.svg" },
-  { src: "/assets/home/hero-05.png", name: "Andrew", flag: "/assets/home/flag-ng.svg" },
+  { src: "/assets/home/candidate-01.png", name: "Maria", flag: "/assets/flags/ph.svg" },
+  { src: "/assets/home/candidate-02.png", name: "Chrismene", flag: "/assets/flags/ht.svg" },
+  { src: "/assets/home/candidate-03.png", name: "Wanjiru", flag: "/assets/flags/ke.svg" },
+  { src: "/assets/home/candidate-04.png", name: "Kwame", flag: "/assets/flags/gh.svg" },
+  { src: "/assets/home/candidate-05.png", name: "Emeka", flag: "/assets/flags/ng.svg" },
+  { src: "/assets/home/candidate-06.png", name: "Ama", flag: "/assets/flags/gh.svg" },
+  { src: "/assets/home/candidate-07.png", name: "Daniel", flag: "/assets/flags/ke.svg" },
+  { src: "/assets/home/candidate-08.png", name: "Ngozi", flag: "/assets/flags/ng.svg" },
+  { src: "/assets/home/candidate-09.png", name: "Linh", flag: "/assets/flags/vn.svg" },
+  { src: "/assets/home/candidate-10.png", name: "Samuel", flag: "/assets/flags/et.svg" },
 ];
 
 const CARD_W = 220;
 const CARD_H = 264;
 const CARD_HALF = CARD_W / 2;
-const LOOP_SECONDS = 22;
+const LOOP_SECONDS = 34;
+const HOVER_SPEED_FACTOR = 0.35;
 
 /** Perfect circular arc — equal angle steps, symmetric about center */
 const ARC_COUNT = CARDS.length;
 const ARC_HALF_SPAN = 25; // degrees from center to each end (±25 → 10° steps)
-const ARC_RADIUS = 1680;
+const ARC_RADIUS = 3400; // larger radius spaces the 10 cards apart on the same arc
 const ARC_STEP = (2 * ARC_HALF_SPAN) / (ARC_COUNT - 1);
 const WRAP_OUT = 140;
 
@@ -132,7 +129,7 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const progress = useMotionValue(0);
   const reduceMotion = useReducedMotion();
-  const startRef = useRef<number | null>(null);
+  const isHoveredRef = useRef(false);
 
   useEffect(() => {
     const root = sectionRef.current;
@@ -144,15 +141,11 @@ export default function Hero() {
     });
   }, []);
 
-  useAnimationFrame((time) => {
-    if (reduceMotion) {
-      progress.set(0);
-      startRef.current = null;
-      return;
-    }
-    if (startRef.current === null) startRef.current = time;
-    const elapsed = (time - startRef.current) / 1000;
-    progress.set((elapsed / LOOP_SECONDS) % 1);
+  useAnimationFrame((_, delta) => {
+    if (reduceMotion) return;
+    const speedFactor = isHoveredRef.current ? HOVER_SPEED_FACTOR : 1;
+    const next = (progress.get() + (delta / 1000 / LOOP_SECONDS) * speedFactor) % 1;
+    progress.set(next);
   });
 
   return (
@@ -196,7 +189,16 @@ export default function Hero() {
           </span>
         </div>
 
-        <div className="absolute bottom-[33px] left-4 right-2 h-[355px]" aria-hidden>
+        <div
+          className="absolute bottom-[33px] left-4 right-2 h-[355px]"
+          aria-hidden
+          onMouseEnter={() => {
+            isHoveredRef.current = true;
+          }}
+          onMouseLeave={() => {
+            isHoveredRef.current = false;
+          }}
+        >
           {CARDS.map((card, i) => (
             <ArcCard
               key={card.src}

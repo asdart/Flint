@@ -1,14 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-
-const NAV_LINKS = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/" },
-  { label: "Candidates", to: "/candidates" },
-  { label: "Facility partners", to: "/facility-partners" },
-  { label: "About", to: "/" },
-  { label: "Blog", to: "/blog" },
-];
+import { NAV_LINKS } from "../../nav";
 
 const OVERLAY =
   "linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 18.6%), linear-gradient(rgba(0,0,0,0) 55.8%, rgba(0,0,0,0.8) 100%), linear-gradient(90deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28))";
