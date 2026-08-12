@@ -21,10 +21,14 @@ export default function FacilityPartnersHero() {
   return (
     <section ref={sectionRef} className="w-full p-4">
       <div className="relative h-[848px] w-full overflow-clip rounded-[24px] shadow-[0px_20px_40px_0px_rgba(0,0,0,0.1)]">
-        <img
-          src="/assets/facility/hero.png"
-          alt=""
+        <video
+          src="/assets/facility/hero.mp4"
           className="absolute inset-0 size-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden
         />
         <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: OVERLAY }} />
 
