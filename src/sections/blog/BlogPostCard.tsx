@@ -8,9 +8,9 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
   return (
     <article
       data-reveal
-      className="group flex cursor-pointer flex-col overflow-clip rounded-[16px] bg-white"
+      className="group flex h-[432px] cursor-pointer flex-col overflow-clip rounded-[16px] bg-white"
     >
-      <div className="relative aspect-[3/2] w-full shrink-0 overflow-clip">
+      <div className="relative h-[260px] w-full shrink-0 overflow-clip">
         <img
           src={post.image}
           alt=""
@@ -18,15 +18,10 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
         />
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-center gap-1 text-[16px] leading-6 tracking-[-0.23px] text-[rgba(38,37,30,0.5)]">
-          <span>{post.date}</span>
-          <span aria-hidden>·</span>
-          <span>{post.category}</span>
-        </div>
-        <h3 className="pt-1 text-[20px] leading-7 tracking-[-0.11px] text-ink">
+        <h3 className="line-clamp-2 pt-1 text-[20px] leading-7 tracking-[-0.11px] text-ink">
           {post.title}
         </h3>
-        <p className="line-clamp-2 pt-2 text-[16px] leading-6 tracking-[-0.23px] text-[rgba(38,37,30,0.6)]">
+        <p className="truncate pt-2 text-[16px] leading-6 tracking-[-0.23px] text-[rgba(38,37,30,0.6)]">
           {post.excerpt}
         </p>
         <div className="mt-auto flex items-center gap-2 pt-4">
