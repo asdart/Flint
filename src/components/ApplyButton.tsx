@@ -22,7 +22,7 @@ export default function ApplyButton({
     variant === "white" ? (
       <button
         type={type}
-        className="relative flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-[14px] py-[6px] text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-transform hover:scale-[1.03] active:scale-[0.98]"
+        className="relative flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-[14px] py-[6px] text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-[background-color,transform] duration-300 ease-in-out hover:bg-[#f5f5f5] active:scale-[0.98]"
       >
         {children}
       </button>

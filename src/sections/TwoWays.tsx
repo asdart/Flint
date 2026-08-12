@@ -1,21 +1,29 @@
 type Banner = {
   image: string;
-  title: string;
+  title: React.ReactNode;
   body: string;
   cta: string;
   ctaTop: number;
   overlay: string;
+  overlayBlur?: boolean;
   features: { icon: string; label: string }[];
 };
 
 const BANNERS: Banner[] = [
   {
     image: "/assets/home/banner-nurse.jpg",
-    title: "For nurses. Not a visa. A permanent future.",
+    title: (
+      <>
+        For nurses. Not a visa.
+        <br />
+        A permanent future.
+      </>
+    ),
     body: "Flint sponsors your green card, so from day one you're building something that lasts.",
     cta: "Apply as nurse",
     ctaTop: 176,
     overlay: "linear-gradient(129deg, rgba(0,0,0,0.6) 1%, rgba(0,0,0,0) 35%)",
+    overlayBlur: true,
     features: [
       { icon: "/assets/home/icon-relocate.svg", label: "Relocation support included" },
       { icon: "/assets/home/icon-greencard.svg", label: "Green card sponsorship" },
@@ -41,9 +49,9 @@ function GlassButton({ children }: { children: React.ReactNode }) {
   return (
     <button
       type="button"
-      className="relative flex items-center justify-center rounded-[24px] border border-white/20 px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-white transition-transform hover:scale-[1.03] active:scale-[0.98]"
+      className="group relative flex items-center justify-center rounded-[24px] border border-white/20 px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-white transition-[border-color,transform] duration-300 ease-in-out hover:border-white/40 active:scale-[0.98]"
     >
-      <span className="absolute inset-0 rounded-[24px] bg-[rgba(255,255,255,0.16)] backdrop-blur-[10px]" />
+      <span className="absolute inset-0 rounded-[24px] bg-[rgba(255,255,255,0.16)] backdrop-blur-[10px] transition-colors duration-300 ease-in-out group-hover:bg-[rgba(255,255,255,0.4)]" />
       <span className="absolute inset-0 rounded-[inherit] shadow-[inset_0px_2px_6px_0px_rgba(255,255,255,0.25)]" />
       <span className="relative">{children}</span>
     </button>
@@ -94,7 +102,19 @@ export default function TwoWays() {
                 />
                 <div
                   className="absolute inset-2 rounded-2xl"
-                  style={{ backgroundImage: banner.overlay }}
+                  style={{
+                    backgroundImage: banner.overlay,
+                    ...(banner.overlayBlur
+                      ? {
+                          backdropFilter: "blur(8px)",
+                          WebkitBackdropFilter: "blur(8px)",
+                          maskImage:
+                            "linear-gradient(129deg, black 1%, rgba(0,0,0,0) 35%)",
+                          WebkitMaskImage:
+                            "linear-gradient(129deg, black 1%, rgba(0,0,0,0) 35%)",
+                        }
+                      : null),
+                  }}
                 />
                 <div className="absolute left-10 top-10 flex w-[338px] flex-col gap-2 text-white">
                   <p className="text-[24px] leading-7 tracking-[-0.48px]">{banner.title}</p>

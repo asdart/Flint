@@ -53,7 +53,7 @@ export default function FacilityPartnersHero() {
         <div className="absolute right-4 top-[18px] z-10">
           <button
             type="button"
-            className="flex items-center justify-center rounded-[24px] border border-white/20 bg-white/[0.16] px-[14px] py-[6px] text-[14px] font-medium leading-5 tracking-[-0.028px] text-white shadow-[inset_0px_2px_6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px] transition-transform hover:scale-[1.03] active:scale-[0.98]"
+            className="flex items-center justify-center rounded-[24px] border border-white/20 bg-white/[0.16] px-[14px] py-[6px] text-[14px] font-medium leading-5 tracking-[-0.028px] text-white shadow-[inset_0px_2px_6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px] transition-[background-color,border-color,transform] duration-300 ease-in-out hover:border-white/40 hover:bg-white/40 active:scale-[0.98]"
           >
             Apply now
           </button>
@@ -77,7 +77,7 @@ export default function FacilityPartnersHero() {
           <button
             data-hero-reveal
             type="button"
-            className="flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-transform hover:scale-[1.03] active:scale-[0.98]"
+            className="flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-[background-color,transform] duration-300 ease-in-out hover:bg-[#f5f5f5] active:scale-[0.98]"
           >
             Apply now
           </button>
