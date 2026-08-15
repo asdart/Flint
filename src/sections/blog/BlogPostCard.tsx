@@ -7,7 +7,6 @@ type BlogPostCardProps = {
 export default function BlogPostCard({ post }: BlogPostCardProps) {
   return (
     <article
-      data-reveal
       className="group flex h-[432px] cursor-pointer flex-col overflow-clip rounded-[16px] bg-white"
     >
       <div className="relative h-[260px] w-full shrink-0 overflow-clip">

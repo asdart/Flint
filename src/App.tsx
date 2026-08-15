@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import FacilitiesPage from "./pages/FacilitiesPage";
 import FacilityPartnersPage from "./pages/FacilityPartnersPage";
 import BlogPage from "./pages/BlogPage";
+import AboutPage from "./pages/AboutPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/candidates" element={<FacilitiesPage />} />
           <Route path="/facility-partners" element={<FacilityPartnersPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

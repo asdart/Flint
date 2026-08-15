@@ -13,7 +13,7 @@ const LINK_GROUPS = [
     links: [
       { label: "Blog", to: "/blog" },
       { label: "Webinars", to: "/" },
-      { label: "About us", to: "/" },
+      { label: "About us", to: "/about" },
       { label: "Brand", to: "/" },
       { label: "Careers", to: "/" },
     ],

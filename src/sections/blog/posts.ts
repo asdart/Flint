@@ -28,228 +28,270 @@ const IMAGES = [
   "/assets/blog/post-06.jpg",
 ] as const;
 
-const POST_SEED: Omit<BlogPost, "image">[] = [
+const AUTHORS = ["Jonathan", "Sarah", "Michael", "Priya", "David", "Emily"] as const;
+
+// Sourced from withflint.com/blog (titles, dates, excerpts, and read times).
+const POST_SEED: Omit<BlogPost, "image" | "author">[] = [
+  {
+    date: "August 7, 2026",
+    category: "Immigration",
+    title: "5 Practical Paths to Green Card Sponsorship for Nurses",
+    excerpt:
+      "Explore five practical ways to find healthcare employers offering permanent jobs and Green Card sponsorship.",
+    readTime: "4 min read",
+  },
+  {
+    date: "August 6, 2026",
+    category: "Immigration",
+    title: "Is EB-3 the Best Green Card Path for Healthcare Workers in 2026?",
+    excerpt:
+      "Explore how the EB-3 green card may help CNAs, LPNs, LVNs, and RNs pursue permanent residence through employer-sponsored healthcare roles.",
+    readTime: "6 min read",
+  },
+  {
+    date: "August 6, 2026",
+    category: "Immigration",
+    title: "How to Get Green Card Sponsorship in 2026",
+    excerpt:
+      "Learn how to get Green Card sponsorship in 2026, how to find employers that sponsor permanent residency, and what the process may involve.",
+    readTime: "5 min read",
+  },
   {
     date: "July 17, 2026",
     category: "Institutional",
-    title: "How hospitals sponsor nurses for green cards",
+    title: "How Hospitals Sponsor Nurses for Green Cards",
     excerpt:
       "Learn how hospitals sponsor nurses for green cards through EB-3, Schedule A, licensing, and workforce planning.",
-    author: "Jonathan",
     readTime: "3 min read",
   },
   {
-    date: "July 14, 2026",
-    category: "Careers",
-    title: "Top 5 states hiring international nurses in 2026",
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "EB-3 Visa Bulletin — July 2026 Update",
     excerpt:
-      "Discover which U.S. states have the highest demand for internationally educated nurses and what to expect.",
-    author: "Sarah",
+      "Review the July 2026 Visa Bulletin for EB-3 healthcare workers, including key dates, backlogs, and sponsorship timing.",
+    readTime: "3 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Licensing",
+    title: "NCLEX for Foreign-Educated Nurses: What You Need to Know",
+    excerpt:
+      "Learn how foreign-educated nurses can take the NCLEX, meet state requirements, and prepare for U.S. nursing sponsorship.",
+    readTime: "4 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "What Happens to Your EB-3 Green Card If You Get Laid Off",
+    excerpt:
+      "Learn what happens if you get laid off during your EB-3 process, including I-140, I-485, portability, and next steps.",
+    readTime: "4 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "Can I Change Job During the EB-3 Green Card Process",
+    excerpt:
+      "Learn when changing jobs during the EB-3 green card process may be possible and what healthcare workers should know before moving.",
+    readTime: "3 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "EB-3 Visa for Nurses from India",
+    excerpt:
+      "Learn how EB-3 visa sponsorship works for Indian nurses, including eligibility, the India backlog, and Flint's U.S.-based process.",
     readTime: "5 min read",
   },
   {
-    date: "July 9, 2026",
-    category: "Licensing",
-    title: "NCLEX prep guide for foreign-trained nurses",
-    excerpt:
-      "A step-by-step breakdown of how to prepare for the NCLEX exam, from study resources to test-day tips.",
-    author: "Michael",
-    readTime: "7 min read",
-  },
-  {
-    date: "July 2, 2026",
+    date: "July 17, 2026",
     category: "Immigration",
-    title: "Understanding visa retrogression and priority dates",
+    title: "EB-3 Visa for Nurses from the Philippines",
     excerpt:
-      "What visa retrogression means for healthcare workers and how to navigate long wait times effectively.",
-    author: "Priya",
-    readTime: "4 min read",
-  },
-  {
-    date: "June 26, 2026",
-    category: "Careers",
-    title: "Building your nursing career after immigration",
-    excerpt:
-      "Practical advice on career advancement, continuing education, and professional networking for immigrant nurses.",
-    author: "David",
-    readTime: "6 min read",
-  },
-  {
-    date: "June 19, 2026",
-    category: "Licensing",
-    title: "Credential evaluation: what nurses need to know",
-    excerpt:
-      "How to get your international nursing credentials evaluated and recognized for U.S. licensure requirements.",
-    author: "Emily",
-    readTime: "4 min read",
-  },
-  {
-    date: "June 12, 2026",
-    category: "Immigration",
-    title: "What is Schedule A and who qualifies?",
-    excerpt:
-      "Schedule A can skip labor certification for nurses. Here’s who qualifies and how sponsorship usually works.",
-    author: "Jonathan",
-    readTime: "4 min read",
-  },
-  {
-    date: "June 5, 2026",
-    category: "Careers",
-    title: "Choosing the right hospital for your career",
-    excerpt:
-      "How to evaluate facility partners by specialty, location, support, and long-term growth — not just salary.",
-    author: "Sarah",
+      "Learn how EB-3 visa sponsorship works for Filipino nurses, including eligibility, licensing, timelines, and Flint's U.S.-based process.",
     readTime: "5 min read",
   },
   {
-    date: "May 29, 2026",
-    category: "Licensing",
-    title: "CGFNS and credential evaluation explained",
+    date: "July 17, 2026",
+    category: "Careers",
+    title: "Nursing Agency for EB-3 Visa: What Nurses Should Know",
     excerpt:
-      "A clear guide to credential evaluation for internationally educated nurses, including common delays to avoid.",
-    author: "Michael",
+      "Compare nursing agencies that offer sponsorship in 2026, how EB-3 support works, and what nurses should check before choosing a path.",
     readTime: "4 min read",
   },
   {
-    date: "May 22, 2026",
+    date: "July 17, 2026",
+    category: "Careers",
+    title: "RN and CNA Agencies in the USA",
+    excerpt:
+      "Compare RN and CNA job placement agencies in 2026, including contract roles, direct hire options, and sponsorship support.",
+    readTime: "4 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Careers",
+    title: "Nurse Agencies vs Staffing Companies",
+    excerpt:
+      "A simple comparison of nurse agencies vs. staffing companies, and how Flint offers a more structured path to stable, long-term roles.",
+    readTime: "3 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Careers",
+    title: "Nursing Agencies That Offer Sponsorship in the USA",
+    excerpt:
+      "An overview of U.S. nursing agencies that offer sponsorship, and why direct hire opportunities with Flint may be a better fit.",
+    readTime: "5 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Careers",
+    title: "Direct Hire Nursing Jobs in the USA for Foreign Nurses",
+    excerpt:
+      "Find direct hire nursing jobs in the USA in 2026, including employer-sponsored roles, no-fee support, and relocation help.",
+    readTime: "4 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Careers",
+    title: "US Nursing Jobs for Foreign Nurses: Direct Hire Opportunities",
+    excerpt:
+      "Find U.S. nursing jobs for foreign nurses in 2026, including where to apply, employer-sponsored options, and how to check your fit.",
+    readTime: "4 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "How to Apply for Nurse Green Card Sponsorship (EB-3)",
+    excerpt:
+      "Learn how to apply for nurse green card sponsorship in 2026, from eligibility and employer matching to EB-3 support and next steps.",
+    readTime: "3 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "EB-3 Visa Timeline for Nurses (2026)",
+    excerpt:
+      "Learn the EB-3 timeline for nurses in 2026, including Schedule A steps, processing delays, and work authorization.",
+    readTime: "5 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "Can Healthcare Workers on TPS, DACA, or Asylum Get EB-3 Sponsorship?",
+    excerpt:
+      "Learn how EB-3 sponsorship may work for TPS, DACA, or asylum healthcare workers in the U.S., including risks and next steps.",
+    readTime: "5 min read",
+  },
+  {
+    date: "July 17, 2026",
     category: "Relocation",
-    title: "First 90 days in the US as a nurse",
+    title: "Relocation for Nurse Green Card Sponsorship: $3,000 Support",
     excerpt:
-      "Practical tips for settling in — banking, housing, commuting, and building community after you arrive.",
-    author: "Priya",
-    readTime: "5 min read",
+      "Learn how nurse green card sponsorship relocation works in 2026, including EB-3 job moves, $3,000 support, and costs.",
+    readTime: "2 min read",
   },
   {
-    date: "May 15, 2026",
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "How Green Card Sponsorship for Nurses Actually Works",
+    excerpt:
+      "Learn how green card sponsorship for nurses works in 2026, including EB-3 jobs, no-cost support, and relocation help.",
+    readTime: "4 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "Nurse Green Card: Do You Qualify If You're Already Working in the U.S.?",
+    excerpt:
+      "Already working in the U.S. as a nurse? Learn who may qualify for green card sponsorship and how EB-3 works.",
+    readTime: "4 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "Why EB-3 Is One of the Best Green Card Pathways for Nurses",
+    excerpt:
+      "Learn why EB-3 for nurses is a reliable green card pathway in 2026, including I-140 approval data and Schedule A benefits.",
+    readTime: "1 min read",
+  },
+  {
+    date: "July 17, 2026",
     category: "Institutional",
-    title: "How Flint matches nurses with facilities",
+    title: "Flint's Free Nurse Green Card Sponsorship Program Explained",
     excerpt:
-      "Inside our matching process: licensing readiness, specialty fit, location preferences, and facility needs.",
-    author: "David",
+      "Learn how nurse green card sponsorship works in 2026, including EB-3 steps, free support, and relocation help.",
+    readTime: "4 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "Do You Qualify for Nurse Green Card Sponsorship in 2026?",
+    excerpt:
+      "See if nurse green card sponsorship is right for you in 2026, including eligibility, EB-3 safety, and work authorization.",
+    readTime: "2 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "Green Card for Nurses: Step-by-Step Process in 2026",
+    excerpt:
+      "Learn how to get a green card for nurses in 2026, from eligibility and job sponsorship to EB-3 steps and relocation.",
     readTime: "3 min read",
   },
   {
-    date: "May 8, 2026",
-    category: "Immigration",
-    title: "PERM, I-140, and adjustment of status",
-    excerpt:
-      "A plain-language walkthrough of the main immigration stages in employer-sponsored green card cases.",
-    author: "Emily",
-    readTime: "6 min read",
-  },
-  {
-    date: "May 1, 2026",
-    category: "Careers",
-    title: "Med-Surg, ICU, or L&D: finding your specialty",
-    excerpt:
-      "How specialty choice affects placement options, sponsorship demand, and your day-to-day work life.",
-    author: "Jonathan",
-    readTime: "4 min read",
-  },
-  {
-    date: "April 24, 2026",
-    category: "Licensing",
-    title: "English proficiency tests for nurse licensing",
-    excerpt:
-      "TOEFL, IELTS, and OET — which tests states accept, score targets, and how to prepare efficiently.",
-    author: "Sarah",
-    readTime: "4 min read",
-  },
-  {
-    date: "April 17, 2026",
-    category: "Relocation",
-    title: "Family sponsorship and dependent visas",
-    excerpt:
-      "What to know if your spouse or children will join you, including timing, documents, and school planning.",
-    author: "Michael",
-    readTime: "5 min read",
-  },
-  {
-    date: "April 10, 2026",
+    date: "July 17, 2026",
     category: "Institutional",
-    title: "Questions to ask before signing an offer",
-    excerpt:
-      "Compensation, shift schedules, housing support, and immigration timelines — the checklist before you accept.",
-    author: "Priya",
-    readTime: "3 min read",
-  },
-  {
-    date: "April 3, 2026",
-    category: "Immigration",
-    title: "Priority dates and visa bulletin basics",
-    excerpt:
-      "How the visa bulletin works for EB-3 nurses and what a current or retrogressed priority date means.",
-    author: "David",
-    readTime: "5 min read",
-  },
-  {
-    date: "March 27, 2026",
-    category: "Careers",
-    title: "Building a strong nursing resume for the US",
-    excerpt:
-      "Highlight clinical experience, licenses, and credentials in a way US hiring managers expect to see.",
-    author: "Emily",
-    readTime: "3 min read",
-  },
-  {
-    date: "March 20, 2026",
-    category: "Licensing",
-    title: "State board of nursing: what varies by state",
-    excerpt:
-      "Licensure isn’t one-size-fits-all. Key differences across compact and non-compact states for new arrivals.",
-    author: "Jonathan",
+    title: "Hospitals That Sponsor Green Card for Nurses in 2026",
+    excerpt: "Hospitals and jobs from Flint that offer green card sponsorships.",
     readTime: "4 min read",
   },
   {
-    date: "March 13, 2026",
-    category: "Relocation",
-    title: "Housing options for relocating nurses",
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "What Is the EB-3 Visa for Nurses?",
     excerpt:
-      "Temporary housing, roommate setups, and long-term leases — what facilities often help with first.",
-    author: "Sarah",
-    readTime: "3 min read",
+      "Learn how the EB-3 visa for nurses works in 2026, including timelines, sponsorship steps, and safety concerns.",
+    readTime: "4 min read",
   },
   {
-    date: "March 6, 2026",
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "Complete Guide to Nurse Green Card Sponsorship via EB-3",
+    excerpt:
+      "Learn how EB-3 nurse sponsorship works, who qualifies, and how to secure long-term residency through employer-based opportunities.",
+    readTime: "5 min read",
+  },
+  {
+    date: "July 17, 2026",
+    category: "Immigration",
+    title: "USCIS EB-3 Processing Times for Healthcare Workers",
+    excerpt: "What to know and what to expect based on your role.",
+    readTime: "10 min read",
+  },
+  {
+    date: "July 17, 2026",
     category: "Institutional",
-    title: "What facilities look for in sponsored hires",
-    excerpt:
-      "Clinical readiness, communication, retention signals, and how to stand out in a competitive pool.",
-    author: "Michael",
-    readTime: "4 min read",
-  },
-  {
-    date: "February 27, 2026",
-    category: "Immigration",
-    title: "Avoiding common green card application mistakes",
-    excerpt:
-      "Document gaps, inconsistent dates, and incomplete forms — the issues that slow cases down most often.",
-    author: "Priya",
+    title: "How Finding Visa Sponsorship with Flint Works",
+    excerpt: "Unsure about what Flint does or who it's for? This in-depth guide is for you.",
     readTime: "5 min read",
   },
   {
-    date: "February 20, 2026",
-    category: "Careers",
-    title: "Night shifts, weekends, and US nurse schedules",
-    excerpt:
-      "How US hospital scheduling typically works and how to set expectations before your first placement.",
-    author: "David",
-    readTime: "3 min read",
-  },
-  {
-    date: "February 13, 2026",
-    category: "Relocation",
-    title: "Taxes, SSN, and banking after you arrive",
-    excerpt:
-      "A practical starter guide to getting set up financially once you begin working in the United States.",
-    author: "Emily",
-    readTime: "4 min read",
+    date: "May 26, 2026",
+    category: "Immigration",
+    title: "Green Card Sponsorship for Healthcare Workers: How It Works",
+    excerpt: "A clear, updated guide about how nurse sponsorship in the USA works.",
+    readTime: "10 min read",
   },
 ];
 
 export const ALL_POSTS: BlogPost[] = POST_SEED.map((post, i) => ({
   ...post,
-  image: IMAGES[i % IMAGES.length],
+  // Rotate the image order per page so pages don't render the same
+  // thumbnail-to-position mapping (POSTS_PER_PAGE === IMAGES.length).
+  image: IMAGES[(i + Math.floor(i / IMAGES.length)) % IMAGES.length],
+  author: AUTHORS[i % AUTHORS.length],
 }));
 
 export const POSTS_PER_PAGE = 6;
