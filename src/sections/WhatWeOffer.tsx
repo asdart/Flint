@@ -53,7 +53,7 @@ function Flower({ className, size }: { className?: string; size: number }) {
 
 export default function WhatWeOffer() {
   return (
-    <section className="w-full px-4 pt-4">
+    <section className="w-full px-4 pt-4 pb-4">
       <div className="relative h-[1004px] w-full overflow-clip rounded-[24px] bg-secondary">
         <Flower className="left-[-311px] top-[-261px]" size={522} />
         <Flower className="left-[900px] top-[521px]" size={747} />

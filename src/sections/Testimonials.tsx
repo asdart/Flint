@@ -4,6 +4,7 @@ import {
   motion,
   useMotionValue,
   useReducedMotion,
+  useTransform,
   type PanInfo,
 } from "framer-motion";
 
@@ -14,72 +15,114 @@ type Testimonial = {
   quote: string;
 };
 
+const QUOTE =
+  "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.";
+
 const TESTIMONIALS: Testimonial[] = [
-  {
-    name: "Brandon Terry",
-    location: "Minesota",
-    photo: "/assets/testimonial-photo-2.png",
-    quote:
-      "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.",
-  },
-  {
-    name: "Brandon Terry",
-    location: "Minesota",
-    photo: "/assets/testimonial-photo-1.png",
-    quote:
-      "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.",
-  },
-  {
-    name: "Brandon Terry",
-    location: "Minesota",
-    photo: "/assets/testimonial-photo-3.png",
-    quote:
-      "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.",
-  },
-  {
-    name: "Chrismene jones",
-    location: "California",
-    photo: "/assets/testimonial-photo-3.png",
-    quote:
-      "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.",
-  },
-  {
-    name: "Chrismene jones",
-    location: "California",
-    photo: "/assets/testimonial-photo-3.png",
-    quote:
-      "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.",
-  },
+  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-2.png", quote: QUOTE },
+  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-1.png", quote: QUOTE },
+  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-3.png", quote: QUOTE },
+  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-3.png", quote: QUOTE },
+  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-1.png", quote: QUOTE },
+  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-2.png", quote: QUOTE },
+  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-3.png", quote: QUOTE },
 ];
+
+// Native card canvas — the Card component's internal layout (photo, quote
+// box, name/flag) is all positioned in these pixels; everything below scales
+// that canvas down with a CSS transform rather than resizing it.
+const CARD_W = 396;
+const CARD_HALF = CARD_W / 2;
+
+// Every card is 20% smaller than the original design; the centred card stays
+// proportionally bigger than the rest, just scaled down by the same 20%.
+const BASE_SCALE = 0.8;
+const CENTER_SCALE = BASE_SCALE * 1.1;
+
+// Gap is in visual (post-scale) pixels, and identical everywhere — including
+// next to the bigger center card, even though it's wider than its neighbors.
+const GAP = 24;
+
+// The slot sitting at x = 0 — always the middle index since TESTIMONIALS.length is odd.
+const CENTER_SLOT = (TESTIMONIALS.length - 1) / 2;
 
 /**
- * Arc slots from Figma 5543:1034 — card-center offsets from track center.
- * Near cards sit in 538px wrappers at top:5; far cards in 578px wrappers at top:74.
+ * Visual center offset for the slot `steps` positions away from the center.
+ * The center card is wider than the rest, so the first step out accounts for
+ * its half-width instead of a side card's; every step after that is between
+ * two same-sized side cards.
  */
-const SLOTS = [
-  { x: -874, y: 119, rotate: -16, dimmed: true, z: 1 },
-  { x: -440, y: 30, rotate: -8, dimmed: false, z: 2 },
-  { x: 0, y: 0, rotate: 0, dimmed: false, z: 3 },
-  { x: 448, y: 30, rotate: 8, dimmed: false, z: 2 },
-  { x: 868, y: 119, rotate: 16, dimmed: true, z: 1 },
-];
+function slotOffset(steps: number) {
+  if (steps === 0) return 0;
+  const baseW = CARD_W * BASE_SCALE;
+  let x = (CARD_W * CENTER_SCALE) / 2 + GAP + baseW / 2;
+  for (let s = 2; s <= Math.abs(steps); s++) x += baseW + GAP;
+  return Math.sign(steps) * x;
+}
 
+/**
+ * A flat row with the active card centred. Slot count tracks the number of
+ * testimonials so the outermost pair always sits fully outside the container,
+ * which is where the wrap-around jump happens — off screen, so it never shows.
+ */
+const SLOTS = TESTIMONIALS.map((_, i) => slotOffset(i - CENTER_SLOT));
+
+/* The quote is bottom-anchored and grows upward on hover: 104px shows three
+   lines fading out, 160px shows all five. Both end 110px above the card's
+   bottom edge, and the scrim over the photo deepens as it opens. */
+const QUOTE_COLLAPSED = 104;
+const QUOTE_EXPANDED = 160;
+const QUOTE_BOTTOM = 110;
+const SCRIM_REST = 0.6;
+const SCRIM_HOVER = 0.9;
+
+const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const EASE_IN_OUT: [number, number, number, number] = [0.42, 0, 0.58, 1];
 const DURATION = 0.45;
 const BOUNCE_TRANSITION = {
   type: "spring" as const,
-  duration: 0.9,
-  bounce: 0.28,
+  duration: 1.4,
+  bounce: 0.22,
 };
-const CARD_W = 396;
-const CARD_HALF = CARD_W / 2;
 const DRAG_THRESHOLD = 80;
 const VELOCITY_THRESHOLD = 500;
 const DRAG_GAIN = 0.55;
+const AUTOPLAY_DELAY = 5000;
 
-function Card({ testimonial }: { testimonial: Testimonial }) {
+// Pagination: the active dot stretches into a track that fills over the
+// autoplay interval, then collapses back to a dot as the next one takes over.
+const DOT_SIZE = 7;
+const BAR_WIDTH = 57;
+
+function Card({ testimonial, dragging }: { testimonial: Testimonial; dragging: boolean }) {
+  const reduceMotion = useReducedMotion();
+  const [hovered, setHovered] = useState(false);
+  const open = hovered && !dragging;
+
+  const progress = useMotionValue(0);
+  const height = useTransform(progress, [0, 1], [QUOTE_COLLAPSED, QUOTE_EXPANDED]);
+  const scrim = useTransform(progress, [0, 1], [SCRIM_REST, SCRIM_HOVER]);
+  // At rest the quote fades to nothing over its own height; open, the fade is
+  // gone. Interpolating the gradient's end alpha lands on both exactly.
+  const fade = useTransform(
+    progress,
+    (p) => `linear-gradient(to bottom, rgb(0 0 0 / 1) 0%, rgb(0 0 0 / ${p}) 100%)`,
+  );
+
+  useEffect(() => {
+    animate(
+      progress,
+      open ? 1 : 0,
+      reduceMotion ? { duration: 0 } : { duration: 0.45, ease: EASE_OUT },
+    );
+  }, [open, progress, reduceMotion]);
+
   return (
-    <div className="group relative h-[488px] w-[396px] overflow-clip rounded-[32px] bg-white">
+    <div
+      className="relative h-[488px] w-[396px] overflow-clip rounded-[32px] bg-white"
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+    >
       <div className="pointer-events-none absolute left-1/2 top-[-71px] h-[798px] w-[612px] -translate-x-1/2">
         <img
           src={testimonial.photo}
@@ -88,22 +131,32 @@ function Card({ testimonial }: { testimonial: Testimonial }) {
           className="absolute inset-0 size-full max-w-none select-none object-cover"
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[61.5%] to-black transition-opacity duration-500 group-hover:opacity-0 [[data-dragging]_&]:opacity-100" />
-      <div className="invisible absolute inset-0 bg-white/90 opacity-0 backdrop-blur-[8px] transition-[opacity,visibility] duration-500 group-hover:visible group-hover:opacity-100 [[data-dragging]_&]:invisible [[data-dragging]_&]:opacity-0" />
-      <div className="absolute left-[74px] top-[141px] flex w-[248px] flex-col items-center gap-8 opacity-0 transition-opacity duration-500 group-hover:opacity-100 [[data-dragging]_&]:opacity-0">
-        <img src="/assets/quote.svg" alt="" className="h-8 w-10" />
-        <p className="w-full text-center font-serif text-[20px] leading-7 tracking-[-0.4px] text-ink">
-          {testimonial.quote}
+
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-[61.475%] to-black" />
+      <motion.div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent to-black"
+        style={{ opacity: scrim }}
+      />
+
+      {/* The gradient is sized by this box, so it always fades to nothing
+          exactly at the clip edge; overflow-hidden keeps the lines below it
+          from reappearing where the mask tiles. */}
+      <motion.div
+        className="pointer-events-none absolute left-8 w-[338px] overflow-hidden"
+        style={{ bottom: QUOTE_BOTTOM, height, maskImage: fade, WebkitMaskImage: fade }}
+      >
+        <p className="absolute inset-x-0 top-0 font-serif text-[24px] leading-8 tracking-[-0.48px] text-white">
+          &ldquo;{testimonial.quote}&rdquo;
         </p>
-        <img src="/assets/quote.svg" alt="" className="h-8 w-10 rotate-180" />
-      </div>
+      </motion.div>
+
       <img
         src="/assets/country-flag.svg"
         alt=""
         draggable={false}
-        className="pointer-events-none absolute right-8 bottom-8 size-8 select-none transition-opacity duration-500 group-hover:opacity-0 [[data-dragging]_&]:opacity-100"
+        className="pointer-events-none absolute bottom-8 right-8 size-8 select-none"
       />
-      <div className="absolute bottom-8 left-8 flex flex-col gap-1 transition-opacity duration-500 group-hover:opacity-0 [[data-dragging]_&]:opacity-100">
+      <div className="pointer-events-none absolute bottom-8 left-8 flex flex-col gap-1">
         <p className="text-[16px] font-medium leading-6 text-white">{testimonial.name}</p>
         <p className="text-[16px] leading-6 text-white opacity-60">{testimonial.location}</p>
       </div>
@@ -118,6 +171,7 @@ function slotForIndex(index: number, offset: number, count: number) {
 export default function Testimonials() {
   const [offset, setOffset] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const [paused, setPaused] = useState(false);
   const reduceMotion = useReducedMotion();
   const n = TESTIMONIALS.length;
   const prevSlots = useRef(TESTIMONIALS.map((_, i) => slotForIndex(i, 0, n)));
@@ -129,6 +183,34 @@ export default function Testimonials() {
 
   const goPrev = () => setOffset((o) => o - 1);
   const goNext = () => setOffset((o) => o + 1);
+
+  // Centres the given testimonial, taking whichever direction round the loop
+  // is shorter so the row never sweeps the long way.
+  const goTo = (index: number) =>
+    setOffset((o) => {
+      const delta = (((index - CENTER_SLOT - o) % n) + n) % n;
+      return o + (delta > n / 2 ? delta - n : delta);
+    });
+
+  // The pagination bar's fill *is* the autoplay clock. It advances the
+  // carousel on completion and holds its position while paused, so hovering
+  // freezes the countdown mid-way and resumes from there rather than restarting.
+  const barProgress = useMotionValue(0);
+  const fillWidth = useTransform(barProgress, [0, 1], [0, BAR_WIDTH]);
+
+  useEffect(() => {
+    barProgress.set(reduceMotion ? 1 : 0);
+  }, [offset, reduceMotion, barProgress]);
+
+  useEffect(() => {
+    if (reduceMotion || paused || dragging) return;
+    const controls = animate(barProgress, 1, {
+      duration: (AUTOPLAY_DELAY * (1 - barProgress.get())) / 1000,
+      ease: "linear",
+      onComplete: goNext,
+    });
+    return () => controls.stop();
+  }, [offset, paused, dragging, reduceMotion, barProgress]);
 
   const onPanStart = () => setDragging(true);
 
@@ -166,75 +248,78 @@ export default function Testimonials() {
         </header>
 
         <motion.div
-          className="absolute top-[412px] h-[512px] w-[1384px] cursor-grab touch-pan-y select-none active:cursor-grabbing"
-          style={{ left: "50%", marginLeft: -692, x: dragX }}
-          {...(dragging ? { "data-dragging": true } : {})}
+          className="absolute left-0 top-[412px] h-[488px] w-full cursor-grab touch-pan-y select-none active:cursor-grabbing"
+          style={{ x: dragX }}
           onPanStart={onPanStart}
           onPan={onPan}
           onPanEnd={onPanEnd}
+          onPointerEnter={() => setPaused(true)}
+          onPointerLeave={() => setPaused(false)}
         >
           {TESTIMONIALS.map((testimonial, i) => {
             const slotIndex = slotForIndex(i, offset, n);
-            const slot = SLOTS[slotIndex];
-            const wrap = Math.abs(prevSlots.current[i] - slotIndex) > 1;
-            const transition =
-              reduceMotion || wrap
-                ? { type: "tween" as const, duration: 0 }
-                : BOUNCE_TRANSITION;
+            const isCenter = slotIndex === CENTER_SLOT;
+            // A card that changed slot by more than half the row took the long
+            // way round, i.e. it wrapped — jump it instead of flying it across.
+            // Smaller multi-slot moves (from a pagination click) still animate.
+            const wrap = Math.abs(slotIndex - prevSlots.current[i]) > n / 2;
+            const snap = reduceMotion || wrap;
+            const positionTransition = snap ? { type: "tween" as const, duration: 0 } : BOUNCE_TRANSITION;
+            // Opacity settles rather than bounces — springing it would dip below
+            // 60% or overshoot past 100% before landing.
+            const opacityTransition = snap ? { duration: 0 } : { duration: 0.5, ease: EASE_OUT };
 
             return (
               <motion.div
                 key={i}
-                className="absolute top-0 origin-center"
-                style={{ left: "50%", zIndex: slot.z }}
+                className="absolute top-0"
+                style={{ left: "50%", zIndex: isCenter ? 1 : 0 }}
                 initial={false}
                 animate={{
-                  x: slot.x - CARD_HALF,
-                  y: slot.y,
-                  rotate: slot.rotate,
-                  opacity: slot.dimmed ? 0.6 : 1,
+                  x: SLOTS[slotIndex] - CARD_HALF,
+                  scale: isCenter ? CENTER_SCALE : BASE_SCALE,
+                  opacity: isCenter ? 1 : 0.6,
                 }}
-                transition={transition}
+                transition={{ x: positionTransition, scale: positionTransition, opacity: opacityTransition }}
               >
-                <Card testimonial={testimonial} />
+                <Card testimonial={testimonial} dragging={dragging} />
               </motion.div>
             );
           })}
         </motion.div>
 
-        <div className="absolute bottom-[96px] left-1/2 flex -translate-x-1/2 items-center gap-3">
-          <span data-reveal className="inline-flex">
-            <button
-              type="button"
-              aria-label="Previous testimonial"
-              onClick={goPrev}
-              className="flex items-center justify-center rounded-[24px] bg-white p-3 transition-transform hover:scale-105 active:scale-95"
-            >
-              <span className="relative size-5 overflow-clip">
-                <img
-                  src="/assets/arrow-left.svg"
-                  alt=""
-                  className="absolute left-1/2 top-1/2 h-3 w-1.5 -translate-x-1/2 -translate-y-1/2 rotate-180"
-                />
-              </span>
-            </button>
-          </span>
-          <span data-reveal className="inline-flex">
-            <button
-              type="button"
-              aria-label="Next testimonial"
-              onClick={goNext}
-              className="flex items-center justify-center rounded-[24px] bg-white p-3 transition-transform hover:scale-105 active:scale-95"
-            >
-              <span className="relative size-5 overflow-clip">
-                <img
-                  src="/assets/arrow-right.svg"
-                  alt=""
-                  className="absolute left-1/2 top-1/2 h-3 w-1.5 -translate-x-1/2 -translate-y-1/2"
-                />
-              </span>
-            </button>
-          </span>
+        <div
+          data-reveal
+          className="absolute bottom-[168px] left-1/2 z-10 flex -translate-x-1/2 items-center gap-[4.5px]"
+        >
+          {TESTIMONIALS.map((_, i) => {
+            const isActive = slotForIndex(i, offset, n) === CENTER_SLOT;
+
+            return (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Go to testimonial ${i + 1}`}
+                aria-current={isActive ? "true" : undefined}
+                className="flex items-center py-2"
+              >
+                <motion.span
+                  className="relative block overflow-hidden rounded-full bg-[#ebebe5]"
+                  style={{ height: DOT_SIZE }}
+                  animate={{ width: isActive ? BAR_WIDTH : DOT_SIZE }}
+                  transition={reduceMotion ? { duration: 0 } : { duration: 0.45, ease: EASE_OUT }}
+                >
+                  {isActive && (
+                    <motion.span
+                      className="absolute inset-y-0 left-0 block rounded-full bg-[#444444]"
+                      style={{ width: fillWidth }}
+                    />
+                  )}
+                </motion.span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>

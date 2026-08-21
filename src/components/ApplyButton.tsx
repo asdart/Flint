@@ -6,6 +6,8 @@ const GRADIENT =
 
 type ApplyButtonProps = {
   variant?: "gradient" | "white";
+  /** "sm" is the compact nav size, "lg" matches the gradient button's padding. */
+  size?: "sm" | "lg";
   children?: React.ReactNode;
   /** When false, skips the staggered reveal wrapper. */
   reveal?: boolean;
@@ -14,6 +16,7 @@ type ApplyButtonProps = {
 
 export default function ApplyButton({
   variant = "gradient",
+  size = "sm",
   children = "Apply now",
   reveal = true,
   type = "button",
@@ -22,7 +25,9 @@ export default function ApplyButton({
     variant === "white" ? (
       <button
         type={type}
-        className="relative flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-[14px] py-[6px] text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-[background-color,transform] duration-300 ease-in-out hover:bg-[#f5f5f5] active:scale-[0.98]"
+        className={`relative flex items-center justify-center rounded-[24px] border border-stone-50 bg-white text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-[background-color,transform] duration-300 ease-in-out hover:bg-[#f5f5f5] active:scale-[0.98] ${
+          size === "lg" ? "px-5 py-2.5" : "px-[14px] py-[6px]"
+        }`}
       >
         {children}
       </button>

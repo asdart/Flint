@@ -1,3 +1,17 @@
+import { useLayoutEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+
+// The front notification is fully detailed (avatar, name, role, icon). The
+// ones behind it are just decreasingly-sized glass slivers hinting at a
+// stack of more notifications underneath — mirroring the Figma design, where
+// only a thin sliver of each card behind is exposed (too thin to legibly
+// show any of its own content).
+const BACK_LAYERS = [
+  { scale: 0.944, height: 14, radius: 20, blur: 9 },
+  { scale: 0.917, height: 11, radius: 18, blur: 8 },
+  { scale: 0.861, height: 8, radius: 16, blur: 7 },
+];
+
 function ApplicationCard() {
   return (
     <div className="relative flex h-[464px] w-[360px] shrink-0 flex-col justify-end overflow-clip rounded-[32px] p-8">
@@ -7,40 +21,42 @@ function ApplicationCard() {
         className="absolute inset-0 size-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-      <div className="relative mb-4 flex flex-col">
-        {[0.4, 0.6, 0.8, 1].map((opacity, i) => (
-          <div
-            key={opacity}
-            className="relative flex items-center gap-3 rounded-[24px] border border-white/20 px-4 py-3.5"
-            style={{
-              marginTop: i === 0 ? 0 : -52,
-              opacity,
-              zIndex: i + 1,
-              background:
-                i === 3 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.16)",
-              backdropFilter: "blur(10px)",
-            }}
-          >
-            <div className="size-10 overflow-clip rounded-full bg-[#fee0db]">
-              <img
-                src="/assets/home/how-avatar.png"
-                alt=""
-                className="size-full object-cover object-bottom"
-              />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p
-                className={`truncate text-[14px] leading-5 ${i === 3 ? "text-ink" : "text-white"}`}
-              >
-                Jonathan Johnson
-              </p>
-              <p
-                className={`truncate text-[14px] leading-5 opacity-60 ${i === 3 ? "text-ink" : "text-white"}`}
-              >
-                Applications sent
-              </p>
-            </div>
+      <div className="relative mb-4 flex flex-col items-center">
+        <div
+          className="relative z-10 flex w-[296px] shrink-0 items-center gap-3 rounded-[24px] border border-white/20 px-4 py-3.5"
+          style={{ background: "rgba(255,255,255,0.4)", backdropFilter: "blur(10px)" }}
+        >
+          <div className="size-10 shrink-0 overflow-clip rounded-full bg-[#fee0db]">
+            <img
+              src="/assets/home/how-avatar-andrew.png"
+              alt=""
+              className="size-full object-cover object-top"
+            />
           </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[14px] leading-5 text-white">Andrew</p>
+            <p className="truncate text-[14px] leading-5 text-white opacity-60">
+              Applications sent
+            </p>
+          </div>
+          <div className="flex shrink-0 items-center justify-center rounded-full bg-black/10 p-3">
+            <img src="/assets/home/how-send-icon.svg" alt="" className="size-[13px]" />
+          </div>
+        </div>
+
+        {BACK_LAYERS.map((layer, i) => (
+          <div
+            key={i}
+            className="shrink-0 border border-t-0 border-white/20"
+            style={{
+              width: 296 * layer.scale,
+              height: layer.height,
+              borderRadius: `0 0 ${layer.radius}px ${layer.radius}px`,
+              zIndex: BACK_LAYERS.length - i,
+              background: "rgba(255,255,255,0.16)",
+              backdropFilter: `blur(${layer.blur}px)`,
+            }}
+          />
         ))}
       </div>
       <div className="relative flex flex-col gap-2 text-white">
@@ -133,7 +149,55 @@ function RelocateCard() {
   );
 }
 
+// Each card's own native width as coded (used to compute the exact scale
+// factor that lands on SMALL_SIZE/LARGE_SIZE below, regardless of the card's
+// own intrinsic size).
+const STEPS = [
+  { Card: ApplicationCard, nativeWidth: 360 },
+  { Card: InterviewCard, nativeWidth: 398 },
+  { Card: RelocateCard, nativeWidth: 361 },
+];
+
+const SMALL_SIZE = { width: 360, height: 464 };
+const LARGE_SIZE = { width: 398, height: 512 };
+
+function scaleFor(nativeWidth: number, isActive: boolean) {
+  const target = isActive ? LARGE_SIZE : SMALL_SIZE;
+  return target.width / nativeWidth;
+}
+
+// How long each step stays active (and the progress bar takes to fill) in seconds.
+const STEP_DURATION = 5;
+const DOT_SIZE = 12;
+const BAR_WIDTH = 52;
+
 export default function HowItWorks() {
+  const shouldReduceMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [trackX, setTrackX] = useState(0);
+
+  // Keep the active card centered in the viewport, re-measuring on resize so
+  // it works regardless of the (differing) card widths.
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    const card = cardRefs.current[active];
+    if (!viewport || !card) return;
+
+    const center = () => {
+      const viewportCenter = viewport.clientWidth / 2;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      setTrackX(viewportCenter - cardCenter);
+    };
+
+    center();
+    window.addEventListener("resize", center);
+    return () => window.removeEventListener("resize", center);
+  }, [active]);
+
+  const goTo = (index: number) => setActive(((index % STEPS.length) + STEPS.length) % STEPS.length);
+
   return (
     <section className="flex w-full flex-col items-center bg-white p-4">
       <div className="flex w-full max-w-[1200px] flex-col items-center gap-12 py-24">
@@ -147,18 +211,62 @@ export default function HowItWorks() {
           </p>
         </header>
 
-        <div data-reveal className="flex w-full items-center justify-center gap-8 overflow-x-auto pb-2">
-          <ApplicationCard />
-          <InterviewCard />
-          <RelocateCard />
+        <div ref={viewportRef} data-reveal className="w-full overflow-hidden">
+          <motion.div
+            className="flex items-center gap-8"
+            animate={{ x: trackX }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {STEPS.map(({ Card, nativeWidth }, i) => (
+              <motion.div
+                key={i}
+                ref={(el) => {
+                  cardRefs.current[i] = el;
+                }}
+                className="shrink-0"
+                animate={{ scale: scaleFor(nativeWidth, i === active) }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Card />
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
 
-        <div className="flex items-center gap-2" aria-hidden>
-          <span className="size-3 rounded-full bg-stone-100" />
-          <span className="relative h-3 w-[52px] rounded-full bg-stone-100">
-            <span className="absolute left-0 top-0 h-3 w-4 rounded-full bg-[#373839]" />
-          </span>
-          <span className="size-3 rounded-full bg-stone-100" />
+        <div className="flex items-center gap-2">
+          {STEPS.map((_, i) => {
+            const isActive = i === active;
+            return (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Go to step ${i + 1}`}
+                aria-current={isActive ? "step" : undefined}
+                className="flex items-center py-2"
+              >
+                <motion.span
+                  className="relative block h-3 overflow-hidden rounded-full bg-stone-100"
+                  animate={{ width: isActive ? BAR_WIDTH : DOT_SIZE }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {isActive &&
+                    (shouldReduceMotion ? (
+                      <span className="absolute inset-y-0 left-0 w-full rounded-full bg-[#373839]" />
+                    ) : (
+                      <motion.span
+                        key={active}
+                        className="absolute inset-y-0 left-0 block rounded-full bg-[#373839]"
+                        initial={{ width: 0 }}
+                        animate={{ width: BAR_WIDTH }}
+                        transition={{ duration: STEP_DURATION, ease: "linear" }}
+                        onAnimationComplete={() => setActive((a) => (a + 1) % STEPS.length)}
+                      />
+                    ))}
+                </motion.span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>
