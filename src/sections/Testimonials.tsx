@@ -7,6 +7,10 @@ import {
   useTransform,
   type PanInfo,
 } from "framer-motion";
+import CarouselPagination, {
+  CAROUSEL_AUTOPLAY_DELAY,
+  CAROUSEL_BAR_WIDTH,
+} from "../components/CarouselPagination";
 
 type Testimonial = {
   name: string;
@@ -87,12 +91,6 @@ const BOUNCE_TRANSITION = {
 const DRAG_THRESHOLD = 80;
 const VELOCITY_THRESHOLD = 500;
 const DRAG_GAIN = 0.55;
-const AUTOPLAY_DELAY = 5000;
-
-// Pagination: the active dot stretches into a track that fills over the
-// autoplay interval, then collapses back to a dot as the next one takes over.
-const DOT_SIZE = 7;
-const BAR_WIDTH = 57;
 
 function Card({ testimonial, dragging }: { testimonial: Testimonial; dragging: boolean }) {
   const reduceMotion = useReducedMotion();
@@ -196,7 +194,7 @@ export default function Testimonials() {
   // carousel on completion and holds its position while paused, so hovering
   // freezes the countdown mid-way and resumes from there rather than restarting.
   const barProgress = useMotionValue(0);
-  const fillWidth = useTransform(barProgress, [0, 1], [0, BAR_WIDTH]);
+  const fillWidth = useTransform(barProgress, [0, 1], [0, CAROUSEL_BAR_WIDTH]);
 
   useEffect(() => {
     barProgress.set(reduceMotion ? 1 : 0);
@@ -205,7 +203,7 @@ export default function Testimonials() {
   useEffect(() => {
     if (reduceMotion || paused || dragging) return;
     const controls = animate(barProgress, 1, {
-      duration: (AUTOPLAY_DELAY * (1 - barProgress.get())) / 1000,
+      duration: (CAROUSEL_AUTOPLAY_DELAY * (1 - barProgress.get())) / 1000,
       ease: "linear",
       onComplete: goNext,
     });
@@ -290,36 +288,16 @@ export default function Testimonials() {
 
         <div
           data-reveal
-          className="absolute bottom-[168px] left-1/2 z-10 flex -translate-x-1/2 items-center gap-[4.5px]"
+          className="absolute bottom-[168px] left-1/2 z-10 -translate-x-1/2"
         >
-          {TESTIMONIALS.map((_, i) => {
-            const isActive = slotForIndex(i, offset, n) === CENTER_SLOT;
-
-            return (
-              <button
-                key={i}
-                type="button"
-                onClick={() => goTo(i)}
-                aria-label={`Go to testimonial ${i + 1}`}
-                aria-current={isActive ? "true" : undefined}
-                className="flex items-center py-2"
-              >
-                <motion.span
-                  className="relative block overflow-hidden rounded-full bg-[#ebebe5]"
-                  style={{ height: DOT_SIZE }}
-                  animate={{ width: isActive ? BAR_WIDTH : DOT_SIZE }}
-                  transition={reduceMotion ? { duration: 0 } : { duration: 0.45, ease: EASE_OUT }}
-                >
-                  {isActive && (
-                    <motion.span
-                      className="absolute inset-y-0 left-0 block rounded-full bg-[#444444]"
-                      style={{ width: fillWidth }}
-                    />
-                  )}
-                </motion.span>
-              </button>
-            );
-          })}
+          <CarouselPagination
+            count={TESTIMONIALS.length}
+            isActive={(i) => slotForIndex(i, offset, n) === CENTER_SLOT}
+            onSelect={goTo}
+            fillWidth={fillWidth}
+            reduceMotion={reduceMotion}
+            ariaLabel={(i) => `Go to testimonial ${i + 1}`}
+          />
         </div>
       </div>
     </section>
