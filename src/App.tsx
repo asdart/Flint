@@ -19,7 +19,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="flex min-h-screen w-full flex-col items-center bg-white">
+      <div className="flex min-h-screen w-full min-w-0 flex-col items-center overflow-x-clip bg-white">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/candidates" element={<FacilitiesPage />} />

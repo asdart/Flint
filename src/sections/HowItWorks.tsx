@@ -334,18 +334,34 @@ const LARGE_SIZE = { width: 398, height: 512 };
 const CARD_GAP = 32;
 const CARD_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-function scaleFor(nativeWidth: number, isActive: boolean) {
-  const target = isActive ? LARGE_SIZE : SMALL_SIZE;
-  return target.width / nativeWidth;
+function layoutFor(viewportWidth: number) {
+  const fit = Math.min(1, Math.max(0.72, (viewportWidth - 24) / LARGE_SIZE.width));
+  return {
+    small: { width: SMALL_SIZE.width * fit, height: SMALL_SIZE.height * fit },
+    large: { width: LARGE_SIZE.width * fit, height: LARGE_SIZE.height * fit },
+    gap: CARD_GAP * (0.6 + 0.4 * fit),
+    fit,
+  };
 }
 
-function trackOffset(activeIndex: number, viewportWidth: number) {
+function scaleFor(nativeWidth: number, isActive: boolean, fit: number) {
+  const target = isActive ? LARGE_SIZE : SMALL_SIZE;
+  return (target.width * fit) / nativeWidth;
+}
+
+function trackOffset(
+  activeIndex: number,
+  viewportWidth: number,
+  smallWidth: number,
+  largeWidth: number,
+  gap: number,
+) {
   let x = 0;
   let activeCenter = 0;
   STEPS.forEach((_, i) => {
-    const width = i === activeIndex ? LARGE_SIZE.width : SMALL_SIZE.width;
+    const width = i === activeIndex ? largeWidth : smallWidth;
     if (i === activeIndex) activeCenter = x + width / 2;
-    x += width + CARD_GAP;
+    x += width + gap;
   });
   return viewportWidth / 2 - activeCenter;
 }
@@ -359,6 +375,7 @@ export default function HowItWorks() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { amount: 0.3 });
   const [trackX, setTrackX] = useState(0);
+  const [layout, setLayout] = useState(() => layoutFor(1200));
   const barProgress = useMotionValue(0);
   const fillWidth = useTransform(barProgress, [0, 1], [0, CAROUSEL_BAR_WIDTH]);
   const cardTransition = shouldReduceMotion
@@ -371,7 +388,19 @@ export default function HowItWorks() {
     const viewport = viewportRef.current;
     if (!viewport) return;
 
-    const center = () => setTrackX(trackOffset(active, viewport.clientWidth));
+    const center = () => {
+      const next = layoutFor(viewport.clientWidth);
+      setLayout(next);
+      setTrackX(
+        trackOffset(
+          active,
+          viewport.clientWidth,
+          next.small.width,
+          next.large.width,
+          next.gap,
+        ),
+      );
+    };
 
     center();
     window.addEventListener("resize", center);
@@ -399,12 +428,12 @@ export default function HowItWorks() {
       ref={sectionRef}
       className="flex w-full flex-col items-center overflow-x-clip bg-white p-4"
     >
-      <div className="flex w-full max-w-[1200px] flex-col items-center pt-24">
-        <header className="mb-12 flex w-[480px] flex-col gap-4 text-center">
-          <h2 data-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink">
+      <div className="flex w-full max-w-[1200px] flex-col items-center pt-12 md:pt-16 lg:pt-24">
+        <header className="mb-10 flex w-full max-w-[480px] flex-col gap-4 px-4 text-center md:mb-12">
+          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             How Flint works
           </h2>
-          <p data-reveal className="text-[18px] leading-7 text-brand opacity-80">
+          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
             Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
             Cards.
           </p>
@@ -414,19 +443,19 @@ export default function HowItWorks() {
       <div
         ref={viewportRef}
         data-reveal
-        className="flex h-[512px] w-full min-w-0 items-center"
+        className="flex h-[380px] w-full min-w-0 items-center overflow-hidden sm:h-[420px] md:h-[512px]"
         onPointerEnter={() => setPaused(true)}
         onPointerLeave={() => setPaused(false)}
       >
         <motion.div
           className="flex items-center"
-          style={{ gap: CARD_GAP }}
+          style={{ gap: layout.gap }}
           animate={{ x: trackX }}
           transition={cardTransition}
         >
           {STEPS.map(({ Card, nativeWidth, nativeHeight }, i) => {
             const isActive = i === active;
-            const target = isActive ? LARGE_SIZE : SMALL_SIZE;
+            const target = isActive ? layout.large : layout.small;
             return (
               <motion.div
                 key={i}
@@ -444,7 +473,7 @@ export default function HowItWorks() {
                     marginLeft: -nativeWidth / 2,
                     marginTop: -nativeHeight / 2,
                   }}
-                  animate={{ scale: scaleFor(nativeWidth, isActive) }}
+                  animate={{ scale: scaleFor(nativeWidth, isActive, layout.fit) }}
                   transition={cardTransition}
                 >
                   <Card />
@@ -455,7 +484,7 @@ export default function HowItWorks() {
         </motion.div>
       </div>
 
-      <div data-reveal className="mt-[34px] flex w-full max-w-[1200px] justify-center pb-24">
+      <div data-reveal className="mt-[34px] flex w-full max-w-[1200px] justify-center pb-12 md:pb-16 lg:pb-24">
         <CarouselPagination
           count={STEPS.length}
           active={active}

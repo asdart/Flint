@@ -19,7 +19,7 @@ export default function FacilityApply() {
   const [role, setRole] = useState("");
   return (
     <section className="w-full px-4 pb-4">
-      <div className="relative flex w-full flex-col items-center overflow-clip rounded-[24px] bg-tertiary py-24">
+      <div className="relative flex w-full flex-col items-center overflow-clip rounded-[24px] bg-tertiary px-4 py-12 md:py-16 lg:py-24">
         <div
           className="pointer-events-none absolute top-1/2 left-1/2 size-[1855px] -translate-x-1/2 -translate-y-1/2 overflow-hidden"
           style={{
@@ -38,14 +38,14 @@ export default function FacilityApply() {
         </div>
 
         <form
-          className="relative z-10 flex w-[710px] max-w-full flex-col gap-8 rounded-[24px] bg-white p-10"
+          className="relative z-10 flex w-full max-w-[710px] flex-col gap-8 rounded-[24px] bg-white p-6 md:p-10"
           onSubmit={(e) => e.preventDefault()}
         >
           <header className="flex flex-col gap-4 text-center">
-            <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink">
+            <h2 className="font-serif text-[28px] leading-9 tracking-[-0.56px] text-ink md:text-[32px] md:leading-10 md:tracking-[-0.64px]">
               See if your facility qualifies
             </h2>
-            <p className="text-[18px] leading-7 text-subtle opacity-80">
+            <p className="text-[16px] leading-6 text-subtle opacity-80 md:text-[18px] md:leading-7">
               Fill out the form below and a member of our team will reach out within one business
               day.
             </p>
@@ -57,7 +57,7 @@ export default function FacilityApply() {
               <input type="text" className={FIELD} placeholder="Director of nursing" />
             </label>
 
-            <div className="flex gap-5">
+            <div className="flex flex-col gap-6 sm:flex-row sm:gap-5">
               <label className="flex flex-1 flex-col gap-1">
                 <span className={LABEL}>First name</span>
                 <input type="text" className={FIELD} placeholder="Maria" />
@@ -68,7 +68,7 @@ export default function FacilityApply() {
               </label>
             </div>
 
-            <div className="flex gap-5">
+            <div className="flex flex-col gap-6 sm:flex-row sm:gap-5">
               <label className="flex flex-1 flex-col gap-1">
                 <span className={LABEL}>Email address</span>
                 <input type="email" className={FIELD} placeholder="maria@facility.com" />

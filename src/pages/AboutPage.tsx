@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
-import ApplyButton from "../components/ApplyButton";
 import DigitPopIn from "../components/DigitPopIn";
+import SiteNav from "../components/SiteNav";
 import { useStaggerReveal } from "../hooks/useStaggerReveal";
-import { NAV_LINKS } from "../nav";
 import Cta from "../sections/Cta";
 import Footer from "../sections/Footer";
 
@@ -49,30 +47,6 @@ const TEAM = [
   },
 ] as const;
 
-function AboutNav() {
-  return (
-    <div className="flex w-full shrink-0 items-center justify-between">
-      <Link to="/">
-        <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
-      </Link>
-      <nav className="flex items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.label}
-            to={link.to}
-            className={`whitespace-nowrap transition-colors hover:text-ink ${
-              link.label === "About" ? "text-ink" : ""
-            }`}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
-      <ApplyButton variant="white" reveal={false} />
-    </div>
-  );
-}
-
 function HeroPortrait({
   src,
   className,
@@ -84,7 +58,7 @@ function HeroPortrait({
 }) {
   return (
     <span
-      className={`relative inline-block h-[52px] w-[84px] shrink-0 overflow-clip rounded-[32px] ${className}`}
+      className={`relative inline-block h-8 w-[52px] shrink-0 overflow-clip rounded-[32px] md:h-[52px] md:w-[84px] ${className}`}
     >
       <span className="absolute left-[calc(50%-0.5px)] top-[calc(50%+17px)] h-[92px] w-[73px] -translate-x-1/2 -translate-y-1/2">
         {crop ? (
@@ -112,18 +86,18 @@ function AboutHero() {
   return (
     <section className="w-full px-4 pt-4">
       <div className="flex min-h-[616px] w-full flex-col overflow-clip rounded-[24px] bg-brand-light px-4 pt-4">
-        <AboutNav />
+        <SiteNav active="About" />
 
-        <div className="flex w-full flex-1 flex-col items-center justify-center pb-16">
+        <div className="flex w-full flex-1 flex-col items-center justify-center px-2 pb-12 md:pb-16">
           <div className="flex flex-col items-center gap-6">
             <p data-reveal className="text-[16px] leading-6 text-subtle">
               About us
             </p>
             <h1
               data-reveal
-              className="flex flex-col items-center gap-3 font-serif text-[48px] leading-[52px] tracking-[-1px] text-ink"
+              className="flex flex-col items-center gap-2 font-serif text-[28px] leading-9 tracking-[-0.56px] text-ink sm:text-[36px] sm:leading-[42px] md:gap-3 md:text-[48px] md:leading-[52px] md:tracking-[-1px]"
             >
-              <span className="flex items-center justify-center gap-4 whitespace-nowrap">
+              <span className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:whitespace-nowrap">
                 Building
                 <HeroPortrait
                   src="/assets/about/hero-pill-01.png"
@@ -132,12 +106,12 @@ function AboutHero() {
                 />
                 the path
               </span>
-              <span className="flex items-center justify-center gap-4 whitespace-nowrap">
+              <span className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:whitespace-nowrap">
                 to permanence for
                 <HeroPortrait src="/assets/about/hero-pill-02.png" className="bg-[#fee0db]" />
                 the nurses
               </span>
-              <span className="flex items-start justify-center gap-4 whitespace-nowrap">
+              <span className="flex flex-wrap items-start justify-center gap-2 sm:gap-4 md:whitespace-nowrap">
                 <HeroPortrait src="/assets/about/hero-pill-03.png" className="bg-[#f1e0d8]" />
                 America needs.
               </span>
@@ -152,7 +126,7 @@ function AboutHero() {
 function Mission() {
   return (
     <section className="w-full px-4 pt-4">
-      <div className="flex w-full items-center justify-center rounded-[16px] bg-tertiary py-24">
+      <div className="flex w-full items-center justify-center rounded-[16px] bg-tertiary px-5 py-12 md:px-10 md:py-16 lg:py-24">
         <div className="flex w-full max-w-[521px] flex-col gap-8">
           <div className="flex flex-col items-center gap-4 text-center">
             <p data-reveal className="text-[16px] leading-6 text-subtle">
@@ -160,7 +134,7 @@ function Mission() {
             </p>
             <h2
               data-reveal
-              className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink"
+              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
             >
               Why we exist
             </h2>
@@ -197,27 +171,27 @@ function Mission() {
 function ImpactStats() {
   return (
     <section className="w-full px-4 pt-4">
-      <div className="flex w-full flex-col items-center gap-12 overflow-clip rounded-[24px] bg-brand-light px-[104px] py-24">
+      <div className="flex w-full flex-col items-center gap-10 overflow-clip rounded-[24px] bg-brand-light px-5 py-12 md:gap-12 md:px-10 md:py-16 lg:px-[104px] lg:py-24">
         <h2
           data-reveal
-          className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink"
+          className="text-center font-serif text-[28px] leading-9 tracking-[-0.56px] text-ink md:text-[32px] md:leading-10 md:tracking-[-0.64px]"
         >
           Small team big impact
         </h2>
-        <div className="flex h-[120px] w-full max-w-[1200px] items-center justify-between">
+        <div className="grid w-full max-w-[1200px] grid-cols-2 gap-8 lg:flex lg:h-[120px] lg:items-center lg:justify-between">
           {STATS.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center">
               <div className="flex items-center justify-center font-serif text-brand">
-                <span className="text-[96px] leading-[96px] tracking-[-1.44px]">
+                <span className="text-[40px] leading-[44px] tracking-[-0.8px] md:text-[72px] md:leading-[80px] lg:text-[96px] lg:leading-[96px] lg:tracking-[-1.44px]">
                   <DigitPopIn value={stat.value} />
                 </span>
                 {stat.suffix ? (
-                  <span className="text-[32px] leading-10 tracking-[-0.48px]">
+                  <span className="text-[20px] leading-7 tracking-[-0.3px] md:text-[32px] md:leading-10 md:tracking-[-0.48px]">
                     {stat.suffix}
                   </span>
                 ) : null}
               </div>
-              <p className="text-[16px] leading-6 text-subtle/80">{stat.label}</p>
+              <p className="text-center text-[14px] leading-5 text-subtle/80 md:text-[16px] md:leading-6">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -228,16 +202,16 @@ function ImpactStats() {
 
 function Residency() {
   return (
-    <section className="flex w-full items-center justify-center px-[70px] py-32">
-      <div className="flex w-full max-w-[1200px] items-start justify-between">
-        <div className="flex w-[480px] flex-col gap-6">
+    <section className="flex w-full items-center justify-center px-5 py-16 md:px-10 md:py-24 lg:px-[70px] lg:py-32">
+      <div className="flex w-full max-w-[1200px] flex-col items-start gap-10 lg:flex-row lg:justify-between lg:gap-12">
+        <div className="flex w-full max-w-[480px] flex-col gap-6">
           <div className="flex flex-col gap-4">
             <p data-reveal className="text-[16px] leading-6 text-subtle">
               What makes Flint different
             </p>
             <h2
               data-reveal
-              className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink"
+              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
             >
               Permanent residency, not another visa
             </h2>
@@ -258,11 +232,11 @@ function Residency() {
             </p>
           </div>
         </div>
-        <div data-reveal className="w-[632px] pt-10">
+        <div data-reveal className="w-full lg:w-[632px] lg:shrink-0 lg:pt-10">
           <img
             src="/assets/about/hospital.png"
             alt="Hospital facility"
-            className="h-[421px] w-full rounded-[16px] object-cover"
+            className="h-[240px] w-full rounded-[16px] object-cover md:h-[421px]"
           />
         </div>
       </div>
@@ -272,16 +246,16 @@ function Residency() {
 
 function Investors() {
   return (
-    <section className="flex w-full items-center justify-center px-[70px] py-32">
+    <section className="flex w-full items-center justify-center px-5 py-16 md:px-10 md:py-24 lg:px-[70px] lg:py-32">
       <div className="flex w-full max-w-[1200px] flex-col items-center gap-2.5">
-        <div className="flex w-[480px] flex-col items-center gap-6 text-center">
+        <div className="flex w-full max-w-[480px] flex-col items-center gap-6 text-center">
           <div className="flex w-full flex-col gap-4">
             <p data-reveal className="text-[16px] leading-6 text-subtle">
               What makes Flint different
             </p>
             <h2
               data-reveal
-              className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink"
+              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
             >
               Backed by the best
             </h2>
@@ -291,21 +265,21 @@ function Investors() {
             workforce ready to fill it, if only someone built the bridge.
           </p>
         </div>
-        <div className="flex w-full gap-2.5 pt-10">
+        <div className="grid w-full grid-cols-2 gap-2.5 pt-10 lg:flex">
           {INVESTORS.map((investor) => (
             <div
               key={investor.alt}
               data-reveal
-              className="flex h-[191px] flex-1 items-center justify-center rounded-[16px] bg-tertiary"
+              className="flex h-[140px] items-center justify-center overflow-hidden rounded-[16px] bg-tertiary md:h-[191px] lg:flex-1"
             >
-              <img src={investor.src} alt={investor.alt} className={investor.className} />
+              <img src={investor.src} alt={investor.alt} className={`max-h-12 w-auto max-w-[75%] object-contain md:max-h-none md:max-w-none ${investor.className}`} />
             </div>
           ))}
           <img
             data-reveal
             src="/assets/about/investor-04.svg"
             alt="Rhino Ventures"
-            className="h-[191px] flex-1"
+            className="h-[140px] w-full object-contain md:h-[191px] lg:flex-1"
           />
         </div>
       </div>
@@ -316,7 +290,7 @@ function Investors() {
 function Story() {
   return (
     <section className="w-full p-4">
-      <div className="flex w-full items-center justify-center rounded-[16px] bg-brand-light py-24">
+      <div className="flex w-full items-center justify-center rounded-[16px] bg-brand-light px-5 py-12 md:px-10 md:py-16 lg:py-24">
         <div className="flex w-full max-w-[521px] flex-col gap-8">
           <div className="flex flex-col items-center gap-4 text-center">
             <p data-reveal className="text-[16px] leading-6 text-subtle">
@@ -324,7 +298,7 @@ function Story() {
             </p>
             <h2
               data-reveal
-              className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink"
+              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
             >
               Why this is personal
             </h2>
@@ -352,16 +326,16 @@ function Story() {
 
 function Team() {
   return (
-    <section className="flex w-full items-center justify-center px-[70px] py-32">
-      <div className="flex w-full max-w-[1200px] flex-col items-center gap-16">
-        <div className="flex w-[480px] flex-col items-center gap-6 text-center">
+    <section className="flex w-full items-center justify-center px-5 py-16 md:px-10 md:py-24 lg:px-[70px] lg:py-32">
+      <div className="flex w-full max-w-[1200px] flex-col items-center gap-10 md:gap-16">
+        <div className="flex w-full max-w-[480px] flex-col items-center gap-6 text-center">
           <div className="flex w-full flex-col gap-4">
             <p data-reveal className="text-[16px] leading-6 text-subtle">
               What makes Flint different
             </p>
             <h2
               data-reveal
-              className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink"
+              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
             >
               Backed by the best
             </h2>
@@ -371,10 +345,10 @@ function Team() {
             workforce ready to fill it, if only someone built the bridge.
           </p>
         </div>
-        <div className="grid w-full grid-cols-3 gap-x-4 gap-y-12">
+        <div className="grid w-full grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-12">
           {TEAM.map((member) => (
             <article key={member.name} data-reveal className="flex flex-col gap-4">
-              <div className="size-[389px] overflow-clip rounded-[16px] bg-[#4a4a4a] opacity-80">
+              <div className="aspect-square w-full max-w-[389px] overflow-clip rounded-[16px] bg-[#4a4a4a] opacity-80">
                 <img
                   src={member.src}
                   alt={member.name}

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { NAV_LINKS } from "../../nav";
+import SiteNav from "../../components/SiteNav";
 
 const OVERLAY =
   "linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 18.6%), linear-gradient(rgba(0,0,0,0) 55.8%, rgba(0,0,0,0.8) 100%), linear-gradient(90deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28))";
@@ -20,7 +19,7 @@ export default function FacilityPartnersHero() {
 
   return (
     <section ref={sectionRef} className="w-full p-4">
-      <div className="relative h-[848px] w-full overflow-clip rounded-[24px] shadow-[0px_20px_40px_0px_rgba(0,0,0,0.1)]">
+      <div className="relative h-[720px] w-full overflow-clip rounded-[24px] shadow-[0px_20px_40px_0px_rgba(0,0,0,0.1)] md:h-[848px]">
         <video
           src="/assets/facility/hero.mp4"
           className="absolute inset-0 size-full object-cover"
@@ -32,44 +31,31 @@ export default function FacilityPartnersHero() {
         />
         <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: OVERLAY }} />
 
-        <Link to="/" className="absolute left-4 top-[15px] z-10">
-          <img src="/assets/wordmark-white.svg" alt="Flint" className="h-6 w-[49px]" />
-        </Link>
-
-        <nav className="absolute left-1/2 top-6 z-10 flex -translate-x-1/2 items-center gap-4 text-[14px] font-medium leading-5 text-white/60">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              className={`whitespace-nowrap transition-colors hover:text-white ${
-                link.label === "Facility partners" ? "text-white" : ""
-              }`}
+        <SiteNav
+          active="Facility partners"
+          variant="dark"
+          layout="overlay"
+          cta={
+            <button
+              type="button"
+              className="flex items-center justify-center rounded-[24px] border border-white/20 bg-white/[0.16] px-[14px] py-[6px] text-[14px] font-medium leading-5 tracking-[-0.028px] text-white shadow-[inset_0px_2px_6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px] transition-[background-color,border-color,transform] duration-300 ease-in-out hover:border-white/40 hover:bg-white/40 active:scale-[0.98]"
             >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+              Apply now
+            </button>
+          }
+        />
 
-        <div className="absolute right-4 top-[18px] z-10">
-          <button
-            type="button"
-            className="flex items-center justify-center rounded-[24px] border border-white/20 bg-white/[0.16] px-[14px] py-[6px] text-[14px] font-medium leading-5 tracking-[-0.028px] text-white shadow-[inset_0px_2px_6px_0px_rgba(255,255,255,0.25)] backdrop-blur-[10px] transition-[background-color,border-color,transform] duration-300 ease-in-out hover:border-white/40 hover:bg-white/40 active:scale-[0.98]"
-          >
-            Apply now
-          </button>
-        </div>
-
-        <div className="absolute left-1/2 top-1/2 z-10 flex w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 text-center">
+        <div className="absolute top-1/2 left-1/2 z-10 flex w-full max-w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-6 px-5 text-center md:gap-8">
           <div className="flex flex-col gap-4">
             <h1
               data-hero-reveal
-              className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-white"
+              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-white md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
             >
               Find Top
               <br />
               Healthcare Talent
             </h1>
-            <p data-hero-reveal className="text-[18px] leading-7 text-white opacity-60">
+            <p data-hero-reveal className="text-[16px] leading-6 text-white opacity-60 md:text-[18px] md:leading-7">
               Connect with 100,000+ vetted candidates. We simplify staffing for hospitals, clinics,
               and care facilities.
             </p>

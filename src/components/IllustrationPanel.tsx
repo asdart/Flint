@@ -15,7 +15,7 @@ export default function IllustrationPanel({
 }) {
   return (
     <div
-      className={`relative h-[696px] w-[580px] max-w-[580px] shrink-0 overflow-clip rounded-[40px] ${
+      className={`relative aspect-[580/696] w-full max-w-[580px] shrink-0 overflow-clip rounded-[24px] md:rounded-[40px] ${
         tone === "brand" ? "bg-brand-light" : "bg-tertiary"
       } ${className}`}
     >

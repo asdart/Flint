@@ -32,24 +32,24 @@ function StepMedia({
   if (illustration === "savings") return <CostSavingsIllustration />;
   if (illustration === "retention") return <RetentionIllustration />;
   return (
-    <div className="h-[696px] w-[580px] max-w-[580px] shrink-0 rounded-[40px] bg-tertiary" />
+    <div className="aspect-[580/696] w-full max-w-[580px] shrink-0 rounded-[24px] bg-tertiary md:rounded-[40px]" />
   );
 }
 
 export default function FacilityHowItWorks() {
   return (
     <section className="w-full px-4 pb-4">
-      <div className="flex w-full flex-col items-center gap-16 overflow-clip rounded-[24px] bg-white px-20 py-24">
+      <div className="flex w-full flex-col items-center gap-10 overflow-clip rounded-[24px] bg-white px-5 py-12 md:gap-16 md:px-10 md:py-16 lg:px-20 lg:py-24">
         <header className="flex max-w-[480px] flex-col items-center gap-4 text-center">
           <h2
             data-reveal
-            className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink"
+            className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
           >
             Why facilities
             <br />
             trust Flint
           </h2>
-          <p data-reveal className="text-[18px] leading-7 text-subtle">
+          <p data-reveal className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
             Get answers to common questions about our Green Card pathway, candidate vetting, and
             healthcare placement process.
           </p>
@@ -57,21 +57,24 @@ export default function FacilityHowItWorks() {
         {STEPS.map((step, i) => (
           <div
             key={i}
-            className="flex w-full max-w-[1200px] items-center justify-between gap-24"
+            className={`flex w-full max-w-[1200px] flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-24 ${
+              step.imageLeft ? "" : "lg:flex-row-reverse"
+            }`}
           >
-            {step.imageLeft && <StepMedia illustration={step.illustration} />}
-            <div className="flex min-w-0 max-w-[480px] flex-1 flex-col gap-2">
+            <div className="w-full max-w-[580px]">
+              <StepMedia illustration={step.illustration} />
+            </div>
+            <div className="flex w-full min-w-0 max-w-[480px] flex-1 flex-col gap-2">
               <h3
                 data-reveal
-                className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink"
+                className="font-serif text-[28px] leading-9 tracking-[-0.56px] text-ink md:text-[32px] md:leading-10 md:tracking-[-0.64px]"
               >
                 {step.title}
               </h3>
-              <p data-reveal className="text-[18px] leading-7 text-subtle">
+              <p data-reveal className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
                 {step.body}
               </p>
             </div>
-            {!step.imageLeft && <StepMedia illustration={step.illustration} />}
           </div>
         ))}
       </div>

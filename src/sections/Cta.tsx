@@ -33,10 +33,10 @@ const WINDOW_MASK = {
 export default function Cta() {
   return (
     <section className="w-full px-4 pb-4">
-      <div className="relative flex h-[560px] w-full items-center overflow-clip rounded-[24px] bg-tertiary p-24">
+      <div className="relative flex min-h-[480px] w-full items-end overflow-clip rounded-[24px] bg-tertiary p-8 md:h-[560px] md:min-h-0 md:items-center md:p-24">
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-[535.49px] -top-[298.62px] h-[812.83px] w-[1196.15px]"
+          className="pointer-events-none absolute -right-[535.49px] -top-[298.62px] hidden h-[812.83px] w-[1196.15px] md:block"
           style={RING_MASK}
         >
           <img src="/assets/home/cta-flower.png" alt="" className="size-full object-cover" />
@@ -44,7 +44,7 @@ export default function Cta() {
 
         <div
           aria-hidden
-          className="pointer-events-none absolute -bottom-[32.7px] -right-[15.93px] h-[484.7px] w-[576.87px]"
+          className="pointer-events-none absolute -right-[15.93px] -bottom-[32.7px] hidden h-[484.7px] w-[576.87px] md:block"
         >
           <div className="absolute inset-0" style={WINDOW_MASK}>
             <img
@@ -60,15 +60,15 @@ export default function Cta() {
           />
         </div>
 
-        <div className="relative z-10 flex w-[436px] flex-col gap-8">
+        <div className="relative z-10 flex w-full max-w-[436px] flex-col gap-8">
           <div className="flex flex-col gap-4">
             <h2
               data-reveal
-              className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink"
+              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
             >
               Your green card pathway starts here.
             </h2>
-            <p data-reveal className="text-[18px] leading-7 text-brand opacity-80">
+            <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
               Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
               Cards.
             </p>

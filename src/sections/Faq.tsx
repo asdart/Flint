@@ -48,12 +48,12 @@ export default function Faq() {
 
   return (
     <section className="w-full px-4 pb-4">
-      <div className="flex w-full flex-col items-center gap-16 overflow-clip rounded-[24px] bg-brand-light px-20 py-24">
+      <div className="flex w-full flex-col items-center gap-10 overflow-clip rounded-[24px] bg-brand-light px-5 py-12 md:gap-16 md:px-10 md:py-16 lg:px-20 lg:py-24">
         <header className="flex max-w-[480px] flex-col items-center gap-4 text-center">
-          <h2 data-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink">
+          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             Frequently asked questions
           </h2>
-          <p data-reveal className="text-[18px] leading-7 text-subtle">
+          <p data-reveal className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
             Get answers to common questions about our Green Card pathway, candidate vetting, and healthcare placement
             process.
           </p>
@@ -70,7 +70,7 @@ export default function Faq() {
                   aria-expanded={isOpen}
                 >
                   <span
-                    className={`min-w-0 flex-1 text-[20px] font-medium leading-7 ${
+                    className={`min-w-0 flex-1 text-[16px] font-medium leading-6 md:text-[20px] md:leading-7 ${
                       isOpen ? "text-subtle" : "text-ink"
                     }`}
                   >

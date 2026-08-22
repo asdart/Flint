@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import ApplyButton from "../../components/ApplyButton";
+import SiteNav from "../../components/SiteNav";
 import { FEATURED_POST } from "./posts";
-import { NAV_LINKS } from "../../nav";
 
 export default function BlogHero() {
   return (
     <section className="w-full px-4 pt-4">
-      <div className="relative flex w-full flex-col gap-16 overflow-clip rounded-[24px] bg-tertiary p-4">
+      <div className="relative flex w-full flex-col gap-10 overflow-clip rounded-[24px] bg-tertiary p-4 md:gap-16">
         <div
           className="pointer-events-none absolute left-[-905px] top-[354px] size-[2019px] overflow-hidden"
           style={{
@@ -24,36 +23,20 @@ export default function BlogHero() {
           />
         </div>
 
-        <div className="relative z-10 flex w-full shrink-0 items-center justify-between">
-          <Link to="/">
-            <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
-          </Link>
-          <nav className="flex items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                className={`whitespace-nowrap transition-colors hover:text-ink ${
-                  link.label === "Blog" ? "text-ink" : ""
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          <ApplyButton variant="white" reveal={false} />
+        <div className="relative z-10">
+          <SiteNav active="Blog" />
         </div>
 
-        <div className="relative z-0 flex w-full flex-col items-center pb-16">
-          <div className="flex w-full max-w-[1200px] flex-col gap-12">
-            <div className="flex max-w-[480px] flex-col gap-2">
+        <div className="relative z-0 flex w-full flex-col items-center pb-8 md:pb-16">
+          <div className="flex w-full max-w-[1200px] flex-col gap-8 md:gap-12">
+            <div className="flex w-full max-w-[480px] flex-col gap-2">
               <h1
                 data-reveal
-                className="font-serif text-[40px] leading-[44px] tracking-[-0.8px] text-ink"
+                className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[40px] md:leading-[44px] md:tracking-[-0.8px]"
               >
                 The Flint blog
               </h1>
-              <p data-reveal className="text-[18px] leading-7 text-subtle">
+              <p data-reveal className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
                 Immigration, licensing, and hiring tips for healthcare workers seeking Visa
                 sponsorship.
               </p>
@@ -62,18 +45,18 @@ export default function BlogHero() {
             <Link
               data-reveal
               to={`/blog/${FEATURED_POST.slug}`}
-              className="group flex h-[480px] w-full items-center justify-between rounded-[24px] bg-white py-4 pl-12 pr-4"
+              className="group flex h-auto w-full flex-col-reverse items-stretch rounded-[24px] bg-white p-3 sm:p-4 lg:h-[480px] lg:flex-row lg:items-center lg:justify-between lg:py-4 lg:pr-4 lg:pl-12"
             >
-              <div className="flex w-[422px] shrink-0 flex-col gap-1">
-                <div className="flex items-center gap-1 text-[16px] leading-6 tracking-[-0.23px] text-brand">
+              <div className="flex w-full shrink-0 flex-col gap-1 px-3 py-5 sm:px-4 lg:w-[422px] lg:px-0 lg:py-0">
+                <div className="flex flex-wrap items-center gap-1 text-[14px] leading-5 tracking-[-0.23px] text-brand md:text-[16px] md:leading-6">
                   <span>{FEATURED_POST.date}</span>
                   <span aria-hidden>·</span>
                   <span>{FEATURED_POST.category}</span>
                 </div>
-                <h2 className="pt-1 text-[32px] leading-10 tracking-[-0.11px] text-ink">
+                <h2 className="pt-1 text-[24px] leading-8 tracking-[-0.11px] text-ink md:text-[32px] md:leading-10">
                   {FEATURED_POST.title}
                 </h2>
-                <p className="pt-2 text-[18px] leading-7 tracking-[-0.23px] text-subtle">
+                <p className="pt-2 text-[16px] leading-6 tracking-[-0.23px] text-subtle md:text-[18px] md:leading-7">
                   {FEATURED_POST.excerpt}
                 </p>
                 <div className="flex items-center gap-2 pt-4">
@@ -84,12 +67,12 @@ export default function BlogHero() {
                       className="size-full object-cover"
                     />
                   </span>
-                  <span className="text-[16px] leading-6 tracking-[-0.23px] text-subtle">
+                  <span className="text-[14px] leading-5 tracking-[-0.23px] text-subtle md:text-[16px] md:leading-6">
                     {FEATURED_POST.author} · {FEATURED_POST.readTime}
                   </span>
                 </div>
               </div>
-              <div className="relative h-full w-[552px] shrink-0 overflow-clip rounded-[20px]">
+              <div className="relative h-[220px] w-full shrink-0 overflow-clip rounded-[16px] sm:h-[280px] lg:h-full lg:w-[552px] lg:rounded-[20px]">
                 <img
                   src={FEATURED_POST.image}
                   alt=""

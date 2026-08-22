@@ -9,10 +9,10 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
   return (
     <Link
       to={`/blog/${post.slug}`}
-      className="group flex h-[440px] flex-col overflow-clip rounded-[16px] bg-white"
+      className="group flex h-auto min-h-[380px] flex-col overflow-clip rounded-[16px] bg-white md:h-[440px]"
     >
       <div className="w-full shrink-0 px-2 pt-2">
-        <div className="relative h-[260px] overflow-clip rounded-[8px]">
+        <div className="relative h-[200px] overflow-clip rounded-[8px] md:h-[260px]">
           <img
             src={post.image}
             alt=""

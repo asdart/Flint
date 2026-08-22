@@ -233,20 +233,20 @@ export default function Testimonials() {
 
   return (
     <section className="w-full px-4 pb-4">
-      <div className="relative h-[1102px] w-full overflow-clip rounded-[24px] bg-tertiary">
-        <header className="absolute left-1/2 top-[140px] flex w-[436px] -translate-x-1/2 flex-col gap-4 text-center">
-          <h2 data-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink">
+      <div className="relative h-[900px] w-full overflow-clip rounded-[24px] bg-tertiary md:h-[1102px]">
+        <header className="absolute top-[72px] left-1/2 flex w-full max-w-[436px] -translate-x-1/2 flex-col gap-4 px-5 text-center md:top-[140px]">
+          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             Real stories.
             <br />
             Real impact
           </h2>
-          <p data-reveal className="text-[18px] leading-7 text-brand opacity-80">
+          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
             Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.
           </p>
         </header>
 
         <motion.div
-          className="absolute left-0 top-[412px] h-[488px] w-full cursor-grab touch-pan-y select-none active:cursor-grabbing"
+          className="absolute top-[280px] left-0 h-[488px] w-full cursor-grab touch-pan-y select-none active:cursor-grabbing md:top-[412px]"
           style={{ x: dragX }}
           onPanStart={onPanStart}
           onPan={onPan}
@@ -288,7 +288,7 @@ export default function Testimonials() {
 
         <div
           data-reveal
-          className="absolute bottom-[168px] left-1/2 z-10 -translate-x-1/2"
+          className="absolute bottom-[80px] left-1/2 z-10 -translate-x-1/2 md:bottom-[168px]"
         >
           <CarouselPagination
             count={TESTIMONIALS.length}

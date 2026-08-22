@@ -41,15 +41,15 @@ const LINK_GROUPS = [
 export default function Footer() {
   return (
     <footer className="w-full p-4">
-      <div className="flex w-full flex-col gap-16 rounded-[24px] bg-brand p-20">
-        <div className="flex w-full items-end justify-between">
-          <div className="flex w-[700px] flex-col gap-4">
-            <p data-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-white">
+      <div className="flex w-full flex-col gap-12 rounded-[24px] bg-brand p-8 md:gap-16 md:p-12 lg:p-20">
+        <div className="flex w-full flex-col items-start gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex w-full max-w-[700px] flex-col gap-4">
+            <p data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-white md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
               It&rsquo;s time to find your
               <br />
               green card sponsor.
             </p>
-            <p data-reveal className="text-[18px] leading-7 text-white/80">
+            <p data-reveal className="text-[16px] leading-6 text-white/80 md:text-[18px] md:leading-7">
               Apply now, it is free.
             </p>
           </div>
@@ -65,7 +65,7 @@ export default function Footer() {
 
         <hr className="w-full border-t border-white/20" />
 
-        <div className="flex w-full gap-10 text-[14px] leading-5">
+        <div className="grid w-full grid-cols-2 gap-8 text-[14px] leading-5 md:grid-cols-4 md:gap-10">
           {LINK_GROUPS.map((group) => (
             <div key={group.title} className="flex min-w-0 flex-1 flex-col gap-5">
               <p data-reveal className="font-medium text-white">{group.title}</p>
@@ -75,7 +75,7 @@ export default function Footer() {
                     key={link.label}
                     data-reveal
                     to={link.to}
-                    className="whitespace-nowrap transition-colors hover:text-white"
+                    className="transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -87,7 +87,7 @@ export default function Footer() {
 
         <hr className="w-full border-t border-white/20" />
 
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Link to="/">
             <img src="/assets/wordmark-white.svg" alt="Flint" className="h-6 w-[49px]" />
           </Link>

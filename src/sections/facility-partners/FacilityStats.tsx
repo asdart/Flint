@@ -41,7 +41,7 @@ function CountUp({
 
   return (
     <span ref={ref} className="inline-flex items-center justify-center" aria-label={`${formatNumber(value)}${suffix}`}>
-      <span className="font-serif text-[72px] leading-[80px] tracking-[-1.08px] text-ink">
+      <span className="font-serif text-[40px] leading-[44px] tracking-[-0.8px] text-ink md:text-[56px] md:leading-[64px] lg:text-[72px] lg:leading-[80px] lg:tracking-[-1.08px]">
         {formatNumber(display)}
       </span>
       {suffix ? (
@@ -54,12 +54,12 @@ function CountUp({
 export default function FacilityStats() {
   return (
     <section className="w-full px-4 pb-4">
-      <div className="flex w-full flex-col items-center justify-center overflow-clip rounded-[24px] bg-brand-light px-[104px] py-[94px]">
-        <div className="flex w-full max-w-[960px] items-center justify-between text-center">
+      <div className="flex w-full flex-col items-center justify-center overflow-clip rounded-[24px] bg-brand-light px-5 py-12 md:px-10 md:py-16 lg:px-[104px] lg:py-[94px]">
+        <div className="grid w-full max-w-[960px] grid-cols-1 gap-8 text-center sm:grid-cols-3 sm:gap-4">
           {STATS.map((stat) => (
-            <div key={stat.label} className="flex w-[227px] flex-col items-center">
+            <div key={stat.label} className="flex w-full flex-col items-center">
               <CountUp value={stat.value} suffix={stat.suffix} />
-              <p data-reveal className="whitespace-nowrap text-[18px] leading-7 text-ink opacity-80">
+              <p data-reveal className="text-[16px] leading-6 text-ink opacity-80 md:whitespace-nowrap md:text-[18px] md:leading-7">
                 {stat.label}
               </p>
             </div>

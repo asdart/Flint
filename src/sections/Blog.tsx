@@ -19,13 +19,13 @@ const POSTS = [
 
 export default function Blog() {
   return (
-    <section className="flex w-full flex-col items-center gap-16 bg-white px-6 py-24">
-      <header className="flex w-[436px] flex-col items-center gap-8 text-center">
+    <section className="flex w-full flex-col items-center gap-10 bg-white px-5 py-12 md:gap-16 md:px-6 md:py-16 lg:py-24">
+      <header className="flex w-full max-w-[436px] flex-col items-center gap-8 text-center">
         <div className="flex flex-col gap-4">
-          <h2 data-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink">
+          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             The Flint Blog
           </h2>
-          <p data-reveal className="text-[18px] leading-7 text-brand opacity-80">
+          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
             Immigration, licensing, and hiring tips for healthcare workers seeking Visa sponsorship.
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function Blog() {
         </span>
       </header>
 
-      <div className="flex w-full max-w-[1200px] gap-4">
+      <div className="flex w-full max-w-[1200px] flex-col gap-8 md:flex-row md:gap-4">
         {POSTS.map((post) => (
           <article
             key={post.title}

@@ -39,18 +39,18 @@ export default function AllPosts() {
 
   return (
     <section className="w-full px-4 pt-4">
-      <div className="flex w-full flex-col items-center overflow-clip rounded-[24px] bg-brand-light px-20 pb-12 pt-24">
-        <div className="flex w-full max-w-[1200px] flex-col gap-16">
+      <div className="flex w-full flex-col items-center overflow-clip rounded-[24px] bg-brand-light px-5 pb-12 pt-12 md:px-10 md:pt-16 lg:px-20 lg:pt-24">
+        <div className="flex w-full max-w-[1200px] flex-col gap-10 md:gap-16">
           <div className="flex flex-col gap-8">
-            <div className="flex w-full items-center justify-between">
+            <div className="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
               <h2
                 data-reveal
-                className="font-serif text-[40px] leading-[44px] tracking-[-0.8px] text-ink"
+                className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[40px] md:leading-[44px] md:tracking-[-0.8px]"
               >
                 All posts
               </h2>
               <Select
-                className="w-[262px]"
+                className="w-full sm:w-[262px]"
                 aria-label="Filter posts by category"
                 value={category}
                 onChange={onCategoryChange}
@@ -61,7 +61,7 @@ export default function AllPosts() {
               />
             </div>
 
-            <div className="relative min-h-[896px]">
+            <div className="relative">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={`${category}-${page}`}
@@ -69,7 +69,7 @@ export default function AllPosts() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: reduceMotion ? 1 : 0 }}
                   transition={{ duration: reduceMotion ? 0 : 0.35, ease: "easeInOut" }}
-                  className="grid grid-cols-3 gap-4"
+                  className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
                 >
                   {pagePosts.map((post) => (
                     <BlogPostCard key={`${category}-${page}-${post.title}`} post={post} />

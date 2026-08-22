@@ -23,17 +23,17 @@ export default function Clients() {
   );
 
   return (
-    <section className="flex w-full items-center gap-14 py-8">
-      <p className="shrink-0 pl-12 pr-2 text-[16px] leading-5 text-brand whitespace-nowrap">
+    <section className="flex w-full flex-col items-start gap-4 py-8 md:flex-row md:items-center md:gap-14">
+      <p className="shrink-0 px-5 text-[16px] leading-5 text-brand md:whitespace-nowrap md:px-0 md:pl-12 md:pr-2">
         Partnering with the top facilities
       </p>
-      <div className="relative h-9 min-w-0 flex-1 overflow-hidden">
+      <div className="relative h-9 min-w-0 w-full flex-1 overflow-hidden">
         <div className="logo-marquee-track flex w-max items-center">
           {row}
           {row}
         </div>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent md:w-32" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent md:w-32" />
       </div>
     </section>
   );

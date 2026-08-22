@@ -54,26 +54,26 @@ function Flower({ className, size }: { className?: string; size: number }) {
 export default function WhatWeOffer() {
   return (
     <section className="w-full px-4 pt-4 pb-4">
-      <div className="relative h-[1004px] w-full overflow-clip rounded-[24px] bg-secondary">
-        <Flower className="left-[-311px] top-[-261px]" size={522} />
-        <Flower className="left-[900px] top-[521px]" size={747} />
+      <div className="relative w-full overflow-clip rounded-[24px] bg-secondary px-5 py-12 md:px-10 md:py-16 lg:px-[104px] lg:py-24">
+        <Flower className="top-[-261px] left-[-311px]" size={522} />
+        <Flower className="top-[521px] left-[900px] hidden md:block" size={747} />
 
-        <header className="absolute left-1/2 top-24 flex w-[436px] -translate-x-1/2 flex-col gap-4 text-center">
-          <h2 data-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink">
+        <header className="relative mx-auto mb-10 flex w-full max-w-[436px] flex-col gap-4 text-center md:mb-16">
+          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             What we offer
           </h2>
-          <p data-reveal className="text-[18px] leading-7 text-brand opacity-80">
+          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
             Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
             Cards.
           </p>
         </header>
 
-        <div className="absolute left-1/2 top-[284px] grid w-[calc(100%-208px)] max-w-[1200px] -translate-x-1/2 grid-cols-3 gap-2">
+        <div className="relative mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {OFFERS.map((offer) => (
             <article
               key={offer.title}
               data-reveal
-              className="flex h-[304px] flex-col justify-between rounded-[20px] bg-white p-6"
+              className="flex min-h-[240px] flex-col justify-between rounded-[20px] bg-white p-6 lg:h-[304px]"
             >
               <img src={offer.icon} alt="" className="size-8" />
               <div className="flex flex-col gap-2">

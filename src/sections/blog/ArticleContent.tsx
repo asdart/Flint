@@ -42,7 +42,7 @@ export default function ArticleContent({ article, toc }: ArticleContentProps) {
   );
 
   return (
-    <section className="relative mx-auto w-full max-w-[1440px] px-20 pb-20 pt-16">
+    <section className="relative mx-auto w-full max-w-[1440px] px-5 pt-10 pb-12 md:px-10 md:pt-16 md:pb-16 lg:px-20 lg:pb-20">
       {toc.length > 0 ? (
         <aside className="absolute top-8 left-20 hidden w-[200px] xl:block">
           <nav className="sticky top-8 flex flex-col gap-4" aria-label="On this page">
@@ -114,7 +114,7 @@ function ArticleBlockView({ block }: { block: ArticleBlock }) {
     case "figure":
       return (
         <figure className="flex w-full flex-col gap-2">
-          <div className="relative h-[405px] w-full overflow-clip rounded-2xl">
+          <div className="relative h-[220px] w-full overflow-clip rounded-2xl md:h-[405px]">
             <img src={block.src} alt="" className="absolute inset-0 size-full object-cover" />
           </div>
           <figcaption className="text-[16px] leading-7 text-subtle">{block.caption}</figcaption>

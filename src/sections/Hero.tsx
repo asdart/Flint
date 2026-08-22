@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import {
   motion,
   useAnimationFrame,
@@ -9,7 +8,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import ApplyButton from "../components/ApplyButton";
-import { NAV_LINKS } from "../nav";
+import SiteNav from "../components/SiteNav";
 
 const CARDS = [
   { src: "/assets/home/candidate-01.png", name: "Maria", flag: "/assets/flags/ph.svg" },
@@ -150,36 +149,18 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="w-full p-4">
-      <div className="relative h-[848px] w-full overflow-clip rounded-[24px] bg-secondary">
-        <Link to="/" className="absolute left-4 top-[15px]">
-          <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
-        </Link>
-        <nav className="absolute left-1/2 top-6 flex -translate-x-1/2 items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              className={`whitespace-nowrap transition-colors hover:text-ink ${
-                link.label === "Home" ? "text-ink" : ""
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="absolute right-4 top-[18px]">
-          <ApplyButton variant="white" reveal={false} />
-        </div>
+      <div className="relative h-[720px] w-full overflow-clip rounded-[24px] bg-secondary md:h-[848px]">
+        <SiteNav active="Home" layout="overlay" />
 
-        <div className="absolute left-1/2 top-[140px] flex w-[436px] -translate-x-1/2 flex-col items-center gap-8 text-center">
+        <div className="absolute top-[120px] left-1/2 flex w-full max-w-[436px] -translate-x-1/2 flex-col items-center gap-6 px-5 text-center md:top-[140px] md:gap-8">
           <div className="flex flex-col gap-4">
             <h1
               data-hero-reveal
-              className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink"
+              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
             >
               Your green card pathway starts here.
             </h1>
-            <p data-hero-reveal className="text-[18px] leading-7 text-brand opacity-80">
+            <p data-hero-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
               Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
               Cards.
             </p>
@@ -190,7 +171,7 @@ export default function Hero() {
         </div>
 
         <div
-          className="absolute bottom-[33px] left-4 right-2 h-[355px]"
+          className="absolute right-2 bottom-4 left-4 h-[240px] md:right-2 md:bottom-[33px] md:left-4 md:h-[355px]"
           aria-hidden
           onMouseEnter={() => {
             isHoveredRef.current = true;

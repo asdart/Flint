@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import ApplyButton from "../../components/ApplyButton";
-import { NAV_LINKS } from "../../nav";
+import SiteNav from "../../components/SiteNav";
 import type { BlogPost } from "./posts";
 
 type ArticleHeroProps = {
@@ -12,32 +11,14 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
 
   return (
     <section className="w-full px-4 pt-4">
-      <div className="flex w-full flex-col gap-16 overflow-clip rounded-[24px] bg-brand-light p-4">
-        <div className="flex w-full shrink-0 items-center justify-between">
-          <Link to="/">
-            <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
-          </Link>
-          <nav className="flex items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                className={`whitespace-nowrap transition-colors hover:text-ink ${
-                  link.label === "Blog" ? "text-ink" : ""
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          <ApplyButton variant="white" reveal={false} />
-        </div>
+      <div className="flex w-full flex-col gap-10 overflow-clip rounded-[24px] bg-brand-light p-4 md:gap-16">
+        <SiteNav active="Blog" />
 
-        <div className="flex w-full flex-col items-center pb-16">
-          <div className="flex w-full max-w-[1200px] flex-col items-center gap-12">
-            <div className="flex w-full max-w-[600px] flex-col items-center gap-8">
+        <div className="flex w-full flex-col items-center pb-8 md:pb-16">
+          <div className="flex w-full max-w-[1200px] flex-col items-center gap-8 md:gap-12">
+            <div className="flex w-full max-w-[600px] flex-col items-center gap-8 px-2">
               <div className="flex w-full flex-col items-center gap-6">
-                <p className="flex items-start gap-0.5 text-[16px] leading-6 text-subtle">
+                <p className="flex items-start gap-0.5 text-[14px] leading-5 text-subtle md:text-[16px] md:leading-6">
                   <Link to="/blog" className="transition-colors hover:text-ink">
                     Blog
                   </Link>
@@ -48,7 +29,7 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
                   <p className="text-[14px] leading-5 text-brand">
                     {post.date} · {post.readTime}
                   </p>
-                  <h1 className="w-full text-center font-serif text-[40px] leading-[48px] tracking-[-1px] text-ink">
+                  <h1 className="w-full text-center font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[40px] md:leading-[48px] md:tracking-[-1px]">
                     {post.titleLines ? (
                       post.titleLines.map((line) => (
                         <span key={line} className="block">
@@ -79,7 +60,7 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
               </div>
             </div>
 
-            <div className="relative h-[311px] w-[552px] overflow-clip rounded-[20px]">
+            <div className="relative h-[200px] w-full max-w-[552px] overflow-clip rounded-[20px] sm:h-[260px] md:h-[311px]">
               <img
                 src={post.image}
                 alt=""

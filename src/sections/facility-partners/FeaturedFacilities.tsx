@@ -13,13 +13,13 @@ const CARD_OVERLAY =
 
 export default function FeaturedFacilities() {
   return (
-    <section className="flex w-full flex-col items-center gap-16 bg-white py-[120px]">
-      <div className="flex w-[436px] max-w-full flex-col items-center gap-8 px-4 text-center">
+    <section className="flex w-full flex-col items-center gap-10 bg-white py-16 md:gap-16 md:py-24 lg:py-[120px]">
+      <div className="flex w-full max-w-[436px] flex-col items-center gap-8 px-4 text-center">
         <div className="flex flex-col gap-4">
-          <h2 data-reveal className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-ink">
+          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             Join these leading facilities
           </h2>
-          <p data-reveal className="text-[18px] leading-7 text-brand opacity-80">
+          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
             Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
             Cards.
           </p>
@@ -31,7 +31,7 @@ export default function FeaturedFacilities() {
         {FACILITIES.map((facility) => (
           <article
             key={facility.name}
-            className="relative h-[376px] w-[501px] shrink-0 snap-start overflow-clip rounded-[24px] first:ml-[max(16px,calc((100%-1200px)/2))] last:mr-4"
+            className="relative h-[320px] w-[min(501px,85vw)] shrink-0 snap-start overflow-clip rounded-[24px] first:ml-[max(16px,calc((100%-1200px)/2))] last:mr-4 md:h-[376px]"
           >
             <img src={facility.img} alt={facility.name} className="absolute inset-0 size-full object-cover" />
             <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: CARD_OVERLAY }} />

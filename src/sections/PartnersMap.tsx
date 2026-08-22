@@ -66,7 +66,7 @@ export default function PartnersMap() {
 
   return (
     <section className="w-full p-4">
-      <div className="relative h-[680px] w-full overflow-clip rounded-[24px] bg-tertiary">
+      <div className="relative h-[420px] w-full overflow-clip rounded-[24px] bg-tertiary md:h-[680px]">
         <img
           src="/assets/home/map-bg.jpg"
           alt=""
@@ -74,14 +74,14 @@ export default function PartnersMap() {
         />
         <div className="absolute inset-0 bg-black/60" />
 
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="relative flex h-full items-center">
-            <p className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-white whitespace-nowrap">
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="relative flex h-full w-full max-w-[900px] flex-col items-center justify-center lg:flex-row lg:items-center">
+            <p className="shrink-0 text-center font-serif text-[32px] leading-10 tracking-[-0.64px] text-white lg:text-left lg:text-[48px] lg:leading-[52px] lg:tracking-[-0.96px] lg:whitespace-nowrap">
               Our partners are in
             </p>
 
             <div
-              className="relative h-full w-[340px] overflow-hidden pl-5"
+              className="relative h-[180px] w-full max-w-[280px] overflow-hidden lg:h-full lg:w-[340px] lg:max-w-none lg:pl-5"
               style={{
                 WebkitMaskImage:
                   "linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%)",
@@ -93,7 +93,7 @@ export default function PartnersMap() {
                 {LOOP.map((state, i) => (
                   <motion.p
                     key={`${state}-${i}`}
-                    className="font-serif text-[48px] leading-[52px] tracking-[-0.96px] text-white whitespace-nowrap"
+                    className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-white whitespace-nowrap lg:text-[48px] lg:leading-[52px] lg:tracking-[-0.96px]"
                     style={{ height: LINE }}
                     initial={false}
                     animate={{ opacity: i === index ? 1 : 0.2 }}
