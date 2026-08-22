@@ -51,11 +51,11 @@ const TEAM = [
 
 function AboutNav() {
   return (
-    <>
-      <Link to="/" className="absolute left-4 top-[15px] z-20">
+    <div className="flex w-full shrink-0 items-center justify-between">
+      <Link to="/">
         <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
       </Link>
-      <nav className="absolute left-1/2 top-6 z-20 flex -translate-x-1/2 items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
+      <nav className="flex items-center gap-4 text-[14px] font-medium leading-5 text-subtle">
         {NAV_LINKS.map((link) => (
           <Link
             key={link.label}
@@ -68,41 +68,80 @@ function AboutNav() {
           </Link>
         ))}
       </nav>
-      <div className="absolute right-4 top-[18px] z-20">
-        <ApplyButton variant="white" reveal={false} />
-      </div>
-    </>
+      <ApplyButton variant="white" reveal={false} />
+    </div>
+  );
+}
+
+function HeroPortrait({
+  src,
+  className,
+  crop,
+}: {
+  src: string;
+  className: string;
+  crop?: boolean;
+}) {
+  return (
+    <span
+      className={`relative inline-block h-[52px] w-[84px] shrink-0 overflow-clip rounded-[32px] ${className}`}
+    >
+      <span className="absolute left-[calc(50%-0.5px)] top-[calc(50%+17px)] h-[92px] w-[73px] -translate-x-1/2 -translate-y-1/2">
+        {crop ? (
+          <span className="absolute inset-0 overflow-hidden">
+            <img
+              src={src}
+              alt=""
+              className="absolute h-full max-w-none"
+              style={{ left: "-12.39%", top: "3.52%", width: "124.96%" }}
+            />
+          </span>
+        ) : (
+          <img
+            src={src}
+            alt=""
+            className="absolute inset-0 size-full max-w-none object-cover"
+          />
+        )}
+      </span>
+    </span>
   );
 }
 
 function AboutHero() {
   return (
     <section className="w-full px-4 pt-4">
-      <div className="relative flex w-full flex-col items-center overflow-clip rounded-[24px] bg-white px-4 pt-4">
+      <div className="flex min-h-[616px] w-full flex-col overflow-clip rounded-[24px] bg-brand-light px-4 pt-4">
         <AboutNav />
 
-        <div className="flex w-full max-w-[1200px] flex-col items-center gap-12 pb-16 pt-24">
-          <div className="flex w-full max-w-[640px] flex-col items-center gap-6 text-center">
+        <div className="flex w-full flex-1 flex-col items-center justify-center pb-16">
+          <div className="flex flex-col items-center gap-6">
             <p data-reveal className="text-[16px] leading-6 text-subtle">
               About us
             </p>
             <h1
               data-reveal
-              className="font-serif text-[40px] leading-[48px] tracking-[-1px] text-ink"
+              className="flex flex-col items-center gap-3 font-serif text-[48px] leading-[52px] tracking-[-1px] text-ink"
             >
-              Building the path to permanence for the nurses America needs
+              <span className="flex items-center justify-center gap-4 whitespace-nowrap">
+                Building
+                <HeroPortrait
+                  src="/assets/about/hero-pill-01.png"
+                  className="bg-brand-foreground"
+                  crop
+                />
+                the path
+              </span>
+              <span className="flex items-center justify-center gap-4 whitespace-nowrap">
+                to permanence for
+                <HeroPortrait src="/assets/about/hero-pill-02.png" className="bg-[#fee0db]" />
+                the nurses
+              </span>
+              <span className="flex items-start justify-center gap-4 whitespace-nowrap">
+                <HeroPortrait src="/assets/about/hero-pill-03.png" className="bg-[#f1e0d8]" />
+                America needs.
+              </span>
             </h1>
-          </div>
-
-          <div
-            data-reveal
-            className="relative h-[248px] w-full overflow-clip rounded-[16px] bg-brand-light"
-          >
-            <img
-              src="/assets/about/hero-collage.png"
-              alt="Healthcare professionals"
-              className="absolute inset-0 size-full object-cover object-center"
-            />
           </div>
         </div>
       </div>
