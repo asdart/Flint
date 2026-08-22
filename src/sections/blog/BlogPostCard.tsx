@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { BlogPost } from "./posts";
 
 type BlogPostCardProps = {
@@ -6,15 +7,18 @@ type BlogPostCardProps = {
 
 export default function BlogPostCard({ post }: BlogPostCardProps) {
   return (
-    <article
-      className="group flex h-[432px] cursor-pointer flex-col overflow-clip rounded-[16px] bg-white"
+    <Link
+      to={`/blog/${post.slug}`}
+      className="group flex h-[440px] flex-col overflow-clip rounded-[16px] bg-white"
     >
-      <div className="relative h-[260px] w-full shrink-0 overflow-clip">
-        <img
-          src={post.image}
-          alt=""
-          className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-        />
+      <div className="w-full shrink-0 px-2 pt-2">
+        <div className="relative h-[260px] overflow-clip rounded-[8px]">
+          <img
+            src={post.image}
+            alt=""
+            className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+          />
+        </div>
       </div>
       <div className="flex flex-1 flex-col p-5">
         <h3 className="line-clamp-2 pt-1 text-[20px] leading-7 tracking-[-0.11px] text-ink">
@@ -32,6 +36,6 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
           </span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }

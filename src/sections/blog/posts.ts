@@ -1,4 +1,5 @@
 export type BlogPost = {
+  slug: string;
   image: string;
   date: string;
   category: string;
@@ -6,17 +7,24 @@ export type BlogPost = {
   excerpt: string;
   author: string;
   readTime: string;
+  authorFullName?: string;
+  authorRole?: string;
+  titleLines?: string[];
 };
 
 export const FEATURED_POST: BlogPost = {
+  slug: "is-flint-legit-what-nurses-should-know",
   image: "/assets/blog/featured.png",
   date: "July 17, 2026",
-  category: "Institutional",
+  category: "Immigration",
   title: "Is Flint legit? What nurses should know",
+  titleLines: ["Is Flint legit?", "What nurses should know"],
   excerpt:
     "Learn if Flint is legit, how Flint helps healthcare workers find green card sponsorship, and what nurses should check before applying.",
   author: "Jonathan",
-  readTime: "3 min read",
+  authorFullName: "Jonathan Johnson",
+  authorRole: "Brand Manager",
+  readTime: "6 min read",
 };
 
 const IMAGES = [
@@ -30,8 +38,15 @@ const IMAGES = [
 
 const AUTHORS = ["Jonathan", "Sarah", "Michael", "Priya", "David", "Emily"] as const;
 
+export function toSlug(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 // Sourced from withflint.com/blog (titles, dates, excerpts, and read times).
-const POST_SEED: Omit<BlogPost, "image" | "author">[] = [
+const POST_SEED: Omit<BlogPost, "image" | "author" | "slug">[] = [
   {
     date: "August 7, 2026",
     category: "Immigration",
@@ -288,10 +303,22 @@ const POST_SEED: Omit<BlogPost, "image" | "author">[] = [
 
 export const ALL_POSTS: BlogPost[] = POST_SEED.map((post, i) => ({
   ...post,
+  slug: toSlug(post.title),
   // Rotate the image order per page so pages don't render the same
   // thumbnail-to-position mapping (POSTS_PER_PAGE === IMAGES.length).
   image: IMAGES[(i + Math.floor(i / IMAGES.length)) % IMAGES.length],
   author: AUTHORS[i % AUTHORS.length],
 }));
 
+export const POST_CATEGORIES = [...new Set(ALL_POSTS.map((post) => post.category))].sort();
+
 export const POSTS_PER_PAGE = 6;
+
+export function getPostBySlug(slug: string): BlogPost | undefined {
+  if (FEATURED_POST.slug === slug) return FEATURED_POST;
+  return ALL_POSTS.find((post) => post.slug === slug);
+}
+
+export function getRelatedPosts(slug: string, count = 3): BlogPost[] {
+  return ALL_POSTS.filter((post) => post.slug !== slug).slice(0, count);
+}

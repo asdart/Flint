@@ -17,6 +17,13 @@
   --color-stone-100: #d3d7de; /* rolling-stone/100 */
 }
 
+/* Figma input/select click state: brand border + 2px 10% brand ring */
+@utility field-active {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 2px rgb(68 56 109 / 0.1);
+  outline: none;
+}
+
 html {
   scroll-behavior: smooth;
 }

@@ -1,16 +1,41 @@
+import { useState } from "react";
+import Select from "../../components/Select";
+
 const GRADIENT =
   "linear-gradient(100deg, rgb(92, 119, 224) -45%, rgb(68, 55, 109) 30%, rgb(68, 55, 109) 60%, rgb(189, 83, 93) 140%)";
 
 const FIELD =
-  "w-full rounded-[12px] border border-stone-100 bg-white px-[14px] py-2 text-[16px] leading-6 text-ink outline-none transition-colors placeholder:text-[#8c929b] focus:border-brand";
+  "w-full rounded-[12px] border border-stone-100 bg-white px-[14px] py-2 text-[16px] leading-6 text-ink outline-none transition-[border-color,box-shadow] placeholder:text-[#8c929b] focus:field-active";
 const LABEL = "text-[14px] leading-5 text-ink";
 
+const ROLE_OPTIONS = [
+  { value: "rn", label: "Registered Nurses (RN)" },
+  { value: "cna", label: "Certified Nursing Assistants (CNA)" },
+  { value: "lpn", label: "Licensed Practical Nurses (LPN)" },
+  { value: "allied", label: "Allied Health" },
+];
+
 export default function FacilityApply() {
+  const [role, setRole] = useState("");
   return (
     <section className="w-full px-4 pb-4">
       <div className="relative flex w-full flex-col items-center overflow-clip rounded-[24px] bg-tertiary py-24">
-        <div className="pointer-events-none absolute top-1/2 -left-[300px] size-[920px] -translate-y-1/2 rounded-full border-[80px] border-brand/15" />
-        <div className="pointer-events-none absolute top-1/2 -right-[300px] size-[920px] -translate-y-1/2 rounded-full border-[80px] border-brand/15" />
+        <div
+          className="pointer-events-none absolute top-1/2 left-1/2 size-[1855px] -translate-x-1/2 -translate-y-1/2 overflow-hidden"
+          style={{
+            WebkitMaskImage: "url(/assets/facility/apply-ring-mask.svg)",
+            maskImage: "url(/assets/facility/apply-ring-mask.svg)",
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
+          }}
+          aria-hidden
+        >
+          <img
+            src="/assets/home/how-bg-purple.png"
+            alt=""
+            className="absolute inset-0 size-full object-cover"
+          />
+        </div>
 
         <form
           className="relative z-10 flex w-[710px] max-w-full flex-col gap-8 rounded-[24px] bg-white p-10"
@@ -50,7 +75,7 @@ export default function FacilityApply() {
               </label>
               <label className="flex flex-1 flex-col gap-1">
                 <span className={LABEL}>Phone number</span>
-                <div className="flex items-center rounded-[12px] border border-stone-100 bg-white pl-[14px]">
+                <div className="flex items-center rounded-[12px] border border-stone-100 bg-white pl-[14px] transition-[border-color,box-shadow] focus-within:field-active">
                   <span className="border-r border-stone-100 py-2 pr-2 text-[16px] leading-6 text-subtle">
                     +1
                   </span>
@@ -75,15 +100,13 @@ export default function FacilityApply() {
 
             <label className="flex flex-col gap-1">
               <span className={LABEL}>What type of roles are you looking to fill?</span>
-              <select className={`${FIELD} appearance-none bg-[url('/assets/how-it-works/arrow-down.svg')] bg-[length:16px] bg-[right_14px_center] bg-no-repeat text-[#8c929b]`} defaultValue="">
-                <option value="" disabled>
-                  Select all that apply
-                </option>
-                <option value="rn">Registered Nurses (RN)</option>
-                <option value="cna">Certified Nursing Assistants (CNA)</option>
-                <option value="lpn">Licensed Practical Nurses (LPN)</option>
-                <option value="allied">Allied Health</option>
-              </select>
+              <Select
+                aria-label="What type of roles are you looking to fill?"
+                value={role}
+                onChange={setRole}
+                placeholder="Select all that apply"
+                options={ROLE_OPTIONS}
+              />
             </label>
 
             <label className="flex flex-col gap-1">
