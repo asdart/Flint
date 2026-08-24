@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import BlurReveal from "../../components/BlurReveal";
 import SiteNav from "../../components/SiteNav";
 
 const OVERLAY =
@@ -45,29 +46,23 @@ export default function FacilityPartnersHero() {
           }
         />
 
-        <div className="absolute top-1/2 left-1/2 z-10 flex w-full max-w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-6 px-5 text-center md:gap-8">
-          <div className="flex flex-col gap-4">
-            <h1
-              data-hero-reveal
-              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-white md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
-            >
-              Find Top
-              <br />
-              Healthcare Talent
-            </h1>
-            <p data-hero-reveal className="text-[16px] leading-6 text-white opacity-60 md:text-[18px] md:leading-7">
-              Connect with 100,000+ vetted candidates. We simplify staffing for hospitals, clinics,
-              and care facilities.
-            </p>
-          </div>
+        <BlurReveal className="absolute top-1/2 left-1/2 z-10 flex w-full max-w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 px-5 text-center">
+          <h1 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-white md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+            Find Top
+            <br />
+            Healthcare Talent
+          </h1>
+          <p className="text-[16px] leading-6 text-white opacity-60 md:text-[18px] md:leading-7">
+            Connect with 100,000+ vetted candidates. We simplify staffing for hospitals, clinics,
+            and care facilities.
+          </p>
           <button
-            data-hero-reveal
             type="button"
-            className="flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-[background-color,transform] duration-300 ease-in-out hover:bg-[#f5f5f5] active:scale-[0.98]"
+            className="mt-2 flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-ink shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-[background-color,transform] duration-300 ease-in-out hover:bg-[#f5f5f5] active:scale-[0.98] md:mt-4"
           >
             Apply now
           </button>
-        </div>
+        </BlurReveal>
       </div>
     </section>
   );

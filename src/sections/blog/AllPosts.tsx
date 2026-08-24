@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import BlurReveal from "../../components/BlurReveal";
 import Select from "../../components/Select";
 import BlogPostCard from "./BlogPostCard";
 import { ALL_POSTS, POSTS_PER_PAGE, POST_CATEGORIES } from "./posts";
@@ -43,12 +44,11 @@ export default function AllPosts() {
         <div className="flex w-full max-w-[1200px] flex-col gap-10 md:gap-16">
           <div className="flex flex-col gap-8">
             <div className="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <h2
-                data-reveal
-                className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[40px] md:leading-[44px] md:tracking-[-0.8px]"
-              >
-                All posts
-              </h2>
+              <BlurReveal>
+                <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[40px] md:leading-[44px] md:tracking-[-0.8px]">
+                  All posts
+                </h2>
+              </BlurReveal>
               <Select
                 className="w-full sm:w-[262px]"
                 aria-label="Filter posts by category"

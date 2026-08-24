@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { animate, motion, useMotionValue, useReducedMotion } from "framer-motion";
+import BlurReveal from "../components/BlurReveal";
 
 const STATES = [
   "New York",
@@ -76,9 +77,11 @@ export default function PartnersMap() {
 
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="relative flex h-full w-full max-w-[900px] flex-col items-center justify-center lg:flex-row lg:items-center">
-            <p className="shrink-0 text-center font-serif text-[32px] leading-10 tracking-[-0.64px] text-white lg:text-left lg:text-[48px] lg:leading-[52px] lg:tracking-[-0.96px] lg:whitespace-nowrap">
-              Our partners are in
-            </p>
+            <BlurReveal className="shrink-0">
+              <p className="text-center font-serif text-[32px] leading-10 tracking-[-0.64px] text-white lg:text-left lg:text-[48px] lg:leading-[52px] lg:tracking-[-0.96px] lg:whitespace-nowrap">
+                Our partners are in
+              </p>
+            </BlurReveal>
 
             <div
               className="relative h-[180px] w-full max-w-[280px] overflow-hidden lg:h-full lg:w-[340px] lg:max-w-none lg:pl-5"

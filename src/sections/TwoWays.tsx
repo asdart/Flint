@@ -1,6 +1,7 @@
 import { Fragment, useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import ApplyButton from "../components/ApplyButton";
+import BlurReveal from "../components/BlurReveal";
 
 const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -236,11 +237,11 @@ function Banner({
         </div>
 
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-          animate={play ? { opacity: 1, y: 0 } : undefined}
+          initial={reduceMotion ? false : { opacity: 0, filter: "blur(16px)", y: 16 }}
+          animate={play ? { opacity: 1, filter: "blur(0px)", y: 0 } : undefined}
           transition={{
-            duration: reduceMotion ? 0 : 0.5,
-            ease: EASE_OUT,
+            duration: reduceMotion ? 0 : 0.75,
+            ease: "easeInOut",
             delay: reduceMotion ? 0 : offset + AT.cta,
           }}
         >
@@ -258,20 +259,17 @@ export default function TwoWays() {
     <section className="w-full px-4 pt-4">
       <div className="flex w-full justify-center rounded-[24px] py-12 md:py-16 lg:py-24">
         <div className="flex w-full max-w-[1200px] flex-col items-center gap-10 px-4 md:gap-16">
-          <header className="flex w-full max-w-[436px] flex-col gap-4 text-center">
-            <h2
-              data-reveal
-              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
-            >
+          <BlurReveal className="flex w-full max-w-[436px] flex-col gap-4 text-center">
+            <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
               One mission.
               <br />
               Two ways in.
             </h2>
-            <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+            <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
               Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
               Cards.
             </p>
-          </header>
+          </BlurReveal>
 
           <div className="flex w-full flex-col items-stretch gap-4 lg:flex-row">
             <Banner

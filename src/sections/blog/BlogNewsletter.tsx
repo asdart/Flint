@@ -16,7 +16,7 @@ function SubscribeForm() {
         aria-label="Email address"
         className="min-w-0 flex-1 bg-transparent py-2 text-[16px] leading-6 text-ink outline-none placeholder:text-[#8c929b]"
       />
-      <ApplyButton type="submit" reveal={false}>
+      <ApplyButton type="submit">
         Subscribe
       </ApplyButton>
     </form>

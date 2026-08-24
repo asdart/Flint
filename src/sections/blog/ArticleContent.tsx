@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import BlurReveal from "../../components/BlurReveal";
 import BlogNewsletter from "./BlogNewsletter";
 import type { ArticleBlock, TocItem } from "./featuredArticle";
 
@@ -98,13 +99,15 @@ function ArticleBlockView({ block }: { block: ArticleBlock }) {
     case "section":
       return (
         <section className="flex w-full flex-col gap-4">
-          <h2
-            id={block.id}
-            className="scroll-mt-8 font-serif text-[24px] leading-7 tracking-[-0.48px] text-ink"
-          >
-            {block.heading}
-          </h2>
-          <Paragraphs text={block.paragraphs} />
+          <BlurReveal className="contents">
+            <h2
+              id={block.id}
+              className="scroll-mt-8 font-serif text-[24px] leading-7 tracking-[-0.48px] text-ink"
+            >
+              {block.heading}
+            </h2>
+            <Paragraphs text={block.paragraphs} />
+          </BlurReveal>
           {block.intro ? (
             <p className="text-[16px] leading-7 text-subtle">{block.intro}</p>
           ) : null}

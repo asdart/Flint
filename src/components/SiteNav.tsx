@@ -1,7 +1,21 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import ApplyButton from "./ApplyButton";
 import { NAV_LINKS, type NavLabel } from "../nav";
+
+// Every page nests the nav under 16px of section padding plus 16px of panel
+// padding, so the resting bar sits 32px in from the viewport on all layouts.
+const REST_OFFSET = 32;
+const PILL_OFFSET = 12;
+const PILL_MAX_WIDTH = 664;
+const SCROLL_THRESHOLD = 24;
+const SHRINK_DURATION = 0.45;
+const BG_DURATION = 0.22;
+const EASE = [0.22, 1, 0.36, 1] as const;
+const PILL_SHADOW =
+  "0px 2px 2.5px rgba(0,0,0,0.03), 0px 9px 4.5px rgba(0,0,0,0.03), 0px 19px 6px rgba(0,0,0,0.01)";
 
 type SiteNavProps = {
   active: NavLabel;
@@ -15,17 +29,17 @@ function MenuIcon({ open, light }: { open: boolean; light: boolean }) {
   return (
     <span className="relative block size-5" aria-hidden>
       <span
-        className={`absolute left-0 h-0.5 w-5 rounded-full transition-transform duration-200 ${bar} ${
+        className={`absolute left-0 h-0.5 w-5 rounded-full transition-[transform,background-color] duration-200 ${bar} ${
           open ? "top-2 rotate-45" : "top-1"
         }`}
       />
       <span
-        className={`absolute top-2 left-0 h-0.5 w-5 rounded-full transition-opacity duration-200 ${bar} ${
+        className={`absolute top-2 left-0 h-0.5 w-5 rounded-full transition-[opacity,background-color] duration-200 ${bar} ${
           open ? "opacity-0" : "opacity-100"
         }`}
       />
       <span
-        className={`absolute left-0 h-0.5 w-5 rounded-full transition-transform duration-200 ${bar} ${
+        className={`absolute left-0 h-0.5 w-5 rounded-full transition-[transform,background-color] duration-200 ${bar} ${
           open ? "top-2 -rotate-45" : "top-3.5"
         }`}
       />
@@ -40,8 +54,16 @@ export default function SiteNav({
   cta,
 }: SiteNavProps) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [showPill, setShowPill] = useState(false);
+  const [viewport, setViewport] = useState(() =>
+    typeof document === "undefined" ? 0 : document.documentElement.clientWidth,
+  );
   const location = useLocation();
-  const light = variant === "light";
+  const reduceMotion = useReducedMotion();
+
+  // Light treatment (dark wordmark / links) only after the white pill is on.
+  const light = variant === "light" || showPill;
 
   useEffect(() => {
     setOpen(false);
@@ -54,17 +76,98 @@ export default function SiteNav({
     };
   }, [open]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const measure = () => setViewport(document.documentElement.clientWidth);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion || !scrolled) {
+      setShowPill(scrolled);
+      return;
+    }
+    const id = window.setTimeout(() => setShowPill(true), SHRINK_DURATION * 720);
+    return () => window.clearTimeout(id);
+  }, [scrolled, reduceMotion]);
+
+  const restWidth = Math.max(viewport - REST_OFFSET * 2, 0);
+  const pillWidth = Math.min(PILL_MAX_WIDTH, restWidth);
+  const motionDuration = reduceMotion ? 0 : undefined;
+  const shrinkTransition = {
+    duration: motionDuration ?? SHRINK_DURATION,
+    // Expand only after the white pill has faded out.
+    delay: reduceMotion || scrolled ? 0 : BG_DURATION,
+    ease: EASE,
+  };
+
   const linkIdle = light ? "text-subtle hover:text-ink" : "text-white/60 hover:text-white";
   const linkActive = light ? "text-ink" : "text-white";
-  const apply = cta ?? <ApplyButton variant="white" reveal={false} />;
+  const restApply = cta ?? <ApplyButton variant="white" reveal={false} />;
+  const pillApply = <ApplyButton variant="gradient" size="sm" reveal={false} />;
+  const apply = (
+    <span className="inline-grid">
+      <span
+        className={`transition-opacity duration-300 [grid-area:1/1] ${
+          showPill ? "pointer-events-none opacity-0" : "opacity-100"
+        }`}
+      >
+        {restApply}
+      </span>
+      <span
+        className={`transition-opacity duration-300 [grid-area:1/1] ${
+          showPill ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      >
+        {pillApply}
+      </span>
+    </span>
+  );
 
   const bar = (
-    <div className="relative flex w-full items-center justify-between">
-      <Link to="/" className="relative z-20 shrink-0" onClick={() => setOpen(false)}>
+    <motion.div
+      className="fixed left-1/2 z-40 flex items-center justify-between rounded-full"
+      style={{ x: "-50%" }}
+      initial={false}
+      animate={{
+        top: scrolled ? PILL_OFFSET : REST_OFFSET,
+        width: scrolled ? pillWidth : restWidth,
+        paddingLeft: scrolled ? 20 : 0,
+        paddingRight: scrolled ? 8 : 0,
+        paddingTop: scrolled ? 8 : 0,
+        paddingBottom: scrolled ? 8 : 0,
+      }}
+      transition={shrinkTransition}
+    >
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-full bg-white"
+        style={{ boxShadow: PILL_SHADOW }}
+        initial={false}
+        animate={{ opacity: showPill ? 1 : 0 }}
+        transition={{
+          duration: motionDuration ?? BG_DURATION,
+          ease: "easeOut",
+        }}
+      />
+
+      <Link to="/" className="relative z-20 h-6 w-[49px] shrink-0" onClick={() => setOpen(false)}>
+        <img src="/assets/wordmark.svg" alt="Flint" className="absolute inset-0 size-full" />
         <img
-          src={light ? "/assets/wordmark.svg" : "/assets/wordmark-white.svg"}
-          alt="Flint"
-          className="h-6 w-[49px]"
+          src="/assets/wordmark-white.svg"
+          alt=""
+          aria-hidden
+          className={`absolute inset-0 size-full transition-opacity duration-300 ${
+            light ? "opacity-0" : "opacity-100"
+          }`}
         />
       </Link>
 
@@ -94,7 +197,7 @@ export default function SiteNav({
           <MenuIcon open={open} light={light} />
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 
   const menu = open ? (
@@ -130,19 +233,20 @@ export default function SiteNav({
     </div>
   ) : null;
 
-  if (layout === "overlay") {
-    return (
-      <>
-        <div className="absolute inset-x-4 top-4 z-20">{bar}</div>
-        {menu}
-      </>
-    );
-  }
-
   return (
     <>
-      <div className="relative z-20 w-full">{bar}</div>
-      {menu}
+      {/* Overlay layouts position the nav absolutely, so only in-flow bars need
+          their vacated height reserved. */}
+      {layout === "bar" ? (
+        <div aria-hidden className="h-10 w-full shrink-0 lg:h-[34px]" />
+      ) : null}
+      {createPortal(
+        <>
+          {bar}
+          {menu}
+        </>,
+        document.body,
+      )}
     </>
   );
 }

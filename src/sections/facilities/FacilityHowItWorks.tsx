@@ -1,3 +1,4 @@
+import BlurReveal from "../../components/BlurReveal";
 import NetworkIllustration from "../../components/NetworkIllustration";
 import CostSavingsIllustration from "../../components/CostSavingsIllustration";
 import RetentionIllustration from "../../components/RetentionIllustration";
@@ -40,20 +41,17 @@ export default function FacilityHowItWorks() {
   return (
     <section className="w-full px-4 pb-4">
       <div className="flex w-full flex-col items-center gap-10 overflow-clip rounded-[24px] bg-white px-5 py-12 md:gap-16 md:px-10 md:py-16 lg:px-20 lg:py-24">
-        <header className="flex max-w-[480px] flex-col items-center gap-4 text-center">
-          <h2
-            data-reveal
-            className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
-          >
+        <BlurReveal className="flex max-w-[480px] flex-col items-center gap-4 text-center">
+          <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             Why facilities
             <br />
             trust Flint
           </h2>
-          <p data-reveal className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
+          <p className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
             Get answers to common questions about our Green Card pathway, candidate vetting, and
             healthcare placement process.
           </p>
-        </header>
+        </BlurReveal>
         {STEPS.map((step, i) => (
           <div
             key={i}
@@ -64,17 +62,14 @@ export default function FacilityHowItWorks() {
             <div className="w-full max-w-[580px]">
               <StepMedia illustration={step.illustration} />
             </div>
-            <div className="flex w-full min-w-0 max-w-[480px] flex-1 flex-col gap-2">
-              <h3
-                data-reveal
-                className="font-serif text-[28px] leading-9 tracking-[-0.56px] text-ink md:text-[32px] md:leading-10 md:tracking-[-0.64px]"
-              >
+            <BlurReveal className="flex w-full min-w-0 max-w-[480px] flex-1 flex-col gap-2">
+              <h3 className="font-serif text-[28px] leading-9 tracking-[-0.56px] text-ink md:text-[32px] md:leading-10 md:tracking-[-0.64px]">
                 {step.title}
               </h3>
-              <p data-reveal className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
+              <p className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
                 {step.body}
               </p>
-            </div>
+            </BlurReveal>
           </div>
         ))}
       </div>

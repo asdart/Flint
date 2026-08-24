@@ -7,6 +7,7 @@ import {
   useReducedMotion,
   useTransform,
 } from "framer-motion";
+import BlurReveal from "../components/BlurReveal";
 import CarouselPagination, {
   CAROUSEL_AUTOPLAY_DELAY,
   CAROUSEL_BAR_WIDTH,
@@ -429,15 +430,15 @@ export default function HowItWorks() {
       className="flex w-full flex-col items-center overflow-x-clip bg-white p-4"
     >
       <div className="flex w-full max-w-[1200px] flex-col items-center pt-12 md:pt-16 lg:pt-24">
-        <header className="mb-10 flex w-full max-w-[480px] flex-col gap-4 px-4 text-center md:mb-12">
-          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+        <BlurReveal className="mb-10 flex w-full max-w-[480px] flex-col gap-4 px-4 text-center md:mb-12">
+          <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             How Flint works
           </h2>
-          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+          <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
             Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
             Cards.
           </p>
-        </header>
+        </BlurReveal>
       </div>
 
       <div

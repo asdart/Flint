@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BlurReveal from "../components/BlurReveal";
 
 const LINK_GROUPS = [
   {
@@ -43,24 +44,24 @@ export default function Footer() {
     <footer className="w-full p-4">
       <div className="flex w-full flex-col gap-12 rounded-[24px] bg-brand p-8 md:gap-16 md:p-12 lg:p-20">
         <div className="flex w-full flex-col items-start gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="flex w-full max-w-[700px] flex-col gap-4">
-            <p data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-white md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+          <BlurReveal className="flex w-full max-w-[700px] flex-col gap-4">
+            <p className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-white md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
               It&rsquo;s time to find your
               <br />
               green card sponsor.
             </p>
-            <p data-reveal className="text-[16px] leading-6 text-white/80 md:text-[18px] md:leading-7">
+            <p className="text-[16px] leading-6 text-white/80 md:text-[18px] md:leading-7">
               Apply now, it is free.
             </p>
-          </div>
-          <span data-reveal className="inline-flex">
+          </BlurReveal>
+          <BlurReveal className="inline-flex">
             <button
               type="button"
               className="relative flex items-center justify-center rounded-[24px] border border-stone-50 bg-white px-5 py-2.5 text-[14px] font-medium leading-5 tracking-[-0.028px] text-[#0a0a0a] shadow-[inset_0px_-1px_2px_0px_rgba(0,0,0,0.15)] transition-[background-color,transform] duration-300 ease-in-out hover:bg-[#f5f5f5] active:scale-[0.98]"
             >
               Apply now
             </button>
-          </span>
+          </BlurReveal>
         </div>
 
         <hr className="w-full border-t border-white/20" />

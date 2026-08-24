@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import ApplyButton from "../../components/ApplyButton";
+import BlurReveal from "../../components/BlurReveal";
 import ProximityOrbit from "../../components/ProximityOrbit";
 import SiteNav from "../../components/SiteNav";
 
@@ -78,19 +79,17 @@ export default function FacilityHero() {
           />
         </div>
 
-        <div className="absolute top-[58%] left-1/2 z-10 flex w-full max-w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-6 px-5 text-center md:top-1/2 md:gap-8">
-          <div className="flex flex-col gap-4">
-            <h1 data-hero-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
-              Find the right sponsored healthcare role for you
-            </h1>
-            <p data-hero-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
-              Flint helps healthcare professionals on temporary status find sponsored healthcare jobs.
-            </p>
-          </div>
-          <span data-hero-reveal className="inline-flex">
+        <BlurReveal className="absolute top-[58%] left-1/2 z-10 flex w-full max-w-[436px] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4 px-5 text-center md:top-1/2">
+          <h1 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+            Find the right sponsored healthcare role for you
+          </h1>
+          <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+            Flint helps healthcare professionals on temporary status find sponsored healthcare jobs.
+          </p>
+          <span className="inline-flex pt-2 md:pt-4">
             <ApplyButton reveal={false} />
           </span>
-        </div>
+        </BlurReveal>
       </div>
     </section>
   );

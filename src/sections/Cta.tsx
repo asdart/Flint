@@ -1,4 +1,5 @@
 import ApplyButton from "../components/ApplyButton";
+import BlurReveal from "../components/BlurReveal";
 
 /* The artwork is laid out on Figma's 1408x560 card and anchored to the right
    edge, so it keeps its composition as the card narrows.
@@ -60,21 +61,18 @@ export default function Cta() {
           />
         </div>
 
-        <div className="relative z-10 flex w-full max-w-[436px] flex-col gap-8">
-          <div className="flex flex-col gap-4">
-            <h2
-              data-reveal
-              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
-            >
-              Your green card pathway starts here.
-            </h2>
-            <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
-              Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
-              Cards.
-            </p>
-          </div>
-          <ApplyButton />
-        </div>
+        <BlurReveal className="relative z-10 flex w-full max-w-[436px] flex-col gap-4">
+          <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+            Your green card pathway starts here.
+          </h2>
+          <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+            Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
+            Cards.
+          </p>
+          <span className="inline-flex pt-4">
+            <ApplyButton reveal={false} />
+          </span>
+        </BlurReveal>
       </div>
     </section>
   );

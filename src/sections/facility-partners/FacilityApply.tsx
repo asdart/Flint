@@ -1,4 +1,5 @@
 import { useState } from "react";
+import BlurReveal from "../../components/BlurReveal";
 import Select from "../../components/Select";
 
 const GRADIENT =
@@ -41,7 +42,7 @@ export default function FacilityApply() {
           className="relative z-10 flex w-full max-w-[710px] flex-col gap-8 rounded-[24px] bg-white p-6 md:p-10"
           onSubmit={(e) => e.preventDefault()}
         >
-          <header className="flex flex-col gap-4 text-center">
+          <BlurReveal className="flex flex-col gap-4 text-center">
             <h2 className="font-serif text-[28px] leading-9 tracking-[-0.56px] text-ink md:text-[32px] md:leading-10 md:tracking-[-0.64px]">
               See if your facility qualifies
             </h2>
@@ -49,7 +50,7 @@ export default function FacilityApply() {
               Fill out the form below and a member of our team will reach out within one business
               day.
             </p>
-          </header>
+          </BlurReveal>
 
           <div className="flex flex-col gap-6">
             <label className="flex flex-col gap-1">
@@ -119,13 +120,15 @@ export default function FacilityApply() {
             </label>
           </div>
 
-          <button
-            type="submit"
-            className="flex w-full items-center justify-center rounded-[999px] px-8 py-3.5 text-[16px] font-semibold leading-6 tracking-[-0.032px] text-white transition-transform hover:scale-[1.01] active:scale-[0.99]"
-            style={{ backgroundImage: GRADIENT }}
-          >
-            Submit form
-          </button>
+          <BlurReveal className="w-full [&>div]:w-full">
+            <button
+              type="submit"
+              className="flex w-full items-center justify-center rounded-[999px] px-8 py-3.5 text-[16px] font-semibold leading-6 tracking-[-0.032px] text-white transition-transform hover:scale-[1.01] active:scale-[0.99]"
+              style={{ backgroundImage: GRADIENT }}
+            >
+              Submit form
+            </button>
+          </BlurReveal>
         </form>
       </div>
     </section>

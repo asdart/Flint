@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BlurReveal from "../../components/BlurReveal";
 import SiteNav from "../../components/SiteNav";
 import { FEATURED_POST } from "./posts";
 
@@ -29,18 +30,15 @@ export default function BlogHero() {
 
         <div className="relative z-0 flex w-full flex-col items-center pb-8 md:pb-16">
           <div className="flex w-full max-w-[1200px] flex-col gap-8 md:gap-12">
-            <div className="flex w-full max-w-[480px] flex-col gap-2">
-              <h1
-                data-reveal
-                className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[40px] md:leading-[44px] md:tracking-[-0.8px]"
-              >
+            <BlurReveal className="flex w-full max-w-[480px] flex-col gap-2">
+              <h1 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[40px] md:leading-[44px] md:tracking-[-0.8px]">
                 The Flint blog
               </h1>
-              <p data-reveal className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
+              <p className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
                 Immigration, licensing, and hiring tips for healthcare workers seeking Visa
                 sponsorship.
               </p>
-            </div>
+            </BlurReveal>
 
             <Link
               data-reveal
@@ -53,12 +51,14 @@ export default function BlogHero() {
                   <span aria-hidden>·</span>
                   <span>{FEATURED_POST.category}</span>
                 </div>
-                <h2 className="pt-1 text-[24px] leading-8 tracking-[-0.11px] text-ink md:text-[32px] md:leading-10">
-                  {FEATURED_POST.title}
-                </h2>
-                <p className="pt-2 text-[16px] leading-6 tracking-[-0.23px] text-subtle md:text-[18px] md:leading-7">
-                  {FEATURED_POST.excerpt}
-                </p>
+                <BlurReveal>
+                  <h2 className="pt-1 text-[24px] leading-8 tracking-[-0.11px] text-ink md:text-[32px] md:leading-10">
+                    {FEATURED_POST.title}
+                  </h2>
+                  <p className="pt-2 text-[16px] leading-6 tracking-[-0.23px] text-subtle md:text-[18px] md:leading-7">
+                    {FEATURED_POST.excerpt}
+                  </p>
+                </BlurReveal>
                 <div className="flex items-center gap-2 pt-4">
                   <span className="size-6 shrink-0 overflow-clip rounded-full bg-[#e6e5e0]">
                     <img

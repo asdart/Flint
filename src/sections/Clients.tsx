@@ -1,3 +1,5 @@
+import BlurReveal from "../components/BlurReveal";
+
 const LOGOS = [
   { src: "/assets/home/logo-01.png", w: 132 },
   { src: "/assets/home/logo-02.png", w: 96 },
@@ -24,9 +26,11 @@ export default function Clients() {
 
   return (
     <section className="flex w-full flex-col items-start gap-4 py-8 md:flex-row md:items-center md:gap-14">
-      <p className="shrink-0 px-5 text-[16px] leading-5 text-brand md:whitespace-nowrap md:px-0 md:pl-12 md:pr-2">
-        Partnering with the top facilities
-      </p>
+      <BlurReveal className="shrink-0">
+        <p className="px-5 text-[16px] leading-5 text-brand md:whitespace-nowrap md:px-0 md:pl-12 md:pr-2">
+          Partnering with the top facilities
+        </p>
+      </BlurReveal>
       <div className="relative h-9 min-w-0 w-full flex-1 overflow-hidden">
         <div className="logo-marquee-track flex w-max items-center">
           {row}

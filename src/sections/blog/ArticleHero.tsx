@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BlurReveal from "../../components/BlurReveal";
 import SiteNav from "../../components/SiteNav";
 import type { BlogPost } from "./posts";
 
@@ -25,7 +26,7 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
                   <span aria-hidden>/</span>
                   <span>{post.category}</span>
                 </p>
-                <div className="flex w-full flex-col items-center gap-4">
+                <BlurReveal className="flex w-full flex-col items-center gap-4">
                   <p className="text-[14px] leading-5 text-brand">
                     {post.date} · {post.readTime}
                   </p>
@@ -40,7 +41,7 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
                       post.title
                     )}
                   </h1>
-                </div>
+                </BlurReveal>
               </div>
 
               <div className="flex flex-col items-center gap-3">

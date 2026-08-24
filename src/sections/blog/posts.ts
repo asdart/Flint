@@ -27,6 +27,39 @@ export const FEATURED_POST: BlogPost = {
   readTime: "6 min read",
 };
 
+export const HOME_POSTS: BlogPost[] = [
+  {
+    ...FEATURED_POST,
+    image: "/assets/home/blog-card-01.jpg",
+    title: "Is Flint legit? What international nurses must know",
+    excerpt:
+      "A comprehensive look at our secure green card verification system built entirely to protect candidate nurses.",
+    readTime: "4 min read",
+  },
+  {
+    slug: "the-ultimate-nclex-rn-state-by-state-transition-map",
+    image: "/assets/home/blog-card-02.jpg",
+    date: "July 17, 2026",
+    category: "Licensing",
+    title: "The ultimate NCLEX-RN state-by-state transition map",
+    excerpt:
+      "Choosing the right state board of nursing can reduce your credential evaluation timeline by up to three months.",
+    author: "Sarah",
+    readTime: "5 min read",
+  },
+  {
+    slug: "how-hospitals-tackle-critical-winter-staffing-shifts",
+    image: "/assets/home/blog-card-03.jpg",
+    date: "July 17, 2026",
+    category: "Institutional",
+    title: "How hospitals tackle critical winter staffing shifts",
+    excerpt:
+      "Strategic approaches and predictive staffing matrices that aid modern hospital systems in avoiding costly agency dependency.",
+    author: "Marcus",
+    readTime: "8 min read",
+  },
+];
+
 const IMAGES = [
   "/assets/blog/post-01.jpg",
   "/assets/blog/post-02.jpg",
@@ -316,7 +349,7 @@ export const POSTS_PER_PAGE = 6;
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
   if (FEATURED_POST.slug === slug) return FEATURED_POST;
-  return ALL_POSTS.find((post) => post.slug === slug);
+  return HOME_POSTS.find((post) => post.slug === slug) ?? ALL_POSTS.find((post) => post.slug === slug);
 }
 
 export function getRelatedPosts(slug: string, count = 3): BlogPost[] {

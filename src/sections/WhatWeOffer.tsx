@@ -1,3 +1,5 @@
+import BlurReveal from "../components/BlurReveal";
+
 const OFFERS = [
   {
     icon: "/assets/home/offer-hospital.svg",
@@ -58,15 +60,15 @@ export default function WhatWeOffer() {
         <Flower className="top-[-261px] left-[-311px]" size={522} />
         <Flower className="top-[521px] left-[900px] hidden md:block" size={747} />
 
-        <header className="relative mx-auto mb-10 flex w-full max-w-[436px] flex-col gap-4 text-center md:mb-16">
-          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+        <BlurReveal className="relative mx-auto mb-10 flex w-full max-w-[436px] flex-col gap-4 text-center md:mb-16">
+          <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             What we offer
           </h2>
-          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+          <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
             Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
             Cards.
           </p>
-        </header>
+        </BlurReveal>
 
         <div className="relative mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {OFFERS.map((offer) => (
@@ -76,10 +78,10 @@ export default function WhatWeOffer() {
               className="flex min-h-[240px] flex-col justify-between rounded-[20px] bg-white p-6 lg:h-[304px]"
             >
               <img src={offer.icon} alt="" className="size-8" />
-              <div className="flex flex-col gap-2">
+              <BlurReveal className="flex flex-col gap-2">
                 <h3 className="text-[16px] font-medium leading-6 text-ink opacity-80">{offer.title}</h3>
                 <p className="text-[16px] leading-6 text-brand opacity-80">{offer.body}</p>
-              </div>
+              </BlurReveal>
             </article>
           ))}
         </div>

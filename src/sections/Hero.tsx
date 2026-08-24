@@ -8,23 +8,77 @@ import {
   type MotionValue,
 } from "framer-motion";
 import ApplyButton from "../components/ApplyButton";
+import BlurReveal from "../components/BlurReveal";
 import SiteNav from "../components/SiteNav";
 
+// Crops are Figma coordinates on a 200×240 card (node 5703:5332).
 const CARDS = [
-  { src: "/assets/home/candidate-01.png", name: "Maria", flag: "/assets/flags/ph.svg" },
-  { src: "/assets/home/candidate-02.png", name: "Chrismene", flag: "/assets/flags/ht.svg" },
-  { src: "/assets/home/candidate-03.png", name: "Wanjiru", flag: "/assets/flags/ke.svg" },
-  { src: "/assets/home/candidate-04.png", name: "Kwame", flag: "/assets/flags/gh.svg" },
-  { src: "/assets/home/candidate-05.png", name: "Emeka", flag: "/assets/flags/ng.svg" },
-  { src: "/assets/home/candidate-06.png", name: "Ama", flag: "/assets/flags/gh.svg" },
-  { src: "/assets/home/candidate-07.png", name: "Daniel", flag: "/assets/flags/ke.svg" },
-  { src: "/assets/home/candidate-08.png", name: "Ngozi", flag: "/assets/flags/ng.svg" },
-  { src: "/assets/home/candidate-09.png", name: "Linh", flag: "/assets/flags/vn.svg" },
-  { src: "/assets/home/candidate-10.png", name: "Samuel", flag: "/assets/flags/et.svg" },
+  {
+    src: "/assets/home/candidate-01.png",
+    name: "Maria",
+    flag: "/assets/flags/ph.svg",
+    crop: { left: -115.04, top: -6.15, width: 431.66, height: 539.38, rotate: -1.38 },
+  },
+  {
+    src: "/assets/home/candidate-02.png",
+    name: "Chrismene",
+    flag: "/assets/flags/ht.svg",
+    crop: { left: -52.42, top: -28.51, width: 308.89, height: 385.97, rotate: -1.38 },
+  },
+  {
+    src: "/assets/home/candidate-03.png",
+    name: "Wanjiru",
+    flag: "/assets/flags/ke.svg",
+    crop: { left: -56.55, top: -19.47, width: 308.89, height: 385.97 },
+  },
+  {
+    src: "/assets/home/candidate-04.png",
+    name: "Kwame",
+    flag: "/assets/flags/gh.svg",
+    crop: { left: -88.86, top: 4.54, width: 371.83, height: 371.82 },
+  },
+  {
+    src: "/assets/home/candidate-05.png",
+    name: "Emeka",
+    flag: "/assets/flags/ng.svg",
+    crop: { left: -87.26, top: -29.19, width: 375.12, height: 468.73 },
+  },
+  {
+    src: "/assets/home/candidate-06.png",
+    name: "Ama",
+    flag: "/assets/flags/gh.svg",
+    crop: { left: -87.26, top: -29.19, width: 375.12, height: 468.73 },
+  },
+  {
+    src: "/assets/home/candidate-07.png",
+    name: "Daniel",
+    flag: "/assets/flags/ke.svg",
+    crop: { left: -56.25, top: -19.24, width: 308.89, height: 385.97 },
+  },
+  {
+    src: "/assets/home/candidate-08.png",
+    name: "Ngozi",
+    flag: "/assets/flags/ng.svg",
+    crop: { left: -115.11, top: -5.5, width: 432.1, height: 539.93, rotate: -1.38 },
+  },
+  {
+    src: "/assets/home/candidate-09.png",
+    name: "Linh",
+    flag: "/assets/flags/vn.svg",
+    crop: { left: -110.47, top: 9.42, width: 426.75, height: 533.24, rotate: -1.38 },
+  },
+  {
+    src: "/assets/home/candidate-10.png",
+    name: "Samuel",
+    flag: "/assets/flags/et.svg",
+    crop: { left: -146.04, top: -1.25, width: 485.15, height: 606.22, rotate: -1.38 },
+  },
 ];
 
+const FIGMA_CARD_W = 200;
 const CARD_W = 220;
 const CARD_H = 264;
+const CROP_SCALE = CARD_W / FIGMA_CARD_W;
 const CARD_HALF = CARD_W / 2;
 const LOOP_SECONDS = 34;
 const HOVER_SPEED_FACTOR = 0.35;
@@ -112,8 +166,14 @@ function ArcCard({
         <img
           src={card.src}
           alt=""
-          className="pointer-events-none absolute left-1/2 max-w-none -translate-x-1/2 object-cover"
-          style={{ top: -26, width: 352, height: 429 }}
+          className="pointer-events-none absolute max-w-none origin-center object-cover"
+          style={{
+            left: card.crop.left * CROP_SCALE,
+            top: card.crop.top * CROP_SCALE,
+            width: card.crop.width * CROP_SCALE,
+            height: card.crop.height * CROP_SCALE,
+            transform: card.crop.rotate ? `rotate(${card.crop.rotate}deg)` : undefined,
+          }}
         />
         <div className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-[32px] bg-white py-1 pl-1 pr-2.5">
           <img src={card.flag} alt="" className="size-5" />
@@ -152,23 +212,18 @@ export default function Hero() {
       <div className="relative h-[720px] w-full overflow-clip rounded-[24px] bg-secondary md:h-[848px]">
         <SiteNav active="Home" layout="overlay" />
 
-        <div className="absolute top-[120px] left-1/2 flex w-full max-w-[436px] -translate-x-1/2 flex-col items-center gap-6 px-5 text-center md:top-[140px] md:gap-8">
-          <div className="flex flex-col gap-4">
-            <h1
-              data-hero-reveal
-              className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]"
-            >
-              Your green card pathway starts here.
-            </h1>
-            <p data-hero-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
-              Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
-              Cards.
-            </p>
-          </div>
-          <span data-hero-reveal className="inline-flex">
+        <BlurReveal className="absolute top-[120px] left-1/2 flex w-full max-w-[436px] -translate-x-1/2 flex-col items-center gap-4 px-5 text-center md:top-[140px]">
+          <h1 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+            Your green card pathway starts here.
+          </h1>
+          <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+            Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
+            Cards.
+          </p>
+          <span className="inline-flex pt-2 md:pt-4">
             <ApplyButton reveal={false} />
           </span>
-        </div>
+        </BlurReveal>
 
         <div
           className="absolute right-2 bottom-4 left-4 h-[240px] md:right-2 md:bottom-[33px] md:left-4 md:h-[355px]"

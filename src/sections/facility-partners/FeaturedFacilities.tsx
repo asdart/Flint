@@ -1,4 +1,5 @@
 import ApplyButton from "../../components/ApplyButton";
+import BlurReveal from "../../components/BlurReveal";
 
 const FACILITIES = [
   { img: "/assets/facility/facility-01.png", name: "Oceanic Medical Center", location: "Seattle, WA", roles: "12 Open Roles" },
@@ -14,18 +15,18 @@ const CARD_OVERLAY =
 export default function FeaturedFacilities() {
   return (
     <section className="flex w-full flex-col items-center gap-10 bg-white py-16 md:gap-16 md:py-24 lg:py-[120px]">
-      <div className="flex w-full max-w-[436px] flex-col items-center gap-8 px-4 text-center">
-        <div className="flex flex-col gap-4">
-          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
-            Join these leading facilities
-          </h2>
-          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
-            Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
-            Cards.
-          </p>
-        </div>
-        <ApplyButton />
-      </div>
+      <BlurReveal className="flex w-full max-w-[436px] flex-col items-center gap-4 px-4 text-center">
+        <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+          Join these leading facilities
+        </h2>
+        <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+          Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
+          Cards.
+        </p>
+        <span className="inline-flex pt-4">
+          <ApplyButton reveal={false} />
+        </span>
+      </BlurReveal>
 
       <div className="flex w-full snap-x gap-6 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {FACILITIES.map((facility) => (

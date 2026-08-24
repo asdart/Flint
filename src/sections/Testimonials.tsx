@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import BlurReveal from "../components/BlurReveal";
 import {
   animate,
   motion,
@@ -234,16 +235,16 @@ export default function Testimonials() {
   return (
     <section className="w-full px-4 pb-4">
       <div className="relative h-[900px] w-full overflow-clip rounded-[24px] bg-tertiary md:h-[1102px]">
-        <header className="absolute top-[72px] left-1/2 flex w-full max-w-[436px] -translate-x-1/2 flex-col gap-4 px-5 text-center md:top-[140px]">
-          <h2 data-reveal className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+        <BlurReveal className="absolute top-[72px] left-1/2 flex w-full max-w-[436px] -translate-x-1/2 flex-col gap-4 px-5 text-center md:top-[140px]">
+          <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
             Real stories.
             <br />
             Real impact
           </h2>
-          <p data-reveal className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+          <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
             Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.
           </p>
-        </header>
+        </BlurReveal>
 
         <motion.div
           className="absolute top-[280px] left-0 h-[488px] w-full cursor-grab touch-pan-y select-none active:cursor-grabbing md:top-[412px]"
