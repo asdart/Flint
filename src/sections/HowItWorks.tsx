@@ -60,8 +60,10 @@ function ApplicationCard() {
                   />
                 </div>
                 <div className={`min-w-0 flex-1 ${isFront ? "text-ink" : "text-white"}`}>
-                  <p className="truncate text-[14px] leading-5">Andrew</p>
-                  <p className="truncate text-[14px] leading-5 opacity-60">Applications sent</p>
+                  <p className="truncate text-[14px] leading-5">Jonathan Johnson</p>
+                  <p className="truncate text-[14px] leading-5 opacity-60">
+                    {isFront ? "Applications Submitted!" : "Applications sent"}
+                  </p>
                 </div>
                 <div
                   className={`flex shrink-0 items-center justify-center rounded-full p-3 ${isFront ? "bg-black/10" : "bg-white/10"}`}
@@ -74,7 +76,7 @@ function ApplicationCard() {
         })}
       </div>
       <div className="relative flex flex-col gap-2 text-white">
-        <p className="text-[20px] font-medium leading-7 tracking-[-0.04px]">Send application</p>
+        <p className="text-[20px] font-medium leading-7 tracking-[-0.04px]">Apply in 30 Seconds</p>
         <p className="text-[20px] leading-7 tracking-[-0.04px] opacity-60">
           We will make sure we can help you with your immigration case.
         </p>
@@ -131,7 +133,7 @@ function InterviewCard() {
         className="absolute left-[269.5px] top-[214px] size-[114px] rounded-xl border-4 border-white object-cover"
       />
       <div className="absolute right-8 bottom-8 left-8 flex flex-col gap-2 text-white">
-        <p className="text-[20px] font-medium leading-7 tracking-[-0.04px]">Interview and offer</p>
+        <p className="text-[20px] font-medium leading-7 tracking-[-0.04px]">Meet with Flint</p>
         <p className="text-[20px] leading-7 tracking-[-0.04px] opacity-60">
           Apply to any facility; if successful, you&rsquo;ll get an offer.
         </p>
@@ -140,24 +142,106 @@ function InterviewCard() {
   );
 }
 
+function FlowerRing({ className }: { className: string }) {
+  return (
+    <div
+      className={`pointer-events-none absolute size-[505px] overflow-hidden ${className}`}
+      style={{
+        WebkitMaskImage: "url(/assets/home/how-ring-mask.svg)",
+        maskImage: "url(/assets/home/how-ring-mask.svg)",
+        WebkitMaskSize: "100% 100%",
+        maskSize: "100% 100%",
+      }}
+    >
+      <img
+        src="/assets/home/how-bg-purple.png"
+        alt=""
+        className="absolute left-[-20.57px] top-0 h-[505px] w-[743px] max-w-none object-cover"
+      />
+    </div>
+  );
+}
+
+function FacilityCallCard() {
+  return (
+    <div className="relative flex h-[464px] w-[361px] shrink-0 flex-col justify-end gap-2 overflow-clip rounded-[32px] bg-secondary p-8">
+      <FlowerRing className="left-[-211px] top-[-264px]" />
+
+      <div className="relative min-h-0 w-full flex-1">
+        <div
+          className="absolute left-[39px] top-[215px] h-[41px] w-[219px] rounded-[24px] border border-white/10"
+          style={{
+            background: "rgba(255,255,255,0.2)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "inset 0 2px 6px rgba(255,255,255,0.25)",
+          }}
+        />
+        <div
+          className="absolute left-5 top-[205px] h-[41px] w-[257px] rounded-[24px] border border-white/20"
+          style={{
+            background: "rgba(255,255,255,0.4)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "inset 0 2px 6px rgba(255,255,255,0.25)",
+          }}
+        />
+
+        <div className="absolute left-0 top-[62px] flex h-[172px] w-[297px] gap-4 overflow-clip rounded-[24px] bg-white p-5 shadow-[0_19px_42px_rgba(0,0,0,0.02),0_77px_77px_rgba(0,0,0,0.02)]">
+          <div className="h-full w-1.5 shrink-0 rounded-[15px] bg-brand" />
+          <div className="flex min-w-0 flex-1 flex-col justify-between">
+            <div className="flex items-center gap-1 self-start rounded-full bg-[#e8f3ed] py-0.5 pr-2 pl-1">
+              <div className="size-3 overflow-clip">
+                <img
+                  src="/assets/home/how-call-ic-video.svg"
+                  alt=""
+                  className="size-full max-w-none object-contain"
+                />
+              </div>
+              <p className="text-[12px] leading-4 tracking-[-0.06px] text-[#317544]">Video Call</p>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center">
+                <div className="relative z-[1] mr-[-4px] size-6 overflow-clip rounded-full border-[1.5px] border-white bg-[#f1e0d8]">
+                  <div className="absolute top-[-18.75%] left-[calc(50%+1px)] aspect-[1086/1448] h-[300%] -translate-x-1/2">
+                    <img
+                      src="/assets/home/how-call-dieunold.png"
+                      alt=""
+                      className="absolute inset-0 size-full max-w-none object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="size-6 overflow-clip rounded-full">
+                  <img
+                    src="/assets/home/how-call-flag-ng.svg"
+                    alt=""
+                    className="size-full max-w-none object-cover"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-0.5">
+                <p className="text-[14px] font-medium leading-5 tracking-[-0.07px] text-ink">
+                  Dieunold x Casa Healthcare
+                </p>
+                <p className="text-[12px] leading-4 tracking-[-0.06px] text-subtle">13:30PM-14:30PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p className="relative text-[20px] font-medium leading-7 tracking-[-0.04px] text-ink">
+        Call with Facility
+      </p>
+      <p className="relative text-[20px] leading-7 tracking-[-0.04px] text-ink opacity-60">
+        While your Green card processes you continue to work
+      </p>
+    </div>
+  );
+}
+
 function RelocateCard() {
   return (
     <div className="relative flex h-[464px] w-[361px] shrink-0 flex-col justify-end gap-2 overflow-clip rounded-[32px] bg-tertiary p-8">
-      <div
-        className="pointer-events-none absolute left-[125px] top-[-264px] size-[505px] overflow-hidden"
-        style={{
-          WebkitMaskImage: "url(/assets/home/how-ring-mask.svg)",
-          maskImage: "url(/assets/home/how-ring-mask.svg)",
-          WebkitMaskSize: "100% 100%",
-          maskSize: "100% 100%",
-        }}
-      >
-        <img
-          src="/assets/home/how-bg-purple.png"
-          alt=""
-          className="absolute left-[-20.57px] top-0 h-[505px] w-[743px] max-w-none object-cover"
-        />
-      </div>
+      <FlowerRing className="left-[125px] top-[-264px]" />
 
       <div className="relative min-h-0 w-full flex-1 drop-shadow-[0_14px_15.5px_rgba(0,0,0,0.03)]">
         <div className="absolute left-px top-0 flex h-[280px] w-[296px] items-center justify-center">
@@ -224,12 +308,80 @@ function RelocateCard() {
 
 function StartWorkCard() {
   return (
-    <div className="relative flex h-[464px] w-[361px] shrink-0 flex-col justify-end gap-2 overflow-clip rounded-[32px] bg-secondary px-8 pb-8">
-      <img
-        src="/assets/home/how-startwork-visual.png"
-        alt=""
-        className="pointer-events-none absolute left-0 top-0 h-[340px] w-[361px] max-w-none"
-      />
+    <div className="relative flex h-[464px] w-[361px] shrink-0 flex-col justify-end gap-2 overflow-clip rounded-[32px] bg-brand-light px-8 pb-8">
+      <FlowerRing className="left-[-245px] top-[-264px]" />
+
+      <div className="relative min-h-0 w-full flex-1">
+        <div className="absolute top-[-13.7px] left-[112.7px] flex h-[63.9px] w-[53.3px] items-center justify-center">
+          <div className="-scale-y-100 rotate-[177.82deg]">
+            <img
+              src="/assets/home/how-startwork-lanyard-back.svg"
+              alt=""
+              className="h-[62px] w-[51px] max-w-none"
+            />
+          </div>
+        </div>
+
+        <div className="absolute top-[26.88px] left-1/2 flex h-[296.2px] w-[231.8px] -translate-x-1/2 items-center justify-center">
+          <div className="-rotate-[2.18deg]">
+            <div
+              className="h-[288px] w-[221px] rounded-[28px] border border-white shadow-[0_1px_15.5px_rgba(0,0,0,0.1),inset_0_0_12px_rgba(255,255,255,0.35)]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(214.5deg, rgba(255,255,255,0.2) 3%, rgba(255,255,255,0) 95%)",
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="absolute top-[33.14px] left-[40.65px] flex h-[283.7px] w-[217.4px] items-center justify-center">
+          <div className="-rotate-[2.18deg]">
+            <div className="relative h-[276px] w-[207px] overflow-clip rounded-[24px]">
+              <img
+                src="/assets/home/how-startwork-photo.png"
+                alt=""
+                className="absolute top-0 bottom-[-12px] left-[calc(50%-76px)] w-[383px] max-w-none -translate-x-1/2 object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-[140px] bg-gradient-to-t from-brand from-[35%] to-transparent" />
+              <p className="absolute top-[204px] left-5 w-[99px] text-[14px] font-medium leading-[17px] text-white">
+                Chrismene
+                <br />
+                Adams
+              </p>
+              <p className="absolute top-[244px] left-5 text-[10px] font-medium leading-3 text-white opacity-60">
+                Registered Nurse
+              </p>
+              <img
+                src="/assets/home/how-startwork-flag.svg"
+                alt=""
+                className="absolute right-6 bottom-[23px] h-[18px] w-[37px] max-w-none"
+              />
+              <img
+                src="/assets/home/how-startwork-badge-overlay.svg"
+                alt=""
+                className="absolute inset-0 size-full max-w-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="pointer-events-none absolute top-[26.88px] left-1/2 flex h-[296.2px] w-[231.8px] -translate-x-1/2 items-center justify-center">
+          <div className="-rotate-[2.18deg]">
+            <div className="h-[288px] w-[221px] rounded-[28px] border border-white shadow-[inset_0_0_12px_rgba(255,255,255,0.35)]" />
+          </div>
+        </div>
+
+        <div className="absolute top-[-14.04px] left-[124.69px] flex h-[63.8px] w-[50.3px] items-center justify-center">
+          <div className="-rotate-[2.18deg]">
+            <img
+              src="/assets/home/how-startwork-lanyard-front.svg"
+              alt=""
+              className="h-[62px] w-12 max-w-none"
+            />
+          </div>
+        </div>
+      </div>
+
       <p className="relative text-[20px] font-medium leading-7 tracking-[-0.04px] text-ink">
         Start work
       </p>
@@ -325,6 +477,7 @@ function ProcessingCard() {
 const STEPS = [
   { Card: ApplicationCard, nativeWidth: 360, nativeHeight: 464 },
   { Card: InterviewCard, nativeWidth: 398, nativeHeight: 512 },
+  { Card: FacilityCallCard, nativeWidth: 361, nativeHeight: 464 },
   { Card: RelocateCard, nativeWidth: 361, nativeHeight: 464 },
   { Card: StartWorkCard, nativeWidth: 361, nativeHeight: 464 },
   { Card: ProcessingCard, nativeWidth: 361, nativeHeight: 464 },

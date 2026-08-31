@@ -1,4 +1,5 @@
 import BlurReveal from "../components/BlurReveal";
+import ServiceCard from "../components/ServiceCard";
 
 const OFFERS = [
   {
@@ -33,57 +34,35 @@ const OFFERS = [
   },
 ];
 
-function Flower({ className, size }: { className?: string; size: number }) {
-  return (
-    <div
-      className={`pointer-events-none absolute overflow-hidden ${className ?? ""}`}
-      style={{
-        width: size,
-        height: size,
-        WebkitMaskImage: "url(/assets/home/flower-mask.svg)",
-        maskImage: "url(/assets/home/flower-mask.svg)",
-        WebkitMaskSize: "100% 100%",
-        maskSize: "100% 100%",
-        WebkitMaskRepeat: "no-repeat",
-        maskRepeat: "no-repeat",
-      }}
-    >
-      <img src="/assets/home/flower-alt.png" alt="" className="absolute inset-0 size-full object-cover" />
-    </div>
-  );
-}
-
 export default function WhatWeOffer() {
   return (
     <section className="w-full px-4 pt-4 pb-4">
-      <div className="relative w-full overflow-clip rounded-[24px] bg-secondary px-5 py-12 md:px-10 md:py-16 lg:px-[104px] lg:py-24">
-        <Flower className="top-[-261px] left-[-311px]" size={522} />
-        <Flower className="top-[521px] left-[900px] hidden md:block" size={747} />
+      <div className="relative w-full overflow-clip rounded-[24px] bg-secondary py-12 md:py-16 lg:py-24">
+        <div className="relative mx-auto flex w-full max-w-[1200px] flex-col items-center gap-10 px-5 md:gap-16 md:px-10">
+          <BlurReveal className="flex w-full max-w-[436px] flex-col gap-4 text-center">
+            <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+              What we offer
+            </h2>
+            <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+              Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
+              Cards.
+            </p>
+          </BlurReveal>
 
-        <BlurReveal className="relative mx-auto mb-10 flex w-full max-w-[436px] flex-col gap-4 text-center md:mb-16">
-          <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
-            What we offer
-          </h2>
-          <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
-            Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
-            Cards.
-          </p>
-        </BlurReveal>
-
-        <div className="relative mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {OFFERS.map((offer) => (
-            <article
-              key={offer.title}
-              data-reveal
-              className="flex min-h-[240px] flex-col justify-between rounded-[20px] bg-white p-6 lg:h-[304px]"
-            >
-              <img src={offer.icon} alt="" className="size-8" />
-              <BlurReveal className="flex flex-col gap-2">
-                <h3 className="text-[16px] font-medium leading-6 text-ink opacity-80">{offer.title}</h3>
-                <p className="text-[16px] leading-6 text-brand opacity-80">{offer.body}</p>
-              </BlurReveal>
-            </article>
-          ))}
+          <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[244px]">
+            {OFFERS.map((offer) => (
+              <div key={offer.title} data-reveal className="h-full min-h-[240px] lg:min-h-0">
+                <ServiceCard
+                  icon={offer.icon}
+                  title={offer.title}
+                  body={offer.body}
+                  className="h-full"
+                  bodyClass="text-brand"
+                  iconClass="size-10"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

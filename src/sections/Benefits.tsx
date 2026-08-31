@@ -1,4 +1,5 @@
 import BlurReveal from "../components/BlurReveal";
+import ServiceCard from "../components/ServiceCard";
 
 const CARDS = [
   {
@@ -34,20 +35,13 @@ export default function Benefits() {
         </BlurReveal>
         <div className="flex w-full max-w-[1200px] flex-col items-stretch gap-2 px-0 md:h-[296px] md:flex-row md:items-start md:px-4">
           {CARDS.map((card) => (
-            <div
+            <ServiceCard
               key={card.title}
-              className="flex min-h-[220px] min-w-0 flex-1 flex-col items-start justify-between overflow-clip rounded-[20px] bg-white p-6 md:h-full"
-            >
-              <img src={card.icon} alt="" className="size-8" />
-              <BlurReveal className="flex w-full flex-col gap-2">
-                <h3 className="text-[16px] font-medium leading-6 text-ink opacity-80">
-                  {card.title}
-                </h3>
-                <p className="text-[16px] leading-6 text-subtle opacity-80">
-                  {card.body}
-                </p>
-              </BlurReveal>
-            </div>
+              icon={card.icon}
+              title={card.title}
+              body={card.body}
+              className="min-h-[220px] min-w-0 flex-1 md:h-full"
+            />
           ))}
         </div>
       </div>

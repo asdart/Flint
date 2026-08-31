@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import BlurReveal from "../../components/BlurReveal";
+import SendApplicationIllustration from "../../components/SendApplicationIllustration";
 import InterviewIllustration from "../../components/InterviewIllustration";
 import ImmigrationFeesIllustration from "../../components/ImmigrationFeesIllustration";
 import CasePrepIllustration from "../../components/CasePrepIllustration";
@@ -13,6 +14,12 @@ type Step = {
 };
 
 const STEPS: Step[] = [
+  {
+    title: "Send application",
+    body: "We will provide comprehensive support and guidance throughout your immigration case to help you achieve the best outcome.",
+    imageLeft: false,
+    illustration: <SendApplicationIllustration />,
+  },
   {
     title: "Interview directly with Facilities",
     body: "We'll connect you with ready-to-hire facilities so you can ask questions and find the right facility for you.",

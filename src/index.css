@@ -134,8 +134,26 @@ body {
   animation: logo-marquee 32s linear infinite;
 }
 
+@keyframes cta-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.cta-marquee-track {
+  animation: cta-marquee 48s linear infinite;
+}
+
+.cta-marquee-track:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .logo-marquee-track {
+  .logo-marquee-track,
+  .cta-marquee-track {
     animation: none;
   }
 }

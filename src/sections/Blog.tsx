@@ -5,7 +5,7 @@ import { HOME_POSTS } from "./blog/posts";
 
 export default function Blog() {
   return (
-    <section className="w-full p-4">
+    <section className="w-full px-4 pb-4">
       <div className="flex w-full flex-col items-center rounded-[24px] bg-brand-light p-6 md:p-12 lg:p-20">
         <div className="flex w-full max-w-[1200px] flex-col items-center gap-8 md:gap-12">
           <BlurReveal className="flex w-full max-w-[436px] flex-col items-center gap-2 text-center">
