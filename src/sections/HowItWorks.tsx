@@ -337,12 +337,27 @@ function StartWorkCard() {
         <div className="absolute top-[33.14px] left-[40.65px] flex h-[283.7px] w-[217.4px] items-center justify-center">
           <div className="-rotate-[2.18deg]">
             <div className="relative h-[276px] w-[207px] overflow-clip rounded-[24px]">
-              <img
-                src="/assets/home/how-startwork-photo.png"
-                alt=""
-                className="absolute top-0 bottom-[-12px] left-[calc(50%-76px)] w-[383px] max-w-none -translate-x-1/2 object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 h-[140px] bg-gradient-to-t from-brand from-[35%] to-transparent" />
+              <div className="absolute top-0 bottom-[-12px] left-[calc(50%-76px)] w-[383px] -translate-x-1/2">
+                <img
+                  src="/assets/home/how-startwork-photo.png"
+                  alt=""
+                  className="absolute inset-0 size-full max-w-none object-cover"
+                />
+              </div>
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  WebkitMaskImage: "linear-gradient(to bottom, transparent 54%, #000 77%)",
+                  maskImage: "linear-gradient(to bottom, transparent 54%, #000 77%)",
+                }}
+              >
+                <img
+                  src="/assets/home/how-bg-purple.png"
+                  alt=""
+                  className="absolute max-w-none object-cover"
+                  style={{ left: -168.57, top: 138, width: 743.1, height: 505 }}
+                />
+              </div>
               <p className="absolute top-[204px] left-5 w-[99px] text-[14px] font-medium leading-[17px] text-white">
                 Chrismene
                 <br />

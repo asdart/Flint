@@ -157,3 +157,34 @@ body {
     animation: none;
   }
 }
+
+/* Primary gradient button — angle is registered so hover can interpolate it. */
+@property --btn-grad-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 349.52deg;
+}
+
+.btn-primary-gradient {
+  --btn-grad-angle: 349.52deg;
+  background-image: linear-gradient(
+    var(--btn-grad-angle),
+    #bd535d -32.33%,
+    #44386d 39.71%,
+    #44386d 65.25%,
+    #5c77e0 146.24%
+  );
+  transition:
+    --btn-grad-angle 0.7s ease-in-out,
+    box-shadow 0.3s ease-out;
+}
+
+.btn-primary-gradient:hover:enabled:not(:active) {
+  --btn-grad-angle: 529.52deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary-gradient {
+    transition: box-shadow 0.3s ease-out;
+  }
+}
