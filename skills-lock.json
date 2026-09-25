@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "webflow-mcp:interactions": {
+      "source": "webflow/webflow-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/webflow-skills/skills/interactions/SKILL.md",
+      "computedHash": "2628517f490f0294550dcf5854f30d6e5c2d96797d1bd94fdc3f4006a745504b"
+    }
+  }
+}
