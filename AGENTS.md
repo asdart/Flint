@@ -4,10 +4,13 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.0 (2026-09-23)
-- **Status:** contract defined, migration not started. The next step is the MVP (phase 1 of the
-  [roadmap](docs/webflow/roadmap.md)). The code in `src/` is still _legacy_ (Tailwind utilities +
-  Framer Motion). See [Legacy code policy](#8-legacy-code-policy).
+- **Contract version:** 1.1 (2026-09-23). 1.1 adds what the MVP proved about the Webflow MCP:
+  typography on classes instead of tag styles, `fk-page` as a wrapper div, exact breakpoint query
+  syntax, `data-ix` interaction triggers, and the sync scripts in `scripts/`.
+- **Status:** MVP (roadmap phase 1) closed on 2026-09-24: built in the repo (`/mvp`) and in Webflow
+  (draft page `/mvp`), reviewed. Phase 2 has not started; wait for the user's go. Everything outside
+  the MVP in `src/` is still _legacy_ (Tailwind utilities + Framer Motion). See
+  [Legacy code policy](#8-legacy-code-policy).
 
 Detailed registries live in [`docs/webflow/`](docs/webflow/). This file defines the rules; the
 registries define the inventory. If they disagree, fix the registry, not the rule.
@@ -22,6 +25,7 @@ registries define the inventory. If they disagree, fix the registry, not the rul
 | [`interactions.md`](docs/webflow/interactions.md) | Interactions registry and the custom-code exceptions list |
 | [`mcp-playbook.md`](docs/webflow/mcp-playbook.md) | How to push changes with the Webflow MCP, safely |
 | [`sync-log.md`](docs/webflow/sync-log.md) | What has been pushed to Webflow, and when |
+| [`webflow-ids.json`](docs/webflow/webflow-ids.json) | Ids of everything created in Webflow (variables, assets, collections, components…) |
 
 ---
 
@@ -87,10 +91,12 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 | In this repo | Becomes in Webflow |
 | --- | --- |
 | `src/styles/tokens.css` custom properties (`--color-ink`) | Variables with the same name (`color-ink`) |
-| `src/styles/base.css` tag selectors | Tag styles |
-| `src/styles/**/*.css` `.fk-*` / `.fk-*.is-*` rules | Classes / combo classes |
-| Media queries at 991 / 767 / 479px (see §5) | Tablet / Mobile landscape / Mobile portrait styles |
+| `src/styles/base.css` tag selectors | Tag styles, after a one-time seed in the Designer (the MCP can update but not create them). Synced markup never relies on them |
+| `.fk-page` on the page root div | The same wrapper div, first child of Body |
+| `src/styles/**/*.css` `.fk-*` / `.fk-*.is-*` rules | Classes / combo classes, pushed with `scripts/webflow-css.mjs` (new) and `scripts/webflow-style-actions.mjs` (changes, states) |
+| Media queries at 991 / 767 / 479px (see §5) | Tablet (`medium`) / Mobile landscape (`small`) / Mobile portrait (`tiny`) styles |
 | `:hover`, `:active`, `:focus-visible` in CSS | Hover / Pressed / Focused (keyboard) states |
+| `/assets/…` paths | Uploaded assets; hosted URLs and ids in `docs/webflow/webflow-ids.json` |
 | `src/components/global/*.tsx` | Components in group `Global` |
 | `src/components/ui/*.tsx` | Components in group `UI` |
 | `src/sections/*.tsx` | Components in group `Section` |
@@ -105,12 +111,14 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 Webflow is desktop-first, so CSS in this repo is written **desktop-first with `max-width` queries**
 at Webflow's breakpoints only:
 
-| Webflow breakpoint | Query | Legacy Tailwind equivalent |
+| Webflow breakpoint | Query (write it exactly like this) | Legacy Tailwind equivalent |
 | --- | --- | --- |
 | Desktop (base) | none | `lg:` (≥1024) and up |
-| Tablet | `@media (max-width: 991px)` | `md:` (768–1023) |
-| Mobile landscape | `@media (max-width: 767px)` | `sm:` (640–767) and base |
-| Mobile portrait | `@media (max-width: 479px)` | base (<640) |
+| Tablet | `@media screen and (max-width: 991px)` | `md:` (768–1023) |
+| Mobile landscape | `@media screen and (max-width: 767px)` | `sm:` (640–767) and base |
+| Mobile portrait | `@media screen and (max-width: 479px)` | base (<640) |
+
+No `min-width` queries below 1280px: a desktop-only style is the base value plus a Tablet override.
 
 Larger breakpoints (1280/1440/1920) are not used unless a registry entry says so.
 
@@ -130,6 +138,7 @@ src/
   sections/               # Webflow group "Section": one file per section, named like the component
   content/                # CMS seed data as JSON, shaped exactly like cms.md
   ix/                     # local preview runtime for registered interactions (not shipped to Webflow)
+  lib/                    # repo-only helpers with no Webflow equivalent (cx, SmartLink)
   pages/                  # composition only — no styling, no data
 ```
 
@@ -170,8 +179,11 @@ The current `src/` predates this contract. Until each piece is migrated:
 - Small fixes to legacy files are allowed without migrating, but must not add new legacy patterns.
 - Once no registry entry is `legacy`, remove `tailwindcss`, `@tailwindcss/vite` and `framer-motion`
   from `package.json`.
-- During the transition, `src/styles/*` is imported after `index.css`, so contract classes win over
-  Tailwind's preflight.
+- During the transition, `src/styles/index.css` is imported after the legacy `src/index.css`, so
+  contract classes win over Tailwind's preflight. Tag styles in `base.css` are scoped to
+  `:where(.fk-page)`, so they don't restyle legacy pages. In Webflow they are global tag styles;
+  drop the wrapper once no page is legacy.
+- Migrated pages render inside `.fk-page` and call `useInteractions()` from `src/ix/`.
 
 ## 9. Webflow project
 

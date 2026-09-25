@@ -22,10 +22,36 @@ first, then implement it in `src/styles/`, then sync it (see `mcp-playbook.md`).
   Block/element classes must not set properties that the stacked typography class also sets.
 - A combo class is defined per base class. `fk-panel is-brand` and `fk-text-lg is-brand` are two
   different styles, and both must be listed in the tables below.
+- Combo classes toggled by an interaction must be unique site-wide (`is-pill`, `is-menu-open`).
 - No page names in classes. Pages differ through variants (`fk-hero is-about`).
 - No numbers in names, except grid column counts (`is-3`).
 - Don't style unclassed elements, except through tag styles.
 - Only `fk-` utilities from the closed list below; everything else is a block class.
+
+## What a class can express
+
+Webflow styles one class (or combo) at a time, at one breakpoint and one state. So in
+`src/styles/`:
+
+- **One selector per rule.** No grouped selectors (`.a, .b`), descendant selectors (`.a .b`) or
+  child selectors.
+- **No parent-state child styling.** `.fk-button:hover .fk-button-icon` has no Webflow equivalent.
+  Style the element's own state, or use an interaction.
+- **One state per rule**, from: `:hover`, `:active`, `:focus`, `:focus-visible`, `:focus-within`,
+  `::placeholder`, `::before`, `::after`, first/last/odd/even child. States can't be combined
+  (no `:hover::before`).
+- **Media queries only at the §5 breakpoints, written exactly** `@media screen and (max-width: 991px)`
+  (or 767/479). No `min-width` queries below 1280px: express "desktop only" as the base value plus
+  an override at Tablet. No `prefers-reduced-motion` queries (see `interactions.md`).
+- **Write `0px`, not `0`, before a negative value** (`inset 0px -1px …`). The WHTML builder
+  minifies `0 -1px` into `0-1px`, which breaks the declaration.
+- The WHTML builder only accepts `:hover`, `:focus` and `:active`, and drops a combo name that
+  appears on two bases in the same call. `scripts/webflow-css.mjs` leaves out the other states;
+  push them (and any dropped combo) with `scripts/webflow-style-actions.mjs` / `create_style`.
+- `w--current` (Webflow's current-link state) couldn't be created through the MCP; style it in the
+  Designer when the nav links point to real pages.
+- Element-specific dimensions (icon and image sizes) may be raw px inside their block's classes.
+  Colors, spacing, radii and widths always use tokens.
 
 ## Layers (apply in this order)
 
@@ -36,7 +62,21 @@ first, then implement it in `src/styles/`, then sync it (see `mcp-playbook.md`).
 
 ## Tag styles
 
+**The MCP can't create tag styles, but it can read and update one once it exists.** A tag style
+exists after someone edits it once in the Designer (then `update_style` with `style_name: "a"`
+works; the WHTML builder still rejects tag selectors). So:
+
+- Every heading and paragraph in synced markup still carries a class that sets its typography
+  **and `margin: 0`**, and the body defaults live on `.fk-page`. Nothing breaks if a tag style is missing.
+- Tag styles in the table below are seeded once in the Designer (any one property is enough), then
+  kept in sync through the MCP like classes.
+
+Seeded so far: **All Links (`a`)** with `text-decoration: none` (2026-09-24). The Body tag style
+exists with Webflow's defaults (Arial 14/20, `#333`); `.fk-page` overrides them.
+
 Desktop value, then values at the breakpoints where it changes (Tablet ≤991, Mobile ≤767).
+In the repo they live in `src/styles/base.css`, scoped to `:where(.fk-page)` during the transition
+(see `AGENTS.md` §8).
 
 | Tag | Font | Desktop | Mobile ≤767 | Color |
 | --- | --- | --- | --- | --- |
@@ -47,21 +87,24 @@ Desktop value, then values at the breakpoints where it changes (Tablet ≤991, M
 | H4 | `font-sans` 500 | 20/28, −0.11px | 18/28 | `color-ink` |
 | P | inherit | inherit | — | inherit |
 | Link | inherit | inherit | — | inherit, no underline, color transition 300ms |
-| Blockquote | `font-serif` | 24/32, −0.48px | 20/28, −0.4px | `color-ink` |
+| Blockquote | `font-serif` | 24/32, −0.48px | 20/28, −0.4px | `color-ink`, no border or padding |
+| Image | — | `display: block`, `max-width: 100%` | — | — |
 
-Also: `html { scroll-behavior: smooth; }`, and body/html `overflow-x: hidden`.
+H1–H4, P, Blockquote and Figure all have `margin: 0`. Webflow's defaults add heading and
+paragraph margins, so the tag styles must set them to 0 explicitly.
 
 ## Layout
 
 | Class | Definition |
 | --- | --- |
-| `fk-page` | Page wrapper: full width, flex column, white background, `overflow-x: clip` |
+| `fk-page` | Page wrapper div, first child of Body (the MCP can't style Body): full width, `min-height: 100vh`, white background, `overflow-x: clip`, plus the body typography defaults (`font-sans` 16/24, `color-ink`) |
 | `fk-section` | Band wrapper: padding `space-4` inline and top (legacy `px-4 pt-4`) |
-| `fk-section is-last` | Adds `space-4` bottom padding (last band before the footer) |
-| `fk-section is-open` | Unpaneled band: padding 128/70 desktop → 96/40 tablet → 64/20 mobile |
-| `fk-panel` | Rounded (`radius-xl`) band content, `overflow: clip`, padding 96/104 → 64/40 → 48/20 |
+| `fk-section is-last` | Adds `space-4` bottom padding |
+| `fk-section is-open` | Unpaneled band: padding 128/64 desktop → 96/40 tablet → 64/20 mobile |
+| `fk-panel` | Rounded (`radius-xl`) band content, `overflow: clip`, padding 96 → 64/40 → 48/20 |
 | `fk-panel is-brand` · `is-brand-light` · `is-secondary` · `is-tertiary` · `is-surface` | Panel background token |
-| `fk-panel is-compact` | Padding 64/40 → 48/20 |
+| `fk-panel is-compact` | Padding 80 → 48 → 24 |
+| `fk-panel is-radius-lg` | Radius `radius-lg` (16px) |
 | `fk-container` | `max-width: width-container`, centered, full width |
 | `fk-container is-md` · `is-content` · `is-content-sm` | Max width `width-container-md` / `width-content` / `width-content-sm` |
 | `fk-grid` | CSS grid, gap `space-4` |
@@ -72,52 +115,64 @@ Also: `html { scroll-behavior: smooth; }`, and body/html `overflow-x: hidden`.
 
 ## Typography
 
+Typography classes set font, size, line height and tracking. Color is inherited, or set with a combo.
+
 | Class | Desktop | Mobile ≤767 | Notes |
 | --- | --- | --- | --- |
 | `fk-heading-display` | serif 72/80, −1.08px | 48/52, −0.72px | Stat numbers |
-| `fk-heading-display is-xl` | serif 96/96, −1.44px | 40/44, −0.8px | About stats (tablet 72/80) |
+| `fk-heading-display is-xl` | serif 96/96, −1.44px | 40/44, −0.8px | About stats. Tablet: 72/80, −0.8px |
 | `fk-heading-xl` | serif 48/52, −0.96px | 32/40, −0.64px | Same as H1/H2, for non-heading tags |
-| `fk-heading-lg` | serif 40/44, −0.8px | 32/40, −0.64px | Blog and article heroes |
+| `fk-heading-lg` | serif 40/44, −0.8px | 32/40, −0.64px | Blog/article heroes, Post Grid title |
 | `fk-heading-md` | serif 32/40, −0.64px | 28/36, −0.56px | Same as H3 |
-| `fk-heading-sm` | serif 24/32, −0.48px | 20/28, −0.4px | Card titles, quotes |
+| `fk-heading-sm` | serif 24/32, −0.48px | 20/28, −0.4px | Quotes |
 | `fk-text-lg` | sans 18/28 | 16/24 | Lead and long-form body |
 | `fk-text-md` | sans 16/24 | — | Explicit body size |
-| `fk-text-sm` | sans 14/20 | — | Nav links, footer, meta |
+| `fk-text-sm` | sans 14/20 | — | Meta |
 | `fk-text-xs` | sans 12/16 | — | Badges, captions |
 | `fk-eyebrow` | sans 16/24 | — | `color-subtle`. Label above section headings |
 
-Color combos, valid on any typography class: `is-subtle` (`color-subtle`), `is-brand`
-(`color-brand`), `is-brand-muted` (brand at 80%), `is-inverse` (white), `is-inverse-muted`
-(white at 80%). Alignment: `is-center`. Weight: `is-medium` (500).
+Combos in use (add a row here before using a new pair):
+
+| Base | Combo | Definition |
+| --- | --- | --- |
+| `fk-heading-xl` | `is-inverse` | `color-white` |
+| `fk-heading-md` | `is-center` | `text-align: center` |
+| `fk-text-lg` | `is-brand-muted` | `color-brand-80` |
+| `fk-text-lg` | `is-inverse-muted` | `color-white-80` |
+| `fk-text-md` | `is-subtle` | `color-subtle` |
+| `fk-text-md` | `is-inverse-muted` | `color-white-80` |
 
 ## Utilities (closed list)
 
 | Class | Definition |
 | --- | --- |
-| `fk-reveal` | Interaction target for `ix-reveal` (see `interactions.md`). No visual styles |
-| `fk-reveal-group` | Interaction target for `ix-reveal-stagger`. Children reveal in sequence |
 | `fk-sr-only` | Visually hidden, accessible to screen readers |
 | `fk-hide-mobile` | `display: none` at ≤767 |
 | `fk-hide-desktop` | `display: none` above 991 |
-| `fk-divider` | 1px top border, full width. Combo `is-inverse` → white at 20% |
+| `fk-divider` | On an `hr`: 1px top border `color-stone-50`, full width, no margin. Combo `is-inverse` → `color-white-20` |
+
+Scroll reveals are not classes: they use the `data-ix="reveal"` attribute (see `interactions.md`).
 
 ## Component classes
 
 Elements listed are the complete allowed set per block. States use Webflow states (Hover,
 Pressed, Focused-keyboard) and map to `:hover`, `:active`, `:focus-visible` in CSS.
+Blocks marked **MVP** are implemented in `src/styles/components/`.
 
 | Block | Elements | Combos | Notes |
 | --- | --- | --- | --- |
-| `fk-button` | `-label`, `-icon` | `is-primary` (gradient, default), `is-secondary` (white), `is-small` | Radius `radius-xl`, 14/20 medium. Primary hover shifts gradient via `background-position` (no `@property`). Pressed dims label/icon to 60% |
-| `fk-nav` | `-logo`, `-links`, `-link`, `-actions`, `-toggle`, `-menu`, `-menu-link` | `is-dark`, `is-pill` (scrolled), `is-open` | `-link` combo `is-active`. `is-pill` is set by `ix-nav-pill` |
-| `fk-footer` | `-cta`, `-groups`, `-group`, `-group-title`, `-link`, `-bottom`, `-copyright` | — | Inside `fk-panel is-brand` |
-| `fk-section-header` | `-eyebrow`, `-title`, `-body` | `is-center`, `is-inverse` | Standard eyebrow + heading + body block |
+| `fk-button` **MVP** | `-icon` | `is-secondary` (white), `is-small`, and `is-secondary is-small` | Base = primary. Link Block with an unclassed text child. Gradient `background-size: 100% 200%`; hover slides `background-position` 50% 100% → 50% 0% (the legacy angle animation needs `@property`, which Webflow can't do). Pressed: no shadow, text `color-white-60`. `-icon` is a 20px circle with the chevron as a background image |
+| `fk-nav` **MVP** | `-logo` (49×24), `-links`, `-link`, `-actions`, `-cta`, `-cta-rest`, `-toggle`, `-toggle-line`, `-menu`, `-menu-header`, `-menu-close`, `-menu-close-line`, `-menu-links`, `-menu-link`, `-menu-footer` | `fk-nav is-pill` (scrolled), `fk-nav-menu is-menu-open`, `fk-nav-menu-close-line is-reverse`, `fk-nav-link w--current`, `fk-nav-menu-link w--current` | Centered with `left/right: 0` + auto margins, never a transform (the fixed menu is a child). `is-pill` transitions width/top/padding/background. One CTA (Secondary Small) in both states; `-cta-pill` was removed on 2026-09-24 |
+| `fk-footer` **MVP** | `-panel`, `-cta`, `-cta-text`, `-groups`, `-group`, `-group-title`, `-links`, `-link`, `-logo` (49×24), `-bottom` | — | Panel padding 80 → 48 → 32 |
+| `fk-section-header` **MVP** | `-body` | `is-center`, `is-inverse` | Eyebrow uses `fk-eyebrow`, title uses the H2 tag style. `-body` stays left-aligned and stacks with `fk-text-lg is-brand-muted` |
+| `fk-stats-band` **MVP** | `-grid` | — | Grid is a flex row (120px tall) on desktop, 2-column grid below |
+| `fk-stat` **MVP** | `-value`, `-suffix`, `-label` | — | Value number stacks `fk-heading-display is-xl`. `-value` is the `ix-count-in` target |
+| `fk-post-grid` **MVP** | `-header` | — | Header title `fk-heading-lg`, body `fk-text-md is-subtle` |
+| `fk-post-card` **MVP** | `-media`, `-image`, `-body`, `-title`, `-excerpt`, `-meta`, `-avatar`, `-meta-text` | `is-featured` | Bound to Posts. Title and excerpt clamp to 2 lines. The image zooms on its own hover |
 | `fk-hero` | `-content`, `-title`, `-body`, `-actions`, `-media` | `is-home`, `is-candidates`, `is-facility-partners`, `is-about`, `is-blog`, `is-article` | Consolidate variants as heroes are migrated |
 | `fk-card` | `-media`, `-body`, `-title`, `-text` | `is-feature`, `is-service` | Generic content card |
-| `fk-post-card` | `-image`, `-meta`, `-category`, `-title`, `-excerpt`, `-author` | `is-featured` | Bound to the Posts collection |
-| `fk-stat` | `-value`, `-suffix`, `-label` | — | Stat item in the Stats Band |
 | `fk-testimonial` | `-media`, `-quote`, `-name`, `-role` | `is-active` | Quote reveals on hover |
-| `fk-faq` | `-item`, `-question`, `-icon`, `-answer` | `-item.is-open` | Accordion |
+| `fk-faq` | `-item`, `-question`, `-icon`, `-answer` | `-item.is-faq-open` | Accordion |
 | `fk-marquee` | `-track`, `-item` | `is-slow` | Track moved by `ix-marquee` |
 | `fk-newsletter` | `-title`, `-form`, `-field`, `-submit` | `is-stacked` | Default layout is a row |
 | `fk-field` | — | `is-select` | Inputs/selects. Focus: brand border + field-active shadow |
@@ -129,14 +184,18 @@ Pressed, Focused-keyboard) and map to `:hover`, `:active`, `:focus-visible` in C
 
 ## Example
 
+From `src/sections/TextPanel.tsx` + `src/components/ui/SectionHeader.tsx`:
+
 ```html
 <section class="fk-section">
-  <div class="fk-panel is-tertiary">
-    <div class="fk-container is-content-sm">
-      <div class="fk-section-header is-center fk-reveal">
-        <p class="fk-section-header-eyebrow fk-eyebrow">Mission</p>
-        <h2 class="fk-section-header-title">Why we exist</h2>
-        <p class="fk-section-header-body fk-text-lg is-brand-muted">…</p>
+  <div class="fk-panel is-tertiary is-radius-lg">
+    <div class="fk-container is-content-sm" data-ix="reveal">
+      <div class="fk-section-header is-center">
+        <p class="fk-eyebrow">Mission</p>
+        <h2>Why we exist</h2>
+        <div class="fk-section-header-body fk-text-lg is-brand-muted">
+          <p>…</p>
+        </div>
       </div>
     </div>
   </div>

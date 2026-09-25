@@ -2,14 +2,29 @@
 
 ## Principles
 
-- All motion is a **named Webflow Interaction (IX3)** from the registry below. Interactions are
-  reusable and triggered by **class** (`fk-*`), never by element ID.
+- All motion is a **named Webflow Interaction (IX3)** from the registry below. Interactions target
+  a **block class** (`.fk-nav`) or the **`data-ix` attribute** (`data-ix="reveal"`), never an
+  element ID. Use the attribute for behaviors that can sit on any element, so it never has to be
+  stacked with other classes.
 - Hover, pressed and focus effects are **CSS transitions on class states**, not interactions.
-- The static end state is the default. With reduced motion, content is visible and nothing moves.
-  Use the interaction's reduced-motion option, or skip the interaction.
-- Animate only `transform`, `opacity` and `filter`. Width/padding are allowed only for `ix-nav-pill`.
-- In the repo, `src/ix/` is a small preview runtime that emulates these interactions by class for
-  local development. It is never shipped to Webflow and must not grow beyond the registry.
+- **State changes are class toggles.** An interaction adds, removes or toggles a unique combo
+  class (`is-pill`, `is-menu-open`), and that combo's own transitions do the animating. Repo
+  and Webflow then share one mechanism.
+- Reduced motion: motion interactions use `conditionalPlayback`
+  `[{ "type": "prefers-reduced-motion", "behavior": "dont-animate" }]`, so the element stays
+  in its resting, visible state. Interactions that only change UI state (opening the menu) don't
+  get that condition, or the UI would stop working.
+- Animate only `opacity` and transforms (`x`, `y`, `scale`, `rotation`). The IX3 API has **no
+  `filter`**, so no blur. Width, padding and top change only through the `is-pill` class transition.
+- Scroll reveals start at `"top 85%"` and last at least 500ms, per the IX3 guide.
+- Reversing a timeline doesn't undo a class Set (`addClass`), so `leaveBack: reverse` left the nav
+  stuck as a pill. A state that must return is a **pair** of interactions, each with `restart`:
+  one adds the class (`ix-nav-pill`), one removes it (`ix-nav-pill-rest`).
+- A click interaction that must work on every click has **one** action group and control
+  `restart`. Interactions with two or more groups only accept `play`, which goes inert once
+  played, so open and close are separate interactions (`ix-nav-menu`, `ix-nav-menu-close`).
+- In the repo, `src/ix/useInteractions.ts` is a small preview runtime that emulates these
+  interactions for local development. It is never shipped to Webflow and must not grow beyond the registry.
 
 ## Registry
 
@@ -17,15 +32,17 @@ Easing and durations reference `tokens.md` → Motion.
 
 | Interaction | Trigger | Target | Animation | Replaces (legacy) | Status |
 | --- | --- | --- | --- | --- | --- |
-| `ix-reveal` | Scroll into view (once, 15% visible) | `.fk-reveal` (each element) | opacity 0→1, move Y 18px→0, 700ms, ease out (expo) | `data-reveal` + `hooks/useStaggerReveal.ts` | legacy |
-| `ix-reveal-stagger` | Scroll into view (once) | Children of `.fk-reveal-group` | Same as `ix-reveal` plus blur 16px→0, 750ms, 150ms stagger | `components/BlurReveal.tsx` | legacy |
-| `ix-nav-pill` | Page scroll > 24px (reverses at top) | `.fk-nav` | max-width 100%→`width-nav-pill`, top 32→12px, padding 0→8/8/20, 450ms, ease out (expo). Then white background + shadow fade in, 220ms | `components/SiteNav.tsx` (Framer Motion) | legacy |
-| `ix-nav-menu` | Click `.fk-nav-toggle` | `.fk-nav-menu` | Show/hide the full-screen menu, toggle lines → ✕ | `SiteNav.tsx` menu state | legacy |
+| `ix-reveal` | Scroll, start `"top 85%"`, once | Each `[data-ix="reveal"]` | opacity 0→1, move Y 18px→0, 700ms, ease out | `data-reveal` + `hooks/useStaggerReveal.ts`, `BlurReveal.tsx` (blur dropped) | synced (`i-f8d36c90`) |
+| `ix-reveal-stagger` | Scroll, start `"top 85%"`, once | Children of `[data-ix="reveal-stagger"]` | Same as `ix-reveal`, 750ms, 150ms stagger | `components/BlurReveal.tsx` | legacy |
+| `ix-nav-pill` | Scroll on body, start `"top+=24 top"`, `enter: restart` | `.fk-nav` | Add `is-pill` (its transitions shrink the nav and fade in the white pill). The single CTA stays as is | `components/SiteNav.tsx` (Framer Motion) | synced (`i-b1853c2c`), verified in Preview |
+| `ix-nav-pill-rest` | Same trigger, `leaveBack: restart` | `.fk-nav` | Remove `is-pill` | `components/SiteNav.tsx` | synced (`i-004f1888`), verified in Preview |
+| `ix-nav-menu` | Click `.fk-nav-toggle`, control `restart` | `.fk-nav-menu`, body | Add `is-menu-open`; body `overflow: hidden`. No reduced-motion condition | `SiteNav.tsx` menu state | synced (`i-6869da77`) |
+| `ix-nav-menu-close` | Click `.fk-nav-menu-close`, control `restart` | `.fk-nav-menu`, body | Remove `is-menu-open`; body `overflow: visible`. No reduced-motion condition | `SiteNav.tsx` menu state | synced (`i-0fb7a606`) |
 | `ix-parallax` | While scrolling in view | `.fk-parallax` (combo `is-reverse`) | Move Y −40px→40px (reverse: 40→−40) | `Stats.tsx` `useScroll`/`useTransform` | legacy |
 | `ix-marquee` | Page load, infinite loop | `.fk-marquee-track` | Move X 0→−50%, linear, 32s (`is-slow`: 48s) | `.logo-marquee-track`, `.cta-marquee-track` keyframes | legacy |
 | `ix-ticker` | Page load, infinite loop | `.fk-ticker-track` | Step Y by one line (52px) every 2.2s with ease in-out 450ms. Loop of duplicated lists | `PartnersMap.tsx` interval + spring | legacy |
-| `ix-count-in` | Scroll into view (once) | `.fk-stat-value` | opacity 0→1, move Y 8px→0, blur 2px→0, 500ms, ease pop | `components/DigitPopIn.tsx` (per-digit, simplified to whole value) | legacy |
-| `ix-faq-toggle` | Click `.fk-faq-question` | Parent `.fk-faq-item` | Height 0→auto on `.fk-faq-answer`, rotate `.fk-faq-icon` 45° | `Faq.tsx` accordion state | legacy |
+| `ix-count-in` | Scroll, start `"top 85%"`, once | Each `.fk-stat-value` | opacity 0→1, move Y 8px→0, 500ms, ease pop | `components/DigitPopIn.tsx` (per-digit and blur dropped, pending P-07) | synced (`i-baf0948f`) |
+| `ix-faq-toggle` | Click `.fk-faq-question` | Parent `.fk-faq-item` | Toggle `is-faq-open`; height 0→auto on `.fk-faq-answer`, rotate `.fk-faq-icon` 45° | `Faq.tsx` accordion state | legacy |
 | `ix-testimonial-hover` | Hover `.fk-testimonial` | Self | Fade in `.fk-testimonial-quote`, fade out media overlay | `Testimonials.tsx` hover variants | legacy |
 | `ix-illustration-play` | Scroll into view (once) | `.fk-illustration` | Play Lottie from start | `*Illustration.tsx` `useInView` timelines | legacy |
 

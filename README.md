@@ -27,6 +27,15 @@ npm run lint     # oxlint
 npm run preview  # preview the production build
 ```
 
+## Webflow sync scripts
+
+Used by agents following [`docs/webflow/mcp-playbook.md`](docs/webflow/mcp-playbook.md):
+
+```bash
+node scripts/webflow-css.mjs src/styles/components/nav.css            # CSS for the WHTML builder (new classes)
+node scripts/webflow-style-actions.mjs src/styles/layout.css --only fk-panel  # update_style actions (changes, states)
+```
+
 ## Pages
 
 | Route | Page |
@@ -37,6 +46,7 @@ npm run preview  # preview the production build
 | `/about` | About |
 | `/blog` | Blog index |
 | `/blog/:slug` | Blog post |
+| `/mvp` | Migration MVP (contract-based code; draft page `/mvp` in Webflow) |
 
 ## Structure
 

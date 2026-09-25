@@ -12,6 +12,9 @@ Webflow plugin). Every rule in `AGENTS.md` still applies, especially rules 11 an
    MCP Bridge app running. **Data tools** (`data_*`) are headless and preferred.
 4. Call `webflow_guide_tool` once at the start of each session, then
    `data_agent_instructions_tool` → `search_instructions` for site-specific rules.
+5. Before any interaction work, read the project skill
+   `.agents/skills/webflow-mcp-interactions/SKILL.md` (installed with `npx skills add`, pinned in
+   `skills-lock.json`) and its `references/`. The other Webflow skills come from the Cursor plugin.
 
 ## Call conventions
 
@@ -35,17 +38,57 @@ Always sync in this order, because later steps depend on earlier ones:
 | Step | Registry | Tools (actions) |
 | --- | --- | --- |
 | 0. Site instruction (first sync only) | `AGENTS.md` | `data_agent_instructions_tool`: `search_instructions`, then `create_instruction` with a short summary of rules 1–12 and a link to this repo, so agents working inside Webflow follow the same contract |
-| 1. Fonts | `tokens.md` → Fonts | `data_fonts_tool`: `list_fonts`, `create_font` |
+| 1. Fonts | `tokens.md` → Fonts | `data_fonts_tool`: `list_fonts`, `create_font` (MD5 of the file), then POST the bytes to the returned S3 URL within 15 minutes |
 | 2. Variables | `tokens.md` | `data_variable_tool`: `get_variable_collections`, `query_variables`, then `create_variable_collection` (`Flint`), `create_color_variable`, `create_size_variable`, `create_font_family_variable`, `update_*` |
-| 3. Tag styles and classes | `classes.md` | `data_style_tool`: `query_styles`, then `create_style`, `update_style` (per breakpoint and state) |
-| 4. Assets | images, SVGs, Lotties | `data_assets_tool`: `list_asset_folders`, `list_assets`, `create_asset_folder`, `create_asset` (see the MCP's asset upload guide) |
-| 5. Components | `components.md` (UI → Global → Section) | `data_component_tool` (`query_components`, `create_blank_component` with group `Global`/`UI`/`Section`, `set_component_metadata`), `data_component_props_tool` (`create_prop`), `data_component_variants_tool` (`create_variant`, `set_variant_styles`), `data_element_builder` / `data_whtml_builder` to build the tree |
-| 6. Pages | `components.md` → Pages | `data_pages_tool` (`list_pages`, `create_page`, `update_page_settings`), `data_component_builder` (`insert_in_element`) |
+| 3. Assets | images, SVGs, Lotties | `data_assets_tool`: `list_assets`, `create_asset` → POST the bytes to the returned S3 URL (curl) → record id + hosted URL in `webflow-ids.json`. Folders can't be deleted, so don't create them without approval |
+| 4. Components (with their classes) | `components.md` (UI → Global → Section) | `data_component_tool` `create_blank_component` (group `Global`/`UI`/`Section`), then `data_whtml_builder` with `scope_component_id`: repo markup as `html` + `node scripts/webflow-css.mjs <files>` as `css` (creates the classes, links variables). Then `data_component_props_tool` `create_prop` + `data_element_settings_tool` prop bindings, `data_component_variants_tool` `create_variant` + `set_variant_styles` |
+| 5. Class states and fixes | `classes.md` | `node scripts/webflow-style-actions.mjs <files> [--only fk-x]` → `data_style_tool` `update_style` actions: states the builder can't create (`focus-visible`…), changes to existing classes, re-linking variables (`--vars-only`). `create_style` with `parent_style_names` for a combo name already used on another base |
+| 6. Pages | `components.md` → Pages | `data_pages_tool` `create_page`, then `data_component_builder` `insert_in_element` for component instances. Page-level markup (e.g. Collection Lists) with `data_whtml_builder` / `data_element_builder`. A Collection List needs its collection (step 7) first |
 | 7. CMS | `cms.md` | `data_cms_tool` (`get_collection_list`, `create_collection`, `create_collection_static_field`, `create_collection_reference_field`, `create_collection_items`, `update_collection_items`) or `/cms-collection-setup`, `/bulk-cms-update` |
 | 8. Interactions | `interactions.md` | `data_interactions_tool`: `guide`, `list_interactions`, `create_interaction`, `update_interaction` |
 | 9. Custom code | `interactions.md` → exceptions only | `data_scripts_tool` (`register_inline_script`, `add_page_script`) |
 | 10. Verify | — | `data_style_tool` → `get_styles`, `element_snapshot_tool`, `data_element_tool` → `query_elements`, `/site-audit`, `/accessibility-audit` |
 | 11. Publish | — | Only on user request, via `/safe-publish` |
+
+## What the MCP can and can't do (MVP, 2026-09-23)
+
+| Works headlessly | Doesn't (or needs care) |
+| --- | --- |
+| Variables (color, size, font family), linked into styles by id | Tag styles can't be created; once seeded in the Designer, `update_style` (`style_name: "a"`) works |
+| Classes, combos, breakpoint and state styles | Styling Body → `fk-page` wrapper div |
+| WHTML insert of repo markup + CSS (classes created, `var(--token)` linked by name) | Builder: only `:hover/:focus/:active`, exact `screen and (max-width: …)` queries, class selectors only, same-name combos in one call dropped, `0 -1px` minified wrong |
+| Components from elements, props + prop bindings, variants + variant styles | Components containing a CMS-bound Collection List |
+| CMS collections, fields, references, items | Reserved field slugs get `-2` (`published-on`) |
+| Collection List source/sort/limit, CMS field bindings (incl. referenced fields) | Draft items aren't shown on the canvas |
+| Assets and fonts (with an S3 upload step) | Images inserted by URL aren't linked to the asset → `set_image_asset` |
+| IX3 interactions by class, attribute, body; class toggles; reduced-motion condition | Multi-group click interactions only accept `play`; no `filter` (blur) |
+| Snapshots and page switching with the Bridge app | Newly uploaded fonts/CMS data may need a Designer reload to show |
+
+Creates are **not idempotent**: a variable, field or class name that already exists is created
+again with a `-2` suffix (or dropped, in the builder). Query first, every time, and record ids in
+`webflow-ids.json`.
+
+## Pulling Designer edits back into the repo
+
+Anyone may fix things directly in the Designer. Before the next push, pull them back
+(`AGENTS.md` §1), or the push overwrites them:
+
+1. **Detect.** `data_style_tool` → `get_styles` (`query: "all"`) and compare names with
+   `classes.md`; unknown classes or new tag styles (`type: "tag"`) are Designer edits.
+   `data_interactions_tool` → `list_interactions` and compare with `webflow-ids.json` (a missing id
+   means it was deleted or recreated). `data_element_tool` → `get_all_elements` on the edited page.
+2. **Read the values.** `query_styles` (or `get_styles` with `filter_ids`) with
+   `include_properties`, every breakpoint and the `hover`/`focus-visible` pseudos. Variable values
+   come back as `{ id }`; map them to token names through `webflow-ids.json`.
+3. **Compare with the repo.** For the same classes, run `node scripts/webflow-style-actions.mjs
+   <file> --only <class>` to see what the repo would push, and diff it against what Webflow returned.
+4. **Back-port.** Edit `src/styles/` (and the markup, if structure changed), and the registries if a
+   name or rule changed. A Designer value that breaks a rule (a raw hex, a new class name) is snapped to
+   a token or renamed, then pushed back.
+5. **Log it** in `sync-log.md` as a pull, listing what came from the Designer.
+
+Prompt: *"Pull Designer changes for `<page or classes>` into the repo following the playbook's
+pulling section. No pushes until I review the diff."*
 
 ## Safety rules
 

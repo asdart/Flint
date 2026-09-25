@@ -1,0 +1,158 @@
+{
+  "$comment": "Webflow ids created by MCP syncs (see sync-log.md). Update by id or name; never re-create an entry listed here.",
+  "site": {
+    "id": "6ab46032460da07da9dc6231",
+    "homePageId": "6ab46033460da07da9dc623a"
+  },
+  "siteInstructions": {
+    "rules/flint-contract.md": "6ab48af6ad685df955ffe946"
+  },
+  "fonts": {
+    "SN Pro 400": "6ab48afaa6bc5ae96dc51c6c",
+    "SN Pro 500": "6ab48afaad09408dad767b8a",
+    "STIX Two Text 400": "6ab48afa57980aa5a792d7e9"
+  },
+  "pages": {
+    "/mvp": "6ab48bd91bbcc6eb23271a11"
+  },
+  "mvpPageElements": {
+    "body": "6ab48bd91bbcc6eb23271a17",
+    "fk-page": "20d631e5-c3cf-e97f-cfe0-52e889e8c563",
+    "main": "542e65b0-b809-f212-bd11-c2a8344f7e22",
+    "postGridCollectionList": "056a5b70-fe1e-f995-85fe-ed28bb061ad9"
+  },
+  "components": {
+    "Global / Nav": "89f48186-2afc-4976-616a-d28bfe34a7d0",
+    "Global / Footer": "ccc27f32-122e-b41f-b141-b68e9194ce15",
+    "Section / Text Panel": {
+      "id": "b688dcb8-5cff-a032-96fe-b87c6ca831fe",
+      "props": { "Eyebrow": "b2a24c12-02f9-b683-8f94-a0b241cd3d88", "Title": "8044a873-961f-f113-6079-70a717ffa090" },
+      "variants": { "Brand Light": "66689d21-b39d-7ec5-ba8f-5b37abe59e54" }
+    },
+    "Section / Stats Band": "0ffc666f-a586-860f-0472-4d52203a278d"
+  },
+  "collections": {
+    "Categories": {
+      "id": "6ab48f2757980aa5a793d512",
+      "items": {
+        "careers": "6ab48f56ae54d466bac476aa",
+        "immigration": "6ab48f56ae54d466bac476ac",
+        "institutional": "6ab48f56ae54d466bac476ae",
+        "licensing": "6ab48f56ae54d466bac476b0",
+        "relocation": "6ab48f56ae54d466bac476b2"
+      }
+    },
+    "Authors": {
+      "id": "6ab48f2885cf53eee8f7101f",
+      "fields": { "short-name": "9c63bdd862584362e49d82d7deba6eab", "role": "76113b3351395b0c14d32b6c90a6b774", "avatar": "0b06e22de8387b7e075fd874ade615e3" },
+      "items": {
+        "jonathan-johnson": "6ab48f57ad09408dad78027d",
+        "sarah": "6ab48f57ad09408dad78027f",
+        "marcus": "6ab48f57ad09408dad780281"
+      }
+    },
+    "Posts": {
+      "id": "6ab48f297fa72b22f570de6f",
+      "fields": {
+        "name": "41173beb7b83ec391be48bf2a897a30a",
+        "published-on-2": "c8faafbdfaeaad60dbc0ccd28a5de847",
+        "category": "c062b09214bc768a375fe1155d72d4fb",
+        "author": "bee02ac9841a83bc24091c367606af48",
+        "excerpt": "a9db581fd3798d82d7c87e5492fd8bd6",
+        "main-image": "9d3c147cac43c77cef88ba051011e689",
+        "read-time": "21614de02356102458a2a9740c4d533c",
+        "quick-answer": "d0deea85c02887a23787c1be55f13e34",
+        "body": "6dc6704f1108c72aaeadb590d38e6dea",
+        "featured": "d0009fab10ab65818794b97247f42970"
+      },
+      "items": {
+        "is-flint-legit-what-nurses-should-know": "6ab48f6b1adcf80f485dcebe",
+        "the-ultimate-nclex-rn-state-by-state-transition-map": "6ab48f6b1adcf80f485dcec0",
+        "how-hospitals-tackle-critical-winter-staffing-shifts": "6ab48f6b1adcf80f485dcec2"
+      }
+    }
+  },
+  "interactions": {
+    "ix-reveal": "i-f8d36c90",
+    "ix-count-in": "i-baf0948f",
+    "ix-nav-pill": "i-b1853c2c",
+    "ix-nav-pill-rest": "i-004f1888",
+    "ix-nav-menu": "i-6869da77",
+    "ix-nav-menu-close": "i-0fb7a606"
+  },
+  "pendingCleanup": {
+    "$comment": "Created by the MVP and not wanted. Deleting needs user approval (AGENTS.md rule 12).",
+    "variable color-ink-2": "variable-ffd5c2a6-f8fb-acbd-740a-ba7000d82e85",
+    "unused style fk-nav-cta-pill": "ed46340b-845d-2105-5539-69d85ae822b3",
+    "empty span 1 in Post Card meta": "af67cff4-71d7-25be-09ec-dd11fbc5eee6",
+    "empty span 2 in Post Card meta": "af67cff4-71d7-25be-09ec-dd11fbc5eee8",
+    "empty span 3 in Post Card meta": "af67cff4-71d7-25be-09ec-dd11fbc5eeea"
+  },
+  "assets": {
+    "/assets/chevron-right-white.svg": { "id": "6ab48de6e6e26bc496af2d2a", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de6e6e26bc496af2d2a_chevron-right-white.svg" },
+    "/assets/wordmark.svg": { "id": "6ab48de7aa89f501dd432d45", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de7aa89f501dd432d45_wordmark.svg" },
+    "/assets/wordmark-white.svg": { "id": "6ab48de763466ce73f065e07", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de763466ce73f065e07_wordmark-white.svg" },
+    "/assets/home/blog-card-01.jpg": { "id": "6ab48de7b496908db1a5d881", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de7b496908db1a5d881_blog-card-01.jpg" },
+    "/assets/home/blog-card-02.jpg": { "id": "6ab48de71bbcc6eb23276172", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de71bbcc6eb23276172_blog-card-02.jpg" },
+    "/assets/home/blog-card-03.jpg": { "id": "6ab48de7df70a4065e28f109", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de7df70a4065e28f109_blog-card-03.jpg" },
+    "/assets/blog/author.png": { "id": "6ab48de8df70a4065e28f139", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de8df70a4065e28f139_author.png" }
+  },
+  "variableCollections": {
+    "Flint": "collection-09b2219c-143d-431d-edd9-8048dbdd51a5"
+  },
+  "variables": {
+    "color-white": "variable-461ad8e5-6e4f-ff20-1de7-79d98ab8d6a2",
+    "color-ink": "variable-fce6e69c-837a-3cf7-2417-86912d7ec522",
+    "color-subtle": "variable-28160f83-5804-68e5-2bca-424278902814",
+    "color-brand": "variable-a068bcaa-f707-c0a6-c1af-840f4d3d45e9",
+    "color-brand-light": "variable-2cc30fc5-50b9-f2cc-60b0-ea3bb901209d",
+    "color-brand-foreground": "variable-3ac7902b-d962-0cc2-1950-d42d7e0e28f5",
+    "color-secondary": "variable-38b85b3c-c63f-235d-72ca-36e3dc76e537",
+    "color-tertiary": "variable-d59a1a22-91eb-46a2-26c3-a9d7ed0b54aa",
+    "color-surface": "variable-159fe683-5ded-f9dd-e23f-ee98935e976c",
+    "color-stone-50": "variable-c53d7aa0-271b-0bdb-bed0-39d8ead3ba53",
+    "color-stone-100": "variable-00a7f6d2-de57-d5d2-a22a-076448bf8b82",
+    "color-stone-400": "variable-54b82ebc-15f2-a326-1959-311a089c9c46",
+    "color-neutral-hover": "variable-ad52da7b-ede5-235b-e8ac-2f13a44c5f92",
+    "color-white-80": "variable-8a29f395-0832-0a9a-a46f-1fe5147d6bf5",
+    "color-white-60": "variable-b74786e5-7770-362f-b1fd-e1948a34cad2",
+    "color-white-20": "variable-34d22718-5fdf-2c20-c220-a748661fa179",
+    "color-white-10": "variable-b7ed9b6b-2b07-3eb1-39cc-51c6c2d1e524",
+    "color-brand-80": "variable-dbe2ac3c-ff52-9936-8bec-6da92a30632d",
+    "color-subtle-80": "variable-64de2f2a-4528-834e-2da1-09039afc6b59",
+    "color-brand-focus": "variable-11571ed8-7168-060f-4622-a7e01535e3ae",
+    "color-accent-rose": "variable-8d6ac093-50b2-b4b4-3b9b-730d3ecdbb4f",
+    "color-accent-blue": "variable-078beb18-ccd6-d3f9-d8bb-34e71b9aee9e",
+    "color-peach-100": "variable-cac1a9ff-3fe0-dca5-625a-7bf9a2c99def",
+    "color-sand-100": "variable-558d2a56-e4e4-e3cc-a9c4-4260ef2e9d93",
+    "font-sans": "variable-707ab34b-e970-287f-d261-ca843d443688",
+    "font-serif": "variable-de46e2b2-8be7-ee08-760d-7b980ab2ac1e",
+    "radius-sm": "variable-5566d714-121a-1d07-da02-b59cd2bd08f6",
+    "radius-md": "variable-67c14050-d7d3-d361-e1b0-929c0b7ff525",
+    "radius-lg": "variable-dbd1400e-9b17-6879-67d0-517df5eb33d5",
+    "radius-xl": "variable-a7f03ece-1221-20b2-5d4d-b41a747c4167",
+    "radius-2xl": "variable-1332eeaa-38eb-73bd-b8c1-9e46248e3ae1",
+    "radius-full": "variable-e4bd364c-ba01-4d4c-03ec-f6da55e9a20e",
+    "space-1": "variable-08ecad4d-d41e-174e-03a9-21ab1b190d83",
+    "space-1-5": "variable-6e72eb35-2685-fc8b-9b7f-20ef66a1838f",
+    "space-2": "variable-b8401a0f-8c6b-c812-4d59-9b0f1be38f43",
+    "space-2-5": "variable-ae2aedd5-28c4-b519-7874-cd01753d94c0",
+    "space-3": "variable-3dac42cd-d27f-e7f2-4092-8639c360b3ae",
+    "space-4": "variable-a6c1e237-3835-8522-cdbc-65e9b4bb1524",
+    "space-5": "variable-384597ad-b349-b8eb-ef51-3b181c0c2a04",
+    "space-6": "variable-47bee19b-9b8d-5824-1ad9-10b7cc6b69f7",
+    "space-7": "variable-b678c8b7-88b3-767c-20a0-d3e1e5ff0bc4",
+    "space-8": "variable-f67e3dd8-6554-3940-9cf2-15ef8677b30a",
+    "space-10": "variable-620d70d6-474e-d045-e830-63c581d5a074",
+    "space-12": "variable-2e3ba4c2-be63-9bfd-b81e-6824a0470ae7",
+    "space-16": "variable-2d760a79-65a9-a130-3438-5be1d8d2c257",
+    "space-20": "variable-34ec9c8f-1acc-454a-bd07-975aff854da4",
+    "space-24": "variable-9ea2c5e1-4802-6272-ee0d-3263a1be98ae",
+    "space-32": "variable-29c10b72-0cca-4f69-407b-afc7ae020e13",
+    "width-container": "variable-9cbcb7bc-6692-b8b0-49c0-a68bfe334bc0",
+    "width-container-md": "variable-2a337798-d863-749b-16f5-22fad7a59d37",
+    "width-content": "variable-ff14a445-a6b5-dc0b-b3ae-1f3eea332013",
+    "width-content-sm": "variable-569eb2c0-004f-8222-5370-51736cc5f4a6",
+    "width-nav-pill": "variable-eee9c6ff-8363-bae2-4c7d-6de179bfe9ee"
+  }
+}
