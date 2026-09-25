@@ -4,11 +4,12 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.1 (2026-09-23). 1.1 adds what the MVP proved about the Webflow MCP:
+- **Contract version:** 1.2 (2026-09-24). 1.1 added what the MVP proved about the Webflow MCP:
   typography on classes instead of tag styles, `fk-page` as a wrapper div, exact breakpoint query
-  syntax, `data-ix` interaction triggers, and the sync scripts in `scripts/`.
+  syntax, `data-ix` interaction triggers, and the sync scripts in `scripts/`. 1.2 adds rule 13
+  (save every learning) and the `flint-webflow-sync` skill.
 - **Status:** MVP (roadmap phase 1) closed on 2026-09-24: built in the repo (`/mvp`) and in Webflow
-  (draft page `/mvp`), reviewed. Phase 2 has not started; wait for the user's go. Everything outside
+  (draft page `/mvp`), reviewed. Phase 2 (foundations) started on 2026-09-24. Everything outside
   the MVP in `src/` is still _legacy_ (Tailwind utilities + Framer Motion). See
   [Legacy code policy](#8-legacy-code-policy).
 
@@ -69,6 +70,11 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 12. **No destructive or publishing action without explicit user confirmation.** That covers deleting
     styles, components, fields or items, unregistering components, and publishing. Publishing goes
     through the `/safe-publish` skill only.
+13. **Save every learning.** When something fails, needs a workaround or takes discovery (a payload
+    shape, a tool limit, a detour), record the fix in the same change so no one has to rediscover
+    it: recipes and pitfalls in the [`flint-webflow-sync`](.agents/skills/flint-webflow-sync/SKILL.md)
+    skill, tool capabilities in `mcp-playbook.md`, rules here, facts in the registries. The skill's
+    "Record what you learn" table says which learning goes where. Correct wrong entries in place.
 
 ## 3. Definitions
 
@@ -156,9 +162,11 @@ A file's name equals its Webflow component name without spaces (`Section / Stats
    order: variables → classes → components → pages → CMS → interactions → custom code.
 5. **Verify.** Read back what was written (styles, element snapshots). Run `/site-audit` for page
    or CMS changes, and `/accessibility-audit` for new UI.
-6. **Log.** Add a row to [`sync-log.md`](docs/webflow/sync-log.md) and tick the item in
+6. **Record learnings** (rule 13). Anything that failed or had to be discovered goes into the
+   skill, the playbook or the registries before you report back.
+7. **Log.** Add a row to [`sync-log.md`](docs/webflow/sync-log.md) and tick the item in
    [`roadmap.md`](docs/webflow/roadmap.md).
-7. **Publish** only when the user asks, via `/safe-publish`.
+8. **Publish** only when the user asks, via `/safe-publish`.
 
 ### Definition of done
 
@@ -168,6 +176,7 @@ A file's name equals its Webflow component name without spaces (`Section / Stats
 - [ ] Interactions respect reduced motion; focus-visible states exist on interactive elements
 - [ ] Registries and status columns updated
 - [ ] Webflow updated through the MCP (if requested) and logged in `sync-log.md`
+- [ ] Every failure, workaround or discovered payload recorded per rule 13
 
 ## 8. Legacy code policy
 

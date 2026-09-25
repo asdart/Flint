@@ -1,7 +1,7 @@
 # Webflow MCP playbook
 
 How agents push repo changes to Webflow. The MCP server is `plugin-webflow-webflow` (Cursor
-Webflow plugin). Every rule in `AGENTS.md` still applies, especially rules 11 and 12.
+Webflow plugin). Every rule in `AGENTS.md` still applies, especially rules 11, 12 and 13.
 
 ## Prerequisites
 
@@ -12,7 +12,10 @@ Webflow plugin). Every rule in `AGENTS.md` still applies, especially rules 11 an
    MCP Bridge app running. **Data tools** (`data_*`) are headless and preferred.
 4. Call `webflow_guide_tool` once at the start of each session, then
    `data_agent_instructions_tool` → `search_instructions` for site-specific rules.
-5. Before any interaction work, read the project skill
+5. Load the project skill [`flint-webflow-sync`](../../.agents/skills/flint-webflow-sync/SKILL.md)
+   for tested payloads and known pitfalls. After the task, record anything new there or in this
+   playbook (`AGENTS.md` rule 13).
+6. Before any interaction work, read the project skill
    `.agents/skills/webflow-mcp-interactions/SKILL.md` (installed with `npx skills add`, pinned in
    `skills-lock.json`) and its `references/`. The other Webflow skills come from the Cursor plugin.
 
@@ -37,7 +40,7 @@ Always sync in this order, because later steps depend on earlier ones:
 
 | Step | Registry | Tools (actions) |
 | --- | --- | --- |
-| 0. Site instruction (first sync only) | `AGENTS.md` | `data_agent_instructions_tool`: `search_instructions`, then `create_instruction` with a short summary of rules 1–12 and a link to this repo, so agents working inside Webflow follow the same contract |
+| 0. Site instruction (first sync only) | `AGENTS.md` | `data_agent_instructions_tool`: `search_instructions`, then `create_instruction` with a short summary of rules 1–13 and a link to this repo, so agents working inside Webflow follow the same contract |
 | 1. Fonts | `tokens.md` → Fonts | `data_fonts_tool`: `list_fonts`, `create_font` (MD5 of the file), then POST the bytes to the returned S3 URL within 15 minutes |
 | 2. Variables | `tokens.md` | `data_variable_tool`: `get_variable_collections`, `query_variables`, then `create_variable_collection` (`Flint`), `create_color_variable`, `create_size_variable`, `create_font_family_variable`, `update_*` |
 | 3. Assets | images, SVGs, Lotties | `data_assets_tool`: `list_assets`, `create_asset` → POST the bytes to the returned S3 URL (curl) → record id + hosted URL in `webflow-ids.json`. Folders can't be deleted, so don't create them without approval |
@@ -50,7 +53,7 @@ Always sync in this order, because later steps depend on earlier ones:
 | 10. Verify | — | `data_style_tool` → `get_styles`, `element_snapshot_tool`, `data_element_tool` → `query_elements`, `/site-audit`, `/accessibility-audit` |
 | 11. Publish | — | Only on user request, via `/safe-publish` |
 
-## What the MCP can and can't do (MVP, 2026-09-23)
+## What the MCP can and can't do (MVP 2026-09-23, updated 2026-09-24)
 
 | Works headlessly | Doesn't (or needs care) |
 | --- | --- |
@@ -58,7 +61,10 @@ Always sync in this order, because later steps depend on earlier ones:
 | Classes, combos, breakpoint and state styles | Styling Body → `fk-page` wrapper div |
 | WHTML insert of repo markup + CSS (classes created, `var(--token)` linked by name) | Builder: only `:hover/:focus/:active`, exact `screen and (max-width: …)` queries, class selectors only, same-name combos in one call dropped, `0 -1px` minified wrong |
 | Components from elements, props + prop bindings, variants + variant styles | Components containing a CMS-bound Collection List |
-| CMS collections, fields, references, items | Reserved field slugs get `-2` (`published-on`) |
+| Components from page markup (`transform_element_to_component`, the element becomes the root) | `create_blank_component` adds a wrapper `div` root, and `transform` can't reach elements inside a component definition. Build the markup on a draft page, transform it, then remove the page instance |
+| Component instances inside other components (`insert_component_instance` + `scope_component_id`); variant chosen with the `Variant` prop (`type: "string"`, value = variant id) | Variants are style overrides only: they can't add a combo class |
+| Native `<button>`, `<span>` etc. as DOM elements (`data_element_builder`, `type: "DOM"`, `set_dom_config.dom_tag`) | The WHTML builder turns `<button>` into a Link, and its `<span>` can't bind a prop. Use DOM elements for both |
+| CMS collections, fields, references, items | Reserved field slugs get `-2` (`published-on`). Slugs can't be renamed: create the new field, copy values, repoint sorts/bindings, then delete the old one |
 | Collection List source/sort/limit, CMS field bindings (incl. referenced fields) | Draft items aren't shown on the canvas |
 | Assets and fonts (with an S3 upload step) | Images inserted by URL aren't linked to the asset → `set_image_asset` |
 | IX3 interactions by class, attribute, body; class toggles; reduced-motion condition | Multi-group click interactions only accept `play`; no `filter` (blur) |

@@ -16,7 +16,7 @@ function findAuthor(slug: string): Author {
 /** Mirrors a Webflow Collection List on Posts, sorted by "Published on" descending. */
 export function latestPosts(limit: number): PostWithAuthor[] {
   return [...posts]
-    .sort((a, b) => b["published-on"].localeCompare(a["published-on"]))
+    .sort((a, b) => b["publish-date"].localeCompare(a["publish-date"]))
     .slice(0, limit)
     .map((post) => ({ ...post, authorItem: findAuthor(post.author) }));
 }

@@ -8,8 +8,7 @@ Legacy source: `src/sections/blog/posts.ts` and `src/sections/blog/featuredArtic
 
 Seed files: `src/content/categories.json` (5), `authors.json` (3) and `posts.json` (3, the MVP
 subset). Image fields are `{ "url", "alt" }`, and reference fields hold the referenced item's slug
-(the import maps slugs to Webflow item ids, recorded in `webflow-ids.json`). The seed keeps the
-key `published-on` until the field slug question above is settled.
+(the import maps slugs to Webflow item ids, recorded in `webflow-ids.json`).
 `src/content/index.ts` loads them for the preview.
 
 ## Categories
@@ -35,7 +34,7 @@ key `published-on` until the field slug question above is settled.
 | --- | --- | --- | --- | --- |
 | Title | `name` | Plain text | ✓ | `title` |
 | Slug | `slug` | Slug | ✓ | `slug` |
-| Published on | `published-on-2` ⚠ | Date/Time | ✓ | `date` (convert "July 17, 2026" → ISO date) |
+| Publish date | `publish-date` | Date/Time | ✓ | `date` (convert "July 17, 2026" → ISO date) |
 | Category | `category` | Reference → Categories | ✓ | `category` |
 | Author | `author` | Reference → Authors | ✓ | `author`, `authorFullName`, `authorRole` |
 | Excerpt | `excerpt` | Plain text (max 200) | ✓ | `excerpt` |
@@ -45,9 +44,10 @@ key `published-on` until the field slug question above is settled.
 | Body | `body` | Rich text | ✓ | `section`, `paragraphs`, `figure`, `quote` blocks |
 | Featured | `featured` | Switch | | `FEATURED_POST` (only one post at a time) |
 
-⚠ `published-on` is reserved by Webflow (the system publish date), so the field got the slug
-`published-on-2`. Proposed fix (needs approval, it deletes a field): recreate it as "Publish date"
-(`publish-date`) and update the seed JSON and the Post Grid sort.
+`published-on` is reserved by Webflow (the system publish date), so don't name a field
+"Published on": it gets the slug `published-on-2`. Field slugs can't be changed after creation, so
+the MVP field was replaced by `publish-date` on 2026-09-24 (created, values copied, sort
+repointed, old field deleted).
 
 Other MVP findings:
 
@@ -78,11 +78,11 @@ Legacy-to-CMS decisions:
 
 | Where | Collection | Filter | Sort | Limit | Pagination |
 | --- | --- | --- | --- | --- | --- |
-| Home — `Section / Post Grid` (Home) | Posts | — | Published on ↓ | 3 | — |
-| Blog post — `Section / Post Grid` (Related) | Posts | Category = current post's category, exclude current (roadmap D-02) | Published on ↓ | 3 | — |
-| Blog — `Section / Post Index` | Posts | — | Published on ↓ | 6 | Native, 6 per page |
+| Home — `Section / Post Grid` (Home) | Posts | — | Publish date ↓ | 3 | — |
+| Blog post — `Section / Post Grid` (Related) | Posts | Category = current post's category, exclude current (roadmap D-02) | Publish date ↓ | 3 | — |
+| Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page |
 | Blog — featured post | Posts | Featured = on | — | 1 | — |
-| Blog category template — `Section / Post Index` | Posts | Category = current category | Published on ↓ | 6 | Native |
+| Blog category template — `Section / Post Index` | Posts | Category = current category | Publish date ↓ | 6 | Native |
 | Category links above the Post Index | Categories | — | Name ↑ | all | — |
 
 Category filtering uses Category template pages and plain links, which replaces the legacy

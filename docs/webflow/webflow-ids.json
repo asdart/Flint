@@ -29,7 +29,26 @@
       "props": { "Eyebrow": "b2a24c12-02f9-b683-8f94-a0b241cd3d88", "Title": "8044a873-961f-f113-6079-70a717ffa090" },
       "variants": { "Brand Light": "66689d21-b39d-7ec5-ba8f-5b37abe59e54" }
     },
-    "Section / Stats Band": "0ffc666f-a586-860f-0472-4d52203a278d"
+    "Section / Stats Band": "0ffc666f-a586-860f-0472-4d52203a278d",
+    "UI / Button": {
+      "id": "2d27873f-6024-af57-8d0a-382d0847f7a2",
+      "props": {
+        "Variant": "02f11f7d-61e0-fe70-bcdf-430908c9bd2f",
+        "Label": "c9bf0674-8992-50c1-03a6-f8dfc38003fc",
+        "Link": "f68ae9bc-f351-545f-b2a2-ce72c4cc82cf"
+      },
+      "variants": {
+        "Primary": "base",
+        "Secondary": "0579faee-bfd6-0188-f35d-5c5e99f29d87",
+        "Primary Small": "0e38a8a7-f92e-d73d-c1eb-94f9188b6641",
+        "Secondary Small": "f721b0b1-b749-f135-10b5-adf8f838794d"
+      },
+      "instances": {
+        "Nav -cta-rest (Secondary Small)": "4af149f9-cc13-0d2d-deeb-d3ac179d27a0",
+        "Nav -menu-footer (Primary)": "21729cde-b713-607e-c5c3-71390c6c3a91",
+        "Footer -cta (Secondary)": "56d826f9-caef-96a0-e803-362e27ae34ba"
+      }
+    }
   },
   "collections": {
     "Categories": {
@@ -55,7 +74,7 @@
       "id": "6ab48f297fa72b22f570de6f",
       "fields": {
         "name": "41173beb7b83ec391be48bf2a897a30a",
-        "published-on-2": "c8faafbdfaeaad60dbc0ccd28a5de847",
+        "publish-date": "e0661b0510efe25a70e00f8a19f5bb38",
         "category": "c062b09214bc768a375fe1155d72d4fb",
         "author": "bee02ac9841a83bc24091c367606af48",
         "excerpt": "a9db581fd3798d82d7c87e5492fd8bd6",
@@ -80,13 +99,12 @@
     "ix-nav-menu": "i-6869da77",
     "ix-nav-menu-close": "i-0fb7a606"
   },
+  "navElements": {
+    "fk-nav-toggle (button)": "f985e2f9-b402-a723-a749-d088422333e3",
+    "fk-nav-menu-close (button)": "9529c353-11ad-f85e-d7c9-b7665c20e506"
+  },
   "pendingCleanup": {
-    "$comment": "Created by the MVP and not wanted. Deleting needs user approval (AGENTS.md rule 12).",
-    "variable color-ink-2": "variable-ffd5c2a6-f8fb-acbd-740a-ba7000d82e85",
-    "unused style fk-nav-cta-pill": "ed46340b-845d-2105-5539-69d85ae822b3",
-    "empty span 1 in Post Card meta": "af67cff4-71d7-25be-09ec-dd11fbc5eee6",
-    "empty span 2 in Post Card meta": "af67cff4-71d7-25be-09ec-dd11fbc5eee8",
-    "empty span 3 in Post Card meta": "af67cff4-71d7-25be-09ec-dd11fbc5eeea"
+    "$comment": "Created by a sync and not wanted. Deleting needs user approval (AGENTS.md rule 12). Empty since 2026-09-24."
   },
   "assets": {
     "/assets/chevron-right-white.svg": { "id": "6ab48de6e6e26bc496af2d2a", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de6e6e26bc496af2d2a_chevron-right-white.svg" },

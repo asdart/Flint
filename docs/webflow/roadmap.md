@@ -13,7 +13,7 @@ on them. Don't start a phase before the previous phase's exit criteria are met, 
 | --- | --- | --- |
 | 0 | Decisions and setup | ◐ |
 | 1 | **MVP**: one vertical slice built end to end | ☑ closed 2026-09-24 |
-| 2 | Foundations complete | ☐ |
+| 2 | Foundations complete | ◐ |
 | 3 | Global and UI components | ☐ |
 | 4 | Sections | ☐ |
 | 5 | Static pages | ☐ |
@@ -139,12 +139,12 @@ custom domain.
 - [x] `AGENTS.md`, registries and `mcp-playbook.md` updated with the findings (contract v1.1)
 - [x] Go / no-go recorded (D-04: closed, phase 2 waits for the user)
 
-Carried into phase 2 (not blocking the close):
+Carried into phase 2 (not blocking the close), done 2026-09-24:
 
-- [ ] Cleanup, needs approval: delete variable `color-ink-2`, the unused style `fk-nav-cta-pill`
-      and the 3 empty spans; rename the `published-on-2` field (see `webflow-ids.json` →
-      `pendingCleanup`, `cms.md`)
-- [ ] Rebuild Nav/Footer buttons as `UI / Button` instances, components-first (playbook step 4)
+- [x] Cleanup (approved by the user): deleted variable `color-ink-2`, the unused style
+      `fk-nav-cta-pill` and the 3 empty spans; `published-on-2` replaced by `publish-date`
+- [x] Nav/Footer buttons rebuilt as `UI / Button` instances (4 variants, Label and Link props);
+      nav toggle and close are native buttons with focus-visible rings
 
 **Out of scope for the MVP:** heroes, illustrations, custom-code exceptions, other pages, SEO settings, forms.
 
