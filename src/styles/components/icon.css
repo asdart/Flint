@@ -1,0 +1,9 @@
+/* fk-icon — docs/webflow/classes.md → Component classes. An SVG file from src/assets/icons/ in an
+   <img>, never an icon drawn with styled elements. */
+
+.fk-icon {
+  display: block;
+  flex: none;
+  width: 24px;
+  height: 24px;
+}

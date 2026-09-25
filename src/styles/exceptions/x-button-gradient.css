@@ -1,0 +1,36 @@
+/* Exception x-button-gradient — docs/webflow/interactions.md → Custom-code exceptions.
+   Site custom CSS, never pushed as classes. Webflow styles can't animate a gradient angle, and IX3
+   can't animate custom properties. Install in Webflow with each var(--token) renamed to
+   var(--_flint---token). */
+
+@property --fk-button-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 349.52deg;
+}
+
+.fk-button {
+  background-image: linear-gradient(
+    var(--fk-button-angle),
+    var(--color-accent-rose) -32.33%,
+    var(--color-brand) 39.71%,
+    var(--color-brand) 65.25%,
+    var(--color-accent-blue) 146.24%
+  );
+  transition:
+    --fk-button-angle 700ms cubic-bezier(0.42, 0, 0.58, 1),
+    box-shadow 300ms ease-out,
+    color 150ms ease-out;
+}
+
+.fk-button:hover:not(:active) {
+  --fk-button-angle: 529.52deg;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fk-button {
+    transition:
+      box-shadow 300ms ease-out,
+      color 150ms ease-out;
+  }
+}

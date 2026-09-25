@@ -35,7 +35,9 @@
       "props": {
         "Variant": "02f11f7d-61e0-fe70-bcdf-430908c9bd2f",
         "Label": "c9bf0674-8992-50c1-03a6-f8dfc38003fc",
-        "Link": "f68ae9bc-f351-545f-b2a2-ce72c4cc82cf"
+        "Link": "f68ae9bc-f351-545f-b2a2-ce72c4cc82cf",
+        "Show Icon": "d25c54bc-2ee4-36a3-6eae-ff8fcaa327bf",
+        "Icon": "aa6e1828-0473-c180-53b0-a8edac0ff613"
       },
       "variants": {
         "Primary": "base",
@@ -101,12 +103,16 @@
   },
   "navElements": {
     "fk-nav-toggle (button)": "f985e2f9-b402-a723-a749-d088422333e3",
-    "fk-nav-menu-close (button)": "9529c353-11ad-f85e-d7c9-b7665c20e506"
+    "fk-nav-menu-close (button)": "9529c353-11ad-f85e-d7c9-b7665c20e506",
+    "fk-nav-toggle fk-icon (menu.svg)": "653d6393-cde0-9cb3-1c83-6bfd427fddba",
+    "fk-nav-menu-close fk-icon (x-mark.svg)": "d1ef0370-1677-b126-08c1-7e02d4d67167"
   },
   "pendingCleanup": {
     "$comment": "Created by a sync and not wanted. Deleting needs user approval (AGENTS.md rule 12). Empty since 2026-09-24."
   },
   "assets": {
+    "src/assets/icons/menu.svg": { "id": "6ab606bc46d3ceb56d132628", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab606bc46d3ceb56d132628_menu.svg" },
+    "src/assets/icons/x-mark.svg": { "id": "6ab606bcaaab0f1581b142c6", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab606bcaaab0f1581b142c6_x-mark.svg" },
     "/assets/chevron-right-white.svg": { "id": "6ab48de6e6e26bc496af2d2a", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de6e6e26bc496af2d2a_chevron-right-white.svg" },
     "/assets/wordmark.svg": { "id": "6ab48de7aa89f501dd432d45", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de7aa89f501dd432d45_wordmark.svg" },
     "/assets/wordmark-white.svg": { "id": "6ab48de763466ce73f065e07", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de763466ce73f065e07_wordmark-white.svg" },
@@ -156,6 +162,7 @@
     "space-2": "variable-b8401a0f-8c6b-c812-4d59-9b0f1be38f43",
     "space-2-5": "variable-ae2aedd5-28c4-b519-7874-cd01753d94c0",
     "space-3": "variable-3dac42cd-d27f-e7f2-4092-8639c360b3ae",
+    "space-3-5": "variable-2d47874a-5040-8101-b201-5b999af02fa3",
     "space-4": "variable-a6c1e237-3835-8522-cdbc-65e9b4bb1524",
     "space-5": "variable-384597ad-b349-b8eb-ef51-3b181c0c2a04",
     "space-6": "variable-47bee19b-9b8d-5824-1ad9-10b7cc6b69f7",

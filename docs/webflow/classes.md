@@ -149,7 +149,7 @@ Combos in use (add a row here before using a new pair):
 | `fk-sr-only` | Visually hidden, accessible to screen readers |
 | `fk-hide-mobile` | `display: none` at ≤767 |
 | `fk-hide-desktop` | `display: none` above 991 |
-| `fk-divider` | On an `hr`: 1px top border `color-stone-50`, full width, no margin. Combo `is-inverse` → `color-white-20` |
+| `fk-divider` | On an `hr`: a 1px-tall fill in `color-white-10` (no border), full width, no margin. No combos |
 
 Scroll reveals are not classes: they use the `data-ix="reveal"` attribute (see `interactions.md`).
 
@@ -161,8 +161,9 @@ Blocks marked **MVP** are implemented in `src/styles/components/`.
 
 | Block | Elements | Combos | Notes |
 | --- | --- | --- | --- |
-| `fk-button` **MVP** | `-icon` | `is-secondary` (white), `is-small`, and `is-secondary is-small` | Base = primary. Link Block with an unclassed text child. Gradient `background-size: 100% 200%`; hover slides `background-position` 50% 100% → 50% 0% (the legacy angle animation needs `@property`, which Webflow can't do). Pressed: no shadow, text `color-white-60`. `-icon` is a 20px circle with the chevron as a background image |
-| `fk-nav` **MVP** | `-logo` (49×24), `-links`, `-link`, `-actions`, `-cta`, `-cta-rest`, `-toggle`, `-toggle-line`, `-menu`, `-menu-header`, `-menu-close`, `-menu-close-line`, `-menu-links`, `-menu-link`, `-menu-footer` | `fk-nav is-pill` (scrolled), `fk-nav-menu is-menu-open`, `fk-nav-menu-close-line is-reverse`, `fk-nav-link w--current`, `fk-nav-menu-link w--current` | Centered with `left/right: 0` + auto margins, never a transform (the fixed menu is a child). `is-pill` transitions width/top/padding/background. One CTA (Secondary Small) in both states; `-cta-pill` was removed on 2026-09-24. `-toggle` and `-menu-close` sit on native buttons: they reset the border and have a `:focus-visible` ring |
+| `fk-icon` | — | — | An SVG icon image, 24×24, `display: block`. Used inside controls (nav toggle and close). Icons come from `src/assets/icons/`; color and shape live in the file |
+| `fk-button` **MVP** | `-icon` | `is-secondary` (white), `is-small` | Base = primary. Link with an unclassed text span. Padding: 10 × 20 (`space-2-5` / `space-5`); small 6 × 14 (`space-1-5` / `space-3-5`). No icon by default. The class holds the static legacy gradient (349.52deg); the hover rotates it 180° over 700ms through exception `x-button-gradient` (interactions.md), and until that's installed Webflow shows only the hover shadow. Pressed: no shadow, text `color-white-60`. `-icon` is an optional 20×20 SVG image after the label |
+| `fk-nav` **MVP** | `-logo` (49×24), `-links`, `-link`, `-actions`, `-cta`, `-cta-rest`, `-toggle`, `-menu`, `-menu-header`, `-menu-close`, `-menu-links`, `-menu-link`, `-menu-footer` | `fk-nav is-pill` (scrolled), `fk-nav-menu is-menu-open`, `fk-nav-link w--current`, `fk-nav-menu-link w--current` | Centered with `left/right: 0` + auto margins, never a transform (the fixed menu is a child). `is-pill` transitions width/top/padding/background. One CTA (Secondary Small) in both states; `-cta-pill` was removed on 2026-09-24. `-toggle` and `-menu-close` are native 40×40 buttons holding an `fk-icon` (`menu.svg`, `x-mark.svg`): they reset the border and have a `:focus-visible` ring |
 | `fk-footer` **MVP** | `-panel`, `-cta`, `-cta-text`, `-groups`, `-group`, `-group-title`, `-links`, `-link`, `-logo` (49×24), `-bottom` | — | Panel padding 80 → 48 → 32 |
 | `fk-section-header` **MVP** | `-body` | `is-center`, `is-inverse` | Eyebrow uses `fk-eyebrow`, title uses the H2 tag style. `-body` stays left-aligned and stacks with `fk-text-lg is-brand-muted` |
 | `fk-stats-band` **MVP** | `-grid` | — | Grid is a flex row (120px tall) on desktop, 2-column grid below |

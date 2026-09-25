@@ -29,6 +29,14 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | Need a variant to add a combo class | Not possible; variants are style overrides. Copy the combo's values into `set_variant_styles` |
 | Field got slug `…-2`, or needs a new slug | Slugs are immutable. Create → copy values → repoint sorts/bindings → delete ([recipes → CMS field](recipes.md#replace-a-cms-field)) |
 | Creating something that exists returns `-2` or is silently dropped | Creates aren't idempotent. Query first; use update actions |
+| WHTML `<img>` → "inserted without a managed asset", even for an uploaded asset | Set the asset after insert: `set_settings` → `assetId` ([recipes → Icons](recipes.md#svg-icons-and-optional-icons)) |
+| `remove_style` → "Ensure there are no usages of this style" | Remove the elements first, in an earlier call (not in parallel). Removing a base style also removes its combos |
+| A class still carries a raw shorthand (`border-top: 1px solid var(--_flint---…)`) or an element keeps a `class` attribute next to its styles | Both came from MVP WHTML inserts. `remove_properties: ["border-top", …]` on the class; `remove_attribute` `["class"]` on the element |
+| A declaration deleted from the repo CSS is still on the Webflow class | `webflow-style-actions.mjs` only sets. Send `update_style` with `remove_properties` ([recipes → Push classes](recipes.md#push-classes)) |
+| An effect Webflow can't do natively (gradient angle, custom property animation) | Don't approximate (rule 14). Ask the user; register an exception in `src/styles/exceptions/` |
+| Uploading an asset or font file | `create_asset` / `create_font`, then pipe the result into `scripts/webflow-upload.mjs` ([recipes → Upload](recipes.md#upload-an-asset)) |
+| A class you pushed is back to older values (seen: `fk-button` gradient and `transition`), with a newer page `lastUpdated` | A Designer tab opened before the push saved its stale copy. Re-read styles at the start of each task, re-push from the repo, and ask the user to reload the Designer after every push |
+| `query_elements` `component_filter` finds no instances that do exist | It only searches the page tree. Instances inside Nav/Footer need `scope_component_id` |
 | `element_snapshot_tool` → `{"status":false}` | Snapshots need the Designer with the MCP Bridge app open. Verify with element queries instead and ask the user to review visually |
 | Validation error about a missing `siteId` / `site_id` / `pageId` | Placement differs per tool; see playbook → Call conventions |
 | Media query rejected, tag selectors dropped | Write queries exactly as in `AGENTS.md` §5; typography lives on classes, not tag selectors |

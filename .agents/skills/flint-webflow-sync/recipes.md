@@ -7,6 +7,8 @@ Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come fro
 ## Contents
 
 - [Push classes](#push-classes)
+- [Upload an asset](#upload-an-asset)
+- [SVG icons and optional icons](#svg-icons-and-optional-icons)
 - [Component from markup](#component-from-markup)
 - [Props and bindings](#props-and-bindings)
 - [Variants](#variants)
@@ -24,6 +26,32 @@ Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come fro
 - **Existing classes, states, fixes:** `node scripts/webflow-style-actions.mjs <css file> --only fk-a,fk-b`
   → send the printed array as `actions` of `data_style_tool`. `update_style` is idempotent.
 - WHTML without `css` reuses classes that already exist, by name.
+- **Removed declarations:** the script can't know what Webflow still has. Read the class
+  (`query_styles`, `include_properties`, all pseudos you touched) and send
+  `{ "update_style": { "style_name": "fk-x", "breakpoint_id": "main", "remove_properties": ["background-size"] } }`
+  (add `pseudo` / `parent_style_names` as needed). Variant styles take `remove_properties` too.
+- Exception CSS (`src/styles/exceptions/`) is never passed to either script.
+
+## Upload an asset
+
+1. `md5 -q <file>` → `data_assets_tool` → `create_asset` with `site_id`, `file_name`, `file_hash`.
+2. Save the action's `result` object and pipe it in (needs `full_network` for S3):
+   `node scripts/webflow-upload.mjs src/assets/icons/menu.svg <<'EOF' … EOF` → `201` means done.
+3. Record `id` and `hostedUrl` in `webflow-ids.json` → `assets`, keyed by the repo path.
+
+The same script works for `create_font` results.
+
+## SVG icons and optional icons
+
+Icons are images of files in `src/assets/icons/`, never styled spans (rule 10).
+
+- Place: WHTML `<img class="fk-icon" src="<hostedUrl>" alt="" width="24" height="24">` inside the
+  control. WHTML doesn't link the asset, so then:
+  `set_settings` → `[{ "key": "assetId", "static_text": { "value": "<asset-id>" } }, { "key": "altText", "static_text": { "value": "" } }]`.
+  Image alt defaults to `inherit`; `""` makes it decorative (the control carries `aria-label`).
+- Optional icon in a component: create props `{ "type": "boolean", "name": "Show Icon", "default_boolean": { "value": false } }`
+  and `{ "type": "image", "name": "Icon", "default_text": { "value": "<asset-id>" } }`, then bind
+  the image: `assetId` → Icon prop, `visibility` → Show Icon prop (both `binding: { source_type: "prop" }`).
 
 ## Component from markup
 
@@ -104,12 +132,11 @@ Insert **next to** the element being replaced, so removing the old one later kee
   "element_schema": { "type": "DOM", "set_dom_config": { "dom_tag": "button" },
     "set_style": { "style_names": ["fk-nav-toggle"] },
     "set_attributes": { "attributes": [
-      { "name": "type", "value": "button" }, { "name": "aria-label", "value": "Open menu" } ] },
-    "children": [ { "type": "DOM", "set_dom_config": { "dom_tag": "span" },
-                    "set_style": { "style_names": ["fk-nav-toggle-line"] } } ] } }
+      { "name": "type", "value": "button" }, { "name": "aria-label", "value": "Open menu" } ] } } }
 ```
 
-Combo classes work in `style_names` (`["fk-nav-menu-close-line", "is-reverse"]`). A text span is
+Then put the icon inside it ([SVG icons](#svg-icons-and-optional-icons)). `children` nests more
+elements in the same call, and combo classes work in `style_names` (`["fk-a", "is-b"]`). A text span is
 `{ "type": "BY_CUSTOM_TAG", "custom_tag": "span", "set_text": { "text": "…" } }`. Native buttons need
 a border reset in the class (`border-*-width: 0px`, `border-*-style: none`).
 

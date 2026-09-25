@@ -52,6 +52,10 @@ function expand(name, value) {
         ["border-bottom-left-radius", bl],
       ];
     }
+    case "border-color":
+    case "border-width":
+    case "border-style":
+      return four("border", name.slice("border".length));
     case "overflow":
       return [["overflow-x", value], ["overflow-y", value]];
     case "grid-area": {
@@ -125,7 +129,10 @@ for (const file of files) {
         .split(";")
         .map((d) => d.trim())
         .filter(Boolean)
-        .map((d) => [d.slice(0, d.indexOf(":")).trim(), d.slice(d.indexOf(":") + 1).trim().replace(/\s+/g, " ")])
+        .map((d) => [
+          d.slice(0, d.indexOf(":")).trim(),
+          d.slice(d.indexOf(":") + 1).trim().replace(/\s+/g, " ").replace(/\(\s+/g, "(").replace(/\s+\)/g, ")"),
+        ])
         .flatMap(([name, value]) => expand(name, value))
         .map(toProperty)
         .filter((property, index, all) => all.findLastIndex((p) => p.property_name === property.property_name) === index)

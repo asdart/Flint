@@ -30,10 +30,14 @@ Nav links (static, in this order): Home `/`, Candidates `/candidates`, Facility 
 
 The Nav holds one `UI / Button` (Secondary Small, in `-cta-rest`) that stays the same when the nav
 turns into a pill, plus a Primary in the mobile menu. The menu toggle and close controls are native
-`<button type="button">` elements (Webflow DOM elements), not links.
+`<button type="button">` elements (Webflow DOM elements) holding the `menu.svg` / `x-mark.svg`
+icons, not links or drawn lines.
+
+Buttons have no icon unless an instance asks for one (Show Icon + Icon). Icons are always SVG
+files from `src/assets/icons/`.
 
 In Webflow a variant can't swap classes, so each `UI / Button` variant carries the values of its
-combo (`is-secondary`, `is-small`) as variant styles on `fk-button` / `fk-button-icon`. When a
+combo (`is-secondary`, `is-small`) as variant styles on `fk-button`. When a
 button combo changes in `button.css`, update the matching variant styles too
 (`data_component_variants_tool` → `set_variant_styles`). The label is a DOM `span`: Webflow's
 rich-text Span can't bind to a prop.
@@ -47,7 +51,7 @@ fixed Nav over the first section's top padding; on mobile it sits right above th
 
 | Component | React target | Legacy source | Props | Variants | Status |
 | --- | --- | --- | --- | --- | --- |
-| `UI / Button` | `components/ui/Button.tsx` | `components/ApplyButton.tsx`, inline button in `Footer.tsx` | Label, Link | Primary (base), Secondary (hides `-icon`), Primary Small, Secondary Small | synced (instances in Nav and Footer) |
+| `UI / Button` | `components/ui/Button.tsx` | `components/ApplyButton.tsx`, inline button in `Footer.tsx` | Label, Link, Show Icon (off by default), Icon (image). React: `icon` (an imported SVG), none by default | Primary (base), Secondary, Primary Small, Secondary Small | synced (instances in Nav and Footer) |
 | `UI / Section Header` | `components/ui/SectionHeader.tsx` | repeated inline in most sections | Eyebrow, Title, Body (rich text) | Center; Left and Inverse to do | migrated (Center) |
 | `UI / Post Card` | `components/ui/PostCard.tsx` | `sections/blog/BlogPostCard.tsx` | Image, Title, Excerpt, Avatar, Author, Read time — bound to CMS fields per instance | Default; Featured to do | migrated; in Webflow a bound element tree inside the Collection Item (component-with-props version to do) |
 | `UI / Stat` | `components/ui/Stat.tsx` | inline in `Stats.tsx`, `FacilityStats.tsx`, `AboutPage.tsx` | Value, Suffix, Label | Large; Default to do | migrated (Large) |

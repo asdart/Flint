@@ -4,7 +4,8 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.2 (2026-09-24). 1.1 added what the MVP proved about the Webflow MCP:
+- **Contract version:** 1.3 (2026-09-24). 1.3 adds SVG-only icons (rule 10), 1:1 behavior
+  (rule 14) and `src/styles/exceptions/`. 1.1 added what the MVP proved about the Webflow MCP:
   typography on classes instead of tag styles, `fk-page` as a wrapper div, exact breakpoint query
   syntax, `data-ix` interaction triggers, and the sync scripts in `scripts/`. 1.2 adds rule 13
   (save every learning) and the `flint-webflow-sync` skill.
@@ -65,6 +66,8 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
    categories) is a CMS collection, never hardcoded in a component.
 10. **Structure mirrors Webflow elements.** Use semantic tags (`section`, `nav`, `footer`, `h1`–`h4`,
     `p`, `a`, `button`, `form`). No wrapper `div` that would not exist in the Webflow build.
+    Icons are SVG files from `src/assets/icons/` placed as images, never drawn with styled
+    elements (no stacked spans for a menu icon).
 11. **Read before write in Webflow.** Query existing styles, variables and components by name before
     creating anything. Never create duplicates, and never rename or delete without updating the registry.
 12. **No destructive or publishing action without explicit user confirmation.** That covers deleting
@@ -75,6 +78,9 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
     it: recipes and pitfalls in the [`flint-webflow-sync`](.agents/skills/flint-webflow-sync/SKILL.md)
     skill, tool capabilities in `mcp-playbook.md`, rules here, facts in the registries. The skill's
     "Record what you learn" table says which learning goes where. Correct wrong entries in place.
+14. **1:1 behavior, no silent approximations.** Hover, pressed, focus and motion effects in Webflow
+    match the repo exactly. If Webflow can't reproduce one natively, stop and ask: the answer is a
+    registered exception (rule 8) or a decision in `roadmap.md`, never a quiet substitute.
 
 ## 3. Definitions
 
@@ -103,6 +109,8 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 | Media queries at 991 / 767 / 479px (see §5) | Tablet (`medium`) / Mobile landscape (`small`) / Mobile portrait (`tiny`) styles |
 | `:hover`, `:active`, `:focus-visible` in CSS | Hover / Pressed / Focused (keyboard) states |
 | `/assets/…` paths | Uploaded assets; hosted URLs and ids in `docs/webflow/webflow-ids.json` |
+| `src/assets/icons/*.svg` imported into a component | Uploaded asset in an Image element (`fk-icon`, or a block's own `-icon` class), empty alt inside a labelled control. Upload with `scripts/webflow-upload.mjs` |
+| `src/styles/exceptions/*.css` | Site custom code for a registered exception (`interactions.md`), never pushed as classes |
 | `src/components/global/*.tsx` | Components in group `Global` |
 | `src/components/ui/*.tsx` | Components in group `UI` |
 | `src/sections/*.tsx` | Components in group `Section` |
@@ -138,6 +146,9 @@ src/
     layout.css            # fk-page, fk-section, fk-panel, fk-container, fk-grid, fk-stack
     typography.css        # fk-heading-*, fk-text-*, fk-eyebrow
     components/           # one file per class family: button.css, nav.css, post-card.css…
+    exceptions/           # custom CSS for registered exceptions only (x-*.css)
+  assets/
+    icons/                # SVG icons, one file per icon, sized and colored in the file
   components/
     global/               # Webflow group "Global": Nav, Footer
     ui/                   # Webflow group "UI": Button, SectionHeader, PostCard…

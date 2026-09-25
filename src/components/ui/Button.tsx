@@ -6,14 +6,17 @@ type ButtonProps = {
   link?: string;
   variant?: "primary" | "secondary";
   size?: "default" | "small";
+  /** An SVG from src/assets/icons/, shown after the label. No icon by default. */
+  icon?: string;
 };
 
-/** UI / Button. In Webflow the Secondary variant hides the icon (display: none). */
+/** UI / Button. */
 export default function Button({
   label = "Apply now",
   link = "#apply",
   variant = "primary",
   size = "default",
+  icon,
 }: ButtonProps) {
   return (
     <SmartLink
@@ -21,7 +24,7 @@ export default function Button({
       className={cx("fk-button", variant === "secondary" && "is-secondary", size === "small" && "is-small")}
     >
       <span>{label}</span>
-      {variant === "primary" ? <span className="fk-button-icon" aria-hidden /> : null}
+      {icon ? <img className="fk-button-icon" src={icon} alt="" width={20} height={20} /> : null}
     </SmartLink>
   );
 }

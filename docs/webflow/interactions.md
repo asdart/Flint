@@ -7,6 +7,8 @@
   element ID. Use the attribute for behaviors that can sit on any element, so it never has to be
   stacked with other classes.
 - Hover, pressed and focus effects are **CSS transitions on class states**, not interactions.
+  They match the repo 1:1 (`AGENTS.md` rule 14). The MVP replaced the rotating button gradient
+  with a background slide without asking; that is what rule 14 prevents.
 - **State changes are class toggles.** An interaction adds, removes or toggles a unique combo
   class (`is-pill`, `is-menu-open`), and that combo's own transitions do the animating. Repo
   and Webflow then share one mechanism.
@@ -72,6 +74,7 @@ attributes that load code, or Code Components.
 | --- | --- | --- | --- | --- | --- |
 | `x-gravity-gallery` | Physics avatar gallery in `Section / CTA` (Gallery) | Matter.js physics simulation | CTA section only | Webflow Code Component (React, via the plugin's code-component skills). Alternative: replace with `ix-reveal-stagger` on a static collage | open: roadmap P-01 |
 | `x-article-toc` | Table of contents built from the article body H2s, with scroll-spy | Rich text headings can't be listed natively | Blog post template only | Small inline script registered with `data_scripts_tool`, under 2 KB | open: roadmap P-02 |
+| `x-button-gradient` | Primary button hover: the gradient angle turns 349.52° → 529.52° in 700ms (ease in-out), skipped with reduced motion | Webflow styles can't transition a gradient angle, and IX3 can't animate gradients or custom properties. Only `@property` does it | Site (every `fk-button`) | Custom CSS, about 1 KB: `src/styles/exceptions/x-button-gradient.css` with each `var(--token)` renamed to `var(--_flint---token)`, in site head code inside `<style>` | approved (D-06); install blocked until the site plan allows custom code (P-06) |
 
 Rules for exceptions:
 
@@ -79,5 +82,6 @@ Rules for exceptions:
 - Prefer a Code Component over a raw script when it renders UI. Prefer a page script over a site script.
 - No third-party analytics, chat or tracking without adding a row here first. Those go through
   `/custom-code-management`.
-- Removed legacy CSS such as `@property --btn-grad-angle` doesn't come back as custom CSS. The
-  button hover uses a `background-position` transition instead (`classes.md` → `fk-button`).
+- Custom CSS lives in `src/styles/exceptions/<id>.css`, is imported by the repo like any style,
+  and is never pushed through the class scripts. The class keeps the native part (the static
+  gradient), so the page still looks right before the exception is installed.

@@ -33,7 +33,7 @@ Values come from Figma via the current `src/index.css` `@theme` block, plus hard
 | `color-secondary` | `#fff5f3` | Secondary panel background |
 | `color-tertiary` | `#fbf5f2` | Tertiary panel background |
 | `color-surface` | `#f3f4f6` | Neutral surface panels |
-| `color-stone-50` | `#edeff2` | Borders on white buttons, dividers |
+| `color-stone-50` | `#edeff2` | Borders on white buttons |
 | `color-stone-100` | `#d3d7de` | Footer link text, muted borders |
 | `color-stone-400` | `#8c929b` | Form placeholder text |
 | `color-neutral-hover` | `#f5f5f5` | Hover background of white buttons |
@@ -57,8 +57,8 @@ step that's in use is its own token. Add a row before using a new one.
 | --- | --- | --- |
 | `color-white-80` | `rgba(255, 255, 255, 0.8)` | Body text on brand panels |
 | `color-white-60` | `rgba(255, 255, 255, 0.6)` | Pressed text on primary buttons |
-| `color-white-20` | `rgba(255, 255, 255, 0.2)` | Dividers on brand panels |
-| `color-white-10` | `rgba(255, 255, 255, 0.1)` | Primary button icon circle |
+| `color-white-20` | `rgba(255, 255, 255, 0.2)` | Not used by contract classes since 2026-09-24 (was the inverse divider) |
+| `color-white-10` | `rgba(255, 255, 255, 0.1)` | Dividers (`fk-divider`) |
 | `color-brand-80` | `rgba(68, 56, 109, 0.8)` | Long-form body text |
 | `color-subtle-80` | `rgba(97, 101, 106, 0.8)` | Stat labels |
 
@@ -100,12 +100,14 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 | `space-2` | 8px | | `space-10` | 40px |
 | `space-2-5` | 10px | | `space-12` | 48px |
 | `space-3` | 12px | | `space-16` | 64px |
-| `space-4` | 16px | | `space-20` | 80px |
-| `space-5` | 20px | | `space-24` | 96px |
-| `space-6` | 24px | | `space-32` | 128px |
+| `space-3-5` | 14px | | `space-20` | 80px |
+| `space-4` | 16px | | `space-24` | 96px |
+| `space-5` | 20px | | `space-32` | 128px |
+| `space-6` | 24px | | | |
 
-`space-1-5` and `space-2-5` exist only for button padding (legacy `py-1.5` / `py-2.5`), which
-sets the button heights. `space-7` is the paragraph gap in long-form text.
+`space-1-5`, `space-2-5` and `space-3-5` exist only for button padding: default 10 × 20
+(`space-2-5` / `space-5`), small 6 × 14 (`space-1-5` / `space-3-5`), as in the legacy
+`ApplyButton`. The 1px border sits outside the padding. `space-7` is the paragraph gap in long-form text.
 
 ## Widths (size variables)
 
@@ -131,8 +133,9 @@ Webflow variables don't support shadows, so these values are only allowed inside
 | Field active | `0 0 0 2px rgba(68,56,109,0.1)` | `fk-field:focus` |
 
 The primary gradient is also a class-level constant: `linear-gradient(349.52deg, color-accent-rose
--16.17%, color-brand 19.86%, color-brand 32.63%, color-accent-blue 73.12%)` on a
-`100% 200%` background (`fk-button`).
+-32.33%, color-brand 39.71%, color-brand 65.25%, color-accent-blue 146.24%)` (`fk-button`, same
+stops as the legacy `btn-primary-gradient`). On hover its angle turns to 529.52deg through
+exception `x-button-gradient`.
 
 ## Motion
 

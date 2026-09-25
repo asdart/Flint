@@ -1,4 +1,6 @@
 import { useLocation } from "react-router-dom";
+import closeIcon from "../../assets/icons/x-mark.svg";
+import menuIcon from "../../assets/icons/menu.svg";
 import { cx } from "../../lib/cx";
 import SmartLink from "../../lib/SmartLink";
 import Button from "../ui/Button";
@@ -43,9 +45,7 @@ export default function Nav() {
           </div>
         </div>
         <button type="button" className="fk-nav-toggle" aria-label="Open menu">
-          <span className="fk-nav-toggle-line" />
-          <span className="fk-nav-toggle-line" />
-          <span className="fk-nav-toggle-line" />
+          <img className="fk-icon" src={menuIcon} alt="" width={24} height={24} />
         </button>
       </div>
 
@@ -55,8 +55,7 @@ export default function Nav() {
             <img src="/assets/wordmark.svg" alt="Flint" width={49} height={24} />
           </SmartLink>
           <button type="button" className="fk-nav-menu-close" aria-label="Close menu">
-            <span className="fk-nav-menu-close-line" />
-            <span className="fk-nav-menu-close-line is-reverse" />
+            <img className="fk-icon" src={closeIcon} alt="" width={24} height={24} />
           </button>
         </div>
         <div className="fk-nav-menu-links">

@@ -28,7 +28,8 @@ Webflow plugin). Every rule in `AGENTS.md` still applies, especially rules 11, 1
 - Batch related actions in one call through the tool's `actions[]` array.
 - **Where the site ID goes differs by tool** (checked 2026-09-23):
   - `data_sites_tool`: `site_id` inside the action (`get_site: { site_id }`).
-  - `data_pages_tool`, `data_cms_tool`: `siteId` inside each action (`get_collection_list: { siteId }`).
+  - `data_cms_tool`: `siteId` inside each action (`get_collection_list: { siteId }`).
+  - `data_pages_tool`: `site_id` inside the action for `list_pages` (checked 2026-09-24).
   - `data_variable_tool`, `data_style_tool`, `data_component_tool`, `data_interactions_tool`,
     `data_element_builder`, `data_element_tool`, `data_component_builder`: top-level `siteId` **and**
     `pageId`. For site-wide work (variables, styles, components), use the Home page ID from `AGENTS.md` §9.
@@ -43,7 +44,7 @@ Always sync in this order, because later steps depend on earlier ones:
 | 0. Site instruction (first sync only) | `AGENTS.md` | `data_agent_instructions_tool`: `search_instructions`, then `create_instruction` with a short summary of rules 1–13 and a link to this repo, so agents working inside Webflow follow the same contract |
 | 1. Fonts | `tokens.md` → Fonts | `data_fonts_tool`: `list_fonts`, `create_font` (MD5 of the file), then POST the bytes to the returned S3 URL within 15 minutes |
 | 2. Variables | `tokens.md` | `data_variable_tool`: `get_variable_collections`, `query_variables`, then `create_variable_collection` (`Flint`), `create_color_variable`, `create_size_variable`, `create_font_family_variable`, `update_*` |
-| 3. Assets | images, SVGs, Lotties | `data_assets_tool`: `list_assets`, `create_asset` → POST the bytes to the returned S3 URL (curl) → record id + hosted URL in `webflow-ids.json`. Folders can't be deleted, so don't create them without approval |
+| 3. Assets | images, SVGs (`src/assets/icons/`), Lotties | `data_assets_tool`: `list_assets`, `create_asset` → pipe the result into `node scripts/webflow-upload.mjs <file>` (S3 POST) → record id + hosted URL in `webflow-ids.json`. Folders can't be deleted, so don't create them without approval |
 | 4. Components (with their classes) | `components.md` (UI → Global → Section) | `data_component_tool` `create_blank_component` (group `Global`/`UI`/`Section`), then `data_whtml_builder` with `scope_component_id`: repo markup as `html` + `node scripts/webflow-css.mjs <files>` as `css` (creates the classes, links variables). Then `data_component_props_tool` `create_prop` + `data_element_settings_tool` prop bindings, `data_component_variants_tool` `create_variant` + `set_variant_styles` |
 | 5. Class states and fixes | `classes.md` | `node scripts/webflow-style-actions.mjs <files> [--only fk-x]` → `data_style_tool` `update_style` actions: states the builder can't create (`focus-visible`…), changes to existing classes, re-linking variables (`--vars-only`). `create_style` with `parent_style_names` for a combo name already used on another base |
 | 6. Pages | `components.md` → Pages | `data_pages_tool` `create_page`, then `data_component_builder` `insert_in_element` for component instances. Page-level markup (e.g. Collection Lists) with `data_whtml_builder` / `data_element_builder`. A Collection List needs its collection (step 7) first |
@@ -66,7 +67,9 @@ Always sync in this order, because later steps depend on earlier ones:
 | Native `<button>`, `<span>` etc. as DOM elements (`data_element_builder`, `type: "DOM"`, `set_dom_config.dom_tag`) | The WHTML builder turns `<button>` into a Link, and its `<span>` can't bind a prop. Use DOM elements for both |
 | CMS collections, fields, references, items | Reserved field slugs get `-2` (`published-on`). Slugs can't be renamed: create the new field, copy values, repoint sorts/bindings, then delete the old one |
 | Collection List source/sort/limit, CMS field bindings (incl. referenced fields) | Draft items aren't shown on the canvas |
-| Assets and fonts (with an S3 upload step) | Images inserted by URL aren't linked to the asset → `set_image_asset` |
+| Assets and fonts (with an S3 upload step, `scripts/webflow-upload.mjs`) | Images inserted by URL aren't linked to the asset → `set_settings` `assetId` (or `set_image_asset`) |
+| Removing properties from a class or variant (`remove_properties`) | `remove_style` fails while any element still uses the style; removing a base removes its combos |
+| CSS transitions of colors, shadows, transforms, opacity | No transition of a gradient angle or custom property, and IX3 can't animate them either → exception (`x-button-gradient`) |
 | IX3 interactions by class, attribute, body; class toggles; reduced-motion condition | Multi-group click interactions only accept `play`; no `filter` (blur) |
 | Snapshots and page switching with the Bridge app | Newly uploaded fonts/CMS data may need a Designer reload to show |
 
@@ -77,7 +80,13 @@ again with a `-2` suffix (or dropped, in the builder). Query first, every time, 
 ## Pulling Designer edits back into the repo
 
 Anyone may fix things directly in the Designer. Before the next push, pull them back
-(`AGENTS.md` §1), or the push overwrites them:
+(`AGENTS.md` §1), or the push overwrites them.
+
+Not every difference is an edit. A Designer tab that was open before an MCP push can save its
+older copy of a style over the push (seen 2026-09-24: `fk-button` lost its new gradient and
+`transition` while padding stayed). If Webflow's value equals an earlier synced value and
+contradicts a recorded decision, treat it as stale: re-push and tell the user. If unsure, ask.
+After every push, ask the user to reload the Designer.
 
 1. **Detect.** `data_style_tool` → `get_styles` (`query: "all"`) and compare names with
    `classes.md`; unknown classes or new tag styles (`type: "tag"`) are Designer edits.

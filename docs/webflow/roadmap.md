@@ -36,6 +36,7 @@ on them. Don't start a phase before the previous phase's exit criteria are met, 
 | D-03 | Webflow site is `Flint` (short name `flint-4167fa`, ID `6ab46032460da07da9dc6231`), workspace `paulos-workspace-442e65` | 2026-09-23 | `AGENTS.md` §9 |
 | D-04 | MVP closed after the user's review. The approach (repo → MCP, contract v1.1) holds; phase 2 starts only when the user says so | 2026-09-24 | This file, `AGENTS.md` status |
 | D-05 | The nav has a single CTA (Secondary Small) in both rest and pill states | 2026-09-24 | `components.md`, `classes.md` |
+| D-06 | The primary button hover matches the repo exactly (gradient angle rotation) through custom-CSS exception `x-button-gradient`, installed once the plan allows custom code. Icons are SVG files; buttons have no icon by default | 2026-09-24 | `interactions.md`, `classes.md`, `components.md`, `AGENTS.md` rules 10 and 14 |
 
 ### To decide before the full migration (phases 2–10)
 
@@ -48,7 +49,7 @@ None of these block the MVP. All must be closed before the phase noted in "Neede
 | P-03 | What do `WhyFacilities` and `ModernFacility` become? | (a) Variants of `Section / Feature Grid` · (b) their own sections. Review against Figma | Phase 4 | open |
 | P-04 | How are the ~9 animated illustrations produced? _(proposed)_ | (a) Lottie made in After Effects or a Figma plugin (who makes them?) · (b) rebuild as Interaction timelines · (c) static SVG at launch, animate later | Phase 7 (phase 4 uses static SVGs meanwhile) | open |
 | P-05 | Where do form submissions go (Facility Apply form, newsletter)? _(proposed)_ | Webflow Forms with email notifications · Webflow Forms + webhook to a CRM/ESP · an external embed (would be an exception) | Phase 4 | open |
-| P-06 | Which Webflow site plan, and which custom domain? _(proposed)_ | Needs a CMS-capable plan for about 30 posts plus categories and authors. Check limits before phase 6 | Phase 6 (plan), phase 10 (domain) | open |
+| P-06 | Which Webflow site plan, and which custom domain? _(proposed)_ | Needs a CMS-capable plan for about 30 posts plus categories and authors, and site custom code for `x-button-gradient` (D-06). Check limits before phase 6 | Phase 6 (plan), phase 10 (domain) | open |
 | P-07 | Is it acceptable that stat numbers animate as a whole instead of digit by digit? _(proposed)_ | (a) Yes, native `ix-count-in` · (b) no, add a digit script exception | Phase 7 | open |
 | P-08 | Who supplies the missing content? _(proposed)_ | FAQ answers 2+, real footer URLs, About Team copy, bodies for non-featured posts | Phase 9 | open |
 
@@ -198,6 +199,8 @@ Needs P-04 and P-07 closed.
 
 - [ ] `x-gravity-gallery` per P-01
 - [ ] `x-article-toc` per P-02 (if approved)
+- [ ] `x-button-gradient` installed as site head code once the plan allows it (D-06, P-06); then
+      check the primary hover in Preview against the repo
 - [ ] Exceptions table in `interactions.md` matches what is actually installed (`data_scripts_tool` → `get_site_scripts`)
 
 ## Phase 9 — QA and launch prep

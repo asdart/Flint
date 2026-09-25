@@ -72,7 +72,7 @@ export default function Footer({
           <Button variant="secondary" />
         </div>
 
-        <hr className="fk-divider is-inverse" />
+        <hr className="fk-divider" />
 
         <div className="fk-footer-groups">
           {LINK_GROUPS.map((group) => (
@@ -89,7 +89,7 @@ export default function Footer({
           ))}
         </div>
 
-        <hr className="fk-divider is-inverse" />
+        <hr className="fk-divider" />
 
         <div className="fk-footer-bottom">
           <SmartLink href="/" className="fk-footer-logo">

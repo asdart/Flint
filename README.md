@@ -1,6 +1,6 @@
 # Flint — Marketing site
 
-Marketing site for Flint, implemented from the [Figma design](https://www.figma.com/design/bFJIQUAnqKd2ueYqsV8rRd/Flint-Brand--Copy-?node-id=5552-19770).
+Marketing site for Flint, implemented from the [Figma design](https://www.figma.com/design/bFJIQUAnqKd2ueYqsV8rRd/Flint-Brand--Copy-?node-id=5445-2297).
 The site is being **migrated to Webflow**. This repo is the blueprint and local preview for that
 build.
 
