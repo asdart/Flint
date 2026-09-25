@@ -1,0 +1,92 @@
+/*
+ * Webflow tag styles — mirrors docs/webflow/classes.md → Tag styles.
+ *
+ * Transition scope: every selector is wrapped in :where(.fk-page) so these defaults don't restyle
+ * legacy Tailwind pages. :where() keeps tag-level specificity. In Webflow they are plain, global
+ * tag styles, and `.fk-page` is the class on Body. Drop the wrapper once no page is legacy.
+ */
+
+:where(.fk-page) {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.fk-page) :where(h1, h2, h3, h4, p, blockquote, figure) {
+  margin: 0;
+}
+
+:where(.fk-page) :where(h1, h2) {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 52px;
+  letter-spacing: -0.96px;
+  color: var(--color-ink);
+}
+
+:where(.fk-page) :where(h3) {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.64px;
+  color: var(--color-ink);
+}
+
+:where(.fk-page) :where(h4) {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.11px;
+  color: var(--color-ink);
+}
+
+:where(.fk-page) :where(blockquote) {
+  padding: 0;
+  border: 0;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.48px;
+  color: var(--color-ink);
+}
+
+:where(.fk-page) :where(a) {
+  color: inherit;
+  text-decoration: none;
+  transition: color 300ms ease-out;
+}
+
+:where(.fk-page) :where(img) {
+  display: block;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  :where(.fk-page) :where(h1, h2) {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.64px;
+  }
+
+  :where(.fk-page) :where(h3) {
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -0.56px;
+  }
+
+  :where(.fk-page) :where(h4) {
+    font-size: 18px;
+  }
+
+  :where(.fk-page) :where(blockquote) {
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.4px;
+  }
+}

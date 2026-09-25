@@ -1,0 +1,22 @@
+/* fk-section-header — eyebrow + heading + body. */
+
+.fk-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.fk-section-header.is-center {
+  align-items: center;
+  text-align: center;
+}
+
+/* Long-form body stays left-aligned, also in the centered variant. */
+.fk-section-header-body {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: var(--space-7);
+  margin-top: var(--space-4);
+  text-align: left;
+}

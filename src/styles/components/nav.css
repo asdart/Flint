@@ -1,0 +1,214 @@
+/*
+ * fk-nav — Global / Nav. Fixed, centered without transforms so the full-screen menu (a fixed
+ * child) is positioned against the viewport. `is-pill` is toggled by ix-nav-pill / ix-nav-pill-rest
+ * and `is-menu-open` by ix-nav-menu / ix-nav-menu-close; the class transitions do the animating.
+ */
+
+.fk-nav {
+  position: fixed;
+  top: var(--space-8);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 2 * var(--space-8));
+  max-width: calc(100% - 2 * var(--space-8));
+  margin-inline: auto;
+  padding: 0;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transition:
+    width 450ms cubic-bezier(0.22, 1, 0.36, 1) 220ms,
+    top 450ms cubic-bezier(0.22, 1, 0.36, 1) 220ms,
+    padding 450ms cubic-bezier(0.22, 1, 0.36, 1) 220ms,
+    background-color 220ms ease-out,
+    box-shadow 220ms ease-out;
+}
+
+.fk-nav.is-pill {
+  top: var(--space-3);
+  width: var(--width-nav-pill);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-5);
+  background-color: var(--color-white);
+  box-shadow:
+    0 2px 2.5px rgba(0, 0, 0, 0.03),
+    0 9px 4.5px rgba(0, 0, 0, 0.03),
+    0 19px 6px rgba(0, 0, 0, 0.01);
+  transition:
+    width 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    top 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    padding 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 220ms ease-out 324ms,
+    box-shadow 220ms ease-out 324ms;
+}
+
+.fk-nav-logo {
+  position: relative;
+  display: flex;
+  flex: none;
+  width: 49px;
+  height: 24px;
+}
+
+.fk-nav-links {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  transform: translateX(-50%);
+}
+
+.fk-nav-link {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--color-subtle);
+}
+
+.fk-nav-link:hover {
+  color: var(--color-ink);
+}
+
+.fk-nav-link.w--current {
+  color: var(--color-ink);
+}
+
+.fk-nav-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.fk-nav-cta {
+  display: grid;
+}
+
+.fk-nav-cta-rest {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.fk-nav-toggle {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+}
+
+.fk-nav-toggle-line {
+  width: 20px;
+  height: 2px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-ink);
+}
+
+.fk-nav-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  flex-direction: column;
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-white);
+}
+
+/* The menu only opens below desktop; see the Tablet breakpoint. */
+.fk-nav-menu.is-menu-open {
+  display: none;
+}
+
+.fk-nav-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fk-nav-menu-close {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+}
+
+.fk-nav-menu-close-line {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-ink);
+  transform: rotate(45deg);
+}
+
+.fk-nav-menu-close-line.is-reverse {
+  transform: rotate(-45deg);
+}
+
+.fk-nav-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-10);
+}
+
+.fk-nav-menu-link {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.64px;
+  color: var(--color-ink);
+}
+
+.fk-nav-menu-link.w--current {
+  color: var(--color-brand);
+}
+
+.fk-nav-menu-footer {
+  margin-top: auto;
+  padding-bottom: var(--space-8);
+}
+
+@media screen and (max-width: 991px) {
+  .fk-nav-links {
+    display: none;
+  }
+
+  .fk-nav-toggle {
+    display: flex;
+  }
+
+  .fk-nav-menu.is-menu-open {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .fk-nav-cta {
+    display: none;
+  }
+
+  .fk-nav-menu-link {
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -0.56px;
+  }
+}

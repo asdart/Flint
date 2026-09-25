@@ -1,0 +1,149 @@
+#!/usr/bin/env node
+// Prints Webflow MCP `data_style_tool` update_style actions (JSON) for every class rule in the given
+// CSS files: one action per selector × breakpoint × state. Shorthands are expanded to the longhands
+// Webflow stores, and `var(--token)` values are linked by id from docs/webflow/webflow-ids.json.
+// Use it to sync changes to classes that already exist (the WHTML builder only creates new ones).
+// Usage: node scripts/webflow-style-actions.mjs src/styles/layout.css [--only fk-panel,fk-section]
+import { readFileSync } from "node:fs";
+
+// --vars-only: emit only properties that reference a variable (re-linking raw var() values).
+const varsOnly = process.argv.includes("--vars-only");
+const args = process.argv.slice(2).filter((arg) => arg !== "--vars-only");
+const onlyIndex = args.indexOf("--only");
+const only = onlyIndex >= 0 ? new Set(args[onlyIndex + 1].split(",")) : null;
+const files = onlyIndex >= 0 ? args.filter((_, i) => i !== onlyIndex && i !== onlyIndex + 1) : args;
+
+const ids = JSON.parse(readFileSync(new URL("../docs/webflow/webflow-ids.json", import.meta.url), "utf8"));
+const tokens = Object.fromEntries(
+  [...readFileSync(new URL("../src/styles/tokens.css", import.meta.url), "utf8").matchAll(/--([a-z0-9-]+):\s*([^;]+);/g)].map(
+    ([, name, value]) => [name, value.trim()],
+  ),
+);
+const BREAKPOINTS = { "991px": "medium", "767px": "small", "479px": "tiny" };
+const PSEUDOS = ["hover", "active", "focus-visible", "focus-within", "focus", "placeholder", "before", "after"];
+
+function sides(value) {
+  const parts = value.trim().split(/\s+(?![^(]*\))/);
+  const [t, r = t, b = t, l = r] = parts;
+  return [t, r, b, l];
+}
+
+function expand(name, value) {
+  const four = (prefix, suffix = "") =>
+    sides(value).map((v, i) => [`${prefix}-${["top", "right", "bottom", "left"][i]}${suffix}`, v]);
+  switch (name) {
+    case "padding":
+    case "margin":
+      return four(name);
+    case "inset":
+      return sides(value).map((v, i) => [["top", "right", "bottom", "left"][i], v]);
+    case "margin-inline":
+      return [["margin-inline-start", value], ["margin-inline-end", value]];
+    case "gap": {
+      const [row, column = row] = value.trim().split(/\s+(?![^(]*\))/);
+      return [["grid-row-gap", row], ["grid-column-gap", column]];
+    }
+    case "border-radius": {
+      const [tl, tr, br, bl] = sides(value);
+      return [
+        ["border-top-left-radius", tl],
+        ["border-top-right-radius", tr],
+        ["border-bottom-right-radius", br],
+        ["border-bottom-left-radius", bl],
+      ];
+    }
+    case "overflow":
+      return [["overflow-x", value], ["overflow-y", value]];
+    case "grid-area": {
+      const [rs, cs, re, ce] = value.split("/").map((v) => v.trim());
+      return [["grid-row-start", rs], ["grid-column-start", cs], ["grid-row-end", re], ["grid-column-end", ce]];
+    }
+    case "flex":
+      if (value === "none") return [["flex-grow", "0"], ["flex-shrink", "0"], ["flex-basis", "auto"]];
+      if (/^\d+$/.test(value)) return [["flex-grow", value], ["flex-shrink", "1"], ["flex-basis", "0%"]];
+      return [[name, value]];
+    case "border":
+    case "border-top": {
+      const edges = name === "border" ? ["top", "right", "bottom", "left"] : ["top"];
+      const [width, style = width === "0" ? "none" : "solid", color] = value.split(/\s+(?![^(]*\))/);
+      return edges.flatMap((edge) => [
+        [`border-${edge}-width`, width === "0" ? "0px" : width],
+        [`border-${edge}-style`, style],
+        ...(color ? [[`border-${edge}-color`, color]] : []),
+      ]);
+    }
+    default:
+      return [[name, value]];
+  }
+}
+
+function toProperty([name, value]) {
+  const whole = value.match(/^var\(--([a-z0-9-]+)\)$/);
+  if (whole) {
+    const id = ids.variables[whole[1]];
+    if (!id) throw new Error(`Unknown token "${whole[1]}" (add it to webflow-ids.json)`);
+    return { property_name: name, variable_as_value: id };
+  }
+  // The API can't keep a variable inside a compound value (shadows, gradients): it would replace the
+  // whole value with the variable. Resolve the token to its literal value, as Webflow does for gradients.
+  return {
+    property_name: name,
+    property_value: value.replace(/var\(--([a-z0-9-]+)\)/g, (_, token) => {
+      if (!tokens[token]) throw new Error(`Unknown token "${token}" in src/styles/tokens.css`);
+      return tokens[token];
+    }),
+  };
+}
+
+function parseSelector(selector) {
+  const pseudo = PSEUDOS.find((p) => selector.endsWith(`:${p}`) || selector.endsWith(`::${p}`));
+  const bare = pseudo ? selector.replace(new RegExp(`::?${pseudo}$`), "") : selector;
+  if (!/^(\.[a-z0-9-]+)+$/.test(bare)) throw new Error(`Unsupported selector "${selector}"`);
+  const classes = bare.slice(1).split(".");
+  return { classes, pseudo };
+}
+
+const actions = [];
+for (const file of files) {
+  const css = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+  const blocks = [];
+  let rest = css;
+  const mediaRe = /@media screen and \(max-width: (\d+px)\)\s*\{((?:[^{}]*\{[^}]*\})*)\s*\}/g;
+  rest = rest.replace(mediaRe, (_, width, body) => {
+    blocks.push({ breakpoint: BREAKPOINTS[width], body });
+    return "";
+  });
+  blocks.unshift({ breakpoint: "main", body: rest });
+
+  for (const { breakpoint, body } of blocks) {
+    for (const [, selector, declarations] of body.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
+      const trimmed = selector.trim();
+      if (trimmed.includes(":where(")) continue;
+      const { classes, pseudo } = parseSelector(trimmed);
+      if (only && !only.has(classes[0])) continue;
+      const properties = declarations
+        .split(";")
+        .map((d) => d.trim())
+        .filter(Boolean)
+        .map((d) => [d.slice(0, d.indexOf(":")).trim(), d.slice(d.indexOf(":") + 1).trim().replace(/\s+/g, " ")])
+        .flatMap(([name, value]) => expand(name, value))
+        .map(toProperty)
+        .filter((property, index, all) => all.findLastIndex((p) => p.property_name === property.property_name) === index)
+        .filter((property) => !varsOnly || property.variable_as_value);
+      if (properties.length === 0) continue;
+      const action = {
+        label: `${trimmed} @${breakpoint}`,
+        update_style: {
+          style_name: classes[classes.length - 1],
+          ...(classes.length > 1 ? { parent_style_names: classes.slice(0, -1) } : {}),
+          breakpoint_id: breakpoint,
+          ...(pseudo ? { pseudo } : {}),
+          properties,
+        },
+      };
+      actions.push(action);
+    }
+  }
+}
+
+process.stdout.write(JSON.stringify(actions));

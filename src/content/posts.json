@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Is Flint legit? What international nurses must know",
+    "slug": "is-flint-legit-what-nurses-should-know",
+    "published-on": "2026-07-17",
+    "category": "immigration",
+    "author": "jonathan-johnson",
+    "excerpt": "A comprehensive look at our secure green card verification system built entirely to protect candidate nurses.",
+    "main-image": {
+      "url": "/assets/home/blog-card-01.jpg",
+      "alt": "Healthcare professional speaking to the camera in a warmly lit living room"
+    },
+    "read-time": "4 min read",
+    "quick-answer": "",
+    "body": "<p>A comprehensive look at our secure green card verification system built entirely to protect candidate nurses.</p>",
+    "featured": false
+  },
+  {
+    "name": "The ultimate NCLEX-RN state-by-state transition map",
+    "slug": "the-ultimate-nclex-rn-state-by-state-transition-map",
+    "published-on": "2026-07-17",
+    "category": "licensing",
+    "author": "sarah",
+    "excerpt": "Choosing the right state board of nursing can reduce your credential evaluation timeline by up to three months.",
+    "main-image": {
+      "url": "/assets/home/blog-card-02.jpg",
+      "alt": "Smiling nurse in blue scrubs with a stethoscope standing in a hospital corridor"
+    },
+    "read-time": "5 min read",
+    "quick-answer": "",
+    "body": "<p>Choosing the right state board of nursing can reduce your credential evaluation timeline by up to three months.</p>",
+    "featured": false
+  },
+  {
+    "name": "How hospitals tackle critical winter staffing shifts",
+    "slug": "how-hospitals-tackle-critical-winter-staffing-shifts",
+    "published-on": "2026-07-17",
+    "category": "institutional",
+    "author": "marcus",
+    "excerpt": "Strategic approaches and predictive staffing matrices that aid modern hospital systems in avoiding costly agency dependency.",
+    "main-image": {
+      "url": "/assets/home/blog-card-03.jpg",
+      "alt": "Smiling nurse in green scrubs against a soft pink background"
+    },
+    "read-time": "8 min read",
+    "quick-answer": "",
+    "body": "<p>Strategic approaches and predictive staffing matrices that aid modern hospital systems in avoiding costly agency dependency.</p>",
+    "featured": false
+  }
+]

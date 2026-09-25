@@ -4,6 +4,7 @@ import '@fontsource/sn-pro/400.css'
 import '@fontsource/sn-pro/500.css'
 import '@fontsource/stix-two-text/400.css'
 import './index.css'
+import './styles/index.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(

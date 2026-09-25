@@ -1,0 +1,166 @@
+/*
+ * Typography classes — mirrors docs/webflow/classes.md → Typography.
+ * Classes set font, size, line height and tracking. Color comes from inheritance or a combo.
+ */
+
+.fk-heading-display {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 72px;
+  line-height: 80px;
+  letter-spacing: -1.08px;
+}
+
+.fk-heading-display.is-xl {
+  font-size: 96px;
+  line-height: 96px;
+  letter-spacing: -1.44px;
+}
+
+.fk-heading-xl {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 52px;
+  letter-spacing: -0.96px;
+}
+
+.fk-heading-xl.is-inverse {
+  color: var(--color-white);
+}
+
+.fk-heading-lg {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 44px;
+  letter-spacing: -0.8px;
+}
+
+.fk-heading-md {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.64px;
+}
+
+.fk-heading-md.is-center {
+  text-align: center;
+}
+
+.fk-heading-sm {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.48px;
+}
+
+.fk-text-lg {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.fk-text-lg.is-brand-muted {
+  color: var(--color-brand-80);
+}
+
+.fk-text-lg.is-inverse-muted {
+  color: var(--color-white-80);
+}
+
+.fk-text-md {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.fk-text-md.is-subtle {
+  color: var(--color-subtle);
+}
+
+.fk-text-md.is-inverse-muted {
+  color: var(--color-white-80);
+}
+
+.fk-text-sm {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.fk-text-xs {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.fk-eyebrow {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-subtle);
+}
+
+@media screen and (max-width: 991px) {
+  .fk-heading-display.is-xl {
+    font-size: 72px;
+    line-height: 80px;
+    letter-spacing: -0.8px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-heading-display {
+    font-size: 48px;
+    line-height: 52px;
+    letter-spacing: -0.72px;
+  }
+
+  .fk-heading-display.is-xl {
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: -0.8px;
+  }
+
+  .fk-heading-xl {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.64px;
+  }
+
+  .fk-heading-lg {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.64px;
+  }
+
+  .fk-heading-md {
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -0.56px;
+  }
+
+  .fk-heading-sm {
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.4px;
+  }
+
+  .fk-text-lg {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
