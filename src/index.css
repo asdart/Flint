@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "SN Pro", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "STIX Two Text", ui-serif, Georgia, serif;
-
-  /* Flint design tokens (from Figma) */
-  --color-ink: #0f0e17; /* victoria/950 — headings & strong body */
-  --color-subtle: #61656a; /* rolling-stone/600 — subtle body */
-  --color-brand: #44386d; /* purple-brand / victoria/600 */
-  --color-brand-light: #f6f5f8; /* background-brand-light */
-  --color-secondary: #fff5f3; /* background-secondary-light / roman soft */
-  --color-tertiary: #fbf5f2; /* background-tertiary-light / zinnwaldite/50 */
-  --color-surface: #f3f4f6; /* two-ways panel */
-  --color-brand-foreground: #e0dcec; /* foreground-brand-light */
-  --color-stone-50: #edeff2; /* rolling-stone/50 */
-  --color-stone-100: #d3d7de; /* rolling-stone/100 */
+/* Legacy utilities (bg-brand, font-serif…) read the values from src/styles/tokens.css.
+   `reference` makes Tailwind generate the utilities without redefining the variables. */
+@theme reference {
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --color-ink: var(--color-ink);
+  --color-subtle: var(--color-subtle);
+  --color-brand: var(--color-brand);
+  --color-brand-light: var(--color-brand-light);
+  --color-secondary: var(--color-secondary);
+  --color-tertiary: var(--color-tertiary);
+  --color-surface: var(--color-surface);
+  --color-brand-foreground: var(--color-brand-foreground);
+  --color-stone-50: var(--color-stone-50);
+  --color-stone-100: var(--color-stone-100);
 }
 
 /* Figma input/select click state: brand border + 2px 10% brand ring */

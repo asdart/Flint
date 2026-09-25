@@ -51,7 +51,7 @@ Always sync in this order, because later steps depend on earlier ones:
 | 7. CMS | `cms.md` | `data_cms_tool` (`get_collection_list`, `create_collection`, `create_collection_static_field`, `create_collection_reference_field`, `create_collection_items`, `update_collection_items`) or `/cms-collection-setup`, `/bulk-cms-update` |
 | 8. Interactions | `interactions.md` | `data_interactions_tool`: `guide`, `list_interactions`, `create_interaction`, `update_interaction` |
 | 9. Custom code | `interactions.md` → exceptions only | `data_scripts_tool` (`register_inline_script`, `add_page_script`) |
-| 10. Verify | — | `data_style_tool` → `get_styles`, `element_snapshot_tool`, `data_element_tool` → `query_elements`, `/site-audit`, `/accessibility-audit` |
+| 10. Verify | — | `node scripts/webflow-diff.mjs` on a fresh `get_styles` dump (skill recipe "Diff"), `element_snapshot_tool`, `data_element_tool` → `query_elements`, `/site-audit`, `/accessibility-audit` |
 | 11. Publish | — | Only on user request, via `/safe-publish` |
 
 ## What the MCP can and can't do (MVP 2026-09-23, updated 2026-09-24)
@@ -69,6 +69,7 @@ Always sync in this order, because later steps depend on earlier ones:
 | Collection List source/sort/limit, CMS field bindings (incl. referenced fields) | Draft items aren't shown on the canvas |
 | Assets and fonts (with an S3 upload step, `scripts/webflow-upload.mjs`) | Images inserted by URL aren't linked to the asset → `set_settings` `assetId` (or `set_image_asset`) |
 | Removing properties from a class or variant (`remove_properties`) | `remove_style` fails while any element still uses the style; removing a base removes its combos |
+| Standard CSS properties | Vendor-prefixed ones (`-webkit-line-clamp`, `-webkit-box-orient`, `-webkit-font-smoothing`) are rejected, also unprefixed → exception `x-text-rendering` |
 | CSS transitions of colors, shadows, transforms, opacity | No transition of a gradient angle or custom property, and IX3 can't animate them either → exception (`x-button-gradient`) |
 | IX3 interactions by class, attribute, body; class toggles; reduced-motion condition | Multi-group click interactions only accept `play`; no `filter` (blur) |
 | Snapshots and page switching with the Bridge app | Newly uploaded fonts/CMS data may need a Designer reload to show |

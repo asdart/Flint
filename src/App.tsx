@@ -7,6 +7,7 @@ import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import AboutPage from "./pages/AboutPage";
 import MvpPage from "./pages/MvpPage";
+import StyleGuidePage from "./pages/StyleGuidePage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/mvp" element={<MvpPage />} />
+          <Route path="/style-guide" element={<StyleGuidePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

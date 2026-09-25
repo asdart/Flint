@@ -13,7 +13,13 @@
     "STIX Two Text 400": "6ab48afa57980aa5a792d7e9"
   },
   "pages": {
-    "/mvp": "6ab48bd91bbcc6eb23271a11"
+    "/mvp": "6ab48bd91bbcc6eb23271a11",
+    "/style-guide": "6ab6a5c82d26d568f1f1f1cc"
+  },
+  "styleGuidePageElements": {
+    "fk-page": "10743946-6b11-3b05-e705-924f4c0d9310",
+    "main": "10743946-6b11-3b05-e705-924f4c0d930f",
+    "buttonsRow": "10743946-6b11-3b05-e705-924f4c0d92c4"
   },
   "mvpPageElements": {
     "body": "6ab48bd91bbcc6eb23271a17",
@@ -112,6 +118,7 @@
   },
   "assets": {
     "src/assets/icons/menu.svg": { "id": "6ab606bc46d3ceb56d132628", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab606bc46d3ceb56d132628_menu.svg" },
+    "src/assets/icons/chevron-right.svg": { "id": "6ab6a5d0bd19338a42c4ef81", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab6a5d0bd19338a42c4ef81_chevron-right.svg" },
     "src/assets/icons/x-mark.svg": { "id": "6ab606bcaaab0f1581b142c6", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab606bcaaab0f1581b142c6_x-mark.svg" },
     "/assets/chevron-right-white.svg": { "id": "6ab48de6e6e26bc496af2d2a", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de6e6e26bc496af2d2a_chevron-right-white.svg" },
     "/assets/wordmark.svg": { "id": "6ab48de7aa89f501dd432d45", "url": "https://cdn.prod.website-files.com/6ab46032460da07da9dc6231/6ab48de7aa89f501dd432d45_wordmark.svg" },

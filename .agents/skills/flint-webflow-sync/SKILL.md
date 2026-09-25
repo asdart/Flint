@@ -31,7 +31,11 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | Creating something that exists returns `-2` or is silently dropped | Creates aren't idempotent. Query first; use update actions |
 | WHTML `<img>` → "inserted without a managed asset", even for an uploaded asset | Set the asset after insert: `set_settings` → `assetId` ([recipes → Icons](recipes.md#svg-icons-and-optional-icons)) |
 | `remove_style` → "Ensure there are no usages of this style" | Remove the elements first, in an earlier call (not in parallel). Removing a base style also removes its combos |
-| A class still carries a raw shorthand (`border-top: 1px solid var(--_flint---…)`) or an element keeps a `class` attribute next to its styles | Both came from MVP WHTML inserts. `remove_properties: ["border-top", …]` on the class; `remove_attribute` `["class"]` on the element |
+| A class still carries a raw shorthand (`border-top: 1px solid var(--_flint---…)`) | An old WHTML insert stored it as-is. `remove_properties: ["border-top", …]`, then push the longhands |
+| A DOM element (`hr`, custom tag) inserted with WHTML has a `class` attribute next to its styles | Happens on every WHTML insert of a DOM element. Right after inserting, `remove_attribute` `["class"]` on it |
+| `update_style` → "Invalid style property -webkit-…" (also `line-clamp`, `font-smoothing`) | Vendor-prefixed properties can't be stored. Move them to `src/styles/exceptions/` and ask per rule 14 |
+| Markup copied from the browser preview has `data-cursor-ref` attributes | The browser tool adds them. Strip them before sending the markup to WHTML |
+| Not sure whether Webflow still matches the repo | Run the diff ([recipes → Diff](recipes.md#diff-the-repo-against-webflow)) before and after every class push |
 | A declaration deleted from the repo CSS is still on the Webflow class | `webflow-style-actions.mjs` only sets. Send `update_style` with `remove_properties` ([recipes → Push classes](recipes.md#push-classes)) |
 | An effect Webflow can't do natively (gradient angle, custom property animation) | Don't approximate (rule 14). Ask the user; register an exception in `src/styles/exceptions/` |
 | Uploading an asset or font file | `create_asset` / `create_font`, then pipe the result into `scripts/webflow-upload.mjs` ([recipes → Upload](recipes.md#upload-an-asset)) |

@@ -171,7 +171,8 @@ A file's name equals its Webflow component name without spaces (`Section / Stats
 3. **Update registries.** Keep `docs/webflow/*.md` in sync with the code, including the status column.
 4. **Sync to Webflow.** Follow [`mcp-playbook.md`](docs/webflow/mcp-playbook.md) in its fixed
    order: variables → classes → components → pages → CMS → interactions → custom code.
-5. **Verify.** Read back what was written (styles, element snapshots). Run `/site-audit` for page
+5. **Verify.** Read back what was written (styles, element snapshots). For class changes, run
+   `scripts/webflow-diff.mjs` until it reports no differences. Run `/site-audit` for page
    or CMS changes, and `/accessibility-audit` for new UI.
 6. **Record learnings** (rule 13). Anything that failed or had to be discovered goes into the
    skill, the playbook or the registries before you report back.
@@ -204,6 +205,9 @@ The current `src/` predates this contract. Until each piece is migrated:
   `:where(.fk-page)`, so they don't restyle legacy pages. In Webflow they are global tag styles;
   drop the wrapper once no page is legacy.
 - Migrated pages render inside `.fk-page` and call `useInteractions()` from `src/ix/`.
+- Legacy Tailwind utilities read token values from `tokens.css` (`@theme reference` in
+  `src/index.css`); never redefine a token there. Tailwind utilities whose variables share a
+  token name (`rounded-sm`…`rounded-2xl` → `--radius-*`) resolve to the Flint values.
 
 ## 9. Webflow project
 

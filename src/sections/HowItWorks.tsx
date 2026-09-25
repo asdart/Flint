@@ -94,11 +94,11 @@ function InterviewCard() {
         className="absolute inset-0 size-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-      <div className="absolute left-8 top-8 h-[328px] w-[334px] overflow-clip rounded-2xl border border-black/10 bg-white/80 shadow-[0_37px_37px_rgba(0,0,0,0.18),0_9px_20px_rgba(0,0,0,0.21)] backdrop-blur-[20px]">
+      <div className="absolute left-8 top-8 h-[328px] w-[334px] overflow-clip rounded-lg border border-black/10 bg-white/80 shadow-[0_37px_37px_rgba(0,0,0,0.18),0_9px_20px_rgba(0,0,0,0.21)] backdrop-blur-[20px]">
         <img
           src="/assets/home/how-interview-main.jpg"
           alt=""
-          className="absolute left-1.5 top-[7px] h-[280px] w-[322px] rounded-xl object-cover"
+          className="absolute left-1.5 top-[7px] h-[280px] w-[322px] rounded-md object-cover"
         />
         <span className="absolute left-[18px] top-[255px] rounded-full border border-white/20 bg-black/20 px-2.5 py-1 text-[10px] leading-3 text-white">
           Cristine
@@ -130,7 +130,7 @@ function InterviewCard() {
       <img
         src="/assets/home/how-interview-pip.jpg"
         alt=""
-        className="absolute left-[269.5px] top-[214px] size-[114px] rounded-xl border-4 border-white object-cover"
+        className="absolute left-[269.5px] top-[214px] size-[114px] rounded-md border-4 border-white object-cover"
       />
       <div className="absolute right-8 bottom-8 left-8 flex flex-col gap-2 text-white">
         <p className="text-[20px] font-medium leading-7 tracking-[-0.04px]">Meet with Flint</p>
@@ -444,7 +444,7 @@ function ProcessingCard() {
             <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-between">
               <span className="size-3 rounded-full bg-brand" />
               <span className="size-3 rounded-full bg-brand" />
-              <div className="flex size-6 items-center justify-center rounded-xl border-2 border-[#d1e7da] bg-[#5aa572] p-[3px]">
+              <div className="flex size-6 items-center justify-center rounded-md border-2 border-[#d1e7da] bg-[#5aa572] p-[3px]">
                 <div className="size-[18px] overflow-clip">
                   <img src="/assets/home/how-processing-check.svg" alt="" className="size-full object-contain" />
                 </div>

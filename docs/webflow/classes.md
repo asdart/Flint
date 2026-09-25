@@ -50,6 +50,8 @@ Webflow styles one class (or combo) at a time, at one breakpoint and one state. 
   push them (and any dropped combo) with `scripts/webflow-style-actions.mjs` / `create_style`.
 - `w--current` (Webflow's current-link state) couldn't be created through the MCP; style it in the
   Designer when the nav links point to real pages.
+- **No vendor-prefixed properties** (`-webkit-line-clamp`, `-webkit-font-smoothing`…): the
+  style API rejects them, prefixed or not. They go in an exception file (`interactions.md`).
 - Element-specific dimensions (icon and image sizes) may be raw px inside their block's classes.
   Colors, spacing, radii and widths always use tokens.
 
@@ -80,7 +82,7 @@ In the repo they live in `src/styles/base.css`, scoped to `:where(.fk-page)` dur
 
 | Tag | Font | Desktop | Mobile ≤767 | Color |
 | --- | --- | --- | --- | --- |
-| Body | `font-sans` 400 | 16/24 | — | `color-ink`, antialiased |
+| Body | `font-sans` 400 | 16/24 | — | `color-ink`; antialiased through exception `x-text-rendering` |
 | H1 | `font-serif` 400 | 48/52, −0.96px | 32/40, −0.64px | `color-ink` |
 | H2 | `font-serif` 400 | 48/52, −0.96px | 32/40, −0.64px | `color-ink` |
 | H3 | `font-serif` 400 | 32/40, −0.64px | 28/36, −0.56px | `color-ink` |
@@ -97,7 +99,7 @@ paragraph margins, so the tag styles must set them to 0 explicitly.
 
 | Class | Definition |
 | --- | --- |
-| `fk-page` | Page wrapper div, first child of Body (the MCP can't style Body): full width, `min-height: 100vh`, white background, `overflow-x: clip`, plus the body typography defaults (`font-sans` 16/24, `color-ink`) |
+| `fk-page` | Page wrapper div, first child of Body (the MCP can't style Body): full width, `min-height: 100vh`, white background, `overflow-x: clip`, plus the body typography defaults (`font-sans` 16/24, `color-ink`). Font smoothing comes from exception `x-text-rendering` |
 | `fk-section` | Band wrapper: padding `space-4` inline and top (legacy `px-4 pt-4`) |
 | `fk-section is-last` | Adds `space-4` bottom padding |
 | `fk-section is-open` | Unpaneled band: padding 128/64 desktop → 96/40 tablet → 64/20 mobile |
@@ -169,7 +171,7 @@ Blocks marked **MVP** are implemented in `src/styles/components/`.
 | `fk-stats-band` **MVP** | `-grid` | — | Grid is a flex row (120px tall) on desktop, 2-column grid below |
 | `fk-stat` **MVP** | `-value`, `-suffix`, `-label` | — | Value number stacks `fk-heading-display is-xl`. `-value` is the `ix-count-in` target |
 | `fk-post-grid` **MVP** | `-header` | — | Header title `fk-heading-lg`, body `fk-text-md is-subtle` |
-| `fk-post-card` **MVP** | `-media`, `-image`, `-body`, `-title`, `-excerpt`, `-meta`, `-avatar`, `-meta-text` | `is-featured` | Bound to Posts. Title and excerpt clamp to 2 lines. The image zooms on its own hover |
+| `fk-post-card` **MVP** | `-media`, `-image`, `-body`, `-title`, `-excerpt`, `-meta`, `-avatar`, `-meta-text` | `is-featured` | Bound to Posts. Title and excerpt clamp to 2 lines through exception `x-text-rendering` (the classes only carry `overflow: hidden`). The image zooms on its own hover |
 | `fk-hero` | `-content`, `-title`, `-body`, `-actions`, `-media` | `is-home`, `is-candidates`, `is-facility-partners`, `is-about`, `is-blog`, `is-article` | Consolidate variants as heroes are migrated |
 | `fk-card` | `-media`, `-body`, `-title`, `-text` | `is-feature`, `is-service` | Generic content card |
 | `fk-testimonial` | `-media`, `-quote`, `-name`, `-role` | `is-active` | Quote reveals on hover |

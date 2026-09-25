@@ -6,7 +6,9 @@ Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come fro
 
 ## Contents
 
+- [Diff the repo against Webflow](#diff-the-repo-against-webflow)
 - [Push classes](#push-classes)
+- [Build a page from the repo markup](#build-a-page-from-the-repo-markup)
 - [Upload an asset](#upload-an-asset)
 - [SVG icons and optional icons](#svg-icons-and-optional-icons)
 - [Component from markup](#component-from-markup)
@@ -18,6 +20,16 @@ Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come fro
 - [Replace a CMS field](#replace-a-cms-field)
 - [Collection List settings](#collection-list-settings)
 - [Verify](#verify)
+
+## Diff the repo against Webflow
+
+1. `data_style_tool` → `get_styles` with `query: "all"`, `include_properties: true`,
+   `include_breakpoints: ["main","medium","small","tiny"]`,
+   `include_base_pseudos: ["noPseudo","hover","active","focus","focus-visible","placeholder"]`.
+   The client writes the large result to a file and prints its path.
+2. `node scripts/webflow-diff.mjs <that file> src/styles/layout.css src/styles/typography.css src/styles/components/*.css --unregistered`
+3. Each line is `selector @breakpoint:state property: repo → webflow`. "No differences." (exit 0) is
+   the goal. It already ignores Webflow's own grid defaults, empty two-combo stacks and `w--current`.
 
 ## Push classes
 
@@ -31,6 +43,18 @@ Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come fro
   `{ "update_style": { "style_name": "fk-x", "breakpoint_id": "main", "remove_properties": ["background-size"] } }`
   (add `pseudo` / `parent_style_names` as needed). Variant styles take `remove_properties` too.
 - Exception CSS (`src/styles/exceptions/`) is never passed to either script.
+
+## Build a page from the repo markup
+
+The Webflow page uses the markup the repo page renders, so nothing is retyped:
+
+1. `data_pages_tool` → `create_page` (`site_id`, `title`, `slug`, `draft: true`, `seo`).
+2. `npm run dev`, open the page in the browser tool, and read the markup with CDP
+   `Runtime.evaluate`: clone `main`, empty every spot where a component instance goes
+   (buttons), and return `outerHTML`. Strip `data-cursor-ref="…"` attributes.
+3. `data_whtml_builder` into the page Body: `<div class="fk-page">` + that `main`, no `css`.
+4. Remove the `class` attribute from DOM elements (`hr`), then place `Global / Nav` before `main`,
+   `Global / Footer` after it, and UI instances with `insert_component_instance` + prop values.
 
 ## Upload an asset
 

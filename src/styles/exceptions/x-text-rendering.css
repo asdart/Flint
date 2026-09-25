@@ -1,0 +1,19 @@
+/* Exception x-text-rendering — docs/webflow/interactions.md → Custom-code exceptions.
+   Site custom CSS, never pushed as classes. Webflow's style API rejects these properties
+   (prefixed and unprefixed). */
+
+.fk-page {
+  -webkit-font-smoothing: antialiased;
+}
+
+.fk-post-card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.fk-post-card-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

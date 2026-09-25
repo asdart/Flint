@@ -89,7 +89,7 @@ function ArticleBlockView({ block }: { block: ArticleBlock }) {
   switch (block.type) {
     case "quick-answer":
       return (
-        <div className="flex w-full flex-col gap-1 rounded-2xl bg-tertiary p-4 text-[16px] leading-6">
+        <div className="flex w-full flex-col gap-1 rounded-lg bg-tertiary p-4 text-[16px] leading-6">
           <p className="text-ink">{block.title}</p>
           <p className="text-subtle">{block.body}</p>
         </div>
@@ -117,7 +117,7 @@ function ArticleBlockView({ block }: { block: ArticleBlock }) {
     case "figure":
       return (
         <figure className="flex w-full flex-col gap-2">
-          <div className="relative h-[220px] w-full overflow-clip rounded-2xl md:h-[405px]">
+          <div className="relative h-[220px] w-full overflow-clip rounded-lg md:h-[405px]">
             <img src={block.src} alt="" className="absolute inset-0 size-full object-cover" />
           </div>
           <figcaption className="text-[16px] leading-7 text-subtle">{block.caption}</figcaption>

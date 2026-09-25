@@ -106,6 +106,7 @@ Nav and Footer wrap every page and are omitted from the section lists.
 | Blog category | `/blog-categories/{slug}` | CMS template (Categories) | Hero (Blog), Post Index (filtered to the current category) |
 | Blog post | `/blog/{slug}` | CMS template (Posts) | Article Hero, Article Body, Post Grid (Related) |
 | MVP (draft, not in nav, no-index) | `/mvp` | Static | Text Panel (Tertiary), Stats Band (Large), Post Grid (Related) |
+| Style guide (draft, not in nav, no-index) | `/style-guide` | Static | Page-level QA markup (`pages/StyleGuidePage.tsx`): Section Header, type scale, `UI / Button` ×5, panel colors, grids, divider. Update it when a class or UI component is added |
 
 Legacy routing sends unknown paths to `/`. In Webflow, use the 404 page instead.
 

@@ -13,7 +13,7 @@ on them. Don't start a phase before the previous phase's exit criteria are met, 
 | --- | --- | --- |
 | 0 | Decisions and setup | ◐ |
 | 1 | **MVP**: one vertical slice built end to end | ☑ closed 2026-09-24 |
-| 2 | Foundations complete | ◐ |
+| 2 | Foundations complete | ◐ built, waiting for the style guide review |
 | 3 | Global and UI components | ☐ |
 | 4 | Sections | ☐ |
 | 5 | Static pages | ☐ |
@@ -37,6 +37,7 @@ on them. Don't start a phase before the previous phase's exit criteria are met, 
 | D-04 | MVP closed after the user's review. The approach (repo → MCP, contract v1.1) holds; phase 2 starts only when the user says so | 2026-09-24 | This file, `AGENTS.md` status |
 | D-05 | The nav has a single CTA (Secondary Small) in both rest and pill states | 2026-09-24 | `components.md`, `classes.md` |
 | D-06 | The primary button hover matches the repo exactly (gradient angle rotation) through custom-CSS exception `x-button-gradient`, installed once the plan allows custom code. Icons are SVG files; buttons have no icon by default | 2026-09-24 | `interactions.md`, `classes.md`, `components.md`, `AGENTS.md` rules 10 and 14 |
+| D-07 | Two-line clamps and antialiased font smoothing match the repo through custom-CSS exception `x-text-rendering` (the style API rejects those properties), installed with `x-button-gradient` | 2026-09-25 | `interactions.md`, `classes.md` |
 
 ### To decide before the full migration (phases 2–10)
 
@@ -151,9 +152,16 @@ Carried into phase 2 (not blocking the close), done 2026-09-24:
 
 ## Phase 2 — Foundations complete
 
-- [ ] Remaining classes in `classes.md` (layout, typography, utilities) in the repo and in Webflow
-- [ ] Remove duplicated tokens from `src/index.css` `@theme`, pointing legacy code to `tokens.css`
-- [ ] Style guide page (draft) in Webflow showing tokens, type scale and buttons, for visual QA
+- [x] Remaining classes in `classes.md` (layout, typography, utilities) in the repo and in Webflow.
+      All were already in both; `scripts/webflow-diff.mjs` now proves it (no differences on
+      2026-09-25) after fixing `fk-sr-only` borders, a leftover `fk-nav-cta` value and the
+      post-card clamp (moved to exception `x-text-rendering`, D-07)
+- [x] Remove duplicated tokens from `src/index.css` `@theme`, pointing legacy code to `tokens.css`
+      (`@theme reference`). Legacy `rounded-lg/xl/2xl` had been rendering with the Flint radii;
+      renamed to the tokens with the old pixel values (`rounded-sm/md/lg`)
+- [x] Style guide page (draft) in the repo (`/style-guide`) and in Webflow (draft page
+      `/style-guide`): type scale, buttons, panel colors, grids, divider
+- [ ] Review `/style-guide` in the Designer against the repo at the four breakpoints (user)
 
 ## Phase 3 — Global and UI components
 
@@ -199,7 +207,7 @@ Needs P-04 and P-07 closed.
 
 - [ ] `x-gravity-gallery` per P-01
 - [ ] `x-article-toc` per P-02 (if approved)
-- [ ] `x-button-gradient` installed as site head code once the plan allows it (D-06, P-06); then
+- [ ] `x-button-gradient` and `x-text-rendering` installed as site head code once the plan allows it (D-06, D-07, P-06); then
       check the primary hover in Preview against the repo
 - [ ] Exceptions table in `interactions.md` matches what is actually installed (`data_scripts_tool` → `get_site_scripts`)
 

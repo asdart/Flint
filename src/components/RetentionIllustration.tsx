@@ -178,7 +178,7 @@ export default function RetentionIllustration() {
             </div>
 
             <motion.div
-              className="relative size-12 overflow-clip rounded-lg bg-brand-light"
+              className="relative size-12 overflow-clip rounded-sm bg-brand-light"
               {...rise(FACILITY_START + 0.18, ROW_DUR)}
             >
               <img

@@ -57,7 +57,7 @@ function CtaPhoto({ photo }: { photo: Photo }) {
 
   const frame = (
     <div
-      className="relative h-[200px] w-[168px] overflow-clip rounded-2xl"
+      className="relative h-[200px] w-[168px] overflow-clip rounded-lg"
       style={{ background: photo.bg }}
     >
       {image}
