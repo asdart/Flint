@@ -61,6 +61,25 @@ The Webflow page uses the markup the repo page renders, so nothing is retyped:
 4. Remove the `class` attribute from DOM elements (`hr`), then place `Global / Nav` before `main`,
    `Global / Footer` after it, and UI instances with `insert_component_instance` + prop values.
 
+## Loops and multi-step timelines (IX3)
+
+Payloads accepted by `create_interaction` (runtime verification in `mvp2-home.md` → spikes):
+
+- **Infinite loop:** `timing: { duration: 20, ease: 0, repeat: -1 }`. `repeat` lives on each
+  action, not on the timeline.
+- **Multi-step loop (ticker, carousel):** give every action the same cycle length C with
+  `repeatDelay = C − duration` and its own `position` inside the cycle, so all actions repeat in
+  step. An action may sit at `position = C` (a "return to start" step).
+- **Spring-like ease:** `ease: { type: "back", curve: "out", power: 1.2 }` (or `elastic`).
+- **Hover pause/resume of a load-played loop:** extra triggers on the same interaction:
+  `wf:hover` with `control: "pause"` + `pluginConfig: { multiTimeline: false, eventMode: "enter" }`,
+  and `control: "resume"` with `eventMode: "leave"`. No `groupId` needed on a single timeline.
+- **Jump to a step:** `wf:click` with `config: { control: "play", jump: 5 }` (seconds).
+- **Width/height** are `wf:transform` properties: `width: ["7px", "57px"]` tweens natively.
+- **Scope an action to one block:** target `wf:class` with
+  `filterContext: { relationship: "within", filterBy: ["wf:class", [<block id>]], firstMatchOnly: false }`.
+- The host expands a combo leaf id into its chain (`[base, combo]`) on save; pass the leaf.
+
 ## Upload an asset
 
 1. `md5 -q <file>` → `data_assets_tool` → `create_asset` with `site_id`, `file_name`, `file_hash`.

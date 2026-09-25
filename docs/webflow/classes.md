@@ -192,6 +192,15 @@ Blocks marked **MVP** are implemented in `src/styles/components/`.
 | `fk-illustration` | — | — | Frame for a Lottie illustration (`interactions.md`) |
 | `fk-article` | `-toc`, `-toc-link`, `-body`, `-quick-answer` | — | CMS template. `-body` styles the Rich Text element |
 
+## Lab classes (temporary)
+
+`fk-lab-*` classes exist only on the draft Webflow page `/lab` for MVP 2 capability spikes
+(`mvp2-home.md`): `-row`, `-mask`, `-glass`, `-blend`, `-blur`, `-marquee(-track/-row)`, `-chip`,
+`-arc(-wheel/-card is-a1…a15)`, `-label`, `-ticker(-list/-row is-r0…r5)`, `-carousel(-track)`,
+`-slide`, `-dots`, `-dot is-d1…d3`, `-dot-fill is-f1…f3`, `-reveal`, `-reveal-item is-delay-1/2
+is-revealed`. They are never used in `src/` and are deleted with the Lab page (with confirmation)
+once the spikes are recorded.
+
 ## Example
 
 From `src/sections/TextPanel.tsx` + `src/components/ui/SectionHeader.tsx`:

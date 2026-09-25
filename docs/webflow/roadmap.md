@@ -167,9 +167,10 @@ Carried into phase 2 (not blocking the close), done 2026-09-24:
 
 Plan, spikes, per-section approach and open decisions: [`mvp2-home.md`](mvp2-home.md).
 
-- [ ] Capability spikes S1–S6 on a draft Lab page
-- [ ] Decisions H-1…H-7 in `mvp2-home.md` closed with the user (H-2, H-4…H-7 decided
-      2026-09-25; H-1 and H-3 wait for spikes S1 and S3)
+- [ ] Capability spikes S1–S6 on `/lab`, verified on staging: all six pass (2026-09-25); re-check
+      of the S4 cycle fix and S1 reduced-motion fix pending a re-publish
+- [ ] Decisions H-1…H-7 in `mvp2-home.md` closed with the user (H-2…H-7 closed 2026-09-25; H-1
+      waits for the S1 reduced-motion re-check)
 - [ ] Repo `/mvp-home` built from contract sections; screenshots match legacy `/` at 4 widths
 - [ ] Webflow draft `/mvp-home` built from the repo render; diff clean; reviewed in the Designer
 

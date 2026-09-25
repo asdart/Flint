@@ -83,6 +83,18 @@ equals its first frame**, then the IX3 timeline repeats (`repeat: -1`) with no v
 How It Works is different: legacy slides back from step 6 to step 1 (it rewinds). The timeline keeps
 that as an animated seventh step instead of relying on the repeat, which would jump.
 
+**Coverage rule (found in the Lab, 2026-09-25):** the copies must fill the visible area during the
+*whole* cycle, not only at its start, or the edges empty out as the set drains. So the total
+length of the copies is at least **visible area + one set's travel**, placed so the visible area
+is covered at both the start and the end of a cycle:
+
+| Loop | Copies needed |
+| --- | --- |
+| Marquee | `1 + ceil(widest viewport / one set's width)` copies; each cycle moves exactly one set (`xPercent = −100 / copies`) |
+| Arc wheel | Cards from `−(half the visible arc + one set's angle)` to `+half the visible arc` |
+| Ticker | Padding rows above and below the active row, as many as are visible (legacy uses 4 copies of the list on the tall desktop panel) |
+| Testimonials | Cards on every visible slot plus one hidden slot at each end |
+
 ### 0 · Nav
 
 Contract Nav already covers it. Deltas vs legacy: desktop links switch at 991 instead of 1024 and
@@ -145,8 +157,8 @@ The six cards are static compositions (≈20–30 elements each: photos, glass p
 - Carousel: **N\*** — one IX3 timeline of 6 steps (track `x`, card `scale`, bar `scaleX`) plus an
   animated return from step 6 to step 1, as legacy does (it rewinds, it isn't infinite), repeated;
   hover trigger pauses/resumes; dot click triggers `jump` to the step's time. Card width change
-  becomes a scale on a fixed card (visually identical). Dot → bar width morph: scaleX on a pill
-  distorts its radius, so the bar is drawn as dot + fill layers. (spike S5)
+  becomes a scale on a fixed card (visually identical). Dot → bar morph: IX3 tweens `width`
+  directly (7 → 57px), and the progress fill is a `width` 0 → 100% tween inside it. (spike S5)
 - Card art: rebuild as elements (~150 elements total, backdrop blur, masks) or render each card's
   art to one image and keep titles/body as live text. **H-4**
 
@@ -171,9 +183,8 @@ threshold; autoplay 5s with the same progress pagination; card hover grows the q
 - Carousel: infinite (see Infinite loops): every card runs the same 7-slot timeline offset by its
   index, so the card after the 7th is the 1st, still moving left; hover pause and dot jumps as in
   S5. **N\*** No drag (H-6).
-- Hover quote expand + scrim: IX3 doesn't tween `height`, so the hover trigger adds a class whose
-  CSS transition grows the quote box 104 → 160px; the scrim opacity is an IX3 tween. **N\***
-  The moving fade mask on the quote: S3.
+- Hover quote expand + scrim: IX3 hover tweens the quote box `height` 104 → 160px and the scrim
+  opacity 0.6 → 0.9 (0.45s). **N** The moving fade mask on the quote: S3.
 
 ### 8 · Post Grid (Home)
 
@@ -206,6 +217,20 @@ per-link stagger. **N**
 
 Spike results go straight into the skill and playbook (rule 13).
 
+**Results (2026-09-25, measured on staging `flint-4167fa.webflow.io/lab` with CDP sampling):**
+
+| ID | Result |
+| --- | --- |
+| S1 | **Pass.** Frame-by-frame identical to `BlurReveal`: opacity 0→1, blur 16→0px, y 16→0 over 750ms ease-in-out, children at 0/150/300ms. **Reduced motion:** with `dont-animate` the class is never added and the items stay invisible, so class-toggle reveals must use `skip-to-end` (update pushed, re-check pending) |
+| S2 | **Pass.** Wheel rotates 1.18°/s (20° / 17s) and wraps seamlessly at the loop point |
+| S3 | **Pass.** `mask-image` (linear gradients), `backdrop-filter`, `mix-blend-mode`, `filter` are stored and applied on the published page. H-3 closes: masks are native |
+| S4 | **Pass with a fix.** Steps, crossfades and the `back.out` overshoot (≈2px) match the spring; the loop point is invisible. My cycle was wrong (8.8s gave the duplicate row a double hold): the cycle is **unique items × step** (6.6s here). Fix pushed, re-check pending |
+| S5 | **Pass.** 5s autoplay with linear progress fill, dot width morph 7↔57px, track slide, animated return from the last step; hover pauses mid-motion and resumes; dot clicks jump to their step. Nuance: a jump replays that step's transition from its own start, so jumping two slides ahead snaps to the previous slide first. **Backward clicks** (a smaller index) snap instead of sliding back: IX3 keeps no "current slide" state. Deferred as exception candidate `x-carousel-goto` (decided 2026-09-25) |
+| S6 | **Pass.** Marquee speed matches exactly (32.76 vs 32.78 px/s) with no seam |
+| All loops | **Fix after your review:** with only two copies, the arc, marquee and ticker drained and left empty edges during the cycle. Copies added per the coverage rule above; re-check pending |
+
+Under reduced motion the loops stay still, as in legacy.
+
 ## Work plan
 
 | Step | Work | Who |
@@ -230,7 +255,7 @@ patterns — reveal, carousel — are proven before the heavy sections).
 | --- | --- | --- |
 | H-1 | With reduced motion, the blur-in CSS transition still runs (IX3 can skip its own tweens, not CSS transitions) | open until spike S1. Recommendation: accept, the element is already visible and only the blur fades |
 | H-2 | Hero hover: legacy slows the arc to 0.35×; IX3 can pause but not slow a loop | **decided 2026-09-25: pause on hover.** The 0.35× slow-down is kept as deferred exception candidate `x-hero-arc-speed` (`interactions.md`) |
-| H-3 | CSS masks (Two Ways collage, Partners ticker edges, CTA art, testimonial quote fade) if S3 fails | open until spike S3. Recommendation: pre-masked image exports for art; opacity steps for the ticker |
+| H-3 | CSS masks (Two Ways collage, Partners ticker edges, CTA art, testimonial quote fade) if S3 fails | **closed 2026-09-25: native.** S3 passed, so all masks are `mask-image` on their classes |
 | H-4 | How It Works card art: rebuild as elements or one image per card | **decided 2026-09-25: one image per card**, rendered from the repo at 2×; titles and body stay live text |
 | H-5 | Service card radius 20px (no token) | **decided 2026-09-25: add a 20px radius token** (named in `tokens.md` when the Feature Grid is built) |
 | H-6 | Testimonials drag/swipe (no native equivalent with center weighting) | **decided 2026-09-25: no drag**; autoplay, dots and hover pause stay. Drag is kept as deferred exception candidate `x-testimonial-drag` |

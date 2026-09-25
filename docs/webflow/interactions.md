@@ -12,12 +12,17 @@
 - **State changes are class toggles.** An interaction adds, removes or toggles a unique combo
   class (`is-pill`, `is-menu-open`), and that combo's own transitions do the animating. Repo
   and Webflow then share one mechanism.
+- Reduced motion for **class-toggle reveals** (resting CSS hidden, the interaction adds the visible
+  class, e.g. the blur reveal) uses `behavior: "skip-to-end"`: `dont-animate` skips the whole
+  interaction and would leave the content invisible (measured on staging, spike S1).
 - Reduced motion: motion interactions use `conditionalPlayback`
   `[{ "type": "prefers-reduced-motion", "behavior": "dont-animate" }]`, so the element stays
   in its resting, visible state. Interactions that only change UI state (opening the menu) don't
   get that condition, or the UI would stop working.
-- Animate only `opacity` and transforms (`x`, `y`, `scale`, `rotation`). The IX3 API has **no
-  `filter`**, so no blur. Width, padding and top change only through the `is-pill` class transition.
+- IX3 tweens `opacity`, transforms (`x`, `y`, `scale`, `rotation`…), `width`, `height` and three
+  colors (`backgroundColor`, `borderColor`, `color`). It has **no `filter`**: a blur is animated by a
+  class toggle whose CSS transition runs on `filter` (spike S1). Other properties (padding, top)
+  change through class transitions, like `is-pill`.
 - Scroll reveals start at `"top 85%"` and last at least 500ms, per the IX3 guide.
 - Reversing a timeline doesn't undo a class Set (`addClass`), so `leaveBack: reverse` left the nav
   stuck as a pill. A state that must return is a **pair** of interactions, each with `restart`:
@@ -29,6 +34,8 @@
   marquee, partner states, testimonials) are built so the last frame equals the first: duplicated
   items, and a cycle that moves by exactly one set. The timeline repeats (`repeat: -1`) with no
   visible jump. A carousel that rewinds in the repo (How It Works) animates its return as a step.
+  The copies must **cover the visible area for the whole cycle**: at least the visible length plus
+  one set's travel (coverage rule in `mvp2-home.md`), or the edges empty out as the set drains.
 - In the repo, `src/ix/useInteractions.ts` is a small preview runtime that emulates these
   interactions for local development. It is never shipped to Webflow and must not grow beyond the registry.
 
@@ -81,6 +88,7 @@ attributes that load code, or Code Components.
 | `x-button-gradient` | Primary button hover: the gradient angle turns 349.52° → 529.52° in 700ms (ease in-out), skipped with reduced motion | Webflow styles can't transition a gradient angle, and IX3 can't animate gradients or custom properties. Only `@property` does it | Site (every `fk-button`) | Custom CSS, about 1 KB: `src/styles/exceptions/x-button-gradient.css` with each `var(--token)` renamed to `var(--_flint---token)`, in site head code inside `<style>` | approved (D-06); install blocked until the site plan allows custom code (P-06) |
 | `x-text-rendering` | Two-line clamp with ellipsis on `fk-post-card-title` / `-excerpt`; antialiased font smoothing on `fk-page` | The style API rejects `-webkit-line-clamp`, `-webkit-box-orient`, `-webkit-font-smoothing` and their unprefixed names | Site | Custom CSS, under 0.5 KB: `src/styles/exceptions/x-text-rendering.css`, installed with `x-button-gradient` | approved (D-07); install blocked like `x-button-gradient` |
 | `x-hero-arc-speed` | Hero arc slows to 0.35× on hover instead of pausing | IX3 can pause/resume a loop, not change its speed | Home hero | Small page script adjusting the GSAP timeline speed | **candidate, deferred** (`mvp2-home.md` H-2). Native build pauses on hover |
+| `x-carousel-goto` | Pagination dot clicks animate directly from the current slide to the clicked one, backward as well as forward | IX3 keeps no "current slide" state: a click `jump` plays the target step's forward transition from its fixed start, so a smaller index snaps | How It Works and Testimonials | Small page script driving the IX3 timeline, or a Code Component | **candidate, deferred** (`mvp2-home.md` S5). Native build: forward jumps animate, backward jumps snap |
 | `x-testimonial-drag` | Drag/swipe on the center-weighted testimonials carousel | No native drag on an IX3-driven carousel | Testimonials section | Page script or Code Component | **candidate, deferred** (`mvp2-home.md` H-6). Native build has autoplay, dots, hover pause |
 
 Rules for exceptions:

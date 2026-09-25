@@ -14,7 +14,16 @@
   },
   "pages": {
     "/mvp": "6ab48bd91bbcc6eb23271a11",
-    "/style-guide": "6ab6a5c82d26d568f1f1f1cc"
+    "/style-guide": "6ab6a5c82d26d568f1f1f1cc",
+    "/lab": "6ab6bfe994c305e2a2248716"
+  },
+  "labInteractions": {
+    "$comment": "Temporary, page-scoped to /lab (MVP 2 spikes). Delete with the Lab page after confirmation.",
+    "lab-s6-marquee": "i-a415377d",
+    "lab-s2-arc": "i-bfdae233",
+    "lab-s4-ticker": "i-bbc78798",
+    "lab-s5-carousel": "i-65c7fe54",
+    "lab-s1-blur-reveal": "i-71ecf165"
   },
   "styleGuidePageElements": {
     "fk-page": "10743946-6b11-3b05-e705-924f4c0d9310",
