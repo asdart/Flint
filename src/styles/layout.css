@@ -59,22 +59,28 @@
   border-radius: var(--radius-lg);
 }
 
+/* Page container: 1200px wide including a 20px gutter on each side. */
 .fk-container {
   width: 100%;
   max-width: var(--width-container);
   margin-inline: auto;
+  padding-inline: var(--space-5);
 }
 
+/* Narrow content blocks sit inside a page container, so they don't add the gutter again. */
 .fk-container.is-md {
   max-width: var(--width-container-md);
+  padding-inline: 0;
 }
 
 .fk-container.is-content {
   max-width: var(--width-content);
+  padding-inline: 0;
 }
 
 .fk-container.is-content-sm {
   max-width: var(--width-content-sm);
+  padding-inline: 0;
 }
 
 .fk-grid {

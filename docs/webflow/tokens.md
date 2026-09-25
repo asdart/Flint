@@ -15,8 +15,11 @@ How Webflow stores them (checked in the MVP):
 - Font-family variables hold the family name only (`SN Pro`); a full stack is rejected.
 - Creating a variable whose name already exists doesn't fail: Webflow adds `-2`. Always query first.
 
-Values come from Figma via the current `src/index.css` `@theme` block, plus hardcoded values found in
-`src/` that are promoted here. Values that are not listed must be snapped to the nearest token.
+Tokens are **system values** only: colors, fonts, the spacing scale, radii and container widths.
+A size shown to be local to one element of one block (an illustration offset,
+one panel's height) can stay raw in that block's class. Sizes that repeat (icons, avatars, shared
+card sizes, a width used by several sections) need one shared class or token (`AGENTS.md` rule 2,
+`classes.md`). A missing system value is added here; don't snap it to a near token.
 
 ## Colors
 
@@ -107,16 +110,16 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 
 `space-1-5`, `space-2-5` and `space-3-5` exist only for button padding: default 10 × 20
 (`space-2-5` / `space-5`), small 6 × 14 (`space-1-5` / `space-3-5`), as in the legacy
-`ApplyButton`. The 1px border sits outside the padding. `space-7` is the paragraph gap in long-form text.
+`ApplyButton`. The 1px border sits outside the padding. `space-7` is the paragraph gap in long-form text. `space-5` is also the page gutter (`fk-container` inline padding).
 
 ## Widths (size variables)
 
 | Token | Value | Usage |
 | --- | --- | --- |
-| `width-container` | `1200px` | Default content container |
+| `width-container` | `1200px` | Page container (`fk-container`), including the 20px gutter on each side |
 | `width-container-md` | `960px` | Stats and narrow grids |
 | `width-content` | `580px` | Wide text blocks |
-| `width-content-sm` | `480px` | Section headers, text columns (snap 436, 521) |
+| `width-content-sm` | `480px` | Section headers, text columns. Other copy widths (436, 521) are local values in their block |
 | `width-nav-pill` | `664px` | Max width of the scrolled nav pill |
 
 ## Shadows (class-level constants)

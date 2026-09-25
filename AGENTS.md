@@ -4,8 +4,9 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.3 (2026-09-24). 1.3 adds SVG-only icons (rule 10), 1:1 behavior
-  (rule 14) and `src/styles/exceptions/`. 1.1 added what the MVP proved about the Webflow MCP:
+- **Contract version:** 1.4 (2026-09-25). 1.4 narrows tokens to system values and allows raw
+  local sizes only after checking they don't repeat (rule 2). 1.3 added SVG-only icons (rule 10), 1:1 behavior (rule 14) and
+  `src/styles/exceptions/`. 1.1 added what the MVP proved about the Webflow MCP:
   typography on classes instead of tag styles, `fk-page` as a wrapper div, exact breakpoint query
   syntax, `data-ix` interaction triggers, and the sync scripts in `scripts/`. 1.2 adds rule 13
   (save every learning) and the `flint-webflow-sync` skill.
@@ -47,8 +48,12 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 
 1. **Only registered building blocks.** Every color, size, class, component, section, collection,
    interaction and script must be listed in its registry before it is used, in code or in Webflow.
-2. **Tokens, not values.** No raw hex, px or font values in components. Use a variable from
-   `tokens.md`. If a value is missing, add a token (or snap to the nearest existing one).
+2. **Tokens for system values, local values for local sizes.** Colors, fonts, the spacing scale,
+   radii and container widths always use a variable from `tokens.md`; a missing
+   system value becomes a token. A raw px size is allowed only when analysis shows it's local to
+   one element of one block (an illustration offset, one panel's height). Repeated elements (icons,
+   avatars, flags, buttons, shared card sizes) and values repeated across sections get one shared
+   class or token. See `classes.md` → What a class can express.
 3. **Webflow CSS model, not Tailwind.** Styling is layered: variables → tag styles → classes →
    combo classes. No Tailwind utilities, arbitrary values or inline `style` in new code.
 4. **FlowKit naming.** Classes are `fk-[block]`, `fk-[block]-[element]`, plus `is-[variant]` combo

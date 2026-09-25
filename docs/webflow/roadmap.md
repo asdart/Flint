@@ -163,6 +163,16 @@ Carried into phase 2 (not blocking the close), done 2026-09-24:
       `/style-guide`): type scale, buttons, panel colors, grids, divider
 - [ ] Review `/style-guide` in the Designer against the repo at the four breakpoints (user)
 
+## Phase 2b — MVP 2: the homepage at 1:1 parity
+
+Plan, spikes, per-section approach and open decisions: [`mvp2-home.md`](mvp2-home.md).
+
+- [ ] Capability spikes S1–S6 on a draft Lab page
+- [ ] Decisions H-1…H-7 in `mvp2-home.md` closed with the user (H-2, H-4…H-7 decided
+      2026-09-25; H-1 and H-3 wait for spikes S1 and S3)
+- [ ] Repo `/mvp-home` built from contract sections; screenshots match legacy `/` at 4 widths
+- [ ] Webflow draft `/mvp-home` built from the repo render; diff clean; reviewed in the Designer
+
 ## Phase 3 — Global and UI components
 
 - [ ] `Global / Nav` Dark variant, and move the Nav out of all 6 legacy heroes
@@ -237,3 +247,6 @@ Needs P-04 and P-07 closed.
 - [ ] FAQ answers after the first are placeholders
 - [ ] Featured article: remove the placeholder bullets about Flint, Michigan
 - [ ] Non-featured posts have only an excerpt, and need bodies
+- [ ] Home, kept verbatim in MVP 2 (H-7): testimonials "Minesota" and "Chrismene jones"; How It
+      Works "13:30PM-14:30PM" and the "Jonathan Johnson" name on the `andrew` avatar; the Two Ways
+      Facilities card repeats the Nurses body; How It Works Facility call and Processing share a body

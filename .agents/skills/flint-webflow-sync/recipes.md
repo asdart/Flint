@@ -43,6 +43,11 @@ Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come fro
   `{ "update_style": { "style_name": "fk-x", "breakpoint_id": "main", "remove_properties": ["background-size"] } }`
   (add `pseudo` / `parent_style_names` as needed). Variant styles take `remove_properties` too.
 - Exception CSS (`src/styles/exceptions/`) is never passed to either script.
+- The script expands `padding-inline` to `padding-left`/`-right` (what Webflow stores) and
+  `margin-inline` to `margin-inline-start`/`-end` (stored as such).
+- **Alias token** (`--a: var(--b)`): `create_size_variable` with
+  `value: { existing_variable_id: "<b's id>" }`; it reads back as `{ id }`. Prefer using the
+  existing token directly: an alias only earns its place when it can diverge later.
 
 ## Build a page from the repo markup
 

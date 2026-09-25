@@ -25,6 +25,10 @@
 - A click interaction that must work on every click has **one** action group and control
   `restart`. Interactions with two or more groups only accept `play`, which goes inert once
   played, so open and close are separate interactions (`ix-nav-menu`, `ix-nav-menu-close`).
+- **Infinite loops never rewind.** Marquees, tickers and looping carousels (hero arc, logo
+  marquee, partner states, testimonials) are built so the last frame equals the first: duplicated
+  items, and a cycle that moves by exactly one set. The timeline repeats (`repeat: -1`) with no
+  visible jump. A carousel that rewinds in the repo (How It Works) animates its return as a step.
 - In the repo, `src/ix/useInteractions.ts` is a small preview runtime that emulates these
   interactions for local development. It is never shipped to Webflow and must not grow beyond the registry.
 
@@ -76,6 +80,8 @@ attributes that load code, or Code Components.
 | `x-article-toc` | Table of contents built from the article body H2s, with scroll-spy | Rich text headings can't be listed natively | Blog post template only | Small inline script registered with `data_scripts_tool`, under 2 KB | open: roadmap P-02 |
 | `x-button-gradient` | Primary button hover: the gradient angle turns 349.52° → 529.52° in 700ms (ease in-out), skipped with reduced motion | Webflow styles can't transition a gradient angle, and IX3 can't animate gradients or custom properties. Only `@property` does it | Site (every `fk-button`) | Custom CSS, about 1 KB: `src/styles/exceptions/x-button-gradient.css` with each `var(--token)` renamed to `var(--_flint---token)`, in site head code inside `<style>` | approved (D-06); install blocked until the site plan allows custom code (P-06) |
 | `x-text-rendering` | Two-line clamp with ellipsis on `fk-post-card-title` / `-excerpt`; antialiased font smoothing on `fk-page` | The style API rejects `-webkit-line-clamp`, `-webkit-box-orient`, `-webkit-font-smoothing` and their unprefixed names | Site | Custom CSS, under 0.5 KB: `src/styles/exceptions/x-text-rendering.css`, installed with `x-button-gradient` | approved (D-07); install blocked like `x-button-gradient` |
+| `x-hero-arc-speed` | Hero arc slows to 0.35× on hover instead of pausing | IX3 can pause/resume a loop, not change its speed | Home hero | Small page script adjusting the GSAP timeline speed | **candidate, deferred** (`mvp2-home.md` H-2). Native build pauses on hover |
+| `x-testimonial-drag` | Drag/swipe on the center-weighted testimonials carousel | No native drag on an IX3-driven carousel | Testimonials section | Page script or Code Component | **candidate, deferred** (`mvp2-home.md` H-6). Native build has autoplay, dots, hover pause |
 
 Rules for exceptions:
 

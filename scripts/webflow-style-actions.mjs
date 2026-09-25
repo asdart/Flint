@@ -39,6 +39,10 @@ function expand(name, value) {
       return sides(value).map((v, i) => [["top", "right", "bottom", "left"][i], v]);
     case "margin-inline":
       return [["margin-inline-start", value], ["margin-inline-end", value]];
+    case "padding-inline": {
+      const [start, end = start] = value.trim().split(/\s+(?![^(]*\))/);
+      return [["padding-left", start], ["padding-right", end]];
+    }
     case "gap": {
       const [row, column = row] = value.trim().split(/\s+(?![^(]*\))/);
       return [["grid-row-gap", row], ["grid-column-gap", column]];

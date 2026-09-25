@@ -52,8 +52,15 @@ Webflow styles one class (or combo) at a time, at one breakpoint and one state. 
   Designer when the nav links point to real pages.
 - **No vendor-prefixed properties** (`-webkit-line-clamp`, `-webkit-font-smoothing`…): the
   style API rejects them, prefixed or not. They go in an exception file (`interactions.md`).
-- Element-specific dimensions (icon and image sizes) may be raw px inside their block's classes.
-  Colors, spacing, radii and widths always use tokens.
+- Colors, fonts, the spacing scale, radii and container widths always use tokens. A raw px size
+  is allowed only after checking it's truly local (`AGENTS.md` rule 2): it belongs to one element
+  in one block and isn't repeated elsewhere, like an illustration offset or one panel's height.
+  Before writing one, search the registries and the other sections for the same value:
+  - **Repeated elements share one definition.** Icons (20/24px), avatars, flags, chips, buttons and
+    any card size used by more than one block get a shared class (`fk-icon`, `fk-button-icon`) or
+    a token, never a copy of the px value in each block.
+  - **A value repeated across sections** (the same copy width in several section headers) goes into
+    the shared class those sections use, not into each section.
 
 ## Layers (apply in this order)
 
@@ -107,8 +114,8 @@ paragraph margins, so the tag styles must set them to 0 explicitly.
 | `fk-panel is-brand` · `is-brand-light` · `is-secondary` · `is-tertiary` · `is-surface` | Panel background token |
 | `fk-panel is-compact` | Padding 80 → 48 → 24 |
 | `fk-panel is-radius-lg` | Radius `radius-lg` (16px) |
-| `fk-container` | `max-width: width-container`, centered, full width |
-| `fk-container is-md` · `is-content` · `is-content-sm` | Max width `width-container-md` / `width-content` / `width-content-sm` |
+| `fk-container` | **Page container**: full width, `max-width: width-container` (1200px) including a 20px (`space-5`) gutter on each side as inline padding, centered. Every section's content sits in one |
+| `fk-container is-md` · `is-content` · `is-content-sm` | Narrow blocks inside a page container: max width `width-container-md` / `width-content` / `width-content-sm`, no gutter (inline padding 0) |
 | `fk-grid` | CSS grid, gap `space-4` |
 | `fk-grid is-2` · `is-3` · `is-4` | Columns on desktop. `is-3`/`is-4` → 2 on tablet. All → 1 on mobile |
 | `fk-stack` | Flex column, gap `space-4` |
