@@ -1,6 +1,6 @@
 # Recipes
 
-Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come from
+Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 `docs/webflow/webflow-ids.json` or from the previous call's result. Every call also carries
 `session_id`, `agent_id` and `context` (see the playbook).
 

@@ -1,11 +1,29 @@
 {
   "version": 1,
   "skills": {
+    "webflow-mcp:accessibility-audit": {
+      "source": "webflow/webflow-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/webflow-skills/skills/accessibility-audit/SKILL.md",
+      "computedHash": "4c24ec522b9fb2baecd08af56c5bdce6f12754a334eaf0ecd54594ae83b61e78"
+    },
     "webflow-mcp:interactions": {
       "source": "webflow/webflow-skills",
       "sourceType": "github",
       "skillPath": "plugins/webflow-skills/skills/interactions/SKILL.md",
       "computedHash": "2628517f490f0294550dcf5854f30d6e5c2d96797d1bd94fdc3f4006a745504b"
+    },
+    "webflow-mcp:safe-publish": {
+      "source": "webflow/webflow-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/webflow-skills/skills/safe-publish/SKILL.md",
+      "computedHash": "957076f95176d36f00de0a32d31f0358c02f582336eab4843b1dade5043d27e8"
+    },
+    "webflow-mcp:site-audit": {
+      "source": "webflow/webflow-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/webflow-skills/skills/site-audit/SKILL.md",
+      "computedHash": "15e0d2c325bbe420b0415c98063b6b069ed1e963c77d3b1e71b458da04f311af"
     }
   }
 }

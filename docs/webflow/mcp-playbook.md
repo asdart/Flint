@@ -1,11 +1,13 @@
 # Webflow MCP playbook
 
-How agents push repo changes to Webflow. The MCP server is `plugin-webflow-webflow` (Cursor
-Webflow plugin). Every rule in `AGENTS.md` still applies, especially rules 11, 12 and 13.
+How agents push repo changes to Webflow. The MCP server is Webflow's official MCP: `plugin-webflow-webflow`
+in Cursor (Webflow plugin), the Webflow connector in Claude Code. Both expose the same tools.
+Every rule in `AGENTS.md` still applies, especially rules 11, 12 and 13.
 
 ## Prerequisites
 
-1. **Authenticated.** If calls fail with an auth error, run the server's `mcp_auth`. If
+1. **Authenticated.** If calls fail with an auth error, re-authenticate the server (Cursor: its `mcp_auth`; Claude Code:
+   reconnect the Webflow connector). If
    `data_sites_tool` → `list_sites` returns no sites, the wrong Webflow account is connected. Stop and ask the user.
 2. **Site ID known.** Read it from `AGENTS.md` §9. Never guess it or pick one from a list without asking the user.
 3. **Designer tools** (`designer_tool`, selection, canvas) need the Webflow Designer open with the
@@ -17,13 +19,18 @@ Webflow plugin). Every rule in `AGENTS.md` still applies, especially rules 11, 1
    playbook (`AGENTS.md` rule 13).
 6. Before any interaction work, read the project skill
    `.agents/skills/webflow-mcp-interactions/SKILL.md` (installed with `npx skills add`, pinned in
-   `skills-lock.json`) and its `references/`. The other Webflow skills come from the Cursor plugin.
+   `skills-lock.json`) and its `references/`. The other Webflow skills come from the Cursor plugin in Cursor.
+   In Claude Code, `safe-publish`, `site-audit` and `accessibility-audit` are installed in
+   `.claude/skills/` (`npx skills add webflow/webflow-skills -s <skill> -a claude-code`, pinned in
+   `skills-lock.json`), and the two project skills are symlinked there from `.agents/skills/`.
+   Claude Code lists them as `webflow-mcp:safe-publish` etc.; the contract's `/safe-publish` means that skill.
 
 ## Call conventions
 
 - `session_id`: send `start` on the first call. Reuse the returned `ses_…` value on every later
   call in the same task, and pass it to subagents.
-- `agent_id`: `<model>|cursor|<5-char suffix>`, chosen once per task and never changed.
+- `agent_id`: `<model>|<harness>|<5-char suffix>` (harness `cursor` or `claude-code`), chosen once
+  per task and never changed.
 - `context`: 15–25 words, third person, describing why the call is made. No personal data.
 - Batch related actions in one call through the tool's `actions[]` array.
 - **Where the site ID goes differs by tool** (checked 2026-09-23):

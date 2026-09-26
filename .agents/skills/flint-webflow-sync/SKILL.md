@@ -1,6 +1,6 @@
 ---
 name: flint-webflow-sync
-description: Pushes Flint repo changes to the Flint Webflow site and pulls Designer edits back through the Webflow MCP, using tested payload recipes and a list of known pitfalls. Use before calling any plugin-webflow-webflow tool, when syncing tokens, classes, components, CMS or pages to Webflow, and whenever a Webflow MCP call fails or behaves unexpectedly.
+description: Pushes Flint repo changes to the Flint Webflow site and pulls Designer edits back through the Webflow MCP, using tested payload recipes and a list of known pitfalls. Use before calling any Webflow MCP tool, when syncing tokens, classes, components, CMS or pages to Webflow, and whenever a Webflow MCP call fails or behaves unexpectedly.
 ---
 
 # Flint ⇄ Webflow sync
@@ -15,7 +15,7 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
    id created so far). Never guess an id; never re-create a name that is listed there.
 2. Send `session_id: "start"` once, then reuse the returned `ses_…` on every call.
 3. Query by name before any create. Destructive actions and publishing need the user's explicit
-   confirmation (rule 12). Batch all pending deletions into one `AskQuestion`.
+   confirmation (rule 12). Batch all pending deletions into one question to the user.
 4. Interactions: also read `.agents/skills/webflow-mcp-interactions/SKILL.md` (vendored, don't edit).
 
 ## Pitfalls: symptom → what to do
@@ -49,6 +49,7 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | A class you pushed is back to older values (seen: `fk-button` gradient and `transition`), with a newer page `lastUpdated` | A Designer tab opened before the push saved its stale copy. Re-read styles at the start of each task, re-push from the repo, and ask the user to reload the Designer after every push |
 | `query_elements` `component_filter` finds no instances that do exist | It only searches the page tree. Instances inside Nav/Footer need `scope_component_id` |
 | `element_snapshot_tool` → `{"status":false}` | Snapshots need the Designer with the MCP Bridge app open. Verify with element queries instead and ask the user to review visually |
+| Claude Code: `webflow_guide_tool` result (~87k chars) is too large and saved to a file instead | The `ses_…` id is still in it: `grep -o 'ses_[0-9A-Za-z]\{27\}' <saved file> \| head -1`. Read the rest with `jq` only if needed |
 | Validation error about a missing `siteId` / `site_id` / `pageId` | Placement differs per tool; see playbook → Call conventions |
 | Media query rejected, tag selectors dropped | Write queries exactly as in `AGENTS.md` §5; typography lives on classes, not tag selectors |
 | `0 -1px` minified to `0-1px`, or a shadow/gradient replaced by one color variable | Write `0px -1px`; push with `scripts/webflow-style-actions.mjs`, which resolves compound `var()` values to literals |

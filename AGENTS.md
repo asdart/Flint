@@ -10,10 +10,11 @@ pushed to Webflow through the Webflow MCP without reinterpretation.
   typography on classes instead of tag styles, `fk-page` as a wrapper div, exact breakpoint query
   syntax, `data-ix` interaction triggers, and the sync scripts in `scripts/`. 1.2 adds rule 13
   (save every learning) and the `flint-webflow-sync` skill.
-- **Status:** MVP (roadmap phase 1) closed on 2026-09-24: built in the repo (`/mvp`) and in Webflow
-  (draft page `/mvp`), reviewed. Phase 2 (foundations) started on 2026-09-24. Everything outside
-  the MVP in `src/` is still _legacy_ (Tailwind utilities + Framer Motion). See
-  [Legacy code policy](#8-legacy-code-policy).
+- **Status:** The test stage (roadmap phases 0–2: foundations, MVP 1 `/mvp`, MVP 2 homepage
+  `/mvp-home`) closed on 2026-09-25 on the **test** site. The production site will live in the
+  client's Webflow account and be populated from scratch from this repo (roadmap track P); until
+  then, work is rehearsed on the test site. Everything in `src/` outside the migrated pieces is
+  still _legacy_ (Tailwind utilities + Framer Motion). See [Legacy code policy](#8-legacy-code-policy).
 
 Detailed registries live in [`docs/webflow/`](docs/webflow/). This file defines the rules; the
 registries define the inventory. If they disagree, fix the registry, not the rule.
@@ -216,6 +217,9 @@ The current `src/` predates this contract. Until each piece is migrated:
 
 ## 9. Webflow project
 
+The values below are the **test** site (roadmap D-03). The production site (client's account,
+D-09) replaces them as the default target in roadmap step P.1; until then there is no production ID.
+
 | Field | Value |
 | --- | --- |
 | Site name | `Flint` |
@@ -227,6 +231,6 @@ The current `src/` predates this contract. Until each piece is migrated:
 | Custom domain | None yet (roadmap P-06) |
 | Primary locale | English (`en`) |
 | Variable collection | `Flint` (to create. Webflow's default `Base collection` stays unused) |
-| MCP server | `plugin-webflow-webflow` (Cursor Webflow plugin, OAuth) |
+| MCP server | Webflow's official MCP, OAuth. Named `plugin-webflow-webflow` in Cursor (Webflow plugin); a claude.ai connector in Claude Code. Same tools in both |
 
 Agents never target another site. If `list_sites` doesn't return this ID, stop and ask the user.
