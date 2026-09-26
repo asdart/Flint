@@ -55,6 +55,7 @@ next phase on production.
 | D-07 | Two-line clamps and antialiased font smoothing match the repo through custom-CSS exception `x-text-rendering` (the style API rejects those properties), installed with `x-button-gradient` | 2026-09-25 | `interactions.md`, `classes.md` |
 | D-08 | The test stage (phases 0–2) is closed. Its open reviews and staging re-checks are closed as test findings and re-checked on production ([carried checks](#carried-into-production-qa)) | 2026-09-25 | This file |
 | D-09 | Production lives in the **client's Webflow account** on a **Business/Enterprise** plan (exact plan to confirm in P-09). It starts empty and is populated from scratch from the repo. Until access, work continues in the repo and is rehearsed on the test site | 2026-09-25 | This file, `AGENTS.md` §9 once the site exists |
+| D-10 | The mobile menu's scroll lock keeps `overscroll-behavior: contain` through custom-CSS exception `x-scroll-lock`, installed with the other two exceptions. The body lock stays native (`ix-nav-menu`) | 2026-09-26 | `interactions.md`, `classes.md` |
 
 ### Open
 
@@ -154,7 +155,7 @@ In this order. Record every id in `webflow-ids.json` and add one `sync-log.md` r
 - [ ] Pages: Home built from the MVP 2 composition (as the real Home, not a `/mvp-home` draft);
       `/style-guide` as a draft
 - [ ] Interactions: every interaction in `interactions.md` marked synced, with reduced-motion settings
-- [ ] Custom code: `x-button-gradient` and `x-text-rendering` (the plan allows it, D-09)
+- [ ] Custom code: `x-button-gradient`, `x-text-rendering` and `x-scroll-lock` (the plan allows it, D-09, D-10)
 - [ ] Staging publish to the `webflow.io` subdomain (with confirmation), then the
       [carried checks](#carried-into-production-qa)
 

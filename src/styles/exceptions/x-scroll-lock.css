@@ -1,0 +1,9 @@
+/* Exception x-scroll-lock — docs/webflow/interactions.md → Custom-code exceptions.
+   Site custom CSS, never pushed as classes. Keeps a scroll inside the open mobile menu from
+   chaining to the page behind it (the style API may reject overscroll-behavior). The body itself
+   is locked natively by ix-nav-menu (body overflow hidden). */
+
+.fk-nav-menu,
+.fk-nav-menu-links {
+  overscroll-behavior: contain;
+}
