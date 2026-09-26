@@ -1,0 +1,141 @@
+/* fk-partners-map — Section / Partners Map. The panel, ticker line and content width are local
+   geometry inherited from the legacy section. */
+
+.fk-partners-map {
+  position: relative;
+  width: 100%;
+  height: 680px;
+  border-radius: var(--radius-xl);
+  background-color: var(--color-tertiary);
+  overflow: clip;
+}
+
+.fk-partners-map-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(3px);
+  transform: scale(1.05);
+}
+
+.fk-partners-map-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.fk-partners-map-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--space-4);
+}
+
+.fk-partners-map-inner {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+}
+
+.fk-partners-map-heading {
+  flex-shrink: 0;
+}
+
+.fk-partners-map-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 52px;
+  letter-spacing: -0.96px;
+  color: var(--color-white);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.fk-partners-map-viewport {
+  position: relative;
+  width: 340px;
+  max-width: none;
+  height: 100%;
+  padding-left: var(--space-5);
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 38%,
+    black 62%,
+    transparent 100%
+  );
+}
+
+/* Starts with row 7 centred: −(7 × 52 + 26). ix-ticker moves y from 0 in 52px steps. */
+.fk-partners-map-track {
+  position: absolute;
+  top: 50%;
+  left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  margin-top: -390px;
+}
+
+.fk-partners-map-row {
+  flex: none;
+  height: 52px;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 52px;
+  letter-spacing: -0.96px;
+  color: var(--color-white);
+  opacity: 0.2;
+  white-space: nowrap;
+}
+
+.fk-partners-map-row.is-active {
+  opacity: 1;
+}
+
+@media screen and (max-width: 991px) {
+  .fk-partners-map-inner {
+    flex-direction: column;
+  }
+
+  .fk-partners-map-title {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.64px;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .fk-partners-map-row {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.64px;
+  }
+
+  .fk-partners-map-viewport {
+    width: 100%;
+    max-width: 280px;
+    height: 180px;
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-partners-map {
+    height: 420px;
+  }
+}

@@ -1,0 +1,52 @@
+/* fk-pagination — carousel dots shared by How It Works and Testimonials. Each dot is a native
+   button; the active dot's bar is 57px wide and its fill is the autoplay progress. Widths are
+   tweened by the carousel interaction; `is-active` is only the starting state. */
+
+.fk-pagination {
+  display: flex;
+  align-items: center;
+  gap: 4.5px;
+}
+
+.fk-pagination-dot {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.fk-pagination-dot:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-white),
+    0 0 0 4px var(--color-brand-focus);
+}
+
+.fk-pagination-bar {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-100);
+  overflow: hidden;
+}
+
+.fk-pagination-bar.is-active {
+  width: 57px;
+}
+
+.fk-pagination-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-700);
+}

@@ -1,4 +1,13 @@
 import { useEffect } from "react";
+import { blurReveal } from "./blurReveal";
+import { cardHover } from "./cardHover";
+import { heroArc } from "./heroArc";
+import { howCarousel } from "./howCarousel";
+import { marquee } from "./marquee";
+import { revealStagger } from "./revealStagger";
+import { testimonials } from "./testimonials";
+import { ticker } from "./ticker";
+import { twoWays } from "./twoWays";
 
 /*
  * Local preview of the Webflow interactions in docs/webflow/interactions.md. One function per
@@ -102,7 +111,21 @@ function navMenu(): Cleanup {
 /** Call once per page, after the page markup has mounted. */
 export function useInteractions() {
   useEffect(() => {
-    const cleanups = [reveal(), countIn(), navPill(), navMenu()];
+    const cleanups = [
+      reveal(),
+      countIn(),
+      navPill(),
+      navMenu(),
+      blurReveal(),
+      revealStagger(),
+      marquee(),
+      cardHover(),
+      twoWays(),
+      ticker(),
+      heroArc(),
+      howCarousel(),
+      testimonials(),
+    ];
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);
 }

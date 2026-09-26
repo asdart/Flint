@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { animate, motion, useMotionValue, useReducedMotion } from "framer-motion";
-import BlurReveal from "../components/BlurReveal";
+import { cx } from "../lib/cx";
 
 const STATES = [
   "New York",
@@ -19,93 +17,43 @@ const STATES = [
   "Ohio",
 ];
 
-const LINE = 52;
-const COPIES = 4;
-const STEP_MS = 2200;
-const FADE = { duration: 0.45, ease: [0.42, 0, 0.58, 1] as const };
+// Seven rows cover each 340px half of the 680px desktop viewport:
+// ceil((340 - 26) / 52) = 7. The duplicate New York is the cycle's identical end frame.
+const ROWS_ABOVE = 7;
+const ROWS_BELOW = 7;
+const START = STATES.length - ROWS_ABOVE;
+const TICKER_ROWS = Array.from(
+  { length: ROWS_ABOVE + STATES.length + 1 + ROWS_BELOW },
+  (_, index) => STATES[(START + index) % STATES.length],
+);
+const STARTING_ROW = ROWS_ABOVE;
 
-const LOOP = Array.from({ length: STATES.length * COPIES }, (_, i) => STATES[i % STATES.length]);
-
+/** Section / Partners Map. */
 export default function PartnersMap() {
-  // Start in the second copy so we can wrap seamlessly forever
-  const [index, setIndex] = useState(STATES.length);
-  const y = useMotionValue(-(STATES.length * LINE + LINE / 2));
-  const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    const id = window.setInterval(() => {
-      setIndex((i) => i + 1);
-    }, STEP_MS);
-    return () => window.clearInterval(id);
-  }, [reduceMotion]);
-
-  useEffect(() => {
-    let cancelled = false;
-    const target = -(index * LINE + LINE / 2);
-
-    const controls = animate(y, target, {
-      type: "spring",
-      duration: reduceMotion ? 0 : 0.9,
-      bounce: 0.28,
-      onComplete: () => {
-        if (cancelled || reduceMotion) return;
-        // Jump back one full cycle once we've entered the last copies
-        if (index >= STATES.length * (COPIES - 1)) {
-          const resetIndex = index - STATES.length;
-          y.set(-(resetIndex * LINE + LINE / 2));
-          setIndex(resetIndex);
-        }
-      },
-    });
-
-    return () => {
-      cancelled = true;
-      controls.stop();
-    };
-  }, [index, reduceMotion, y]);
-
   return (
-    <section className="w-full p-4">
-      <div className="relative h-[420px] w-full overflow-clip rounded-[24px] bg-tertiary md:h-[680px]">
-        <img
-          src="/assets/home/map-bg.jpg"
-          alt=""
-          className="absolute inset-0 size-full scale-105 object-cover blur-[3px]"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-
-        <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="relative flex h-full w-full max-w-[900px] flex-col items-center justify-center lg:flex-row lg:items-center">
-            <BlurReveal className="shrink-0">
-              <p className="text-center font-serif text-[32px] leading-10 tracking-[-0.64px] text-white lg:text-left lg:text-[48px] lg:leading-[52px] lg:tracking-[-0.96px] lg:whitespace-nowrap">
-                Our partners are in
-              </p>
-            </BlurReveal>
-
-            <div
-              className="relative h-[180px] w-full max-w-[280px] overflow-hidden lg:h-full lg:w-[340px] lg:max-w-none lg:pl-5"
-              style={{
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%)",
-                maskImage:
-                  "linear-gradient(to bottom, transparent 0%, black 38%, black 62%, transparent 100%)",
-              }}
-            >
-              <motion.div style={{ y }} className="absolute left-5 top-1/2 flex flex-col">
-                {LOOP.map((state, i) => (
-                  <motion.p
-                    key={`${state}-${i}`}
-                    className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-white whitespace-nowrap lg:text-[48px] lg:leading-[52px] lg:tracking-[-0.96px]"
-                    style={{ height: LINE }}
-                    initial={false}
-                    animate={{ opacity: i === index ? 1 : 0.2 }}
-                    transition={reduceMotion ? { duration: 0 } : FADE}
+    <section className="fk-section is-last">
+      <div className="fk-partners-map">
+        <img className="fk-partners-map-image" src="/assets/home/map-bg.jpg" alt="" />
+        <div className="fk-partners-map-overlay" aria-hidden="true" />
+        <div className="fk-partners-map-content">
+          <div className="fk-partners-map-inner">
+            <div className="fk-partners-map-heading" data-ix="blur-reveal">
+              <div className="fk-blur-reveal">
+                <p className="fk-partners-map-title">Our partners are in</p>
+              </div>
+            </div>
+            <div className="fk-partners-map-viewport">
+              <div className="fk-partners-map-track" data-ix="ticker">
+                {TICKER_ROWS.map((state, index) => (
+                  <p
+                    key={`${state}-${index}`}
+                    className={cx("fk-partners-map-row", index === STARTING_ROW && "is-active")}
+                    data-ticker-row={index}
                   >
                     {state}
-                  </motion.p>
+                  </p>
                 ))}
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>

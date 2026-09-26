@@ -2,7 +2,7 @@ import BlurReveal from "../components/BlurReveal";
 import DigitPopIn from "../components/DigitPopIn";
 import SiteNav from "../components/SiteNav";
 import { useStaggerReveal } from "../hooks/useStaggerReveal";
-import Cta from "../sections/Cta";
+import Cta from "../sections/legacy/Cta";
 import Footer from "../sections/Footer";
 
 const STATS = [

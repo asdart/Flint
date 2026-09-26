@@ -71,7 +71,7 @@ Always sync in this order, because later steps depend on earlier ones:
 | Removing properties from a class or variant (`remove_properties`) | `remove_style` fails while any element still uses the style; removing a base removes its combos |
 | Standard CSS properties | Vendor-prefixed ones (`-webkit-line-clamp`, `-webkit-box-orient`, `-webkit-font-smoothing`) are rejected, also unprefixed → exception `x-text-rendering` |
 | CSS transitions of colors, shadows, transforms, opacity | No transition of a gradient angle or custom property, and IX3 can't animate them either → exception (`x-button-gradient`) |
-| IX3 interactions by class, attribute, body; class toggles; reduced-motion condition | Multi-group click interactions only accept `play`; no `filter` (blur) |
+| IX3 interactions by class, attribute, body; class toggles; reduced-motion and breakpoint conditions; `customEase` path eases; click `jump`, hover `pause`/`resume` on one timeline | Multi-group click interactions only accept `play`; no `filter` (blur); a scroll trigger must be the interaction's only trigger (no in-view pause for a carousel that also has hover or clicks) |
 | Snapshots and page switching with the Bridge app | Newly uploaded fonts/CMS data may need a Designer reload to show |
 
 Creates are **not idempotent**: a variable, field or class name that already exists is created

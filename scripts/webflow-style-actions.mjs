@@ -7,8 +7,11 @@
 import { readFileSync } from "node:fs";
 
 // --vars-only: emit only properties that reference a variable (re-linking raw var() values).
+// --create: the classes don't exist yet. Each class chain starts with a create_style action (holding
+// its desktop values); the other breakpoints and states follow as update_style actions.
 const varsOnly = process.argv.includes("--vars-only");
-const args = process.argv.slice(2).filter((arg) => arg !== "--vars-only");
+const create = process.argv.includes("--create");
+const args = process.argv.slice(2).filter((arg) => arg !== "--vars-only" && arg !== "--create");
 const onlyIndex = args.indexOf("--only");
 const only = onlyIndex >= 0 ? new Set(args[onlyIndex + 1].split(",")) : null;
 const files = onlyIndex >= 0 ? args.filter((_, i) => i !== onlyIndex && i !== onlyIndex + 1) : args;
@@ -43,6 +46,10 @@ function expand(name, value) {
       const [start, end = start] = value.trim().split(/\s+(?![^(]*\))/);
       return [["padding-left", start], ["padding-right", end]];
     }
+    case "padding-block": {
+      const [start, end = start] = value.trim().split(/\s+(?![^(]*\))/);
+      return [["padding-top", start], ["padding-bottom", end]];
+    }
     case "gap": {
       const [row, column = row] = value.trim().split(/\s+(?![^(]*\))/);
       return [["grid-row-gap", row], ["grid-column-gap", column]];
@@ -69,6 +76,10 @@ function expand(name, value) {
     case "flex":
       if (value === "none") return [["flex-grow", "0"], ["flex-shrink", "0"], ["flex-basis", "auto"]];
       if (/^\d+$/.test(value)) return [["flex-grow", value], ["flex-shrink", "1"], ["flex-basis", "0%"]];
+      {
+        const [grow, shrink, basis] = value.trim().split(/\s+/);
+        if (basis !== undefined) return [["flex-grow", grow], ["flex-shrink", shrink], ["flex-basis", basis === "0" ? "0%" : basis]];
+      }
       return [[name, value]];
     case "border":
     case "border-top": {
@@ -96,10 +107,15 @@ function toProperty([name, value]) {
   // whole value with the variable. Resolve the token to its literal value, as Webflow does for gradients.
   return {
     property_name: name,
-    property_value: value.replace(/var\(--([a-z0-9-]+)\)/g, (_, token) => {
-      if (!tokens[token]) throw new Error(`Unknown token "${token}" in src/styles/tokens.css`);
-      return tokens[token];
-    }),
+    property_value: value
+      .replace(/var\(--([a-z0-9-]+)\)/g, (_, token) => {
+        if (!tokens[token]) throw new Error(`Unknown token "${token}" in src/styles/tokens.css`);
+        return tokens[token];
+      })
+      .replace(/url\("(\/assets\/[^"]+)"\)/g, (_, path) => {
+        if (!ids.assets[path]) throw new Error(`Asset ${path} is not uploaded (add it to webflow-ids.json)`);
+        return `url("${ids.assets[path].url}")`;
+      }),
   };
 }
 
@@ -157,4 +173,27 @@ for (const file of files) {
   }
 }
 
-process.stdout.write(JSON.stringify(actions));
+if (create) {
+  const chain = (action) => [...(action.update_style.parent_style_names ?? []), action.update_style.style_name].join(".");
+  const created = new Set();
+  const createActions = [];
+  for (const action of actions) {
+    const key = chain(action);
+    if (created.has(key)) continue;
+    created.add(key);
+    const { style_name, parent_style_names } = action.update_style;
+    const desktop = actions.find((a) => chain(a) === key && a.update_style.breakpoint_id === "main" && !a.update_style.pseudo);
+    createActions.push({
+      label: `create .${key}`,
+      create_style: {
+        name: style_name,
+        ...(parent_style_names ? { parent_style_names } : {}),
+        properties: desktop ? desktop.update_style.properties : [],
+      },
+    });
+  }
+  const rest = actions.filter((a) => a.update_style.breakpoint_id !== "main" || a.update_style.pseudo);
+  process.stdout.write(JSON.stringify([...createActions, ...rest]));
+} else {
+  process.stdout.write(JSON.stringify(actions));
+}

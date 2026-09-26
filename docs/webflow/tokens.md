@@ -40,6 +40,8 @@ card sizes, a width used by several sections) need one shared class or token (`A
 | `color-stone-100` | `#d3d7de` | Footer link text, muted borders |
 | `color-stone-400` | `#8c929b` | Form placeholder text |
 | `color-neutral-hover` | `#f5f5f5` | Hover background of white buttons |
+| `color-neutral-100` | `#ebebe5` | Carousel pagination track (`fk-pagination-bar`) |
+| `color-neutral-700` | `#444444` | Carousel pagination progress fill (`fk-pagination-fill`) |
 
 ### Accent
 
@@ -87,7 +89,8 @@ The type scale is defined as classes and tag styles in [`classes.md`](classes.md
 | --- | --- | --- |
 | `radius-sm` | `8px` | — |
 | `radius-md` | `12px` | 14, 15 |
-| `radius-lg` | `16px` | 20 |
+| `radius-lg` | `16px` | — |
+| `radius-lg-plus` | `20px` | Service cards (`fk-card`), decided 2026-09-25 (H-5). Other 20px radii in legacy use it too when migrated, no snapping |
 | `radius-xl` | `24px` | 26, 28 (the default panel/button radius) |
 | `radius-2xl` | `32px` | 40 |
 | `radius-full` | `999px` | `rounded-full`, 99, 200, 50% on square elements |
@@ -119,7 +122,8 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 | `width-container` | `1200px` | Page container (`fk-container`), including the 20px gutter on each side |
 | `width-container-md` | `960px` | Stats and narrow grids |
 | `width-content` | `580px` | Wide text blocks |
-| `width-content-sm` | `480px` | Section headers, text columns. Other copy widths (436, 521) are local values in their block |
+| `width-content-sm` | `480px` | Section headers, text columns. Other copy widths (521) are local values in their block |
+| `width-header` | `436px` | Homepage section headers (`fk-section-header is-narrow`, `fk-post-grid-header is-center`): Hero, Two Ways, Feature Grid, Testimonials, Post Grid (Home), CTA |
 | `width-nav-pill` | `664px` | Max width of the scrolled nav pill |
 
 ## Shadows (class-level constants)

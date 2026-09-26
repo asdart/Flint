@@ -1,0 +1,262 @@
+/* fk-hero — Section / Hero, Home. The wheel geometry reproduces the legacy 3400px circular arc. */
+
+.fk-hero {
+  position: relative;
+  width: 100%;
+  height: 848px;
+  border-radius: var(--radius-xl);
+  background-color: var(--color-secondary);
+  overflow: clip;
+}
+
+.fk-hero.is-home {
+  background-color: var(--color-secondary);
+}
+
+.fk-hero-content {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--width-header);
+  padding-inline: var(--space-5);
+  transform: translateX(-50%);
+}
+
+.fk-hero-action {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-4);
+}
+
+.fk-hero-stage {
+  position: absolute;
+  right: var(--space-2);
+  bottom: 33px;
+  left: var(--space-4);
+  height: 355px;
+}
+
+.fk-hero-wheel {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 3532px;
+}
+
+.fk-hero-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 220px;
+  height: 264px;
+  margin-left: -110px;
+  border-radius: var(--radius-xl);
+  background-color: var(--color-peach-100);
+  overflow: clip;
+  transform-origin: 110px 3532px;
+}
+
+.fk-hero-card.is-a1 {
+  transform: rotate(-80.5556deg);
+}
+
+.fk-hero-card.is-a2 {
+  transform: rotate(-75deg);
+}
+
+.fk-hero-card.is-a3 {
+  transform: rotate(-69.4444deg);
+}
+
+.fk-hero-card.is-a4 {
+  transform: rotate(-63.8889deg);
+}
+
+.fk-hero-card.is-a5 {
+  transform: rotate(-58.3333deg);
+}
+
+.fk-hero-card.is-a6 {
+  transform: rotate(-52.7778deg);
+}
+
+.fk-hero-card.is-a7 {
+  transform: rotate(-47.2222deg);
+}
+
+.fk-hero-card.is-a8 {
+  transform: rotate(-41.6667deg);
+}
+
+.fk-hero-card.is-a9 {
+  transform: rotate(-36.1111deg);
+}
+
+.fk-hero-card.is-a10 {
+  transform: rotate(-30.5556deg);
+}
+
+.fk-hero-card.is-a11 {
+  transform: rotate(-25deg);
+}
+
+.fk-hero-card.is-a12 {
+  transform: rotate(-19.4444deg);
+}
+
+.fk-hero-card.is-a13 {
+  transform: rotate(-13.8889deg);
+}
+
+.fk-hero-card.is-a14 {
+  transform: rotate(-8.3333deg);
+}
+
+.fk-hero-card.is-a15 {
+  transform: rotate(-2.7778deg);
+}
+
+.fk-hero-card.is-a16 {
+  transform: rotate(2.7778deg);
+}
+
+.fk-hero-card.is-a17 {
+  transform: rotate(8.3333deg);
+}
+
+.fk-hero-card.is-a18 {
+  transform: rotate(13.8889deg);
+}
+
+.fk-hero-card.is-a19 {
+  transform: rotate(19.4444deg);
+}
+
+.fk-hero-card.is-a20 {
+  transform: rotate(25deg);
+}
+
+.fk-hero-card-image {
+  position: absolute;
+  display: block;
+  max-width: none;
+  object-fit: cover;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.fk-hero-card-image.is-c1 {
+  top: -6.765px;
+  left: -126.544px;
+  width: 474.826px;
+  height: 593.318px;
+  transform: rotate(-1.38deg);
+}
+
+.fk-hero-card-image.is-c2 {
+  top: -31.361px;
+  left: -57.662px;
+  width: 339.779px;
+  height: 424.567px;
+  transform: rotate(-1.38deg);
+}
+
+.fk-hero-card-image.is-c3 {
+  top: -21.417px;
+  left: -62.205px;
+  width: 339.779px;
+  height: 424.567px;
+}
+
+.fk-hero-card-image.is-c4 {
+  top: 4.994px;
+  left: -97.746px;
+  width: 409.013px;
+  height: 409.002px;
+}
+
+.fk-hero-card-image.is-c5 {
+  top: -32.109px;
+  left: -95.986px;
+  width: 412.632px;
+  height: 515.603px;
+}
+
+.fk-hero-card-image.is-c6 {
+  top: -32.109px;
+  left: -95.986px;
+  width: 412.632px;
+  height: 515.603px;
+}
+
+.fk-hero-card-image.is-c7 {
+  top: -21.164px;
+  left: -61.875px;
+  width: 339.779px;
+  height: 424.567px;
+}
+
+.fk-hero-card-image.is-c8 {
+  top: -6.05px;
+  left: -126.621px;
+  width: 475.31px;
+  height: 593.923px;
+  transform: rotate(-1.38deg);
+}
+
+.fk-hero-card-image.is-c9 {
+  top: 10.362px;
+  left: -121.517px;
+  width: 469.425px;
+  height: 586.564px;
+  transform: rotate(-1.38deg);
+}
+
+.fk-hero-card-image.is-c10 {
+  top: -1.375px;
+  left: -160.644px;
+  width: 533.665px;
+  height: 666.842px;
+  transform: rotate(-1.38deg);
+}
+
+.fk-hero-card-chip {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: var(--space-1) var(--space-2-5) var(--space-1) var(--space-1);
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-white);
+}
+
+.fk-hero-card-name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--color-brand);
+}
+
+@media screen and (max-width: 767px) {
+  .fk-hero {
+    height: 720px;
+  }
+
+  .fk-hero-content {
+    top: 120px;
+  }
+
+  .fk-hero-action {
+    padding-top: var(--space-2);
+  }
+
+  .fk-hero-stage {
+    bottom: var(--space-4);
+    height: 240px;
+  }
+}

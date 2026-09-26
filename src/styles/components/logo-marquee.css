@@ -1,0 +1,91 @@
+/* fk-logo-marquee — Section / Logo Marquee (legacy Clients.tsx). */
+
+.fk-logo-marquee {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 56px;
+  padding-block: var(--space-8);
+}
+
+.fk-logo-marquee-label {
+  flex-shrink: 0;
+}
+
+.fk-logo-marquee-text {
+  margin: 0;
+  padding-left: var(--space-12);
+  padding-right: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color-brand);
+  white-space: nowrap;
+}
+
+.fk-logo-marquee-viewport {
+  position: relative;
+  height: 36px;
+  min-width: 0;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+.fk-logo-marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+}
+
+.fk-logo-marquee-row {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-12);
+  padding-right: var(--space-12);
+}
+
+.fk-logo-marquee-logo {
+  flex: none;
+  height: 36px;
+  opacity: 0.8;
+  object-fit: contain;
+}
+
+.fk-logo-marquee-fade {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--space-32);
+}
+
+.fk-logo-marquee-fade.is-left {
+  left: 0;
+  background-image: linear-gradient(to right, var(--color-white), transparent);
+}
+
+.fk-logo-marquee-fade.is-right {
+  right: 0;
+  background-image: linear-gradient(to left, var(--color-white), transparent);
+}
+
+@media screen and (max-width: 767px) {
+  .fk-logo-marquee {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  .fk-logo-marquee-text {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+    white-space: normal;
+  }
+
+  .fk-logo-marquee-fade {
+    width: var(--space-12);
+  }
+}

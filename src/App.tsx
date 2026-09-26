@@ -6,6 +6,7 @@ import FacilityPartnersPage from "./pages/FacilityPartnersPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import AboutPage from "./pages/AboutPage";
+import MvpHomePage from "./pages/MvpHomePage";
 import MvpPage from "./pages/MvpPage";
 import StyleGuidePage from "./pages/StyleGuidePage";
 
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/mvp" element={<MvpPage />} />
           <Route path="/style-guide" element={<StyleGuidePage />} />
+          <Route path="/mvp-home" element={<MvpHomePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

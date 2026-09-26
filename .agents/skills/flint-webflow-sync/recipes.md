@@ -37,6 +37,13 @@ Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come fro
   `data_whtml_builder` together with the markup that uses them.
 - **Existing classes, states, fixes:** `node scripts/webflow-style-actions.mjs <css file> --only fk-a,fk-b`
   → send the printed array as `actions` of `data_style_tool`. `update_style` is idempotent.
+- **New classes without markup (preferred since 2026-09-25):** `--create` prints a `create_style` per
+  class chain (desktop values, combos with `parent_style_names`), then `update_style` for the other
+  breakpoints. Only pass chains that don't exist yet (`query_styles` first; filter the output by
+  chain when a file also holds existing classes). The builder's quirks (same-name combos dropped)
+  don't apply, and a later WHTML insert without `css` reuses the classes by name.
+- Both scripts turn `url("/assets/…")` into the hosted asset URL from `webflow-ids.json`, so upload
+  mask and background images first.
 - WHTML without `css` reuses classes that already exist, by name.
 - **Removed declarations:** the script can't know what Webflow still has. Read the class
   (`query_styles`, `include_properties`, all pseudos you touched) and send
@@ -54,12 +61,27 @@ Tested payloads for `plugin-webflow-webflow`. Ids in `<angle brackets>` come fro
 The Webflow page uses the markup the repo page renders, so nothing is retyped:
 
 1. `data_pages_tool` → `create_page` (`site_id`, `title`, `slug`, `draft: true`, `seo`).
-2. `npm run dev`, open the page in the browser tool, and read the markup with CDP
-   `Runtime.evaluate`: clone `main`, empty every spot where a component instance goes
-   (buttons), and return `outerHTML`. Strip `data-cursor-ref="…"` attributes.
+2. `node scripts/webflow-markup.mjs src/sections/Hero.tsx …` prints `{ path: html }`: static
+   markup with hosted asset URLs and no preview-runtime state. Then empty every spot where a
+   component instance goes (buttons, repeated cards) and every native button (pagination dots),
+   with a small regex over the string. (Older route: read `outerHTML` from the preview with CDP and
+   strip `data-cursor-ref`, `is-revealed` and inline styles.)
 3. `data_whtml_builder` into the page Body: `<div class="fk-page">` + that `main`, no `css`.
 4. Remove the `class` attribute from DOM elements (`hr`), then place `Global / Nav` before `main`,
    `Global / Footer` after it, and UI instances with `insert_component_instance` + prop values.
+
+Tested on `/mvp-home` (2026-09-25): in the extraction script, also remove preview-runtime state
+(`is-revealed`, `is-inverse`, inline `style`), empty the Button slots, keep one copy of a repeated
+UI component (transform it, then `data_component_builder` → `insert_in_element` by component name
+into the empty slots and set props), and drop the repo's list markup where a Collection List goes.
+Link every image afterwards with `set_settings` → `assetId` + `altText`. Then transform each section
+root (`replace: true`) into its `Section /` component and bind its texts to props.
+
+**CMS-bound grid (Post Grid):** `data_element_builder` → `element_schema: { type: "CMSCollection" }`
+inside the block; `set_style` on the DynamoList (`fk-grid is-3`); `set_settings` on the wrapper:
+`source`, `limit`, `sort` (**before** inserting anything into the item); WHTML of the card markup
+into the DynamoItem; bind each element to its field (`binding: { source_type: "cms", collection_id,
+field_id }`, referenced fields as `<ref-field>:::<field>`).
 
 ## Loops and multi-step timelines (IX3)
 
@@ -79,6 +101,25 @@ Payloads accepted by `create_interaction` (runtime verification in `mvp2-home.md
 - **Scope an action to one block:** target `wf:class` with
   `filterContext: { relationship: "within", filterBy: ["wf:class", [<block id>]], firstMatchOnly: false }`.
 - The host expands a combo leaf id into its chain (`[base, combo]`) on save; pass the leaf.
+- **Click and hover triggers on a data attribute** work: `target: { extensionKey: "wf:attribute",
+  value: "[data-dot=\"how-1\"]" }` (created 2026-09-25, `ix-how-carousel`).
+- **Generate big timelines with a throwaway Node script** (how the wave 3 carousels were built):
+  one `act(id, name, target, position, duration, cycle, ease, props)` helper that sets
+  `repeatDelay = cycle − duration`, steps emitted from last to first, output printed as JSON.
+
+### Spring as a CustomEase
+
+Sample the spring `p(t) = 1 − e^(−ζωt)(C·sin(ω_d t) + cos(ω_d t))` over its duration (the repo's
+`src/ix/testimonials.ts` has ω, ζ), split x into ~8 segments (denser at the start), and write one
+cubic Bézier per segment from the values and slopes at its ends (Hermite → Bézier:
+`P1 = (x0 + h/3, y0 + m0·h/3)`, `P2 = (x1 − h/3, y1 − m1·h/3)`, last slope 0, end at `1,1`).
+Values above 1 (the overshoot) are fine. Accepted and stored as:
+
+```json
+"ease": { "type": "customEase", "bezierCurve": "M0,0 C0.0167,0 0.0333,0.034 0.05,0.0821 C… 1,1" }
+```
+
+Check the fit numerically before sending (max |bezier − spring| × travel in px).
 
 ## Upload an asset
 
@@ -87,7 +128,8 @@ Payloads accepted by `create_interaction` (runtime verification in `mvp2-home.md
    `node scripts/webflow-upload.mjs src/assets/icons/menu.svg <<'EOF' … EOF` → `201` means done.
 3. Record `id` and `hostedUrl` in `webflow-ids.json` → `assets`, keyed by the repo path.
 
-The same script works for `create_font` results.
+The same script works for `create_font` results. For several files from one batched `create_asset`
+call, use `scripts/webflow-upload-batch.mjs` (see its header; `--check` verifies the rebuilt policy).
 
 ## SVG icons and optional icons
 
@@ -136,6 +178,10 @@ elements inside a definition. Text key is `text`, link key is `link`:
     "scope_component_id": "<id>",
     "settings": [{ "key": "text", "binding": { "source_type": "prop", "prop_id": "<label-prop>" } }] } ] } }
 ```
+
+An image's `altText` can bind to a `textContent` prop (Testimonial Card: alt ← Name), and a
+Blockquote's `text` binds like a paragraph. On an instance, an image prop value is the asset id as
+`{ "prop_id": "<image-prop>", "type": "string", "string_value": "<asset-id>" }`.
 
 `get_bindable_sources` lists what an element accepts. The text target must be a DOM element or
 a text element, not a WHTML `<span>` (see [Native elements](#native-elements-button-span)).

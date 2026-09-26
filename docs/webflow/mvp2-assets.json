@@ -1,0 +1,1064 @@
+{
+  "$comment": "Assets used by the legacy homepage (MVP 2). Generated; upload with scripts/webflow-upload.mjs.",
+  "generatedOn": "2026-09-25",
+  "assets": [
+    {
+      "path": "/assets/blog/author.png",
+      "bytes": 215219,
+      "md5": "164f4b735c53120cf677f4c66e860aff",
+      "mime": "image/png",
+      "width": 500,
+      "height": 500,
+      "usedBy": [
+        "src/sections/blog/BlogPostCard.tsx"
+      ],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "/assets/chevron-right-white.svg",
+      "bytes": 333,
+      "md5": "a7f95944668648bac7b0f3773b0246eb",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/components/ApplyButton.tsx"
+      ],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "/assets/country-flag.svg",
+      "bytes": 663,
+      "md5": "236c32a3d9ea17c3e9e93163ca3676af",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Testimonials.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/flags/et.svg",
+      "bytes": 635,
+      "md5": "0dc00578ef7b9517ab80907ed7be589c",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/flags/gh.svg",
+      "bytes": 418,
+      "md5": "1c792ecdbdcfd42d31d2bdd7e15ae837",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/flags/ht.svg",
+      "bytes": 500,
+      "md5": "0489977e856bd54c5b1e16be6bd0c1f3",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/flags/ke.svg",
+      "bytes": 740,
+      "md5": "39e60d5c77375d32f2a7631ad44c3194",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/flags/ng.svg",
+      "bytes": 300,
+      "md5": "9d60aa0d417e613d03cde8413545528d",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/flags/ph.svg",
+      "bytes": 788,
+      "md5": "ba804bbacdfd3c3b99fe06f8e70f160e",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/flags/vn.svg",
+      "bytes": 287,
+      "md5": "51d8a6c73103d0efbea63523fd4a1a88",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/blog-card-01.jpg",
+      "bytes": 174091,
+      "md5": "518e5a69842bc2c59674636c66dbf667",
+      "mime": "image/jpeg",
+      "width": 1600,
+      "height": 900,
+      "usedBy": [
+        "src/sections/blog/posts.ts"
+      ],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "/assets/home/blog-card-02.jpg",
+      "bytes": 243555,
+      "md5": "399d8b688e262cd49032508e64e3791d",
+      "mime": "image/jpeg",
+      "width": 1229,
+      "height": 1600,
+      "usedBy": [
+        "src/sections/blog/posts.ts"
+      ],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "/assets/home/blog-card-03.jpg",
+      "bytes": 192496,
+      "md5": "22e4ee5d0fae17a64803a25dca8ace2e",
+      "mime": "image/jpeg",
+      "width": 1200,
+      "height": 1600,
+      "usedBy": [
+        "src/sections/blog/posts.ts"
+      ],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "/assets/home/candidate-01.png",
+      "bytes": 601554,
+      "md5": "322624bab2262083e503231cc6ce2a65",
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-02.png",
+      "bytes": 698793,
+      "md5": "b16cb73e0d0141ba9c6a98f7fa745d41",
+      "mime": "image/png",
+      "width": 842,
+      "height": 1052,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-03.png",
+      "bytes": 820127,
+      "md5": "428437359c163cf9d19c4ee8258646a9",
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1333,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-04.png",
+      "bytes": 692963,
+      "md5": "c693654f7c8e4305f7f65547463edf3e",
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-05.png",
+      "bytes": 691700,
+      "md5": "9e992caa4a96e80f27d401348ce61806",
+      "mime": "image/png",
+      "width": 820,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-06.png",
+      "bytes": 1215661,
+      "md5": "1b7d345a85cf242e817924f0a01fb199",
+      "mime": "image/png",
+      "width": 1122,
+      "height": 1402,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-07.png",
+      "bytes": 1411824,
+      "md5": "427459af3e2a65bccf658c73849eea7c",
+      "mime": "image/png",
+      "width": 1086,
+      "height": 1448,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-08.png",
+      "bytes": 596112,
+      "md5": "9ae1f3ff85672eb1b58185df2185b381",
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-09.png",
+      "bytes": 1530876,
+      "md5": "758d685edb49351f7dab7d72ab7569f5",
+      "mime": "image/png",
+      "width": 1086,
+      "height": 1448,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/candidate-10.png",
+      "bytes": 571934,
+      "md5": "9c110906cecb68552fe05865de8432fd",
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/Hero.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/cta-circle.svg",
+      "bytes": 183,
+      "md5": "aed939bcb138bff3d350ce4f8950ae95",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Cta.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/cta-flower.png",
+      "bytes": 2723172,
+      "md5": "62931fb13e57c0a3ff2bac2a5b00c310",
+      "mime": "image/png",
+      "width": 1672,
+      "height": 941,
+      "usedBy": [
+        "src/sections/legacy/Cta.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/cta-photo.png",
+      "bytes": 1733421,
+      "md5": "effdbc34ae48104c6f999e72012c95f7",
+      "mime": "image/png",
+      "width": 1308,
+      "height": 1099,
+      "usedBy": [
+        "src/sections/legacy/Cta.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/cta-ring.svg",
+      "bytes": 210,
+      "md5": "4b9ac2a8cf030b78c102fee53b6e0a89",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/Cta.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/cta-room.jpg",
+      "bytes": 222078,
+      "md5": "27cea2f439c7f4f7a0637a5eec4ac3a1",
+      "mime": "image/jpeg",
+      "width": 1308,
+      "height": 1099,
+      "usedBy": [
+        "src/sections/legacy/Cta.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-application-bg.jpg",
+      "bytes": 148540,
+      "md5": "437f8136abccfa42c113880acc765ebc",
+      "mime": "image/jpeg",
+      "width": 720,
+      "height": 928,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-avatar-andrew.png",
+      "bytes": 724846,
+      "md5": "1dd6db4afe85755091efb678632ae733",
+      "mime": "image/png",
+      "width": 820,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-barcode.svg",
+      "bytes": 4731,
+      "md5": "970ac3de1e8acf114abeaa28773d9507",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-bg-purple.png",
+      "bytes": 2723172,
+      "md5": "62931fb13e57c0a3ff2bac2a5b00c310",
+      "mime": "image/png",
+      "width": 1672,
+      "height": 941,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-call-dieunold.png",
+      "bytes": 1131691,
+      "md5": "5435e4fcb8d40dad50eeef284ca46fbb",
+      "mime": "image/png",
+      "width": 1086,
+      "height": 1448,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-call-flag-ng.svg",
+      "bytes": 841,
+      "md5": "203d6617dd564fb22dbf8a6f780a3fe3",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-call-ic-video.svg",
+      "bytes": 925,
+      "md5": "d7bb2538052b031c0c11a2becede8ce1",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-bg.jpg",
+      "bytes": 1604290,
+      "md5": "bc3101d2a49cdb7f478156019fcb8b4b",
+      "mime": "image/jpeg",
+      "width": 1024,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-ic-endcall.svg",
+      "bytes": 821,
+      "md5": "7ff198d4db6a0f22b8f94c1ae2dab764",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-ic-expand.svg",
+      "bytes": 671,
+      "md5": "d61507d19143c0254fb9bbeaf4fb89a9",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-ic-mic.svg",
+      "bytes": 817,
+      "md5": "56d35b4699a9ecba9426477a46fb682e",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-ic-more.svg",
+      "bytes": 1101,
+      "md5": "97bbefeb9a8528264cb83c25d52ef7b6",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-ic-people.svg",
+      "bytes": 1474,
+      "md5": "ad486b15c85fe5a4fcfd6f8b995999df",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-ic-video.svg",
+      "bytes": 983,
+      "md5": "9fa4a20477aafdf0a3ac971b966390f6",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-main.jpg",
+      "bytes": 1886820,
+      "md5": "e61c85af81d5767b1b68d9ef3ea837e3",
+      "mime": "image/jpeg",
+      "width": 1672,
+      "height": 941,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-interview-pip.jpg",
+      "bytes": 1901229,
+      "md5": "1fd445c5348fe061215cc90bd65f5aac",
+      "mime": "image/jpeg",
+      "width": 1672,
+      "height": 941,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-processing-avatar.png",
+      "bytes": 139783,
+      "md5": "56808fe919ab1f18305dcc4027769272",
+      "mime": "image/png",
+      "width": 272,
+      "height": 362,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-processing-bg.jpg",
+      "bytes": 179271,
+      "md5": "0fbe3143d7618c9858b89a831bb88634",
+      "mime": "image/jpeg",
+      "width": 1086,
+      "height": 1448,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-processing-check.svg",
+      "bytes": 334,
+      "md5": "27bcc7e50eed9a4f315a95a37790808c",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-processing-dash.svg",
+      "bytes": 260,
+      "md5": "9f6b6e5d4986baa0cd9ea1305b7b9a0e",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-processing-flag.png",
+      "bytes": 1125,
+      "md5": "7820567040adc3aac3fc0dde5ffff827",
+      "mime": "image/png",
+      "width": 32,
+      "height": 32,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-ring-mask.svg",
+      "bytes": 265,
+      "md5": "f969e608857073f1c0f42af006661c43",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-send-icon.svg",
+      "bytes": 1033,
+      "md5": "f181859d049238abe1a4bb87befb644d",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-startwork-badge-overlay.svg",
+      "bytes": 2598,
+      "md5": "f356b53bde6880bc5b0a56c535b19c23",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-startwork-flag.svg",
+      "bytes": 5685,
+      "md5": "2f86fbc0d711cf62bb0ffcab0f864da7",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-startwork-lanyard-back.svg",
+      "bytes": 811,
+      "md5": "93eeee939ae245457b4d0b5ceb3f1cea",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-startwork-lanyard-front.svg",
+      "bytes": 1918,
+      "md5": "1129a6f57248b30e348fc102f1127ce7",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-startwork-photo.png",
+      "bytes": 764387,
+      "md5": "71716ddf0cdcdc0b3e14a1679075fb86",
+      "mime": "image/png",
+      "width": 1000,
+      "height": 558,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-ticket-dash.svg",
+      "bytes": 260,
+      "md5": "4f5de637770783aa83f5e7e14867bea3",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-ticket-flag.svg",
+      "bytes": 627,
+      "md5": "326d8aae5279aa6e3ecdf86b90ace776",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-ticket-rule.svg",
+      "bytes": 271,
+      "md5": "2ede0ffd12dce9f51b5097da1513ff0b",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/how-ticket.svg",
+      "bytes": 1523,
+      "md5": "1f31a05ca35fecb8f6d15c551cfcdbee",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/logo-01.png",
+      "bytes": 98351,
+      "md5": "3a4d8e62b25d33c132cfb56564868853",
+      "mime": "image/png",
+      "width": 1264,
+      "height": 344,
+      "usedBy": [
+        "src/sections/Clients.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/logo-02.png",
+      "bytes": 279855,
+      "md5": "4418172b08d5b0365077b85c270dd41d",
+      "mime": "image/png",
+      "width": 1264,
+      "height": 474,
+      "usedBy": [
+        "src/sections/Clients.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/logo-03.png",
+      "bytes": 290179,
+      "md5": "288e6419fbd3b2dd9a69feb370ec65f7",
+      "mime": "image/png",
+      "width": 1264,
+      "height": 450,
+      "usedBy": [
+        "src/sections/Clients.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/logo-04.png",
+      "bytes": 94035,
+      "md5": "4dc5050aed3d839976f46a73c65286d3",
+      "mime": "image/png",
+      "width": 1264,
+      "height": 244,
+      "usedBy": [
+        "src/sections/Clients.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/logo-05.png",
+      "bytes": 259942,
+      "md5": "322b49cc309b5d08315ad934a71ff245",
+      "mime": "image/png",
+      "width": 1264,
+      "height": 312,
+      "usedBy": [
+        "src/sections/Clients.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/logo-06.png",
+      "bytes": 301975,
+      "md5": "e9a64dbc2c72d608b34ea5bd7e1524f8",
+      "mime": "image/png",
+      "width": 1264,
+      "height": 375,
+      "usedBy": [
+        "src/sections/Clients.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/map-bg.jpg",
+      "bytes": 1604290,
+      "md5": "bc3101d2a49cdb7f478156019fcb8b4b",
+      "mime": "image/jpeg",
+      "width": 1024,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/PartnersMap.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/offer-check.svg",
+      "bytes": 2375,
+      "md5": "e2a7ab34ebce45638cb41cde775a7805",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/WhatWeOffer.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/offer-concierge.svg",
+      "bytes": 2960,
+      "md5": "d5c46d17ac28247eb900636909b008f0",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/WhatWeOffer.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/offer-dashboard.svg",
+      "bytes": 2944,
+      "md5": "9640505243d017e8f7f3418b8d1e6df0",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/WhatWeOffer.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/offer-hospital.svg",
+      "bytes": 1466,
+      "md5": "3fc7338a6cf3a7677ac489a8a699a207",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/WhatWeOffer.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/offer-id.svg",
+      "bytes": 2472,
+      "md5": "361cacc30258509a94b75bc8341d0261",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/WhatWeOffer.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/offer-travel.svg",
+      "bytes": 3193,
+      "md5": "e2896d284d6488908e5501ca9d4423fb",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/WhatWeOffer.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/plane.svg",
+      "bytes": 515,
+      "md5": "82c352cc38f1ec6a3db3852b838311b8",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/sections/legacy/HowItWorks.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/two-ways-facility.png",
+      "bytes": 3560406,
+      "md5": "ff520e6d3036a264511b9befe032b529",
+      "mime": "image/png",
+      "width": 2346,
+      "height": 1560,
+      "usedBy": [
+        "src/sections/legacy/TwoWays.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/two-ways-nurse-center.png",
+      "bytes": 1122068,
+      "md5": "542e2bdaea9de5395f2e33c2342e0e0f",
+      "mime": "image/png",
+      "width": 1080,
+      "height": 1152,
+      "usedBy": [
+        "src/sections/legacy/TwoWays.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/two-ways-nurse-left.png",
+      "bytes": 571929,
+      "md5": "c05b1ee4b348aeface01b322a6d772a2",
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1024,
+      "usedBy": [
+        "src/sections/legacy/TwoWays.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/home/two-ways-nurse-right.png",
+      "bytes": 4281812,
+      "md5": "0a8033f93831a3dd1f99971ce07f9d70",
+      "mime": "image/png",
+      "width": 1792,
+      "height": 2400,
+      "usedBy": [
+        "src/sections/legacy/TwoWays.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/testimonial-photo-1.png",
+      "bytes": 1116642,
+      "md5": "390052a2d83718fe6ac4b5491c62a59d",
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1333,
+      "usedBy": [
+        "src/sections/legacy/Testimonials.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/testimonial-photo-2.png",
+      "bytes": 2545113,
+      "md5": "b2800177f2b7b68fce947e382b125d8a",
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1333,
+      "usedBy": [
+        "src/sections/legacy/Testimonials.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/testimonial-photo-3.png",
+      "bytes": 1635305,
+      "md5": "96a52de9bc796a48f80a6feab85bea62",
+      "mime": "image/png",
+      "width": 1194,
+      "height": 1342,
+      "usedBy": [
+        "src/sections/legacy/Testimonials.tsx"
+      ],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "/assets/wordmark-white.svg",
+      "bytes": 5896,
+      "md5": "70644e8ccc88001580cda684dee1515e",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/components/SiteNav.tsx",
+        "src/sections/Footer.tsx"
+      ],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "/assets/wordmark.svg",
+      "bytes": 5904,
+      "md5": "5b8541bc6e600019cf1320a62ba171e6",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [
+        "src/components/SiteNav.tsx"
+      ],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "src/assets/icons/checkmark.svg",
+      "bytes": 241,
+      "md5": "4f89578863923864a2485c34f359a597",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "src/assets/icons/chevron-left.svg",
+      "bytes": 215,
+      "md5": "fb6d37e9d956de362e96bd2a340b2cad",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "src/assets/icons/chevron-right.svg",
+      "bytes": 214,
+      "md5": "3433e0e403d65c11aefaa4e8b4d6331b",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "src/assets/icons/facility.svg",
+      "bytes": 941,
+      "md5": "798ce3936655e1afb3d2eb4527f5f600",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [],
+      "alreadyUploaded": false
+    },
+    {
+      "path": "src/assets/icons/menu.svg",
+      "bytes": 242,
+      "md5": "3058511355c33b3e5d8797ba2e6256b5",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [],
+      "alreadyUploaded": true
+    },
+    {
+      "path": "src/assets/icons/x-mark.svg",
+      "bytes": 634,
+      "md5": "cb891197210eaa649d61436c0e3c52eb",
+      "mime": "image/svg+xml",
+      "width": null,
+      "height": null,
+      "usedBy": [],
+      "alreadyUploaded": true
+    }
+  ],
+  "missing": []
+}

@@ -59,6 +59,12 @@
   border-radius: var(--radius-lg);
 }
 
+/* Vertical padding only: the page container inside sets the sides. */
+.fk-panel.is-flush-x {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 /* Page container: 1200px wide including a 20px gutter on each side. */
 .fk-container {
   width: 100%;

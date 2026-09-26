@@ -1,0 +1,79 @@
+import ApplyButton from "../../components/ApplyButton";
+import BlurReveal from "../../components/BlurReveal";
+
+/* The artwork is laid out on Figma's 1408x560 card and anchored to the right
+   edge, so it keeps its composition as the card narrows.
+
+   Ring: the purple texture is clipped to a 795px circle stroked 100px wide,
+   which is what gives the crescent. Photo: the full room shot only shows
+   through an 832px circular window, and the cut-out pair sits on top of it
+   unclipped. Both photos are mirrored; the masks are not. */
+
+const RING_MASK = {
+  maskImage: "url(/assets/home/cta-ring.svg)",
+  WebkitMaskImage: "url(/assets/home/cta-ring.svg)",
+  maskSize: "795px 795px",
+  WebkitMaskSize: "795px 795px",
+  maskPosition: "82.66px 7.29px",
+  WebkitMaskPosition: "82.66px 7.29px",
+  maskRepeat: "no-repeat",
+  WebkitMaskRepeat: "no-repeat",
+} as const;
+
+const WINDOW_MASK = {
+  maskImage: "url(/assets/home/cta-circle.svg)",
+  WebkitMaskImage: "url(/assets/home/cta-circle.svg)",
+  maskSize: "831.69px 831.69px",
+  WebkitMaskSize: "831.69px 831.69px",
+  maskPosition: "153.57px 87.31px",
+  WebkitMaskPosition: "153.57px 87.31px",
+  maskRepeat: "no-repeat",
+  WebkitMaskRepeat: "no-repeat",
+} as const;
+
+export default function Cta() {
+  return (
+    <section className="w-full px-4 pb-4">
+      <div className="relative flex min-h-[480px] w-full items-end overflow-clip rounded-[24px] bg-tertiary p-8 md:h-[560px] md:min-h-0 md:items-center md:p-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-[535.49px] -top-[298.62px] hidden h-[812.83px] w-[1196.15px] md:block"
+          style={RING_MASK}
+        >
+          <img src="/assets/home/cta-flower.png" alt="" className="size-full object-cover" />
+        </div>
+
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-[15.93px] -bottom-[32.7px] hidden h-[484.7px] w-[576.87px] md:block"
+        >
+          <div className="absolute inset-0" style={WINDOW_MASK}>
+            <img
+              src="/assets/home/cta-room.jpg"
+              alt=""
+              className="size-full -scale-x-100 object-cover"
+            />
+          </div>
+          <img
+            src="/assets/home/cta-photo.png"
+            alt=""
+            className="absolute inset-0 size-full -scale-x-100 object-cover"
+          />
+        </div>
+
+        <BlurReveal className="relative z-10 flex w-full max-w-[436px] flex-col gap-4">
+          <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
+            Your green card pathway starts here.
+          </h2>
+          <p className="text-[16px] leading-6 text-brand opacity-80 md:text-[18px] md:leading-7">
+            Flint helps eligible healthcare professionals connect with hospitals sponsoring Green
+            Cards.
+          </p>
+          <span className="inline-flex pt-4">
+            <ApplyButton reveal={false} />
+          </span>
+        </BlurReveal>
+      </div>
+    </section>
+  );
+}

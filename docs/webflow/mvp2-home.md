@@ -57,8 +57,8 @@ Legend: **N** native as-is · **N\*** native with a technique worth a spike · *
 - Sizes are analyzed before they're written (`AGENTS.md` rule 2): a size used by one element of one
   block (a panel's height, an illustration offset) stays raw in that block; a repeated one gets a
   shared definition. Repeats already found in the inventories:
-  - **Header copy width 436px** in Hero, What We Offer, Testimonials and CTA →
-    one value in `fk-section-header` (the shared header block), not per section.
+  - **Header copy width 436px** in Hero, Two Ways, What We Offer, Testimonials, Blog and CTA →
+    token `width-header`, used by `fk-section-header is-narrow` and `fk-post-grid-header is-center`.
   - **Flags** 20px (hero chips) and 32px (testimonial cards) → `fk-flag` with a size combo.
   - **Avatars** 24px (post cards, facility call) and 40px (How It Works) → `fk-avatar` + size combo.
   - **Icons** 20/24px → existing `fk-button-icon` / `fk-icon`; the 40px service card icons become
@@ -76,7 +76,7 @@ equals its first frame**, then the IX3 timeline repeats (`repeat: -1`) with no v
 | Loop | How the end frame matches the start |
 | --- | --- |
 | Hero arc | Two copies of the 10 cards on the wheel; one cycle rotates by exactly one set's angle span |
-| Logo marquee | Two copies of the row; one cycle moves X by −50% (one row) |
+| Logo marquee | Three copies of the row (coverage rule); one cycle moves X by −33.333% (one row) |
 | Partner states | The 14 states followed by the first ones again; one cycle moves up 14 lines, back on "New York" |
 | Testimonials | Each card runs the same 7-slot path offset by its index; the card leaving the outermost slot moves to the other end while hidden |
 
@@ -170,7 +170,7 @@ background, title and body turn white, icon inverts (300ms).
 - Layout and card bg: **N**.
 - Child colors and icon invert on card hover (a parent-hover effect CSS classes can't express):
   an IX3 hover trigger on the card animates its children directly — text colors tween (IX3 animates
-  color), and the icon crossfades between a brand and a white SVG. **N\***
+  color), and the icon gets `is-inverse`, whose `filter` transition turns it white. **N\***
 - New: `fk-card is-service` (radius 20px: new token or snap to 16/24, **H-5**), SVG icons.
 
 ### 7 · Testimonials
@@ -231,6 +231,31 @@ Spike results go straight into the skill and playbook (rule 13).
 
 Under reduced motion the loops stay still, as in legacy.
 
+## Build conventions (repo)
+
+- **Page:** `src/pages/MvpHomePage.tsx` on route `/mvp-home`: `div.fk-page` → `Global / Nav` →
+  `main` (sections in the order above) → `Global / Footer`, and `useInteractions()`. Legacy `/`
+  stays on `pages/HomePage.tsx` until sign-off.
+- **Files:** one section per `src/sections/<Name>.tsx` named like its component; UI components in
+  `src/components/ui/`; one CSS file per block in `src/styles/components/<block>.css`, imported
+  from `src/styles/index.css`. The legacy files that held those names now live in
+  `src/sections/legacy/` (moved 2026-09-25, still used by the legacy pages).
+- **Blur reveal** (legacy `BlurReveal`): the trigger gets `data-ix="blur-reveal"`; each child is
+  wrapped in `div.fk-blur-reveal` (legacy wraps each child in a `motion.div` too, so the wrapper
+  exists in both builds) with `is-delay-1` / `-2` / `-3` for the 150ms steps. The interaction adds
+  `is-revealed`; the class transition animates opacity, blur and y (spike S1).
+- **Staggered reveal** (legacy `[data-reveal]` waves, 90ms): the parent gets
+  `data-ix="reveal-stagger"`, each staggered child `data-ix-item`. Plain `data-ix="reveal"` stays
+  for single elements.
+- **Motion preview:** each new interaction gets one module in `src/ix/<name>.ts` (Web Animations
+  or class toggles, same trigger, timing and easing as the registry row), registered in
+  `useInteractions.ts`. Never shipped to Webflow.
+- **Values:** tokens for system values; local sizes raw only after checking they don't repeat
+  (`AGENTS.md` rule 2). Shared blocks: `fk-icon` (+ `is-lg` 40px), `fk-section-header`,
+  `UI / Button`, and later `fk-flag`, `fk-avatar`, `fk-pagination`.
+- **No Tailwind, no Framer Motion, no inline styles** in new files. Legacy components are read,
+  never imported.
+
 ## Work plan
 
 | Step | Work | Who |
@@ -249,6 +274,60 @@ Order inside steps 5 and 7: Nav/Footer deltas → Logo Marquee → Feature Grid 
 CTA → Two Ways → Partners Map → Hero → How It Works → Testimonials (easiest to hardest, so shared
 patterns — reveal, carousel — are proven before the heavy sections).
 
+### Progress
+
+**Wave 1, repo (2026-09-25): done.** Footer deltas, Logo Marquee, Feature Grid + `UI / Service
+Card`, Post Grid (Home), CTA (Art) on `/mvp-home`. Measured against legacy `/` at 1310 and 390px:
+same boxes for every section (headers, cards, panels, art), marquee speed 33.5px/s (one 1071px set
+per 32s) with no empty edge, card hover identical. Section heights differ by 16px only where legacy
+pads the bottom of a section and the contract pads the top of the next; the page total is the
+same. **Webflow (step 7) done the same day** on draft `/mvp-home`: classes, 2 tokens, 17 assets, 4
+components, Collection List, 4 interactions; `webflow-diff.mjs` clean. Visual review pending. Choices
+made in review:
+
+- The 436px header width repeats in six sections, so it became the token `width-header`
+  (`fk-section-header is-narrow`, `fk-post-grid-header is-center`).
+- Legacy panels that pad only vertically (Feature Grid, Two Ways) use `fk-panel is-flush-x`; the
+  Feature Grid's extra 20px side inset is local to `fk-feature-grid`.
+- Service card icon: one image and a class toggle (`fk-icon is-inverse` + a `filter` transition),
+  the S1 technique, instead of crossfading two copies. It reproduces legacy's filter transition.
+- No element carries two base classes (`fk-section fk-cta`, `fk-panel fk-cta-panel`): in Webflow
+  the second one would become a combo of the first. The CTA panel is its own block, `fk-cta`.
+- Texts inside a block get a class with `margin: 0` (Webflow's default `p` has a 10px bottom margin).
+- Legacy Related Insights uses `BlurReveal` too, so both Post Grid variants now use the blur reveal.
+- The legacy primary CTA's chevron pill stays out (H-8).
+
+**Wave 1 visual check: passed (user, 2026-09-25).**
+
+**Wave 2, repo + Webflow (2026-09-25): done.** Two Ways and Partners Map, built by GPT 5.6 Sol
+subagents and reviewed. Partners Map measures identical to legacy at all four widths; its ticker
+steps every 2.2s with ~2px overshoot and loops on an identical frame after 30.8s. Two Ways is
+identical except two-line card titles (legacy's word masks add 3px per line). Review fixes: the
+ticker title and rows had stacked `fk-heading-xl` (and legacy stays 32px up to 1023px, so they got
+their own typography); the track's start offset moved from `transform` to `margin-top` so IX3 `y`
+starts at 0 as in S4; preview-only word-mask classes became inline styles. Ticker rows are targeted
+by `data-ticker-row` attributes instead of per-row combo classes.
+
+**Wave 3, repo + Webflow (2026-09-25): done.** Hero, How It Works and Testimonials (+ `UI /
+Testimonial Card`). Repo measured identical to legacy at 1310/800/600 and at 405 for the phone
+layout. In Webflow: classes pushed (`webflow-diff.mjs` clean), markup rendered from the repo with
+`scripts/webflow-markup.mjs`, 48 images linked, 13 pagination dots as native buttons, components
+`Section / Hero`, `Section / How It Works`, `Section / Testimonials` (prop Body) and `UI /
+Testimonial Card` (7 instances), and 5 interactions. `/mvp-home` now holds the whole homepage in
+legacy order. Review changes:
+
+- Testimonial slides got resting-slot combos (`is-slot-n`). Without them the CSS stacked all seven
+  cards at the centre and only the preview script spread them, which IX3 (and reduced motion)
+  wouldn't do.
+- IX3 allows a scroll trigger only as the sole trigger of an interaction, so How It Works starts on
+  load (H-11). Testimonials hover freezes the whole timeline (H-12). Both repo previews match, and
+  with reduced motion both leave the progress fill empty, as `dont-animate` does.
+- The testimonial spring is a `customEase` path traced from legacy's spring (8 cubic segments, max
+  error 0.13px on a 341px move), not the fitted `back.out`.
+
+Still to verify on staging: motion of the three carousels, the `customEase` string format, and the
+Two Ways titles.
+
 ## Decisions
 
 | ID | Question | Status |
@@ -259,4 +338,9 @@ patterns — reveal, carousel — are proven before the heavy sections).
 | H-4 | How It Works card art: rebuild as elements or one image per card | **decided 2026-09-25: one image per card**, rendered from the repo at 2×; titles and body stay live text |
 | H-5 | Service card radius 20px (no token) | **decided 2026-09-25: add a 20px radius token** (named in `tokens.md` when the Feature Grid is built) |
 | H-6 | Testimonials drag/swipe (no native equivalent with center weighting) | **decided 2026-09-25: no drag**; autoplay, dots and hover pause stay. Drag is kept as deferred exception candidate `x-testimonial-drag` |
+| H-8 | Legacy primary CTAs (Hero, CTA) show a chevron in a translucent pill that brightens on hover; `UI / Button` has no icon by default | **decided 2026-09-25: no chevron.** Accepted difference from legacy; homepage primary buttons are plain `UI / Button` |
+| H-9 | How It Works below 422px: legacy scales the carousel continuously with the viewport (`fit = (vw − 24) / 398`, min 0.72); IX3 values are fixed per breakpoint | **decided 2026-09-25: one fixed scale at ≤479 tuned for a 390px phone.** Legacy's viewport is the section's content box, so at 390 fit = (390 − 32 − 24) / 398 = 0.839 (active card 334 × 430). Exact at 390, a few px off at 360–420, smaller than legacy between ~454 and 479 |
+| H-10 | Testimonial hover: the quote's fade mask interpolates its gradient end alpha; IX3 can't tween a gradient | **decided 2026-09-25: class toggle + CSS transition of `mask-size` / `mask-position`** (same end states and 0.45s timing, near-identical in-between) |
+| H-11 | How It Works plays only while ≥30% of the section is visible and starts at step 1 when first seen; IX3 accepts a scroll trigger only on its own, so visibility control can't share a timeline with hover pause and dot clicks | **decided 2026-09-25: start on page load**, keep hover pause and dot clicks. The carousel keeps cycling off-screen, so a visitor may arrive mid-cycle. The repo preview matches |
+| H-12 | Testimonials hover: legacy pauses only the 5s progress clock (a card mid-move finishes its move); IX3 pause freezes the whole timeline | **decided 2026-09-25: accept the freeze**, as the Hero and How It Works already do. The repo preview matches |
 | H-7 | Legacy copy typos and placeholders | **decided 2026-09-25: verbatim for parity**; fixes listed in the roadmap content backlog |

@@ -1,12 +1,12 @@
-import Hero from "../sections/Hero";
+import Hero from "../sections/legacy/Hero";
 import Clients from "../sections/Clients";
-import TwoWays from "../sections/TwoWays";
-import PartnersMap from "../sections/PartnersMap";
-import HowItWorks from "../sections/HowItWorks";
+import TwoWays from "../sections/legacy/TwoWays";
+import PartnersMap from "../sections/legacy/PartnersMap";
+import HowItWorks from "../sections/legacy/HowItWorks";
 import WhatWeOffer from "../sections/WhatWeOffer";
-import Testimonials from "../sections/Testimonials";
+import Testimonials from "../sections/legacy/Testimonials";
 import Blog from "../sections/Blog";
-import Cta from "../sections/Cta";
+import Cta from "../sections/legacy/Cta";
 import Footer from "../sections/Footer";
 import { useStaggerReveal } from "../hooks/useStaggerReveal";
 

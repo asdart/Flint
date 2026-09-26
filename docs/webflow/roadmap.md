@@ -171,8 +171,12 @@ Plan, spikes, per-section approach and open decisions: [`mvp2-home.md`](mvp2-hom
       of the S4 cycle fix and S1 reduced-motion fix pending a re-publish
 - [ ] Decisions H-1…H-7 in `mvp2-home.md` closed with the user (H-2…H-7 closed 2026-09-25; H-1
       waits for the S1 reduced-motion re-check)
-- [ ] Repo `/mvp-home` built from contract sections; screenshots match legacy `/` at 4 widths
-- [ ] Webflow draft `/mvp-home` built from the repo render; diff clean; reviewed in the Designer
+- [x] Repo `/mvp-home` built from contract sections; screenshots match legacy `/` at 4 widths.
+      Waves 1–3 done 2026-09-25 (Footer deltas, Logo Marquee, Feature Grid, Post Grid Home, CTA Art;
+      Two Ways, Partners Map; Hero, How It Works, Testimonials)
+- [ ] Webflow draft `/mvp-home` built from the repo render; diff clean; reviewed in the Designer.
+      Waves 1–3 synced 2026-09-25, diff clean; waves 1–2 reviewed by the user; wave 3 review and a
+      staging check of the carousel motion pending (H-11, H-12 decided)
 
 ## Phase 3 — Global and UI components
 

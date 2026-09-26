@@ -22,7 +22,7 @@ contract · `synced` = also built in Webflow (logged in `sync-log.md`).
 | Component | React target | Legacy source | Props | Variants | Status |
 | --- | --- | --- | --- | --- | --- |
 | `Global / Nav` | `components/global/Nav.tsx` | `components/SiteNav.tsx`, `nav.ts` (rendered inside 6 heroes) | — | Light (default); Dark to do | synced (Light) |
-| `Global / Footer` | `components/global/Footer.tsx` | `sections/Footer.tsx` | CTA Title (multiline), CTA Body — props not yet created in Webflow | — | synced |
+| `Global / Footer` | `components/global/Footer.tsx` | `sections/Footer.tsx` | CTA Title (multiline), CTA Body — props not yet created in Webflow | — | synced; blur reveal on the CTA and per-link staggered reveal synced 2026-09-25 |
 
 Nav links (static, in this order): Home `/`, Candidates `/candidates`, Facility partners
 `/facility-partners`, About `/about`, Blog `/blog`. The active link uses Webflow's automatic
@@ -54,9 +54,10 @@ fixed Nav over the first section's top padding; on mobile it sits right above th
 | `UI / Button` | `components/ui/Button.tsx` | `components/ApplyButton.tsx`, inline button in `Footer.tsx` | Label, Link, Show Icon (off by default), Icon (image). React: `icon` (an imported SVG), none by default | Primary (base), Secondary, Primary Small, Secondary Small | synced (instances in Nav and Footer) |
 | `UI / Section Header` | `components/ui/SectionHeader.tsx` | repeated inline in most sections | Eyebrow, Title, Body (rich text) | Center; Left and Inverse to do | migrated (Center) |
 | `UI / Post Card` | `components/ui/PostCard.tsx` | `sections/blog/BlogPostCard.tsx` | Image, Title, Excerpt, Avatar, Author, Read time — bound to CMS fields per instance | Default; Featured to do | migrated; in Webflow a bound element tree inside the Collection Item (component-with-props version to do) |
+| Pagination (markup pattern, not a Webflow component) | `components/ui/Pagination.tsx` | `components/CarouselPagination.tsx` | id prefix, count, active | — | synced as markup inside Section / How It Works and Section / Testimonials: native DOM buttons and spans built with `data_element_builder` (a WHTML `<button>` becomes a Link). Each dot, bar and fill carries its own data attribute for IX3, which component props can't set, so each carousel places the markup |
 | `UI / Stat` | `components/ui/Stat.tsx` | inline in `Stats.tsx`, `FacilityStats.tsx`, `AboutPage.tsx` | Value, Suffix, Label | Large; Default to do | migrated (Large) |
-| `UI / Service Card` | `components/ui/ServiceCard.tsx` | `components/ServiceCard.tsx` | Icon, Title, Text | — | legacy |
-| `UI / Testimonial Card` | `components/ui/TestimonialCard.tsx` | inline in `Testimonials.tsx`, `FacilityTestimonial.tsx` | Image, Quote, Name, Role | — | legacy |
+| `UI / Service Card` | `components/ui/ServiceCard.tsx` | `components/ServiceCard.tsx` | Icon (image), Title, Text | — | synced (6 instances in Feature Grid) |
+| `UI / Testimonial Card` | `components/ui/TestimonialCard.tsx` | inline in `legacy/Testimonials.tsx`, `FacilityTestimonial.tsx` | Image, Quote, Name, Role (the photo's alt text is bound to Name) | — | synced (7 instances in Section / Testimonials) |
 | `UI / FAQ Item` | `components/ui/FaqItem.tsx` | inline in `Faq.tsx` | Question, Answer | — | legacy |
 | `UI / Newsletter Form` | `components/ui/NewsletterForm.tsx` | `sections/blog/BlogNewsletter.tsx` | Title | Row, Stacked | legacy |
 | `UI / Portrait` | `components/ui/Portrait.tsx` | `HeroPortrait` in `AboutPage.tsx` | Image | Peach, Sand, Brand | legacy |
@@ -69,27 +70,27 @@ consolidates them. Confirm layout parity against Figma when migrating each one.
 
 | Section | React target | Legacy sources | Variants | Status |
 | --- | --- | --- | --- | --- |
-| `Section / Hero` | `sections/Hero.tsx` | `Hero.tsx`, `facilities/FacilityHero.tsx`, `facility-partners/FacilityPartnersHero.tsx`, `AboutHero` (in `AboutPage.tsx`), `blog/BlogHero.tsx` | Home, Candidates, Facility Partners, About, Blog | legacy |
+| `Section / Hero` | `sections/Hero.tsx` | `legacy/Hero.tsx`, `facilities/FacilityHero.tsx`, `facility-partners/FacilityPartnersHero.tsx`, `AboutHero` (in `AboutPage.tsx`), `blog/BlogHero.tsx` | Home (arc wheel); Candidates, Facility Partners, About, Blog to do | synced (Home; UI / Button instance inside) |
 | `Section / Article Hero` | `sections/ArticleHero.tsx` | `blog/ArticleHero.tsx` | — (CMS template) | legacy |
-| `Section / Logo Marquee` | `sections/LogoMarquee.tsx` | `Clients.tsx` | — | legacy |
-| `Section / Two Ways` | `sections/TwoWays.tsx` | `TwoWays.tsx` | — | legacy |
-| `Section / Partners Map` | `sections/PartnersMap.tsx` | `PartnersMap.tsx` | — | legacy |
-| `Section / How It Works` | `sections/HowItWorks.tsx` | `HowItWorks.tsx`, `facilities/HowFlintWorks.tsx`, `facilities/FacilityHowItWorks.tsx` | Home, Candidates, Facilities | legacy |
-| `Section / Feature Grid` | `sections/FeatureGrid.tsx` | `WhatWeOffer.tsx`, `Benefits.tsx` (both built on `ServiceCard`) | Cards | legacy |
+| `Section / Logo Marquee` | `sections/LogoMarquee.tsx` | `Clients.tsx` | — | synced |
+| `Section / Two Ways` | `sections/TwoWays.tsx` | `legacy/TwoWays.tsx` | — | synced (2 Button instances inside) |
+| `Section / Partners Map` | `sections/PartnersMap.tsx` | `legacy/PartnersMap.tsx` | — | synced |
+| `Section / How It Works` | `sections/HowItWorks.tsx` | `legacy/HowItWorks.tsx`, `facilities/HowFlintWorks.tsx`, `facilities/FacilityHowItWorks.tsx` | Home (card art as images, H-4); Candidates, Facilities to do | synced (Home) |
+| `Section / Feature Grid` | `sections/FeatureGrid.tsx` | `WhatWeOffer.tsx`, `Benefits.tsx` (both built on `ServiceCard`) | Cards (Home, secondary panel); `Benefits` to do | synced (props Title, Body) |
 | _To classify_ (roadmap P-03) | — | `facility-partners/WhyFacilities.tsx`, `facility-partners/ModernFacility.tsx` | Review against Figma: become a Feature Grid variant or their own section | legacy |
 | `Section / Stats Band` | `sections/StatsBand.tsx` | `Stats.tsx`, `facility-partners/FacilityStats.tsx`, `ImpactStats` (in `AboutPage.tsx`) | Large (brand-light panel, title + 4 stats); Default to do | synced (Large; stat props to do) |
-| `Section / Testimonials` | `sections/Testimonials.tsx` | `Testimonials.tsx`, `facility-partners/FacilityTestimonial.tsx` | Slider, Single | legacy |
+| `Section / Testimonials` | `sections/Testimonials.tsx` | `legacy/Testimonials.tsx`, `facility-partners/FacilityTestimonial.tsx` | Slider; Single to do | synced (Slider; prop Body; the Title keeps its line break as fixed markup) |
 | `Section / FAQ` | `sections/Faq.tsx` | `Faq.tsx` | — | legacy |
 | `Section / Facility Grid` | `sections/FacilityGrid.tsx` | `facility-partners/FeaturedFacilities.tsx`, `facility-partners/FacilityCardGrid.tsx` | — | legacy |
 | `Section / Text Panel` | `sections/TextPanel.tsx` | `Mission`, `Story` (in `AboutPage.tsx`) | Tertiary (default), Brand Light | synced (props Eyebrow, Title; body paragraphs are static for now) |
 | `Section / Media Split` | `sections/MediaSplit.tsx` | `Residency` (in `AboutPage.tsx`) | Image Right, Image Left | legacy |
 | `Section / Logo Grid` | `sections/LogoGrid.tsx` | `Investors` (in `AboutPage.tsx`) | — | legacy |
 | `Section / Team Grid` | `sections/TeamGrid.tsx` | `Team` (in `AboutPage.tsx`) | — | legacy |
-| `Section / Post Grid` → **page-level pattern, not a component** | `sections/PostGrid.tsx` | `Blog.tsx`, `blog/RelatedInsights.tsx` | Related (latest 3 in the MVP; category filter comes with the post template); Home to do | synced as page markup. Webflow components can't contain a bound Collection List, so each page places the section markup + Collection List, with `UI / Post Card` instances inside the items |
+| `Section / Post Grid` → **page-level pattern, not a component** | `sections/PostGrid.tsx` | `Blog.tsx`, `blog/RelatedInsights.tsx` | Related (latest 3 in the MVP; category filter comes with the post template); Home (centered header, "See all posts" Secondary button). Header uses the blur reveal in both (legacy does) | Related (on `/mvp`) and Home (on `/mvp-home`) synced as page markup; `/mvp` still has the old `ix-reveal` header (to rebuild). Webflow components can't contain a bound Collection List, so each page places the section markup + Collection List, with `UI / Post Card` instances inside the items |
 | `Section / Post Index` | `sections/PostIndex.tsx` | `blog/AllPosts.tsx` | — | legacy |
 | `Section / Article Body` | `sections/ArticleBody.tsx` | `blog/ArticleContent.tsx` | — (CMS template) | legacy |
 | `Section / Newsletter` | `sections/Newsletter.tsx` | `blog/BlogNewsletter.tsx` (standalone use) | — | legacy |
-| `Section / CTA` | `sections/Cta.tsx` | `Cta.tsx`, `facilities/FacilityCta.tsx` | Gallery, Simple | legacy |
+| `Section / CTA` | `sections/Cta.tsx` | `legacy/Cta.tsx`, `facilities/FacilityCta.tsx` | Art (Home: ring texture + masked room photo, no `GravityGallery`), Gallery (About), Simple | synced (Art; props Title, Body) |
 | `Section / Apply Form` | `sections/ApplyForm.tsx` | `facility-partners/FacilityApply.tsx` | — | legacy |
 
 ## Pages
@@ -98,7 +99,7 @@ Nav and Footer wrap every page and are omitted from the section lists.
 
 | Page | Slug | Type | Sections in order |
 | --- | --- | --- | --- |
-| Home | `/` | Static | Hero (Home), Logo Marquee, Two Ways, Partners Map, How It Works (Home), Feature Grid ← `WhatWeOffer`, Testimonials (Slider), Post Grid (Home), CTA (Gallery) |
+| Home | `/` | Static | Hero (Home), Logo Marquee, Two Ways, Partners Map, How It Works (Home), Feature Grid ← `WhatWeOffer`, Testimonials (Slider), Post Grid (Home), CTA (Art) |
 | Candidates | `/candidates` | Static | Hero (Candidates), Stats Band, How It Works (Candidates), Feature Grid ← `Benefits`, Testimonials (Slider), FAQ, CTA (Simple) |
 | Facility partners | `/facility-partners` | Static | Hero (Facility Partners), Logo Marquee, Stats Band, How It Works (Facilities), `ModernFacility` (to classify), Facility Grid, `WhyFacilities` (to classify), Testimonials (Single), Apply Form |
 | About | `/about` | Static | Hero (About), Text Panel (Tertiary), Stats Band (Large), Media Split, Logo Grid, Text Panel (Brand Light), Team Grid, CTA (Gallery) |
@@ -106,6 +107,7 @@ Nav and Footer wrap every page and are omitted from the section lists.
 | Blog category | `/blog-categories/{slug}` | CMS template (Categories) | Hero (Blog), Post Index (filtered to the current category) |
 | Blog post | `/blog/{slug}` | CMS template (Posts) | Article Hero, Article Body, Post Grid (Related) |
 | MVP (draft, not in nav, no-index) | `/mvp` | Static | Text Panel (Tertiary), Stats Band (Large), Post Grid (Related) |
+| MVP Home (draft, MVP 2) | `/mvp-home` | Static | Hero (Home), Logo Marquee, Two Ways, Partners Map, How It Works (Home), Feature Grid, Testimonials (Slider), Post Grid (Home), CTA (Art) |
 | Lab (draft, temporary, Webflow only) | `/lab` | Static | MVP 2 capability spikes S1–S6 (`mvp2-home.md`). Deleted with confirmation after the spikes |
 | Style guide (draft, not in nav, no-index) | `/style-guide` | Static | Page-level QA markup (`pages/StyleGuidePage.tsx`): Section Header, type scale, `UI / Button` ×5, panel colors, grids, divider. Update it when a class or UI component is added |
 

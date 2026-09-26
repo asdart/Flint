@@ -1,0 +1,97 @@
+/* fk-testimonials — Section / Testimonials, Slider variant. Panel heights and absolute stage
+   offsets are local geometry copied from the legacy carousel. */
+
+.fk-testimonials {
+  position: relative;
+  width: 100%;
+  height: 1102px;
+  border-radius: var(--radius-xl);
+  background-color: var(--color-brand-light);
+  overflow: clip;
+}
+
+.fk-testimonials-header {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-inline: var(--space-5);
+  transform: translateX(-50%);
+}
+
+.fk-testimonials-row {
+  position: absolute;
+  top: 412px;
+  left: 0;
+  width: 100%;
+  height: 488px;
+  user-select: none;
+}
+
+.fk-testimonials-slide {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  opacity: 0.6;
+  transform: translateX(-198px) scale(0.8);
+  transform-origin: center center;
+}
+
+.fk-testimonials-slide.is-center {
+  z-index: 1;
+  opacity: 1;
+  transform: translateX(-198px) scale(0.88);
+}
+
+/* Resting slots, so the row is laid out before (or without) ix-testimonials. Slot 3 is is-center. */
+.fk-testimonials-slide.is-slot-0 {
+  transform: translateX(-1236.24px) scale(0.8);
+}
+
+.fk-testimonials-slide.is-slot-1 {
+  transform: translateX(-895.44px) scale(0.8);
+}
+
+.fk-testimonials-slide.is-slot-2 {
+  transform: translateX(-554.64px) scale(0.8);
+}
+
+.fk-testimonials-slide.is-slot-4 {
+  transform: translateX(158.64px) scale(0.8);
+}
+
+.fk-testimonials-slide.is-slot-5 {
+  transform: translateX(499.44px) scale(0.8);
+}
+
+.fk-testimonials-slide.is-slot-6 {
+  transform: translateX(840.24px) scale(0.8);
+}
+
+.fk-testimonials-pagination {
+  position: absolute;
+  bottom: 168px;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+}
+
+@media screen and (max-width: 767px) {
+  .fk-testimonials {
+    height: 900px;
+  }
+
+  .fk-testimonials-header {
+    top: 72px;
+  }
+
+  .fk-testimonials-row {
+    top: 280px;
+  }
+
+  .fk-testimonials-pagination {
+    bottom: 80px;
+  }
+}

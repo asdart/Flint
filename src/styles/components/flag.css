@@ -1,0 +1,13 @@
+/* fk-flag — a country flag SVG in an <img>. 20px in chips, 32px (`is-lg`) on testimonial cards. */
+
+.fk-flag {
+  display: block;
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.fk-flag.is-lg {
+  width: 32px;
+  height: 32px;
+}

@@ -11,6 +11,11 @@
   text-align: center;
 }
 
+.fk-section-header.is-narrow {
+  width: 100%;
+  max-width: var(--width-header);
+}
+
 /* Long-form body stays left-aligned, also in the centered variant. */
 .fk-section-header-body {
   display: flex;

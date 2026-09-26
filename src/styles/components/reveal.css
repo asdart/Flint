@@ -1,0 +1,39 @@
+/* fk-blur-reveal — docs/webflow/classes.md → Utilities. Resting state is hidden; ix-blur-reveal
+   adds `is-revealed` and the transition animates opacity, blur and y (legacy BlurReveal). */
+
+.fk-blur-reveal {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(16px);
+  transition:
+    opacity 750ms cubic-bezier(0.42, 0, 0.58, 1),
+    filter 750ms cubic-bezier(0.42, 0, 0.58, 1),
+    transform 750ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.fk-blur-reveal.is-delay-1 {
+  transition:
+    opacity 750ms cubic-bezier(0.42, 0, 0.58, 1) 150ms,
+    filter 750ms cubic-bezier(0.42, 0, 0.58, 1) 150ms,
+    transform 750ms cubic-bezier(0.42, 0, 0.58, 1) 150ms;
+}
+
+.fk-blur-reveal.is-delay-2 {
+  transition:
+    opacity 750ms cubic-bezier(0.42, 0, 0.58, 1) 300ms,
+    filter 750ms cubic-bezier(0.42, 0, 0.58, 1) 300ms,
+    transform 750ms cubic-bezier(0.42, 0, 0.58, 1) 300ms;
+}
+
+.fk-blur-reveal.is-delay-3 {
+  transition:
+    opacity 750ms cubic-bezier(0.42, 0, 0.58, 1) 450ms,
+    filter 750ms cubic-bezier(0.42, 0, 0.58, 1) 450ms,
+    transform 750ms cubic-bezier(0.42, 0, 0.58, 1) 450ms;
+}
+
+.fk-blur-reveal.is-revealed {
+  opacity: 1;
+  filter: blur(0px);
+  transform: translateY(0px);
+}

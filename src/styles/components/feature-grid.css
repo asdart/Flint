@@ -1,0 +1,46 @@
+/* fk-feature-grid — Section / Feature Grid. The inset doubles the container gutter to 40px. */
+
+.fk-feature-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-16);
+  width: 100%;
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+}
+
+.fk-feature-grid-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 244px;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.fk-feature-grid-item {
+  height: 100%;
+}
+
+@media screen and (max-width: 991px) {
+  .fk-feature-grid-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+  }
+
+  .fk-feature-grid-item {
+    min-height: 240px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-feature-grid {
+    gap: var(--space-10);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .fk-feature-grid-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
