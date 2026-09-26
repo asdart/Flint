@@ -182,6 +182,14 @@
 }
 
 @media screen and (max-width: 767px) {
+  .fk-section {
+    padding: var(--space-2) var(--space-2) 0;
+  }
+
+  .fk-section.is-last {
+    padding-bottom: var(--space-2);
+  }
+
   .fk-section.is-open {
     padding: var(--space-16) var(--space-5);
   }

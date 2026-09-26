@@ -49,8 +49,8 @@ type FooterProps = {
 
 /** Global / Footer. */
 export default function Footer({
-  ctaTitle = "It’s time to find your\ngreen card sponsor.",
-  ctaBody = "Apply now, it is free.",
+  ctaTitle = "Find the right green card \nsponsored role for you.",
+  ctaBody = "It’s free to apply and takes under a minute.",
 }: FooterProps) {
   const titleLines = ctaTitle.split("\n");
 

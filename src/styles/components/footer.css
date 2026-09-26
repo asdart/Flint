@@ -81,26 +81,26 @@
   .fk-footer-panel {
     padding: var(--space-12);
   }
-
-  .fk-footer-cta {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
 @media screen and (max-width: 767px) {
+  .fk-footer {
+    padding: var(--space-2);
+  }
+
   .fk-footer-panel {
-    gap: var(--space-12);
-    padding: var(--space-8);
+    gap: var(--space-8);
+    padding: var(--space-12) var(--space-5) var(--space-10) var(--space-5);
+  }
+
+  .fk-footer-cta {
+    flex-direction: column;
+    align-items: initial;
+    justify-content: initial;
   }
 
   .fk-footer-groups {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-8);
-  }
-
-  .fk-footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
   }
 }

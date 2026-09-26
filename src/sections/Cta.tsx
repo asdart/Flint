@@ -15,7 +15,7 @@ export default function Cta({
   buttonLink = "#apply",
 }: CtaProps) {
   return (
-    <section className="fk-section is-last">
+    <section className="fk-section">
       <div className="fk-cta">
         <div className="fk-cta-ring" aria-hidden="true">
           <img className="fk-cta-ring-image" src="/assets/home/cta-flower.png" alt="" />

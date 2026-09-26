@@ -21,8 +21,8 @@ contract · `synced` = also built in Webflow (logged in `sync-log.md`).
 
 | Component | React target | Legacy source | Props | Variants | Status |
 | --- | --- | --- | --- | --- | --- |
-| `Global / Nav` | `components/global/Nav.tsx` | `components/SiteNav.tsx`, `nav.ts` (rendered inside 6 heroes) | — | Light (default); Dark to do | synced (Light) |
-| `Global / Footer` | `components/global/Footer.tsx` | `sections/Footer.tsx` | CTA Title (multiline), CTA Body — props not yet created in Webflow | — | synced; blur reveal on the CTA and per-link staggered reveal synced 2026-09-25 |
+| `Global / Nav` | `components/global/Nav.tsx` | `components/SiteNav.tsx`, `nav.ts` (rendered inside 6 heroes) | — | Light (default); Dark to do | synced (Light). **Repo ahead of Webflow (2026-09-26):** mobile menu is now a `fk-nav-menu-panel` inside the frame, with a full-width Secondary Button; bar spacing changed (`classes.md` → `fk-nav`) |
+| `Global / Footer` | `components/global/Footer.tsx` | `sections/Footer.tsx` | CTA Title (multiline), CTA Body — props not yet created in Webflow. Repo defaults (2026-09-26): title "Find the right green card / sponsored role for you.", body "It’s free to apply and takes under a minute." (Webflow still has the old copy "It’s time to find your green card sponsor." / "Apply now, it is free.") | — | synced; blur reveal on the CTA and per-link staggered reveal synced 2026-09-25. **Repo ahead of Webflow:** new default copy and mobile styles (`classes.md` → `fk-footer`) |
 
 Nav links (static, in this order): Home `/`, Candidates `/candidates`, Facility partners
 `/facility-partners`, About `/about`, Blog `/blog`. The active link uses Webflow's automatic
@@ -51,7 +51,7 @@ fixed Nav over the first section's top padding; on mobile it sits right above th
 
 | Component | React target | Legacy source | Props | Variants | Status |
 | --- | --- | --- | --- | --- | --- |
-| `UI / Button` | `components/ui/Button.tsx` | `components/ApplyButton.tsx`, inline button in `Footer.tsx` | Label, Link, Show Icon (off by default), Icon (image). React: `icon` (an imported SVG), none by default | Primary (base), Secondary, Primary Small, Secondary Small | synced (instances in Nav and Footer) |
+| `UI / Button` | `components/ui/Button.tsx` | `components/ApplyButton.tsx`, inline button in `Footer.tsx` | Label, Link, Show Icon (off by default), Icon (image). React: `icon` (an imported SVG), none by default; and a repo `fullWidth` prop (adds the `is-full` combo). In Webflow there is no prop yet: a variant or the combo on the instance, when the Nav is synced | Primary (base), Secondary, Primary Small, Secondary Small | synced (instances in Nav and Footer) |
 | `UI / Section Header` | `components/ui/SectionHeader.tsx` | repeated inline in most sections | Eyebrow, Title, Body (rich text) | Center; Left and Inverse to do | migrated (Center) |
 | `UI / Post Card` | `components/ui/PostCard.tsx` | `sections/blog/BlogPostCard.tsx` | Image, Title, Excerpt, Avatar, Author, Read time — bound to CMS fields per instance | Default; Featured to do | migrated; in Webflow a bound element tree inside the Collection Item (component-with-props version to do) |
 | Pagination (markup pattern, not a Webflow component) | `components/ui/Pagination.tsx` | `components/CarouselPagination.tsx` | id prefix, count, active | — | synced as markup inside Section / How It Works and Section / Testimonials: native DOM buttons and spans built with `data_element_builder` (a WHTML `<button>` becomes a Link). Each dot, bar and fill carries its own data attribute for IX3, which component props can't set, so each carousel places the markup |

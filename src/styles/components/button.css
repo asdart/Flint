@@ -57,6 +57,10 @@
   padding: var(--space-1-5) var(--space-3-5);
 }
 
+.fk-button.is-full {
+  width: 100%;
+}
+
 .fk-button.is-secondary {
   border-color: var(--color-stone-50);
   background-color: var(--color-white);
