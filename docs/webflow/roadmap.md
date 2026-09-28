@@ -56,6 +56,10 @@ next phase on production.
 | D-08 | The test stage (phases 0–2) is closed. Its open reviews and staging re-checks are closed as test findings and re-checked on production ([carried checks](#carried-into-production-qa)) | 2026-09-25 | This file |
 | D-09 | Production lives in the **client's Webflow account** on a **Business/Enterprise** plan (exact plan to confirm in P-09). It starts empty and is populated from scratch from the repo. Until access, work continues in the repo and is rehearsed on the test site | 2026-09-25 | This file, `AGENTS.md` §9 once the site exists |
 | D-10 | The mobile menu's scroll lock keeps `overscroll-behavior: contain` through custom-CSS exception `x-scroll-lock`, installed with the other two exceptions. The body lock stays native (`ix-nav-menu`) | 2026-09-26 | `interactions.md`, `classes.md` |
+| D-11 | New CSS system direction: a utilities layer (`tokens → utilities → primitives → blocks`) sits between tokens and classes, so repeated single-property rules (`display: flex`, `gap`, alignment…) stop needing a combo per base class. Gated on spike S7 (stacked standalone classes through the MCP), which passed 2026-09-27. Three sub-decisions: responsive utilities use suffix naming (`-tablet`/`-mobile`/`-phone`, max-width only); panel colors move from `fk-panel is-*` combos to `fk-bg-*` utilities; a new primitive `fk-section-header-action` replaces the repeated `*-action` block elements. Full spec and the S7 evidence in [`css-system.md`](css-system.md) | 2026-09-27 | `css-system.md` (proposed, becomes contract 1.6 once migrated) |
+| D-12 | How It Works card art redesigned from Figma (node 5746:992 desktop, 5483:860 mobile), **supersedes H-4** ("one image per card"). Cards now get a solid `color-tertiary` background (`is-brand-light` → `color-brand-light` on card 5 "Start work") with a full-bleed `-bg` raster (photo/gradient/pattern) and, on 5 of 6 cards, a floating `-art` illustration on top (card 4 "Relocate" has none); cards 2 and 6 (inverse copy over a photo) add a `-scrim` gradient. Card 3's copy also changed to match Figma ("Interview Directly with Facilities" / "We present you with facilities. You choose who to interview.") | 2026-09-27 | `classes.md` → `fk-how`, `components.md` → Section / How It Works, `sections/HowItWorks.tsx` |
+| D-13 | Twitter card values come from each page's Open Graph settings (Webflow has no separate Twitter fields); no exception needed (was P-11) | 2026-09-27 | `seo.md` S-02 |
+| D-14 | `llms.txt` uses Webflow's native upload (Site settings → SEO → LLMs.txt; UTF-8, under 100 KB), served at `/llms.txt` on the custom domain only and never indexed. The source is `public/llms.txt` in the repo, uploaded by hand after each change (not reachable through the MCP); checked after the custom-domain publish (was P-13) | 2026-09-27 | `seo.md` S-21 |
 
 ### Open
 
@@ -73,6 +77,7 @@ All must be closed before the phase noted in "Needed by".
 | P-08 | Who supplies the missing content? _(proposed)_ | FAQ answers 2+, real footer URLs, About Team copy, bodies for non-featured posts | Phase 9 | open |
 | P-09 | Production access: which site and workspace, which role, and can the Webflow MCP be authorized on the client's account? | We need Designer access with site settings and custom code rights, and the MCP's OAuth app approved for the client's workspace (may need a workspace admin). Confirm the exact plan and whether the site is new and empty | Track P | open |
 | P-10 | What happens to the test site after launch? | (a) Keep as a sandbox for spikes · (b) archive or delete (with confirmation) | Phase 10 | open |
+| P-12 | Which page is the "role page" in the PageSpeed check (`seo.md` S-15)? The roadmap has no role pages yet | Name the page, and add it to `components.md` → Pages if it's new | Phase 5 | open, to decide later (user, 2026-09-27) |
 
 ---
 
@@ -88,7 +93,7 @@ Everything here was built in the repo and on the **test** site. Details per sync
   `webflow-diff.mjs`, `webflow-markup.mjs`, `webflow-upload*.mjs`).
 - **Foundations:** every token in `tokens.md` and every class in `classes.md`, with parity proven by
   `webflow-diff.mjs`. Legacy Tailwind reads the tokens (`@theme reference`). Style guide page `/style-guide`.
-- **MVP 1** (`/mvp`): Nav, Footer, Text Panel, Stats Band, Post Grid (Related) bound to the CMS
+- **MVP 1** (`/mvp`, removed 2026-09-27; its pieces live on in the homepage and registries): Nav, Footer, Text Panel, Stats Band, Post Grid (Related) bound to the CMS
   (Categories, Authors, Posts), and the first interactions.
 - **MVP 2** (`/mvp-home`): the full homepage at 1:1 parity with legacy `/`: Hero (Home), Logo
   Marquee, Two Ways, Partners Map, How It Works (Home), Feature Grid, Testimonials (Slider), Post
@@ -139,6 +144,8 @@ the repo already holds, so no new design work happens here.
 - [ ] Site instruction (`rules/flint-contract.md`) created from `AGENTS.md`
 - [ ] Tag styles seeded once in the Designer (Body, All Links) as on the test site
 - [ ] **MCP Bridge** app installed and connected in the production Designer
+- [ ] SEO site settings (`seo.md`): global canonical URL (with the domain, P-06), auto sitemap,
+      robots.txt with the sitemap link and no AI crawlers blocked, `llms.txt` uploaded per D-14, 404 page
 
 ### P.2 Populate from scratch
 
@@ -155,7 +162,9 @@ In this order. Record every id in `webflow-ids.json` and add one `sync-log.md` r
 - [ ] Pages: Home built from the MVP 2 composition (as the real Home, not a `/mvp-home` draft);
       `/style-guide` as a draft
 - [ ] Interactions: every interaction in `interactions.md` marked synced, with reduced-motion settings
-- [ ] Custom code: `x-button-gradient`, `x-text-rendering` and `x-scroll-lock` (the plan allows it, D-09, D-10)
+- [ ] Custom code: `x-button-gradient`, `x-text-rendering` and `x-scroll-lock` (the plan allows it, D-09, D-10),
+      plus `x-schema-site` and `x-deferred-tracking` (`seo.md` S-06, S-13)
+- [ ] Assets uploaded as resized WebP (`seo.md` S-10); fonts only as uploaded custom fonts (S-12)
 - [ ] Staging publish to the `webflow.io` subdomain (with confirmation), then the
       [carried checks](#carried-into-production-qa)
 
@@ -168,6 +177,15 @@ homepage and later pages), and anything listed as pending cleanup in the test id
 - [ ] From here on, phases 3–10 sync to production; the test site only takes spikes
 
 ---
+
+## CSS system — utilities layer (D-11)
+
+Runs alongside Phase 3, ahead of the rest of the homepage refactor. Details in
+[`css-system.md`](css-system.md).
+
+- [x] Spike S7: stacked global classes through the MCP (passed 2026-09-27, `css-system.md` → S7 result)
+- [ ] `utilities.css` + registry section, generated from `tokens.css` by a small script; contract 1.6
+- [ ] Homepage refactored onto utilities (section by section, arc/carousel/testimonials geometry left for their own pass)
 
 ## Phase 3 — Global and UI components
 
@@ -196,7 +214,8 @@ Grid (Cards), Testimonials (Slider), Post Grid (Home), CTA (Art). Also Text Pane
 ## Phase 5 — Static pages
 
 - [ ] Home (from MVP 2), Candidates, Facility partners, About: composed as in `components.md` → Pages
-- [ ] Page settings: titles, meta descriptions, OG images
+- [ ] Page settings per `seo.md`: title, meta description, OG image (also used for the Twitter card, D-13), noindex
+      where needed, clean slugs; `FAQPage` schema on pages with an FAQ block (S-01…S-05, S-08)
 - [ ] Delete each legacy section/page file once its replacement is migrated (with user confirmation)
 
 ## Phase 6 — Blog and CMS
@@ -207,6 +226,8 @@ Needs P-02 closed.
 - [ ] Blog index with featured post and native pagination (6 per page)
 - [ ] Blog post template, including Related posts (D-02) and the P-02 result
 - [ ] Blog category template pages, and category links replacing the legacy `Select` filter
+- [ ] Template SEO bound to CMS fields (`cms.md` → Posts); `x-schema-post` (`BlogPosting` +
+      `BreadcrumbList`) and the blog index `BreadcrumbList` (`seo.md` S-07, S-09)
 
 ## Phase 7 — Motion and illustrations
 
@@ -227,7 +248,9 @@ Needs P-04 and P-07 closed.
 - [ ] [Carried checks](#carried-into-production-qa) all ticked
 - [ ] `/site-audit`, `/accessibility-audit`, `/link-checker`, `/asset-audit` pass, with fixes applied
 - [ ] Visual comparison against Figma at all four breakpoints
-- [ ] 404 page, favicon, sitemap, robots, social images
+- [ ] 404 page (real 404 status), favicon, sitemap, robots, `llms.txt`, social images (`seo.md` Files)
+- [ ] Every requirement in `seo.md` ticked on staging, including the schema in Google's Rich
+      Results Test and PageSpeed Insights mobile 90+ on Home, a role page (P-12) and a blog post
 - [ ] Forms tested end to end (P-05)
 - [ ] Content gaps closed (P-08, backlog below)
 

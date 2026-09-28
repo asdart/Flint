@@ -8,6 +8,8 @@ import HowItWorks from "../sections/HowItWorks";
 import LogoMarquee from "../sections/LogoMarquee";
 import PartnersMap from "../sections/PartnersMap";
 import PostGrid from "../sections/PostGrid";
+import Pricing from "../sections/Pricing";
+import RoleGrid from "../sections/RoleGrid";
 import Testimonials from "../sections/Testimonials";
 import TwoWays from "../sections/TwoWays";
 
@@ -23,17 +25,13 @@ export default function MvpHomePage() {
         <Hero />
         <LogoMarquee />
         <TwoWays />
+        <Pricing />
         <PartnersMap />
         <HowItWorks />
+        <RoleGrid />
         <FeatureGrid />
         <Testimonials />
-        <PostGrid
-          variant="home"
-          title="The Flint blog"
-          body="More guides on nursing careers, US immigration, and healthcare staffing."
-          buttonLabel="See all posts"
-          buttonLink="/blog"
-        />
+        <PostGrid />
         <Cta />
       </main>
       <Footer />

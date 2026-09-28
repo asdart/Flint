@@ -51,6 +51,7 @@ card sizes, a width used by several sections) need one shared class or token (`A
 | `color-accent-rose` | `#bd535d` | Primary button gradient, start stop |
 | `color-accent-blue` | `#5c77e0` | Primary button gradient, end stop |
 | `color-peach-100` | `#fee0db` | Portrait/avatar backgrounds |
+| `color-peach-200` | `#e1c0af` | Dashed connector line, Pricing diagram card |
 | `color-sand-100` | `#f1e0d8` | Portrait/avatar backgrounds |
 
 ### Transparent
@@ -66,6 +67,7 @@ step that's in use is its own token. Add a row before using a new one.
 | `color-white-10` | `rgba(255, 255, 255, 0.1)` | Dividers (`fk-divider`) |
 | `color-brand-80` | `rgba(68, 56, 109, 0.8)` | Long-form body text |
 | `color-subtle-80` | `rgba(97, 101, 106, 0.8)` | Stat labels |
+| `color-ink-60` | `rgba(15, 14, 23, 0.6)` | Muted supporting lines inside the Pricing message bubbles |
 
 Snapped legacy values: the post card excerpt (`rgba(38,37,30,0.6)`) → `color-subtle`, the post
 card meta (`rgba(38,37,30,0.5)`) → `color-stone-400`, the avatar background `#e6e5e0` → `color-stone-50`.
@@ -105,15 +107,22 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 | `space-1-5` | 6px | | `space-8` | 32px |
 | `space-2` | 8px | | `space-10` | 40px |
 | `space-2-5` | 10px | | `space-12` | 48px |
-| `space-3` | 12px | | `space-16` | 64px |
-| `space-3-5` | 14px | | `space-20` | 80px |
-| `space-4` | 16px | | `space-24` | 96px |
-| `space-5` | 20px | | `space-32` | 128px |
-| `space-6` | 24px | | | |
+| `space-3` | 12px | | `space-14` | 56px |
+| `space-3-5` | 14px | | `space-16` | 64px |
+| `space-4` | 16px | | `space-19` | 76px |
+| `space-5` | 20px | | `space-20` | 80px |
+| `space-6` | 24px | | `space-24` | 96px |
+| | | | `space-32` | 128px |
+| | | | `space-36` | 144px |
 
 `space-1-5`, `space-2-5` and `space-3-5` exist only for button padding: default 10 × 20
 (`space-2-5` / `space-5`), small 6 × 14 (`space-1-5` / `space-3-5`), as in the legacy
 `ApplyButton`. The 1px border sits outside the padding. `space-7` is the paragraph gap in long-form text. `space-5` is also the page gutter (`fk-container` inline padding).
+
+`space-14`, `space-19` and `space-36` — **repo ahead of Webflow (2026-09-27)**: added with the
+homepage section-shell refactor, not yet pushed to Webflow. `space-14` is the row gap in
+`fk-logo-marquee`. `space-19` is the gap between the heading and the ticker viewport in
+`fk-partners-map-inner`. `space-36` is the top padding of `fk-panel.is-hero` (Hero's rhythm combo).
 
 ## Widths (size variables)
 
@@ -123,7 +132,6 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 | `width-container-md` | `960px` | Stats and narrow grids |
 | `width-content` | `580px` | Wide text blocks |
 | `width-content-sm` | `480px` | Section headers, text columns. Other copy widths (521) are local values in their block |
-| `width-header` | `436px` | Homepage section headers (`fk-section-header is-narrow`, `fk-post-grid-header is-center`): Hero, Two Ways, Feature Grid, Testimonials, Post Grid (Home), CTA |
 | `width-nav-pill` | `664px` | Max width of the scrolled nav pill |
 
 ## Shadows (class-level constants)
@@ -138,6 +146,7 @@ Webflow variables don't support shadows, so these values are only allowed inside
 | Button inset (white) | `inset 0 -1px 2px 0 rgba(0,0,0,0.15)` | `fk-button is-secondary` |
 | Nav pill | `0 2px 2.5px rgba(0,0,0,0.03), 0 9px 4.5px rgba(0,0,0,0.03), 0 19px 6px rgba(0,0,0,0.01)` | `fk-nav is-pill` |
 | Field active | `0 0 0 2px rgba(68,56,109,0.1)` | `fk-field:focus` |
+| Pricing bubble | `0 57px 17px rgba(0,0,0,0.01), 0 25px 12.5px rgba(0,0,0,0.02), 0 6px 7px rgba(0,0,0,0.03)` | `fk-pricing-bubble` (Figma's two 0-alpha layers dropped, they render nothing) |
 
 The primary gradient is also a class-level constant: `linear-gradient(349.52deg, color-accent-rose
 -32.33%, color-brand 39.71%, color-brand 65.25%, color-accent-blue 146.24%)` (`fk-button`, same

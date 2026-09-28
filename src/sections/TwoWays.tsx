@@ -66,9 +66,9 @@ function TwoWaysCard({ variant, eyebrow, title, body, buttonLabel }: TwoWaysCard
       {isNurses ? <NursesArt /> : <FacilitiesArt />}
       <div className="fk-two-ways-content">
         <div className="fk-two-ways-copy">
-          <p className="fk-two-ways-eyebrow">{eyebrow}</p>
-          <h3 className="fk-two-ways-title">{title}</h3>
-          <p className="fk-two-ways-body">{body}</p>
+          <p className="fk-text-md is-brand-muted">{eyebrow}</p>
+          <h3 className="fk-heading-sm is-sans">{title}</h3>
+          <p className="fk-text-md is-subtle">{body}</p>
         </div>
         <div className="fk-blur-reveal">
           <div className="fk-two-ways-action">
@@ -87,20 +87,14 @@ type TwoWaysProps = {
 
 /** Section / Two Ways. Each banner runs its own ix-two-ways-card scroll timeline. */
 export default function TwoWays({
-  title = (
-    <>
-      One mission.
-      <br />
-      Two ways in.
-    </>
-  ),
-  body = "Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.",
+  title = "Flint helps healthcare facilities hire.",
+  body = "A fresh opportunity for healthcare professionals.\nA new pool of candidates for facilities.",
 }: TwoWaysProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel is-flush-x">
+      <div className="fk-panel">
         <div className="fk-container">
-          <div className="fk-two-ways">
+          <div className="fk-panel-content">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
               <div className="fk-blur-reveal">
                 <h2 className="fk-heading-xl">{title}</h2>
@@ -113,16 +107,16 @@ export default function TwoWays({
             <div className="fk-two-ways-cards">
               <TwoWaysCard
                 variant="nurses"
-                eyebrow="Nurses"
-                title="Not a visa. A permanent future."
-                body="Flint sponsors your green card, so from day one you're building something that lasts."
-                buttonLabel="Apply as nurse"
+                eyebrow="For Healthcare Professionals"
+                title="Not just a job. A permanent future."
+                body="Find a healthcare role with a facility ready to sponsor your green card from day one."
+                buttonLabel="See if you qualify"
               />
               <TwoWaysCard
                 variant="facilities"
-                eyebrow="Facilities"
-                title="Retain nurses, don't rent."
-                body="Flint sponsors your green card, so from day one you're building something that lasts."
+                eyebrow="For Healthcare Facilities"
+                title="Build a permanent team."
+                body="Put an end to expensive agency staff. Flint connects your facility with licensed and motivated professionals already in the US."
                 buttonLabel="Apply as facility"
               />
             </div>

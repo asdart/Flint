@@ -74,6 +74,14 @@ Legacy-to-CMS decisions:
 - Posts other than the featured one only have an excerpt today (`fallbackArticle` in
   `BlogPostPage.tsx`). Import them as drafts until real bodies exist.
 
+## Template SEO and alt text
+
+Template page settings bind to fields (`seo.md` S-02): Posts → SEO title `name`, meta description
+`excerpt`, OG image `main-image`; Authors and Categories templates are noindex (S-04) unless they
+get their own copy. Image alt text is required on every CMS image: `main-image` describes the
+image, `avatar` is the author's name (S-16). The post template also carries `x-schema-post`
+(`BlogPosting` + `BreadcrumbList`, `interactions.md`).
+
 ## Collection lists
 
 | Where | Collection | Filter | Sort | Limit | Pagination |

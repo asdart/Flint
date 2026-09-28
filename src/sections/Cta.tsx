@@ -9,14 +9,14 @@ type CtaProps = {
 
 /** Section / CTA, variant Art: a ring texture and a room photo, both masked, on the right. */
 export default function Cta({
-  title = "Your green card pathway starts here.",
-  body = "Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.",
+  title = "It's time to find your green card sponsor",
+  body = "We've helped hundreds of Registered Nurses find a permanent path to stability in the US.\nNow it's your turn. Apply now to check your eligibility.",
   buttonLabel = "Apply now",
   buttonLink = "#apply",
 }: CtaProps) {
   return (
     <section className="fk-section">
-      <div className="fk-cta">
+      <div className="fk-panel is-tertiary is-relaxed">
         <div className="fk-cta-ring" aria-hidden="true">
           <img className="fk-cta-ring-image" src="/assets/home/cta-flower.png" alt="" />
         </div>
@@ -26,16 +26,18 @@ export default function Cta({
           </div>
           <img className="fk-cta-photo" src="/assets/home/cta-photo.png" alt="" />
         </div>
-        <div className="fk-section-header is-narrow" data-ix="blur-reveal">
-          <div className="fk-blur-reveal">
-            <h2 className="fk-heading-xl">{title}</h2>
-          </div>
-          <div className="fk-blur-reveal is-delay-1">
-            <p className="fk-text-lg is-brand-muted">{body}</p>
-          </div>
-          <div className="fk-blur-reveal is-delay-2">
-            <div className="fk-cta-action">
-              <Button label={buttonLabel} link={buttonLink} />
+        <div className="fk-container">
+          <div className="fk-section-header is-narrow" data-ix="blur-reveal">
+            <div className="fk-blur-reveal">
+              <h2 className="fk-heading-xl">{title}</h2>
+            </div>
+            <div className="fk-blur-reveal is-delay-1">
+              <p className="fk-text-lg is-brand-muted">{body}</p>
+            </div>
+            <div className="fk-blur-reveal is-delay-2">
+              <div className="fk-cta-action">
+                <Button label={buttonLabel} link={buttonLink} />
+              </div>
             </div>
           </div>
         </div>

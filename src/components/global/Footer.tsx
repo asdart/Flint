@@ -56,58 +56,60 @@ export default function Footer({
 
   return (
     <footer className="fk-footer">
-      <div className="fk-footer-panel">
-        <div className="fk-footer-cta">
-          <div className="fk-footer-cta-text" data-ix="blur-reveal">
-            <div className="fk-blur-reveal">
-              <p className="fk-heading-xl is-inverse">
-                {titleLines.map((line, index) => (
-                  <Fragment key={line}>
-                    {index > 0 ? <br /> : null}
-                    {line}
-                  </Fragment>
-                ))}
-              </p>
-            </div>
-            <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg is-inverse-muted">{ctaBody}</p>
-            </div>
-          </div>
-          <div data-ix="blur-reveal">
-            <div className="fk-blur-reveal">
-              <Button variant="secondary" />
-            </div>
-          </div>
-        </div>
-
-        <hr className="fk-divider" />
-
-        <div className="fk-footer-groups" data-ix="reveal-stagger">
-          {LINK_GROUPS.map((group) => (
-            <div key={group.title} className="fk-footer-group">
-              <p className="fk-footer-group-title" data-ix-item>
-                {group.title}
-              </p>
-              <div className="fk-footer-links">
-                {group.links.map((link) => (
-                  <SmartLink key={link.label} href={link.href} className="fk-footer-link" data-ix-item>
-                    {link.label}
-                  </SmartLink>
-                ))}
+      <div className="fk-panel is-brand is-compact">
+        <div className="fk-container fk-footer-panel">
+          <div className="fk-footer-cta">
+            <div className="fk-footer-cta-text" data-ix="blur-reveal">
+              <div className="fk-blur-reveal">
+                <p className="fk-heading-xl is-inverse">
+                  {titleLines.map((line, index) => (
+                    <Fragment key={line}>
+                      {index > 0 ? <br /> : null}
+                      {line}
+                    </Fragment>
+                  ))}
+                </p>
+              </div>
+              <div className="fk-blur-reveal is-delay-1">
+                <p className="fk-text-lg is-inverse-muted">{ctaBody}</p>
               </div>
             </div>
-          ))}
-        </div>
+            <div data-ix="blur-reveal">
+              <div className="fk-blur-reveal">
+                <Button variant="secondary" />
+              </div>
+            </div>
+          </div>
 
-        <hr className="fk-divider" />
+          <hr className="fk-divider" />
 
-        <div className="fk-footer-bottom">
-          <SmartLink href="/" className="fk-footer-logo">
-            <img src="/assets/wordmark-white.svg" alt="Flint" width={49} height={24} />
-          </SmartLink>
-          <p className="fk-text-md is-inverse-muted" data-ix="reveal">
-            © 2026 Flint. All rights reserved.
-          </p>
+          <div className="fk-footer-groups" data-ix="reveal-stagger">
+            {LINK_GROUPS.map((group) => (
+              <div key={group.title} className="fk-footer-group">
+                <p className="fk-footer-group-title" data-ix-item>
+                  {group.title}
+                </p>
+                <div className="fk-footer-links">
+                  {group.links.map((link) => (
+                    <SmartLink key={link.label} href={link.href} className="fk-footer-link" data-ix-item>
+                      {link.label}
+                    </SmartLink>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <hr className="fk-divider" />
+
+          <div className="fk-footer-bottom">
+            <SmartLink href="/" className="fk-footer-logo">
+              <img src="/assets/wordmark-white.svg" alt="Flint" width={49} height={24} />
+            </SmartLink>
+            <p className="fk-text-md is-inverse-muted">
+              © 2026 Flint. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

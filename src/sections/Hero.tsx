@@ -19,17 +19,14 @@ const ARC_CARDS = [...CANDIDATES, ...CANDIDATES];
 export default function Hero() {
   return (
     <section className="fk-section is-last">
-      <div className="fk-hero is-home">
-        <div className="fk-hero-content">
+      <div className="fk-panel is-secondary is-hero">
+        <div className="fk-container">
           <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
             <div className="fk-blur-reveal">
-              <h1 className="fk-heading-xl">Your green card pathway starts here.</h1>
+              <h1 className="fk-heading-xl">Find Healthcare Jobs with Green Card Sponsorship</h1>
             </div>
             <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg is-brand-muted">
-                Flint helps eligible healthcare professionals connect with hospitals sponsoring
-                Green Cards.
-              </p>
+              <p className="fk-text-lg is-brand-muted">Flint helps you secure a sponsored healthcare job, relocate, and work towards your Green Card in the US.</p>
             </div>
             <div className="fk-blur-reveal is-delay-2">
               <div className="fk-hero-action">

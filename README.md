@@ -46,7 +46,6 @@ node scripts/webflow-style-actions.mjs src/styles/layout.css --only fk-panel  # 
 | `/about` | About |
 | `/blog` | Blog index |
 | `/blog/:slug` | Blog post |
-| `/mvp` | Migration MVP (contract-based code; draft page `/mvp` in Webflow) |
 
 ## Structure
 

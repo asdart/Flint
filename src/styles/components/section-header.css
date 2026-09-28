@@ -9,11 +9,12 @@
 .fk-section-header.is-center {
   align-items: center;
   text-align: center;
+  margin: 0 auto;
 }
 
 .fk-section-header.is-narrow {
   width: 100%;
-  max-width: var(--width-header);
+  max-width: var(--width-content-sm);
 }
 
 /* Long-form body stays left-aligned, also in the centered variant. */

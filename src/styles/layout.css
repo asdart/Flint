@@ -25,10 +25,15 @@
   padding: var(--space-32) var(--space-16);
 }
 
+.fk-section.is-x-flush {
+  padding-inline: 0;
+}
+
 .fk-panel {
-  padding: var(--space-24);
+  padding: var(--space-24) 0;
   border-radius: var(--radius-xl);
   overflow: clip;
+  position: relative;
 }
 
 .fk-panel.is-brand {
@@ -52,17 +57,26 @@
 }
 
 .fk-panel.is-compact {
-  padding: var(--space-20);
+  padding-block: var(--space-20);
+}
+
+.fk-panel.is-hero {
+  padding-top: var(--space-36);
+  padding-bottom: 0;
+}
+
+.fk-panel.is-relaxed {
+  padding-block: var(--space-32);
+}
+
+.fk-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
 }
 
 .fk-panel.is-radius-lg {
   border-radius: var(--radius-lg);
-}
-
-/* Vertical padding only: the page container inside sets the sides. */
-.fk-panel.is-flush-x {
-  padding-left: 0;
-  padding-right: 0;
 }
 
 /* Page container: 1200px wide including a 20px gutter on each side. */
@@ -71,6 +85,10 @@
   max-width: var(--width-container);
   margin-inline: auto;
   padding-inline: var(--space-5);
+}
+
+.fk-container.is-full-height {
+  height: 100%;
 }
 
 /* Narrow content blocks sit inside a page container, so they don't add the gutter again. */
@@ -165,11 +183,19 @@
   }
 
   .fk-panel {
-    padding: var(--space-16) var(--space-10);
+    padding: var(--space-16) 0;
   }
 
   .fk-panel.is-compact {
-    padding: var(--space-12);
+    padding-block: var(--space-12);
+  }
+
+  .fk-panel.is-relaxed {
+    padding-block: var(--space-24);
+  }
+
+  .fk-panel-content {
+    gap: var(--space-10);
   }
 
   .fk-grid.is-3 {
@@ -178,6 +204,10 @@
 
   .fk-grid.is-4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fk-hide-tablet {
+    display: none;
   }
 }
 
@@ -194,12 +224,12 @@
     padding: var(--space-16) var(--space-5);
   }
 
-  .fk-panel {
-    padding: var(--space-12) var(--space-5);
+  .fk-panel.is-compact {
+    padding-block: var(--space-12);
   }
 
-  .fk-panel.is-compact {
-    padding: var(--space-6);
+  .fk-panel.is-relaxed {
+    padding-block: var(--space-16);
   }
 
   .fk-grid.is-2 {

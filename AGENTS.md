@@ -4,7 +4,8 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.4 (2026-09-25). 1.4 narrows tokens to system values and allows raw
+- **Contract version:** 1.5 (2026-09-27). 1.5 adds the SEO, performance and accessibility
+  requirements (rule 15, [`seo.md`](docs/webflow/seo.md)) and one H1 per page (rule 10). 1.4 narrows tokens to system values and allows raw
   local sizes only after checking they don't repeat (rule 2). 1.3 added SVG-only icons (rule 10), 1:1 behavior (rule 14) and
   `src/styles/exceptions/`. 1.1 added what the MVP proved about the Webflow MCP:
   typography on classes instead of tag styles, `fk-page` as a wrapper div, exact breakpoint query
@@ -28,6 +29,7 @@ registries define the inventory. If they disagree, fix the registry, not the rul
 | [`cms.md`](docs/webflow/cms.md) | CMS collections, fields, collection lists |
 | [`interactions.md`](docs/webflow/interactions.md) | Interactions registry and the custom-code exceptions list |
 | [`mcp-playbook.md`](docs/webflow/mcp-playbook.md) | How to push changes with the Webflow MCP, safely |
+| [`seo.md`](docs/webflow/seo.md) | SEO, performance and accessibility requirements every page must meet |
 | [`sync-log.md`](docs/webflow/sync-log.md) | What has been pushed to Webflow, and when |
 | [`webflow-ids.json`](docs/webflow/webflow-ids.json) | Ids of everything created in Webflow (variables, assets, collections, components…) |
 
@@ -73,7 +75,9 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 10. **Structure mirrors Webflow elements.** Use semantic tags (`section`, `nav`, `footer`, `h1`–`h4`,
     `p`, `a`, `button`, `form`). No wrapper `div` that would not exist in the Webflow build.
     Icons are SVG files from `src/assets/icons/` placed as images, never drawn with styled
-    elements (no stacked spans for a menu icon).
+    elements (no stacked spans for a menu icon). Headings follow the page outline, not the look:
+    one `h1` per page, section titles `h2`, items `h3`; dates, authors, quotes, eyebrows and stat
+    values are never headings (size comes from the `fk-heading-*` class).
 11. **Read before write in Webflow.** Query existing styles, variables and components by name before
     creating anything. Never create duplicates, and never rename or delete without updating the registry.
 12. **No destructive or publishing action without explicit user confirmation.** That covers deleting
@@ -87,6 +91,10 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 14. **1:1 behavior, no silent approximations.** Hover, pressed, focus and motion effects in Webflow
     match the repo exactly. If Webflow can't reproduce one natively, stop and ask: the answer is a
     registered exception (rule 8) or a decision in `roadmap.md`, never a quiet substitute.
+15. **SEO, speed and accessibility are part of done.** Every page meets the requirements in
+    [`seo.md`](docs/webflow/seo.md): page settings (title, description, OG), schema, image sizes,
+    formats and lazy loading, alt text, labelled icon buttons, 24px tap targets. Tracking and
+    schema code only through their registered exceptions.
 
 ## 3. Definitions
 
@@ -179,7 +187,8 @@ A file's name equals its Webflow component name without spaces (`Section / Stats
    order: variables → classes → components → pages → CMS → interactions → custom code.
 5. **Verify.** Read back what was written (styles, element snapshots). For class changes, run
    `scripts/webflow-diff.mjs` until it reports no differences. Run `/site-audit` for page
-   or CMS changes, and `/accessibility-audit` for new UI.
+   or CMS changes, and `/accessibility-audit` for new UI. For new or changed pages, check the
+   `seo.md` requirements on staging (headings, page settings, schema, images).
 6. **Record learnings** (rule 13). Anything that failed or had to be discovered goes into the
    skill, the playbook or the registries before you report back.
 7. **Log.** Add a row to [`sync-log.md`](docs/webflow/sync-log.md) and tick the item in
@@ -195,6 +204,8 @@ A file's name equals its Webflow component name without spaces (`Section / Stats
 - [ ] Registries and status columns updated
 - [ ] Webflow updated through the MCP (if requested) and logged in `sync-log.md`
 - [ ] Every failure, workaround or discovered payload recorded per rule 13
+- [ ] One `h1`; headings follow the outline; images have alt, `width`/`height`, WebP and lazy loading below the fold
+- [ ] Icon-only buttons labelled; tap targets at least 24px; page settings and schema per `seo.md`
 
 ## 8. Legacy code policy
 

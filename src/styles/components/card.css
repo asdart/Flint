@@ -38,3 +38,7 @@
   color: var(--color-brand);
   opacity: 0.8;
 }
+
+.fk-card-text.is-subtle {
+  color: var(--color-subtle);
+}

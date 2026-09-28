@@ -1,0 +1,204 @@
+/* fk-pricing-* — Section / Pricing, placed inside the shared fk-panel > fk-container >
+   fk-panel-content shell. Two cards: the diagram card (a message thread laid out with flex and
+   padding, height driven by its content, no absolute positioning) and a plain, background-less
+   copy card. */
+
+.fk-pricing-cards {
+  display: flex;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.fk-pricing-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-24) var(--space-10);
+  border-radius: var(--radius-2xl);
+}
+
+.fk-pricing-card.is-diagram {
+  background-color: var(--color-tertiary);
+}
+
+.fk-pricing-card.is-copy {
+  padding-inline: var(--space-20) 0;
+}
+
+.fk-pricing-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.fk-pricing-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.fk-pricing-avatar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  border: 1px dashed var(--color-peach-200);
+  border-radius: var(--radius-full);
+  width: 104px;
+  height: 104px;
+}
+
+.fk-pricing-avatar {
+  border-radius: var(--radius-full);
+  background-color: var(--color-sand-100);
+  overflow: clip;
+  width: 86px;
+  height: 86px;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Wraps the three bubbles: the dashed connector is a decorative absolute overlay behind them
+   (z-index 0), never used to place the bubbles themselves, which stack in normal flex flow. */
+.fk-pricing-thread {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+  padding-top: var(--space-6);
+}
+
+.fk-pricing-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 0;
+  width: 0;
+  height: 100%;
+  border-left: 1px dashed var(--color-peach-200);
+}
+
+.fk-pricing-bubble {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 320px;
+  padding: 14px var(--space-4);
+  box-sizing: border-box;
+  border-radius: var(--radius-xl);
+  background-color: var(--color-white);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 57px 17px rgba(0, 0, 0, 0.01),
+    0 25px 12.5px rgba(0, 0, 0, 0.02),
+    0 6px 7px rgba(0, 0, 0, 0.03);
+}
+
+.fk-pricing-bubble.is-larger {
+  max-width: 360px;
+}
+
+.fk-pricing-bubble-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: var(--space-3);
+  box-sizing: border-box;
+  border-radius: var(--radius-full);
+  background-color: var(--color-brand-foreground);
+}
+
+.fk-pricing-bubble-icon.is-plain {
+  padding: 0;
+  background-color: transparent;
+}
+
+.fk-pricing-bubble-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fk-pricing-bubble-name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-ink);
+}
+
+.fk-pricing-bubble-detail {
+  margin: 0;
+  padding-left: 21px;
+  list-style: disc;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-ink-60);
+}
+
+.fk-pricing-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.fk-pricing-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fk-pricing-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.fk-pricing-checklist-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: var(--space-1-5);
+  box-sizing: border-box;
+  border-radius: var(--radius-full);
+  background-color: var(--color-brand-light);
+}
+
+@media screen and (max-width: 991px) {
+  .fk-pricing-cards {
+    flex-direction: column;
+  }
+
+  .fk-pricing-card {
+    padding-inline: var(--space-20);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-pricing-card {
+    padding: var(--space-8) var(--space-5);
+  }
+
+  .fk-pricing-card.is-copy {
+    padding-inline: 0;
+  }
+}

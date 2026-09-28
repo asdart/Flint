@@ -1,28 +1,17 @@
-/* fk-how — Section / How It Works (Home). Card art is a 2× raster while titles and body copy
-   remain live. Carousel dimensions and offsets are local to this block's fixed card model. */
+/* fk-how — Section / How It Works (Home). Each card layers a full-bleed `-bg` raster (photo,
+   gradient or pattern), an optional `-scrim` (cards 2 and 6, inverse copy over a photo) and an
+   optional `-art` illustration (card 4 "Relocate" has none) under the live `-copy`. Card
+   background defaults to `color-tertiary`; `is-brand-light` (card 5) switches to
+   `color-brand-light`. Carousel dimensions, the card model and every `-art` offset below are local
+   to this block (2026-09-27, supersedes decision H-4 in `mvp2-home.md`: see `classes.md` →
+   `fk-how` and roadmap decision D-12). */
 
 .fk-how {
-  width: 100%;
-  padding: var(--space-4);
-  background-color: var(--color-white);
-  overflow: clip;
-}
-
-.fk-how-inner {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: var(--width-container);
-  margin-inline: auto;
-  padding-top: var(--space-24);
-}
-
-.fk-how-header {
-  width: 100%;
-  max-width: var(--width-content-sm);
-  margin-bottom: var(--space-12);
-  padding-inline: var(--space-4);
+  gap: var(--space-12);
+  padding: var(--space-24) 0;
+  overflow: clip;
 }
 
 .fk-how-reveal {
@@ -53,6 +42,8 @@
   flex: none;
   width: 360px;
   height: 464px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
 }
 
 .fk-how-slide.is-active {
@@ -70,6 +61,7 @@
   margin-left: -180px;
   border-radius: var(--radius-2xl);
   overflow: clip;
+  background-color: var(--color-tertiary);
   transform: scale(1);
 }
 
@@ -77,13 +69,52 @@
   transform: scale(1.1055556);
 }
 
-.fk-how-art {
+.fk-how-card.is-brand-light {
+  background-color: var(--color-brand-light);
+}
+
+.fk-how-bg {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.fk-how-scrim {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
+  pointer-events: none;
+}
+
+/* `-art`: a floating illustration widget, left/right inset like `-copy`, width auto and height
+   from the asset's own ratio. Only `top` differs per card (local, one card each). */
+.fk-how-art {
+  position: absolute;
+  top: 0;
+  right: var(--space-8);
+  left: var(--space-8);
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+[data-how-card="1"] .fk-how-art {
+  top: 50px;
+}
+
+[data-how-card="2"] .fk-how-art {
+  top: 29px;
+}
+
+[data-how-card="3"] .fk-how-art {
+  top: 94px;
+}
+
+[data-how-card="6"] .fk-how-art {
+  top: 32px;
 }
 
 .fk-how-copy {
@@ -127,35 +158,18 @@
   justify-content: center;
   width: 100%;
   max-width: var(--width-container);
-  margin: 34px auto 0;
-  padding-bottom: var(--space-24);
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 991px) {
-  .fk-how-inner {
-    padding-top: var(--space-16);
-  }
-
   .fk-how-pagination {
     padding-bottom: var(--space-16);
   }
 }
 
 @media screen and (max-width: 767px) {
-  .fk-how-inner {
-    padding-top: var(--space-12);
-  }
-
-  .fk-how-header {
-    margin-bottom: var(--space-10);
-  }
-
   .fk-how-viewport {
     height: 380px;
-  }
-
-  .fk-how-pagination {
-    padding-bottom: var(--space-12);
   }
 }
 

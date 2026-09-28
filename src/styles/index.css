@@ -17,11 +17,13 @@
 @import "./components/hero.css";
 @import "./components/logo-marquee.css";
 @import "./components/two-ways.css";
+@import "./components/pricing.css";
 @import "./components/partners-map.css";
 @import "./components/how-it-works.css";
 @import "./components/testimonial-card.css";
 @import "./components/testimonials.css";
 @import "./components/feature-grid.css";
+@import "./components/role-grid.css";
 @import "./components/cta.css";
 /* Custom-code exceptions (interactions.md): installed as site custom code, not as classes. */
 @import "./exceptions/x-button-gradient.css";

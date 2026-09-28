@@ -328,6 +328,25 @@ legacy order. Review changes:
 Still to verify on staging: motion of the three carousels, the `customEase` string format, and the
 Two Ways titles.
 
+**Wave 4, repo (2026-09-27): done.** New `Section / Pricing` ("Why Flint is free?"), added between
+Two Ways and Partners Map on `/mvp-home` from a fresh Figma pass (nodes 6011:2380, 6011:2507,
+6011:2529) — no legacy page carries this section. Built as two equal `flex: 1 1 0` cards (`gap
+space-4`, matching `fk-two-ways-cards`) instead of Figma's single 580px card + 480px text block 96px
+apart, per direct instruction; the second card carries no background. The avatar photo
+(`Image 49.png`) replaces Figma's placeholder "This is you" ellipse, cropped per the separate
+avatar-only Figma node (6011:2529) and scaled to this card's 104px circle. Review fix: the diagram
+card's avatar/line/bubbles were first placed with fixed `top`/`left` offsets copied straight from
+the Figma canvas; reworked the same day to a plain flex column with padding (no absolute
+positioning, no fixed card height), which also removes the earlier `flex-basis`-vs-`height` bug
+(`flint-webflow-sync` skill pitfalls). Second pass (user): the dashed connector became a full circle
+around the avatar (closer to the reference than the first pass's plain vertical line above it), the
+bubbles got a `max-width` (320px, 360px `is-larger` for the wider Flint one) instead of stretching
+edge-to-edge so the tertiary background shows around them as in Figma, and the copy card gained
+extra left padding for breathing room beyond the cards' own gap. Known regression from that pass:
+the "This is you." caption moved to the plain `fk-text-xs` utility and lost its Figma styling (brand
+purple, medium weight, 14px) — flagged in `classes.md`, not corrected. Not yet synced to Webflow
+(`sync-log.md`).
+
 ## Decisions
 
 | ID | Question | Status |
@@ -335,7 +354,7 @@ Two Ways titles.
 | H-1 | With reduced motion, the blur-in CSS transition still runs (IX3 can skip its own tweens, not CSS transitions) | open until spike S1. Recommendation: accept, the element is already visible and only the blur fades |
 | H-2 | Hero hover: legacy slows the arc to 0.35×; IX3 can pause but not slow a loop | **decided 2026-09-25: pause on hover.** The 0.35× slow-down is kept as deferred exception candidate `x-hero-arc-speed` (`interactions.md`) |
 | H-3 | CSS masks (Two Ways collage, Partners ticker edges, CTA art, testimonial quote fade) if S3 fails | **closed 2026-09-25: native.** S3 passed, so all masks are `mask-image` on their classes |
-| H-4 | How It Works card art: rebuild as elements or one image per card | **decided 2026-09-25: one image per card**, rendered from the repo at 2×; titles and body stay live text |
+| H-4 | How It Works card art: rebuild as elements or one image per card | **decided 2026-09-25: one image per card**, rendered from the repo at 2×; titles and body stay live text. **Superseded 2026-09-27 by D-12** (`roadmap.md`): a new Figma pass split each card into a token background, a full-bleed `-bg` raster and an optional floating `-art` illustration |
 | H-5 | Service card radius 20px (no token) | **decided 2026-09-25: add a 20px radius token** (named in `tokens.md` when the Feature Grid is built) |
 | H-6 | Testimonials drag/swipe (no native equivalent with center weighting) | **decided 2026-09-25: no drag**; autoplay, dots and hover pause stay. Drag is kept as deferred exception candidate `x-testimonial-drag` |
 | H-8 | Legacy primary CTAs (Hero, CTA) show a chevron in a translucent pill that brightens on hover; `UI / Button` has no icon by default | **decided 2026-09-25: no chevron.** Accepted difference from legacy; homepage primary buttons are plain `UI / Button` |

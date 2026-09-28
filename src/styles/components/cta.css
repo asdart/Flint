@@ -1,23 +1,9 @@
-/* fk-cta — Section / CTA (Art). The art is laid out on Figma's 1408×560 card and anchored to the
-   right edge; its offsets and mask geometry are local to this block. z-index 0 makes the panel a
-   stacking context, so the art (z-index −1) paints above its background and below the copy. */
-
-.fk-cta {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 560px;
-  padding: var(--space-24);
-  border-radius: var(--radius-xl);
-  background-color: var(--color-tertiary);
-  overflow: clip;
-}
+/* fk-cta-* — Section / CTA (Art) art layer, placed inside fk-panel.is-tertiary.is-relaxed. The
+   art is laid out on Figma's 1408×560 card and anchored to the right edge; its offsets and mask
+   geometry are local to this block. */
 
 .fk-cta-ring {
   position: absolute;
-  z-index: -1;
   top: -298.62px;
   right: -535.49px;
   width: 1196.15px;
@@ -38,7 +24,6 @@
 
 .fk-cta-room {
   position: absolute;
-  z-index: -1;
   right: -15.93px;
   bottom: -32.7px;
   width: 576.87px;
@@ -79,13 +64,6 @@
 }
 
 @media screen and (max-width: 767px) {
-  .fk-cta {
-    align-items: flex-end;
-    height: auto;
-    min-height: 480px;
-    padding: var(--space-8);
-  }
-
   .fk-cta-ring {
     display: none;
   }

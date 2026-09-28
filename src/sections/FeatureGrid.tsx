@@ -48,12 +48,12 @@ type FeatureGridProps = {
 /** Section / Feature Grid (What We Offer). */
 export default function FeatureGrid({
   title = "What we offer",
-  body = "Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.",
+  body = "Flint gives you a real path to a green card (and not just another contract).",
   items = DEFAULT_ITEMS,
 }: FeatureGridProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel is-secondary is-flush-x">
+      <div className="fk-panel is-secondary">
         <div className="fk-container">
           <div className="fk-feature-grid">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">

@@ -16,6 +16,7 @@ Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 - [Variants](#variants)
 - [Instances inside a component](#instances-inside-a-component)
 - [Native elements (button, span)](#native-elements-button-span)
+- [Stack utility classes](#stack-utility-classes)
 - [Remove elements](#remove-elements)
 - [Replace a CMS field](#replace-a-cms-field)
 - [Collection List settings](#collection-list-settings)
@@ -233,6 +234,37 @@ Then put the icon inside it ([SVG icons](#svg-icons-and-optional-icons)). `child
 elements in the same call, and combo classes work in `style_names` (`["fk-a", "is-b"]`). A text span is
 `{ "type": "BY_CUSTOM_TAG", "custom_tag": "span", "set_text": { "text": "…" } }`. Native buttons need
 a border reset in the class (`border-*-width: 0px`, `border-*-style: none`).
+
+## Stack utility classes
+
+Tested in spike S7 (2026-09-27, `docs/webflow/css-system.md` → S7 result). Stacking several
+**standalone (global)** utility classes on one element works: the element's `class` attribute
+carries every name, and each class keeps applying its own properties. Only stack classes that are
+each meant to contribute one independent rule (utilities); don't stack two block classes that both
+own the element's full identity (`classes.md` → stacking gotcha still applies to those).
+
+1. Create each utility once as its own standalone style (`data_style_tool` → `create_style`, no
+   `parent_style_names`). A property that rejects a linked variable (seen: `gap` +
+   `variable_as_value`) takes a literal value instead.
+2. **First use of a new combination:** insert with the WHTML builder, classes already stacked in
+   the markup, no `css`:
+   ```json
+   { "build_label": "x", "parent_element_id": {...}, "creation_position": "append",
+     "html": "<div class=\"fk-flex fk-flex-col fk-gap-2\">…</div>" }
+   ```
+   Webflow auto-creates an empty combo style per new chain depth (e.g.
+   `.fk-flex.fk-flex-col`, `.fk-flex.fk-flex-col.fk-gap-2`) — expected, harmless, no properties.
+   Never edit these in the Designer; edit the standalone class.
+3. **Reusing an existing combination** on another element: `data_element_tool` → `set_style` with
+   `style_names` in the same order works, because it resolves the chain Webflow already created by
+   name. It does **not** create a new chain — a combination that has never been built via WHTML (or
+   explicit `create_style` at every depth) fails: `"One or more styles not found: …"`. When in
+   doubt, insert the first instance of any new combination through WHTML.
+4. A registered `is-*` combo still wins by specificity when stacked with plain utilities
+   (`.fk-button.is-secondary` = 2 classes beats a 1-class utility), regardless of source order —
+   confirmed structurally (stored selectors), not yet visually on a publish.
+5. Verify with `data_style_tool` → `query_styles` (`name_path: ["<prefix>"]`, `include_properties`):
+   real classes carry their properties; auto-created combos show `properties: {"base": {}}`.
 
 ## Remove elements
 

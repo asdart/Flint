@@ -1,32 +1,11 @@
-/* fk-testimonials — Section / Testimonials, Slider variant. Panel heights and absolute stage
-   offsets are local geometry copied from the legacy carousel. */
-
-.fk-testimonials {
-  position: relative;
-  width: 100%;
-  height: 1102px;
-  border-radius: var(--radius-xl);
-  background-color: var(--color-brand-light);
-  overflow: clip;
-}
-
-.fk-testimonials-header {
-  position: absolute;
-  top: 140px;
-  left: 50%;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  padding-inline: var(--space-5);
-  transform: translateX(-50%);
-}
+/* fk-testimonials-* — Section / Testimonials, Slider variant, placed inside
+   fk-panel.is-brand-light[data-ix="testimonials"]. Row heights and absolute stage offsets are
+   local geometry copied from the legacy carousel. */
 
 .fk-testimonials-row {
-  position: absolute;
-  top: 412px;
-  left: 0;
-  width: 100%;
+  position: relative;
   height: 488px;
+  width: 100%;
   user-select: none;
 }
 
@@ -71,27 +50,9 @@
 }
 
 .fk-testimonials-pagination {
-  position: absolute;
-  bottom: 168px;
-  left: 50%;
-  z-index: 10;
-  transform: translateX(-50%);
-}
-
-@media screen and (max-width: 767px) {
-  .fk-testimonials {
-    height: 900px;
-  }
-
-  .fk-testimonials-header {
-    top: 72px;
-  }
-
-  .fk-testimonials-row {
-    top: 280px;
-  }
-
-  .fk-testimonials-pagination {
-    bottom: 80px;
-  }
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--width-container);
+  margin: 0 auto;
 }

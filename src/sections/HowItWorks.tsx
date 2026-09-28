@@ -4,97 +4,135 @@ import { cx } from "../lib/cx";
 const STEPS = [
   {
     title: "Apply in 30 Seconds",
-    body: "We will make sure we can help you with your immigration case.",
+    body: "We’ll reach out to confirm we can support your unique case.",
     tone: "inverse",
+    variant: "tertiary",
+    scrim: false,
+    bgSize: [360, 464],
+    artSize: [888, 822] as [number, number] | null,
   },
   {
     title: "Meet with Flint",
-    body: "Apply to any facility; if successful, you’ll get an offer.",
+    body: "Connect with us and we’ll help find the best facilities for your needs.",
     tone: "inverse",
+    variant: "tertiary",
+    scrim: true,
+    bgSize: [398, 512],
+    artSize: [1194, 1473] as [number, number] | null,
   },
   {
-    title: "Call with Facility",
-    body: "While your Green card processes you continue to work",
+    title: "Interview Directly with Facilities",
+    body: "We present you with facilities. You choose who to interview.",
     tone: "default",
+    variant: "tertiary",
+    scrim: false,
+    bgSize: [882, 723],
+    artSize: [1083, 1296] as [number, number] | null,
   },
   {
     title: "Relocate",
     body: "We help with your relocation and license transfer.",
     tone: "default",
+    variant: "tertiary",
+    scrim: false,
+    bgSize: [1083, 1391],
+    artSize: null as [number, number] | null,
   },
   {
     title: "Start work",
     body: "After the probation period, immigration filing begins",
     tone: "default",
+    variant: "brand-light",
+    scrim: false,
+    bgSize: [882, 723],
+    artSize: [891, 1016] as [number, number] | null,
   },
   {
     title: "Processing",
     body: "While your Green card processes you continue to work",
     tone: "inverse",
+    variant: "tertiary",
+    scrim: true,
+    bgSize: [1083, 1392],
+    artSize: [722, 864] as [number, number] | null,
   },
 ] as const;
 
-/** Section / How It Works, variant Home. */
+/** Section / How It Works, variant Home. Each card layers a full-bleed `-bg` (photo, gradient or
+ * pattern) under an optional floating `-art` illustration and a `-copy` block; see `classes.md` →
+ * `fk-how` for the split and the per-card offsets. */
 export default function HowItWorks() {
   return (
-    <section className="fk-how">
-      <div className="fk-how-inner">
-        <div className="fk-how-header">
-          <div className="fk-section-header is-center" data-ix="blur-reveal">
+    <section className="fk-section is-x-flush">
+      <div className="fk-how">
+        <div className="fk-container">
+          <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
             <div className="fk-blur-reveal">
               <h2 className="fk-heading-xl">How Flint works</h2>
             </div>
             <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg is-brand-muted">
-                Flint helps eligible healthcare professionals connect with hospitals sponsoring
-                Green Cards.
-              </p>
+              <p className="fk-text-lg is-brand-muted">Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.<br/><br/>From step one to day one on the job, Flint is with you every step of the way.</p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="fk-how-reveal" data-ix="reveal">
-        <div className="fk-how-viewport" data-ix="how-carousel">
-          <div className="fk-how-track" data-how-track>
-            {STEPS.map((step, index) => {
-              const number = index + 1;
-              return (
-                <div
-                  key={step.title}
-                  className={cx("fk-how-slide", index === 0 && "is-active")}
-                  data-how-slide={number}
-                >
-                  <article
-                    className={cx("fk-how-card", index === 0 && "is-active")}
-                    data-how-card={number}
+        <div className="fk-how-reveal" data-ix="reveal">
+          <div className="fk-how-viewport" data-ix="how-carousel">
+            <div className="fk-how-track" data-how-track>
+              {STEPS.map((step, index) => {
+                const number = index + 1;
+                const [bgWidth, bgHeight] = step.bgSize;
+                return (
+                  <div
+                    key={step.title}
+                    className={cx("fk-how-slide", index === 0 && "is-active")}
+                    data-how-slide={number}
                   >
-                    <img
-                      className="fk-how-art"
-                      src={`/assets/home/how-card-${number}.png`}
-                      alt=""
-                      width={720}
-                      height={928}
-                    />
-                    <div
+                    <article
                       className={cx(
-                        "fk-how-copy",
-                        step.tone === "inverse" && "is-inverse",
+                        "fk-how-card",
+                        index === 0 && "is-active",
+                        step.variant === "brand-light" && "is-brand-light",
                       )}
+                      data-how-card={number}
                     >
-                      <h3 className="fk-how-title">{step.title}</h3>
-                      <p className="fk-how-body">{step.body}</p>
-                    </div>
-                  </article>
-                </div>
-              );
-            })}
+                      <img
+                        className="fk-how-bg"
+                        src={`/assets/home/how-card-bg-${number}.png`}
+                        alt=""
+                        width={bgWidth}
+                        height={bgHeight}
+                      />
+                      {step.scrim && <div className="fk-how-scrim" aria-hidden="true" />}
+                      {step.artSize && (
+                        <img
+                          className="fk-how-art"
+                          src={`/assets/home/how-card-art-${number}.png`}
+                          alt=""
+                          width={step.artSize[0]}
+                          height={step.artSize[1]}
+                        />
+                      )}
+                      <div
+                        className={cx(
+                          "fk-how-copy",
+                          step.tone === "inverse" && "is-inverse",
+                        )}
+                      >
+                        <h3 className="fk-how-title">{step.title}</h3>
+                        <p className="fk-how-body">{step.body}</p>
+                      </div>
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="fk-how-pagination" data-ix="reveal">
-        <Pagination id="how" count={STEPS.length} label={(index) => `Go to step ${index + 1}`} />
+        <div className="fk-how-pagination" data-ix="reveal">
+          <Pagination id="how" count={STEPS.length} label={(index) => `Go to step ${index + 1}`} />
+        </div>
       </div>
     </section>
   );

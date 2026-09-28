@@ -17,7 +17,7 @@ export default function LogoMarquee() {
     <section className="fk-logo-marquee">
       <div className="fk-logo-marquee-label" data-ix="blur-reveal">
         <div className="fk-blur-reveal">
-          <p className="fk-logo-marquee-text">Partnering with the top facilities</p>
+          <p className="fk-text-md is-brand-muted">Partnering with the top facilities</p>
         </div>
       </div>
       <div className="fk-logo-marquee-viewport">

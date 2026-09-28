@@ -31,15 +31,16 @@ const STARTING_ROW = ROWS_ABOVE;
 /** Section / Partners Map. */
 export default function PartnersMap() {
   return (
-    <section className="fk-section is-last">
+    <section className="fk-section">
       <div className="fk-partners-map">
         <img className="fk-partners-map-image" src="/assets/home/map-bg.jpg" alt="" />
         <div className="fk-partners-map-overlay" aria-hidden="true" />
         <div className="fk-partners-map-content">
+        <div className="fk-container is-full-height">
           <div className="fk-partners-map-inner">
             <div className="fk-partners-map-heading" data-ix="blur-reveal">
               <div className="fk-blur-reveal">
-                <p className="fk-partners-map-title">Our partners are in</p>
+                <p className="fk-heading-xl is-inverse">Our partners are in</p>
               </div>
             </div>
             <div className="fk-partners-map-viewport">
@@ -56,6 +57,7 @@ export default function PartnersMap() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

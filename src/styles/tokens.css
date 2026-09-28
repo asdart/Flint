@@ -24,12 +24,14 @@
   --color-white-10: rgba(255, 255, 255, 0.1);
   --color-brand-80: rgba(68, 56, 109, 0.8);
   --color-subtle-80: rgba(97, 101, 106, 0.8);
+  --color-ink-60: rgba(15, 14, 23, 0.6);
 
   /* Colors — accent */
   --color-brand-focus: #b8adde;
   --color-accent-rose: #bd535d;
   --color-accent-blue: #5c77e0;
   --color-peach-100: #fee0db;
+  --color-peach-200: #e1c0af;
   --color-sand-100: #f1e0d8;
 
   /* Fonts */
@@ -59,16 +61,18 @@
   --space-8: 32px;
   --space-10: 40px;
   --space-12: 48px;
+  --space-14: 56px;
   --space-16: 64px;
+  --space-19: 76px;
   --space-20: 80px;
   --space-24: 96px;
   --space-32: 128px;
+  --space-36: 144px;
 
   /* Widths */
   --width-container: 1200px;
   --width-container-md: 960px;
   --width-content: 580px;
   --width-content-sm: 480px;
-  --width-header: 436px;
   --width-nav-pill: 664px;
 }

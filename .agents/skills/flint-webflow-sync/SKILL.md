@@ -17,6 +17,8 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 3. Query by name before any create. Destructive actions and publishing need the user's explicit
    confirmation (rule 12). Batch all pending deletions into one question to the user.
 4. Interactions: also read `.agents/skills/webflow-mcp-interactions/SKILL.md` (vendored, don't edit).
+5. Pages, CMS templates, images and custom code: also read `docs/webflow/seo.md`. Every page you
+   build or change must meet it (see "Page SEO checklist" below).
 
 ## Pitfalls: symptom → what to do
 
@@ -50,17 +52,19 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | `query_elements` `component_filter` finds no instances that do exist | It only searches the page tree. Instances inside Nav/Footer need `scope_component_id` |
 | `element_snapshot_tool` → `{"status":false}` | Snapshots need the Designer with the MCP Bridge app open. Verify with element queries instead and ask the user to review visually |
 | Claude Code: `webflow_guide_tool` result (~87k chars) is too large and saved to a file instead | The `ses_…` id is still in it: `grep -o 'ses_[0-9A-Za-z]\{27\}' <saved file> \| head -1`. Read the rest with `jq` only if needed |
+| Asked to delete a page | The MCP can't (no page delete action). Ask the user to delete it in the Designer and keep it `draft: true` until then; track it in `webflow-ids.json` → `pendingCleanup` |
+| Need to change `llms.txt`, robots.txt, the sitemap or the canonical URL | Site settings → SEO, not reachable through the MCP. Edit the repo source (`public/llms.txt`), then ask the user to upload or paste it. `llms.txt` isn't served on the staging domain: check it on the custom domain |
 | Validation error about a missing `siteId` / `site_id` / `pageId` | Placement differs per tool; see playbook → Call conventions |
 | Media query rejected, tag selectors dropped | Write queries exactly as in `AGENTS.md` §5; typography lives on classes, not tag selectors |
 | `0 -1px` minified to `0-1px`, or a shadow/gradient replaced by one color variable | Write `0px -1px`; push with `scripts/webflow-style-actions.mjs`, which resolves compound `var()` values to literals |
-| Repo markup puts two base classes on one element (`fk-section fk-cta`, `fk-panel fk-cta-panel`, `fk-icon fk-card-icon`) | In Webflow every class after the first becomes a combo of the first, so it can't be built as written. Review subagent output for this: give the element one base (a block class of its own, or a base + `is-*` combos) |
+| Repo markup puts two base classes on one element (`fk-section fk-cta`, `fk-panel fk-cta-panel`, `fk-icon fk-card-icon`) | Still don't do this for **block** classes: `fk-section fk-cta` mixes two unrelated block identities, and there's no shared rule to reuse. But for **utility** stacking (spike S7, 2026-09-27, `css-system.md` → S7 result), each class keeps applying its own standalone properties — Webflow just also creates an empty combo style object per new combination, which is harmless noise, not a copy of values. So `fk-lab-u-box fk-lab-u-flex fk-lab-u-gap` is fine; `fk-section fk-cta` (two block identities) is not. See [recipes → Stack utility classes](recipes.md#stack-utility-classes) |
 | A `<p>` or heading inside a block has no class of its own | Webflow's default stylesheet gives `p` a 10px bottom margin (headings get margins too), and synced markup never relies on tag styles. Give the text a class with `margin: 0` and its typography |
 | The Vite dev server serves an old module (a new route redirects to `/`, `curl localhost:5180/src/App.tsx` lacks the change) | Its file watcher stopped after a long session. Restart the dev server before browser QA |
 | `set_attributes` with name `data-ix` → "An internal error occurred" (every time; `data-ix-item` works) | `data-ix` is reserved by Webflow's legacy interactions and can only be written by the WHTML builder. Insert a new element with the attribute (`<div class="…" data-ix="…"></div>`), `move_element` the children into it, then remove the old one (with confirmation). Put `data-ix` in the markup of the first insert whenever possible |
 | WHTML into a new Collection Item → "Connect this Collection List to a Collection before adding elements" | Set the list's `source` (and `sort`, `limit`) with `data_element_settings_tool` first, then insert the card markup into the DynamoItem |
 | Uploading many assets | Batch `create_asset` in one call, then `node scripts/webflow-upload-batch.mjs <xAmzCredential> < uploads.json` with `{file, key, date, signature}` per asset; run it once with `--check <one verbatim policy>` first |
 | Two elements need the same scroll timeline, one offset in time (e.g. the second card +0.12s) | Scroll triggers take no `delay`. Create a second interaction triggered by the other element's combo class with every `position` shifted |
-| A subagent stacks a typography class on a block element (`fk-partners-map-row fk-heading-xl`) | Same two-base-class problem. Copy the typography into the block class, including its breakpoint overrides; check where legacy switches size (`lg:` = 1024 means tablet keeps the small size) |
+| A subagent stacks a typography class on a block element (`fk-partners-map-row fk-heading-xl`) | Still the two-block-identity problem (unlike the utility case above, `fk-heading-xl` and `fk-partners-map-row` are both meant to fully own an element's typography/geometry, so their empty auto-combo hides a real conflict, not a harmless stack). Copy the typography into the block class, including its breakpoint overrides; check where legacy switches size (`lg:` = 1024 means tablet keeps the small size) |
 | A repo preview script needs styled wrapper spans (word masks) that Webflow generates itself | Style them inline from the preview script, not as registered classes, or they show up as permanent diff noise |
 | Comparing legacy and contract pages at several widths | Load both pages in same-origin iframes of the target width from one `Runtime.evaluate` and measure inside them; emulate `prefers-reduced-motion: reduce` first so both show end states. Reload after changing the emulation, or already-started scripts keep the old value |
 | A browser subagent's parity numbers look off (the same hover state on both pages, a header half as wide) | It likely measured the wrong element. Re-measure the specific boxes yourself with CDP `Runtime.evaluate` before acting on them |
@@ -72,6 +76,28 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | An interaction payload nears the 65,536-byte budget | The `customEase` string repeats on every action. Use fewer curve segments (8 gave 0.13px error) and short action names |
 | `draggable="false"` (and similar) missing after a WHTML insert | WHTML drops it. `set_attributes` on the element afterwards (with `scope_component_id` inside a component) |
 | Per-breakpoint geometry for one interaction (phone vs desktop) | Two interactions with `conditionalPlayback` `{type: "breakpoint", breakpoints: [...], behavior: "dont-animate"}`: the listed breakpoints are where it does **not** play (desktop lists `tiny`, phone lists `main`, `medium`, `small`). One row per type, so it sits next to the reduced-motion row |
+| `create_style` → "Property gap does not support setting a variable of type length" | The `gap` **shorthand** rejects `variable_as_value`. Send the longhands `grid-row-gap` and `grid-column-gap` with the variable instead, which is what Webflow stores and what `scripts/webflow-style-actions.mjs` already does. Never fall back to a literal px (rule 2). Found in spike S7, `css-system.md` → S7 result |
+| Stacking several standalone (global) classes on one element (`class="fk-lab-u-box fk-lab-u-flex fk-lab-u-gap"`) | Works: the element's `styleNames` lists every class and each keeps applying its own properties. Webflow also silently creates an empty combo style per new combination (harmless noise, not a value copy; the published CSS doesn't even contain it, checked on staging). `data_element_tool` → `set_style` can only *reuse* a combo chain that already exists by name (via an earlier WHTML insert or explicit `create_style` at every depth) — it errors "One or more styles not found" on a brand-new combination. See [recipes → Stack utility classes](recipes.md#stack-utility-classes) and `css-system.md` → S7 result (spike, 2026-09-27) |
+| A flex child with an explicit fixed `height` collapses to 0px height once its row stacks into a column at a breakpoint | `flex: 1 1 0` sets `flex-basis: 0`, and flex-basis wins over `height` on the main axis — in a column flex container the main axis *is* height, so the explicit height is silently zeroed. Fix: override to `flex: none` on the stacked children at that breakpoint, or better, avoid the explicit height altogether and let content size the card (found 2026-09-27 building Section / Pricing; `fk-pricing-card.is-diagram` was first built this way, then reworked to a flex + padding layout with no fixed height, which sidesteps the bug entirely) |
+
+## Page SEO checklist
+
+Run it for every page or template you build or change (`AGENTS.md` rule 15, details in `seo.md`):
+
+- **Headings:** exactly one `h1` (the hero title); section titles `h2`, card titles `h3`. Dates,
+  authors, quotes, eyebrows and stat values are `p`/`span`. Fix levels with `set_heading_level`.
+- **Page settings:** `data_pages_tool` → `update_page_settings` with `seo.title`,
+  `seo.description` and `openGraph` (image by `imageAssetId`). Slug lowercase kebab-case.
+  Noindex (Sitemap indexing) isn't in the MCP: ask the user to set it in the Designer.
+- **Schema:** `FAQPage` through `jsonLdSchema` on pages with an FAQ block, built from the same
+  copy. Site and post schema only through `x-schema-site` / `x-schema-post`.
+- **Images:** upload resized WebP; `width` and `height` on every image; lazy below the fold, eager
+  for the hero; alt text per `seo.md` S-16 (logos: facility name, people: their name, decorative:
+  empty inside `aria-hidden` art).
+- **Controls:** icon-only buttons get an `aria-label`; hit areas at least 24 × 24 px.
+- **No head weight:** no Google Fonts from the Designer, no tracking tags outside
+  `x-deferred-tracking`, no blocking scripts.
+- Anything marked "to verify" in `seo.md` that you check: record the result there and here.
 
 ## Record what you learn (mandatory)
 
@@ -86,6 +112,7 @@ summary**. Put each learning in exactly one place:
 | What the MCP can or can't do | `mcp-playbook.md` → capability table |
 | A rule that changes how the repo is written | `AGENTS.md` (bump the contract version) and the affected registry |
 | A registry fact (class, token, component, field, interaction behavior) | The registry in `docs/webflow/` |
+| How Webflow meets an SEO, speed or accessibility requirement (a "to verify" item) | `seo.md` (the requirement's row) and a pitfall here if it needed a workaround |
 | An id created in Webflow | `webflow-ids.json` |
 
 Write the fix, not the story: symptom, cause if known, and the exact working call. Only record

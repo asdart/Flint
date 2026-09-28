@@ -39,10 +39,8 @@ export default function Nav() {
       </div>
 
       <div className="fk-nav-actions">
-        <div className="fk-nav-cta">
-          <div className="fk-nav-cta-rest">
-            <Button variant="secondary" size="small" />
-          </div>
+        <div className="fk-hide-tablet">
+          <Button variant="secondary" size="small" />
         </div>
         <button type="button" className="fk-nav-toggle" aria-label="Open menu">
           <img className="fk-icon" src={menuIcon} alt="" width={24} height={24} />
@@ -50,30 +48,30 @@ export default function Nav() {
       </div>
 
       <div className="fk-nav-menu">
-          <div className="fk-nav-menu-panel">
-            <div className="fk-nav-menu-header">
-              <SmartLink href="/" className="fk-nav-logo">
-                <img src="/assets/wordmark.svg" alt="Flint" width={49} height={24} />
-              </SmartLink>
-              <button type="button" className="fk-nav-menu-close" aria-label="Close menu">
-                <img className="fk-icon" src={closeIcon} alt="" width={24} height={24} />
-              </button>
-            </div>
-            <div className="fk-nav-menu-links">
-              {LINKS.map((link) => (
-                <SmartLink
-                  key={link.href}
-                  href={link.href}
-                  className={cx("fk-nav-menu-link", pathname === link.href && "w--current")}
-                >
-                  {link.label}
-                </SmartLink>
-              ))}
-            </div>
-            <div className="fk-nav-menu-footer">
-              <Button variant="secondary" fullWidth />
-            </div>
+        <div className="fk-nav-menu-panel">
+          <div className="fk-nav-menu-header">
+            <SmartLink href="/" className="fk-nav-logo">
+              <img src="/assets/wordmark.svg" alt="Flint" width={49} height={24} />
+            </SmartLink>
+            <button type="button" className="fk-nav-menu-close" aria-label="Close menu">
+              <img className="fk-icon" src={closeIcon} alt="" width={24} height={24} />
+            </button>
           </div>
+          <div className="fk-nav-menu-links">
+            {LINKS.map((link) => (
+              <SmartLink
+                key={link.href}
+                href={link.href}
+                className={cx("fk-nav-menu-link", pathname === link.href && "w--current")}
+              >
+                {link.label}
+              </SmartLink>
+            ))}
+          </div>
+          <div className="fk-nav-menu-footer">
+            <Button variant="secondary" fullWidth />
+          </div>
+        </div>
       </div>
     </nav>
   );
