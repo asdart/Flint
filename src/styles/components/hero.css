@@ -1,4 +1,7 @@
-/* fk-hero — Section / Hero, Home. The wheel geometry reproduces the legacy 3400px circular arc.
+/* fk-hero — Section / Hero, Home. The wheel is the Figma arc: 200×240 cards on a circle of
+   1523px (card centres), 11° apart, so the centre pair sits at ±5.5°. Phone (≤767) is the same arc
+   scaled by 0.5683 (card 113.665×136.398), as drawn in Figma. Card images are cropped in % of the
+   card, so one crop serves both sizes.
    The button row uses the shared `fk-section-header-action` primitive (+ `fk-pt-2-mobile`), not a
    block class; only the arc/cards/chips stay as block geometry here. */
 
@@ -10,101 +13,104 @@
 
 .fk-hero-wheel {
   position: absolute;
-  inset: 0;
-  transform-origin: 50% 3532px;
+  top: 3px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform-origin: 50% 1643px;
 }
 
 .fk-hero-card {
   position: absolute;
   top: 0;
   left: 50%;
-  width: 220px;
-  height: 264px;
-  margin-left: -110px;
+  width: 200px;
+  height: 240px;
+  margin-left: -100px;
   border-radius: var(--radius-xl);
   background-color: var(--color-peach-100);
   overflow: clip;
-  transform-origin: 110px 3532px;
+  transform-origin: 100px 1643px;
 }
 
 .fk-hero-card.is-a1 {
-  transform: rotate(-80.5556deg);
+  transform: rotate(-159.5deg);
 }
 
 .fk-hero-card.is-a2 {
-  transform: rotate(-75deg);
+  transform: rotate(-148.5deg);
 }
 
 .fk-hero-card.is-a3 {
-  transform: rotate(-69.4444deg);
+  transform: rotate(-137.5deg);
 }
 
 .fk-hero-card.is-a4 {
-  transform: rotate(-63.8889deg);
+  transform: rotate(-126.5deg);
 }
 
 .fk-hero-card.is-a5 {
-  transform: rotate(-58.3333deg);
+  transform: rotate(-115.5deg);
 }
 
 .fk-hero-card.is-a6 {
-  transform: rotate(-52.7778deg);
+  transform: rotate(-104.5deg);
 }
 
 .fk-hero-card.is-a7 {
-  transform: rotate(-47.2222deg);
+  transform: rotate(-93.5deg);
 }
 
 .fk-hero-card.is-a8 {
-  transform: rotate(-41.6667deg);
+  transform: rotate(-82.5deg);
 }
 
 .fk-hero-card.is-a9 {
-  transform: rotate(-36.1111deg);
+  transform: rotate(-71.5deg);
 }
 
 .fk-hero-card.is-a10 {
-  transform: rotate(-30.5556deg);
+  transform: rotate(-60.5deg);
 }
 
 .fk-hero-card.is-a11 {
-  transform: rotate(-25deg);
+  transform: rotate(-49.5deg);
 }
 
 .fk-hero-card.is-a12 {
-  transform: rotate(-19.4444deg);
+  transform: rotate(-38.5deg);
 }
 
 .fk-hero-card.is-a13 {
-  transform: rotate(-13.8889deg);
+  transform: rotate(-27.5deg);
 }
 
 .fk-hero-card.is-a14 {
-  transform: rotate(-8.3333deg);
+  transform: rotate(-16.5deg);
 }
 
 .fk-hero-card.is-a15 {
-  transform: rotate(-2.7778deg);
+  transform: rotate(-5.5deg);
 }
 
 .fk-hero-card.is-a16 {
-  transform: rotate(2.7778deg);
+  transform: rotate(5.5deg);
 }
 
 .fk-hero-card.is-a17 {
-  transform: rotate(8.3333deg);
+  transform: rotate(16.5deg);
 }
 
 .fk-hero-card.is-a18 {
-  transform: rotate(13.8889deg);
+  transform: rotate(27.5deg);
 }
 
 .fk-hero-card.is-a19 {
-  transform: rotate(19.4444deg);
+  transform: rotate(38.5deg);
 }
 
 .fk-hero-card.is-a20 {
-  transform: rotate(25deg);
+  transform: rotate(49.5deg);
 }
 
 .fk-hero-card-image {
@@ -117,90 +123,91 @@
 }
 
 .fk-hero-card-image.is-c1 {
-  top: -6.765px;
-  left: -126.544px;
-  width: 474.826px;
-  height: 593.318px;
+  top: -2.563%;
+  left: -57.52%;
+  width: 215.83%;
+  height: 224.742%;
   transform: rotate(-1.38deg);
 }
 
 .fk-hero-card-image.is-c2 {
-  top: -31.361px;
-  left: -57.662px;
-  width: 339.779px;
-  height: 424.567px;
+  top: -11.879%;
+  left: -26.21%;
+  width: 154.445%;
+  height: 160.821%;
   transform: rotate(-1.38deg);
 }
 
 .fk-hero-card-image.is-c3 {
-  top: -21.417px;
-  left: -62.205px;
-  width: 339.779px;
-  height: 424.567px;
+  top: -8.113%;
+  left: -28.275%;
+  width: 154.445%;
+  height: 160.821%;
 }
 
 .fk-hero-card-image.is-c4 {
-  top: 4.994px;
-  left: -97.746px;
-  width: 409.013px;
-  height: 409.002px;
+  top: 1.892%;
+  left: -44.43%;
+  width: 185.915%;
+  height: 154.925%;
 }
 
 .fk-hero-card-image.is-c5 {
-  top: -32.109px;
-  left: -95.986px;
-  width: 412.632px;
-  height: 515.603px;
+  top: -12.163%;
+  left: -43.63%;
+  width: 187.56%;
+  height: 195.304%;
 }
 
 .fk-hero-card-image.is-c6 {
-  top: -32.109px;
-  left: -95.986px;
-  width: 412.632px;
-  height: 515.603px;
+  top: -12.163%;
+  left: -43.63%;
+  width: 187.56%;
+  height: 195.304%;
 }
 
 .fk-hero-card-image.is-c7 {
-  top: -21.164px;
-  left: -61.875px;
-  width: 339.779px;
-  height: 424.567px;
+  top: -8.017%;
+  left: -28.125%;
+  width: 154.445%;
+  height: 160.821%;
 }
 
 .fk-hero-card-image.is-c8 {
-  top: -6.05px;
-  left: -126.621px;
-  width: 475.31px;
-  height: 593.923px;
+  top: -2.292%;
+  left: -57.555%;
+  width: 216.05%;
+  height: 224.971%;
   transform: rotate(-1.38deg);
 }
 
 .fk-hero-card-image.is-c9 {
-  top: 10.362px;
-  left: -121.517px;
-  width: 469.425px;
-  height: 586.564px;
+  top: 3.925%;
+  left: -55.235%;
+  width: 213.375%;
+  height: 222.183%;
   transform: rotate(-1.38deg);
 }
 
 .fk-hero-card-image.is-c10 {
-  top: -1.375px;
-  left: -160.644px;
-  width: 533.665px;
-  height: 666.842px;
+  top: -0.521%;
+  left: -73.02%;
+  width: 242.575%;
+  height: 252.592%;
   transform: rotate(-1.38deg);
 }
 
 .fk-hero-card-chip {
   position: absolute;
-  bottom: var(--space-3);
-  left: var(--space-3);
+  bottom: var(--space-3-5);
+  left: var(--space-3-5);
   display: flex;
   align-items: center;
   gap: var(--space-1-5);
   padding: var(--space-1) var(--space-2-5) var(--space-1) var(--space-1);
   border-radius: var(--radius-2xl);
   background-color: var(--color-white);
+  transform-origin: left bottom;
 }
 
 .fk-hero-card-name {
@@ -214,7 +221,26 @@
 
 @media screen and (max-width: 767px) {
   .fk-hero-stage {
-    bottom: var(--space-4);
-    height: 240px;
+    margin-top: var(--space-8);
+    height: 267.67px;
+  }
+
+  .fk-hero-wheel {
+    top: 45.6px;
+    transform-origin: 50% 933.7px;
+  }
+
+  .fk-hero-card {
+    width: 113.665px;
+    height: 136.398px;
+    margin-left: -56.8325px;
+    border-radius: 13.64px;
+    transform-origin: 56.8325px 933.7px;
+  }
+
+  .fk-hero-card-chip {
+    bottom: 7.83px;
+    left: 7.83px;
+    transform: scale(0.5683);
   }
 }

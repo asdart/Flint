@@ -1,12 +1,12 @@
 /*
- * ix-hero-arc preview: rotate one ten-card set (55.556deg) in 34s. The second set makes the
+ * ix-hero-arc preview: rotate one ten-card set (110deg) in 30s. The second set makes the
  * infinite restart visually identical. Webflow uses the equivalent IX3 load and hover controls.
  */
 
 type Cleanup = () => void;
 
-const SET_ANGLE = 500 / 9;
-const CYCLE_MS = 34_000;
+const SET_ANGLE = 110;
+const CYCLE_MS = 30_000;
 
 function setupHeroArc(stage: HTMLElement): Cleanup {
   const wheel = stage.querySelector<HTMLElement>(".fk-hero-wheel");
