@@ -104,7 +104,7 @@ export default function Footer({
 
           <div className="fk-footer-bottom">
             <SmartLink href="/" className="fk-footer-logo">
-              <img src="/assets/wordmark-white.svg" alt="Flint" width={49} height={24} />
+              <img src="/assets/flint-logo-white.svg" alt="Flint" width={49} height={24} />
             </SmartLink>
             <p className="fk-text-md fk-color-white-80">
               © 2026 Flint. All rights reserved.

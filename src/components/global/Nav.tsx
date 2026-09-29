@@ -23,7 +23,7 @@ export default function Nav() {
   return (
     <nav className="fk-nav" aria-label="Main">
       <SmartLink href="/" className="fk-nav-logo">
-        <img src="/assets/wordmark.svg" alt="Flint" width={49} height={24} />
+        <img src="/assets/flint-logo-brand.svg" alt="Flint" width={49} height={24} />
       </SmartLink>
 
       <div className="fk-nav-links">
@@ -51,7 +51,7 @@ export default function Nav() {
         <div className="fk-nav-menu-panel">
           <div className="fk-nav-menu-header">
             <SmartLink href="/" className="fk-nav-logo">
-              <img src="/assets/wordmark.svg" alt="Flint" width={49} height={24} />
+              <img src="/assets/flint-logo-brand.svg" alt="Flint" width={49} height={24} />
             </SmartLink>
             <button type="button" className="fk-nav-menu-close" aria-label="Close menu">
               <img className="fk-icon" src={closeIcon} alt="" width={24} height={24} />

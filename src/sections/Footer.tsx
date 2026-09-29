@@ -90,7 +90,7 @@ export default function Footer() {
 
         <div className="flex w-full flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Link to="/">
-            <img src="/assets/wordmark-white.svg" alt="Flint" className="h-6 w-[49px]" />
+            <img src="/assets/flint-logo-white.svg" alt="Flint" className="h-6 w-[49px]" />
           </Link>
           <p data-reveal className="text-[16px] leading-6 text-white/80">
             &copy; 2026 Flint. All rights reserved.

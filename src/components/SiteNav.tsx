@@ -160,9 +160,9 @@ export default function SiteNav({
       />
 
       <Link to="/" className="relative z-20 h-6 w-[49px] shrink-0" onClick={() => setOpen(false)}>
-        <img src="/assets/wordmark.svg" alt="Flint" className="absolute inset-0 size-full" />
+        <img src="/assets/flint-logo-brand.svg" alt="Flint" className="absolute inset-0 size-full" />
         <img
-          src="/assets/wordmark-white.svg"
+          src="/assets/flint-logo-white.svg"
           alt=""
           aria-hidden
           className={`absolute inset-0 size-full transition-opacity duration-300 ${
@@ -204,7 +204,7 @@ export default function SiteNav({
     <div className="fixed inset-0 z-50 flex flex-col bg-white px-6 py-4 lg:hidden">
       <div className="flex items-center justify-between">
         <Link to="/" onClick={() => setOpen(false)}>
-          <img src="/assets/wordmark.svg" alt="Flint" className="h-6 w-[49px]" />
+          <img src="/assets/flint-logo-brand.svg" alt="Flint" className="h-6 w-[49px]" />
         </Link>
         <button
           type="button"
