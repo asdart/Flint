@@ -63,6 +63,9 @@ next phase on production.
 | D-15 | Blog content comes from the client's current site (export of 2026-09-28): posts get categories assigned by topic, Flint Editorial Team is the author of every post for now, bodies are cleaned to plain rich text with the removed custom code tracked, excerpts are rewritten for SEO, read time is a Number field, and the quick answer moves to its field | 2026-09-28 | `cms.md`, `blog-custom-code.md` |
 | D-16 | Blog: where the Figma frames disagree, the desktop frame wins. The phone keeps the category select and numbered pagination (no "Load more"), the hero copy is "The Flint blog" / "Immigration, licensing, and hiring tips…", and the phone featured card keeps the built look (gradient scrim, no full-image blur) | 2026-09-29 | `components.md`, `classes.md` → `fk-featured-post`, `fk-pager` |
 | D-17 | **Mixed section model:** a section becomes a `Section /` component only when it is used, or planned (user's call), on more than one page; a section used once stays plain page markup (like the Post Grid pattern) and becomes a component the moment a second page needs it. Components today: **Hero, Logo Marquee, Role Grid, Testimonials**. Page-level markup on Home: **Two Ways, Pricing, Partners Map, How It Works, Webinar, Feature Grid, CTA**. Section components get props only where content differs per page (`components.md` lists them); Hero stays at its Home variant until other pages need theirs. Home also omits Post Grid for now (user, 2026-09-29: the blog comes later; "Post Grid (Home)" is added in the blog phase, `src/pages/HomePage.tsx` unchanged) | 2026-09-29 | `AGENTS.md` 1.7 (rule 6, §3, §4, §6), `components.md` → Sections and Pages, site instruction `rules/flint-contract.md` |
+| D-18 | **Rich Text nested styles:** the styles for elements inside a Rich Text element (h2–h4, p, lists, links, quotes, images) are Webflow Designer nested styles on the Rich Text class (`fk-article-body`). The MCP style API can't create descendant selectors, so they are seeded by hand once in the Designer, like tag styles, and never pushed by scripts. The repo mirrors them in one documented file, `src/styles/components/article-body.css`, the one exception to one selector per rule. Contract 1.8 | 2026-09-29 | `AGENTS.md` 1.8 (§4), `classes.md` → Rich Text nested styles, `css-system.md`, `mcp-playbook.md`, `flint-webflow-sync` skill |
+| D-19 | The post hero's main image shows at its natural ratio (the 2.1:1 banners are not cropped), 552px wide at most, and is hidden at 479px and below, as in the phone frame. P-13 stays open for the cards | 2026-09-29 | `classes.md` → `fk-article-image`, `cms.md` → Posts template |
+| D-20 | **Related Posts is a local page-markup section of the post page**, not Post Grid: a left-aligned "Related Insights" header ("More guides on nursing careers, US immigration, and healthcare staffing."), no button, up to 3 posts of the same category excluding the current one, Publish date ↓. The whole section is hidden when there are none (exception `x-related-empty`; Relocation and Licensing have 1 post each). Supersedes the Related use of Post Grid and the 2026-09-27 note about dropping the "Related Insights" copy; refines D-02. `Section / Newsletter` also got a **Stacked** variant for the post page | 2026-09-29 | `components.md` → Sections and Pages, `cms.md` → Collection lists, `interactions.md` → `x-related-empty` |
 
 ### Open
 
@@ -71,7 +74,7 @@ All must be closed before the phase noted in "Needed by".
 | ID | Question | Options | Needed by | Status |
 | --- | --- | --- | --- | --- |
 | P-01 | How is the physics avatar gallery (`x-gravity-gallery`) built? | (a) Webflow Code Component with Matter.js · (b) replace with a static collage + `ix-reveal-stagger` | Phase 8 (CTA Gallery in phase 4 needs a placeholder) | open |
-| P-02 | Does the blog post template get a table of contents (`x-article-toc`)? | (a) Small page script that builds it from the body H2s · (b) no TOC · (c) manual TOC field in the CMS | Phase 6 | open |
+| P-02 | Does the blog post template get a table of contents (`x-article-toc`)? | (a) Small page script that builds it from the body H2s · (b) no TOC · (c) manual TOC field in the CMS | Phase 6 | **closed (a), 2026-09-29** (user): the TOC is built from the body H2s by `x-article-toc`, desktop only, sticky, with scroll-spy. Approved in `interactions.md`; `cms.md` → Body decisions |
 | P-03 | What do `WhyFacilities` and `ModernFacility` become? | (a) Variants of `Section / Feature Grid` · (b) their own sections. Review against Figma | Phase 4 | open |
 | P-04 | How are the ~9 animated illustrations produced? _(proposed)_ | (a) Lottie made in After Effects or a Figma plugin (who makes them?) · (b) rebuild as Interaction timelines · (c) static SVG at launch, animate later | Phase 7 (phase 4 uses static SVGs meanwhile) | open |
 | P-05 | Where do form submissions go (Facility Apply form, newsletter)? _(proposed)_ | Webflow Forms with email notifications · Webflow Forms + webhook to a CRM/ESP · an external embed (would be an exception) | Phase 4 | open |
@@ -228,12 +231,12 @@ Grid (Cards), Testimonials (Slider), Post Grid (Home), CTA (Art). Also Text Pane
 
 ## Phase 6 — Blog and CMS
 
-Needs P-02 closed; P-13 and P-14 before the template.
+Needs P-02 (closed 2026-09-29); P-13 and P-14 before the template.
 
 - [x] Real posts prepared in the repo from the current site's export: categories, author, cleaned bodies, excerpts, WebP images with alt text (D-15, `cms.md` → Import from the current site)
 - [ ] Import all posts, categories and authors through the MCP, as drafts
 - [ ] Blog index with featured post and native pagination (6 per page). Built in the repo 2026-09-28 (`BlogPage.tsx`: `Section / Blog Hero`, `Section / Post Index`); Webflow build waits on P-15
-- [ ] Blog post template, including Related posts (D-02) and the P-02 result
+- [ ] Blog post template, including Related posts (D-02) and the P-02 result. Built in the repo 2026-09-29 (`src/pages/BlogPostPage.tsx`); Webflow build waits on the CMS import
 - [ ] Blog category template pages, and category links replacing the legacy `Select` filter. Repo: `/blog-categories/:slug` renders the same page, the select is the native-Dropdown pattern `fk-dropdown`
 - [ ] Template SEO bound to CMS fields (`cms.md` → Posts); `x-schema-post` (`BlogPosting` +
       `BreadcrumbList`) and the blog index `BreadcrumbList` (`seo.md` S-07, S-09)
@@ -248,7 +251,7 @@ Needs P-04 and P-07 closed.
 ## Phase 8 — Custom-code exceptions
 
 - [ ] `x-gravity-gallery` per P-01
-- [ ] `x-article-toc` per P-02 (if approved)
+- [ ] `x-article-toc` per P-02 (approved, closed (a) 2026-09-29)
 - [ ] Primary button hover checked in Preview against the repo (`x-button-gradient`, installed in P.2)
 - [ ] Exceptions table in `interactions.md` matches what is actually installed (`data_scripts_tool` → `get_site_scripts`)
 

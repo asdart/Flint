@@ -1,0 +1,166 @@
+/* fk-article — Article Body layout on the Posts template (Figma 5674:4065 frame, TOC 5674:4129,
+   quick answer 5674:4067, content 5674:4066; phone 5682:2225). Desktop is a three-column grid:
+   sticky table of contents | 720px content column (`width-article`) | empty balancing column, so
+   at 1440 the TOC sits at x=80 and the text at x=360. ≤991 drops to one column and hides the TOC.
+   `fk-article-toc-list` is filled by the x-article-toc exception with `fk-article-toc-link` anchors;
+   `is-toc-active` is toggled by its scroll-spy, so no interaction targets a utility.
+   `fk-article-image` is Article Hero's photo: natural ratio, never cropped (D-19). */
+
+.fk-article {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(0, var(--width-article)) minmax(0, 1fr);
+  column-gap: var(--space-10);
+  padding: var(--space-16) var(--space-16) var(--space-12);
+}
+
+.fk-article-toc {
+  position: sticky;
+  top: var(--space-24);
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-self: start;
+  max-height: calc(100vh - 2 * var(--space-24));
+  padding-top: var(--space-8);
+  overflow-y: auto;
+}
+
+.fk-article-toc-label {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--color-subtle);
+}
+
+.fk-article-toc-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.fk-article-toc-link {
+  display: block;
+  padding: 5px 0px 5px var(--space-3);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--color-subtle);
+  text-decoration: none;
+  box-shadow: inset 2px 0px 0px var(--color-stone-50);
+  transition:
+    color 300ms ease-out,
+    box-shadow 300ms ease-out;
+}
+
+.fk-article-toc-link:hover {
+  color: var(--color-ink);
+}
+
+.fk-article-toc-link:focus-visible {
+  outline: 2px solid var(--color-brand-focus);
+  outline-offset: -2px;
+  color: var(--color-ink);
+}
+
+.fk-article-toc-link.is-toc-active {
+  color: var(--color-ink);
+  box-shadow: inset 2px 0px 0px var(--color-brand);
+}
+
+.fk-article-content {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  width: 100%;
+  max-width: var(--width-article);
+  min-width: 0;
+}
+
+.fk-article-quick-answer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-tertiary);
+}
+
+.fk-article-quick-answer-label {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+.fk-article-body {
+  min-width: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-subtle);
+}
+
+.fk-article-author-name {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.fk-article-image {
+  display: block;
+  width: 100%;
+  max-width: 552px;
+  height: auto;
+  border-radius: var(--radius-lg-plus);
+}
+
+@media screen and (max-width: 991px) {
+  .fk-article {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 0px;
+  }
+
+  .fk-article-toc {
+    display: none;
+  }
+
+  .fk-article-content {
+    grid-column: 1;
+    margin-inline: auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-article {
+    padding-inline: var(--space-3);
+    padding-top: var(--space-5);
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .fk-article-content {
+    gap: var(--space-10);
+  }
+
+  .fk-article-quick-answer {
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+  }
+
+  .fk-article-quick-answer-label {
+    font-weight: 600;
+  }
+
+  .fk-article-author-name {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

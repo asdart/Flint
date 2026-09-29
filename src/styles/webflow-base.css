@@ -37,3 +37,43 @@
 .w-form-fail {
   display: none;
 }
+
+/* Rich Text element (`w-richtext`): the few rules Webflow's stylesheet applies to it. The clearfix
+   pseudo-elements contain floated images, lists clip their own overflow, and figures are 60%
+   wide unless an editor sets full width. `.fk-article-body` (article-body.css) restyles the rest. */
+.w-richtext:before,
+.w-richtext:after {
+  content: " ";
+  display: table;
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.w-richtext:after {
+  clear: both;
+}
+
+.w-richtext ol,
+.w-richtext ul {
+  overflow: hidden;
+}
+
+.w-richtext figure {
+  position: relative;
+  max-width: 60%;
+}
+
+.w-richtext figure.w-richtext-align-fullwidth {
+  max-width: 100%;
+}
+
+/* Sticky fix while legacy pages remain: the legacy src/index.css sets `overflow-x: hidden` on html
+   and body, which turns body into a scroll container that never scrolls and so breaks
+   `position: sticky` (the article TOC). `clip` clips the same way without creating a scroll
+   container. Webflow's site has no such rule; drop these two with the legacy stylesheet. */
+html {
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+}

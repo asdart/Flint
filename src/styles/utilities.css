@@ -227,6 +227,10 @@
   max-width: var(--width-content-sm);
 }
 
+.fk-max-w-article {
+  max-width: var(--width-article);
+}
+
 .fk-relative {
   position: relative;
 }

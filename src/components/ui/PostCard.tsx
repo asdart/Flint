@@ -27,6 +27,8 @@ export default function PostCard({ post }: PostCardProps) {
             className="fk-avatar"
             src={post.authorItem.avatar.url}
             alt={post.authorItem.avatar.alt}
+            width={24}
+            height={24}
             loading="lazy"
           />
           <div className="fk-post-card-meta-text">{post.authorItem["short-name"]}</div>

@@ -18,7 +18,7 @@ const SPACE = tokenNames.filter((name) => name.startsWith("space-")).map((name) 
 // Colors: backgrounds for panels, cards and surfaces; text colors for copy.
 const BG = ["white", "brand", "brand-light", "secondary", "tertiary", "surface", "stone-50", "peach-100", "sand-100"];
 const TEXT = ["ink", "ink-60", "subtle", "subtle-80", "brand", "brand-80", "white", "white-80", "white-60", "stone-100", "stone-400"];
-const WIDTHS = ["container", "container-md", "content", "content-sm"];
+const WIDTHS = ["container", "container-md", "content", "content-sm", "article"];
 const RADII = ["sm", "md", "lg", "xl", "2xl", "full"];
 
 for (const name of [

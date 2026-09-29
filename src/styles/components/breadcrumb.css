@@ -1,0 +1,48 @@
+/* fk-breadcrumb — "Blog / Category" trail above the post title in Article Hero (Figma 5674:4052
+   desktop, 5683:4468 phone). 16/24 subtle, links go ink on hover and focus. Gap 2px, 6px on phone
+   where the separator drops to 14/20. */
+
+.fk-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-0-5);
+}
+
+.fk-breadcrumb-link {
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-subtle);
+  text-decoration: none;
+  transition: color 300ms ease-out;
+}
+
+.fk-breadcrumb-link:hover {
+  color: var(--color-ink);
+}
+
+.fk-breadcrumb-link:focus-visible {
+  outline: none;
+  color: var(--color-ink);
+  box-shadow:
+    0px 0px 0px 2px var(--color-white),
+    0px 0px 0px 4px var(--color-brand-focus);
+}
+
+.fk-breadcrumb-separator {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-subtle);
+}
+
+@media screen and (max-width: 479px) {
+  .fk-breadcrumb {
+    gap: var(--space-1-5);
+  }
+
+  .fk-breadcrumb-separator {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

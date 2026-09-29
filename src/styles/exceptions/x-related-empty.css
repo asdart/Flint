@@ -1,0 +1,8 @@
+/* Exception x-related-empty — docs/webflow/interactions.md → Custom-code exceptions.
+   Blog post template custom code, never pushed as classes. Webflow can't hide a section when its
+   Collection List is empty (an empty list renders `.w-dyn-empty`), so the Related Posts section
+   hides itself. The repo preview doesn't render the section at all when there are no related posts. */
+
+[data-x-related]:has(.w-dyn-empty) {
+  display: none;
+}

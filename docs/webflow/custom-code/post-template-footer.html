@@ -1,0 +1,41 @@
+<!-- x-article-toc: article table of contents + scroll-spy. Posts template page, before </body>. See docs/webflow/interactions.md. Preview mirror: src/ix/articleToc.ts (keep in sync). -->
+<script>
+(function(){
+var b=document.querySelector(".fk-article-body"),t=document.querySelector(".fk-article-toc"),
+l=t&&t.querySelector(".fk-article-toc-list");
+if(!b||!l)return;
+var h=[].slice.call(b.querySelectorAll("h2"));
+/* inline display, not a class: no registered class needed, and it beats the aside's own display */
+if(!h.length){t.style.display="none";return}
+var a=[],c=null;
+h.forEach(function(e){
+if(!e.id){
+var s=e.textContent.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"section",i=s,n=1;
+while(document.getElementById(i))i=s+"-"+ ++n;
+e.id=i}
+var k=document.createElement("a");
+k.className="fk-article-toc-link";k.href="#"+e.id;k.textContent=e.textContent;
+l.appendChild(k);a.push(k)});
+function set(i){
+if(c===i)return;
+a.forEach(function(k,j){k.classList.toggle("is-toc-active",j===i);
+if(j===i)k.setAttribute("aria-current","true");else k.removeAttribute("aria-current")});
+c=i;
+/* scroll the aside only, never the page */
+var r=a[i].getBoundingClientRect(),q=t.getBoundingClientRect();
+if(r.top<q.top)t.scrollTop-=q.top-r.top;else if(r.bottom>q.bottom)t.scrollTop+=r.bottom-q.bottom}
+function spy(){
+var m=innerHeight*.3,i=0;
+h.forEach(function(e,j){if(e.getBoundingClientRect().top<=m)i=j});
+set(i)}
+var o=new IntersectionObserver(spy,{rootMargin:"0px 0px -70% 0px"});
+h.forEach(function(e){o.observe(e)});
+spy();
+l.addEventListener("click",function(e){
+var k=e.target.closest("a"),i=a.indexOf(k);
+if(i<0)return;
+e.preventDefault();
+h[i].scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
+history.replaceState(null,"",k.hash)})
+})();
+</script>

@@ -3,7 +3,7 @@ import categories from "./categories.json";
 import posts from "./posts.json";
 
 // Post bodies live in post-bodies.json (slug → rich text HTML) so the cards don't bundle them.
-// Load it with `import("./post-bodies.json")` where a body is rendered.
+// Read them through postBody() in ./bodies.ts, only where a body is rendered.
 
 export type Author = (typeof authors)[number];
 export type Category = (typeof categories)[number];
@@ -61,6 +61,24 @@ export function postPage(categorySlug: string | undefined, page: number) {
   const current = Math.min(Math.max(1, page), totalPages);
   const start = (current - 1) * POSTS_PER_PAGE;
   return { posts: listed.slice(start, start + POSTS_PER_PAGE).map(withRefs), page: current, totalPages };
+}
+
+/** The Posts CMS template page's current item, resolved by slug. Drafts have no live page, so
+ *  they resolve to undefined like an unpublished item would. */
+export function postBySlug(slug: string): PostWithRefs | undefined {
+  const post = posts.find((item) => item.slug === slug && !item.isDraft);
+  return post ? withRefs(post) : undefined;
+}
+
+/** The post page's related-posts Collection List: Posts of the same Category, current post
+ *  excluded, Publish date descending, limit 3. Empty when the category has no other posts; the
+ *  post page then hides the section (roadmap D-02, D-20). */
+export function relatedPosts(post: Post, limit = 3): PostWithAuthor[] {
+  return posts
+    .filter((item) => !item.isDraft && item.category === post.category && item.slug !== post.slug)
+    .sort((a, b) => b["publish-date"].localeCompare(a["publish-date"]))
+    .slice(0, limit)
+    .map((item) => ({ ...item, authorItem: findAuthor(item.author) }));
 }
 
 /** "July 17, 2026", the format Webflow's date binding uses on the cards and hero. */

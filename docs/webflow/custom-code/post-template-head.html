@@ -1,0 +1,54 @@
+<!--
+  x-schema-post (DRAFT): BlogPosting + BreadcrumbList JSON-LD. Posts template page, head code
+  (docs/webflow/interactions.md, seo.md S-07 and S-09). Not installed.
+
+  Placeholders: {{Post: Name}} means "insert the CMS field here" with the Add Field button in the
+  template's custom code editor (Post: Name, Excerpt, Main image, Publish date; Author: Name;
+  Category: Name and Slug). Fields inside JSON strings must not contain quotes: Name and Excerpt are
+  plain text (Excerpt max 160), so check a post with a quote or backslash in the title on staging.
+  Dates: Publish date must come out as ISO 8601 (YYYY-MM-DD); check the inserted format on staging.
+  {{Site: URL}} stands for the production origin (https://<domain>), a literal until the custom domain
+  exists (roadmap P-06); {{Post: Slug}} completes the canonical URL.
+
+  Organization and WebSite live in x-schema-site (site head), referenced here by @id
+  {{Site: URL}}/#organization, so the publisher is not repeated. The logo is defined there too.
+  FAQPage is NOT included (roadmap P-14 is open).
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "{{Site: URL}}/blog/{{Post: Slug}}#article",
+      "headline": "{{Post: Name}}",
+      "description": "{{Post: Excerpt}}",
+      "image": "{{Post: Main image URL}}",
+      "datePublished": "{{Post: Publish date}}",
+      "author": {
+        "@type": "Organization",
+        "name": "{{Author: Name}}"
+      },
+      "publisher": { "@id": "{{Site: URL}}/#organization" },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{Site: URL}}/blog/{{Post: Slug}}"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{Site: URL}}/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "{{Site: URL}}/blog" },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{Category: Name}}",
+          "item": "{{Site: URL}}/blog-categories/{{Category: Slug}}"
+        },
+        { "@type": "ListItem", "position": 4, "name": "{{Post: Name}}" }
+      ]
+    }
+  ]
+}
+</script>
