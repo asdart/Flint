@@ -12,8 +12,8 @@ on them. Don't start a phase before the previous phase's exit criteria are met, 
 ## Webflow target
 
 **Production** is the only Webflow target: the client's account, populated **from scratch** by
-replaying the repo (track P), then the sync target for every later phase. It is waiting for
-access (P-09). The test stage's records (ids, sync log, homepage plan) are archived in
+replaying the repo (track P), then the sync target for every later phase. Access arrived
+2026-09-29 (P-09): the site is `Flint` (`6ab9ba4aeffb3329202448ee`), empty and never published. The test stage's records (ids, sync log, homepage plan) are archived in
 [`archive/test-site/`](archive/test-site/README.md).
 
 The repo is the source of truth. Nothing is copied from the test site to production: every class,
@@ -25,7 +25,7 @@ component, page and item is rebuilt from `src/` and the registries with the reci
 | Phase | Goal | Webflow target | Status |
 | --- | --- | --- | --- |
 | 0–2 | **Test stage**: contract, foundations, MVP 1 (vertical slice) and MVP 2 (homepage at 1:1 parity) | Test site (archived) | ☑ closed 2026-09-25 (D-08) |
-| P | **Production site**: access, then populate from scratch with everything built so far | Production | ☐ starts when access arrives (P-09) |
+| P | **Production site**: access, then populate from scratch with everything built so far | Production | ◐ in progress (P.1 setup started 2026-09-29) |
 | 3 | Global and UI components | Production | ◐ Home components built in the repo |
 | 4 | Sections | Production | ◐ Home sections built in the repo |
 | 5 | Static pages | Production | ☐ |
@@ -54,8 +54,8 @@ next phase on production.
 | D-06 | The primary button hover matches the repo exactly (gradient angle rotation) through custom-CSS exception `x-button-gradient`, installed once the plan allows custom code. Icons are SVG files; buttons have no icon by default | 2026-09-24 | `interactions.md`, `classes.md`, `components.md`, `AGENTS.md` rules 10 and 14 |
 | D-07 | Two-line clamps and antialiased font smoothing match the repo through custom-CSS exception `x-text-rendering` (the style API rejects those properties), installed with `x-button-gradient` | 2026-09-25 | `interactions.md`, `classes.md` |
 | D-08 | The test stage (phases 0–2) is closed. Its open reviews and staging re-checks are closed as test findings and re-checked on production ([carried checks](#carried-into-production-qa)) | 2026-09-25 | This file |
-| D-09 | Production lives in the **client's Webflow account** on a **Business/Enterprise** plan (exact plan to confirm in P-09). It starts empty and is populated from scratch from the repo. Until access, work continues in the repo only | 2026-09-25 | This file, `AGENTS.md` §9 once the site exists |
-| D-10 | The mobile menu's scroll lock keeps `overscroll-behavior: contain` through custom-CSS exception `x-scroll-lock`, installed with the other two exceptions. The body lock stays native (`ix-nav-menu`) | 2026-09-26 | `interactions.md`, `classes.md` |
+| D-09 | Production lives in the **client's Webflow account** on a **Business/Enterprise** plan (exact plan to confirm, P-09). It starts empty and is populated from scratch from the repo. The site exists since 2026-09-28: name `Flint`, short name `fint-fc2589` ("fint" kept on purpose, staging `fint-fc2589.webflow.io`), site ID `6ab9ba4aeffb3329202448ee`, workspace `6903cd68560df35a819fcc12`, time zone America/Vancouver, no custom domain | 2026-09-25 | This file, `AGENTS.md` §9 once the site exists |
+| D-10 | The mobile menu's scroll lock keeps `overscroll-behavior: contain`. It was planned as custom-CSS exception `x-scroll-lock`, but the style API accepts the property, so since 2026-09-29 it sits on `fk-nav-menu` and `fk-nav-menu-links` and the exception is retired. The body lock stays native (`ix-nav-menu`) | 2026-09-26, updated 2026-09-29 | `interactions.md`, `classes.md` |
 | D-11 | New CSS system direction: a utilities layer (`tokens → utilities → primitives → blocks`) sits between tokens and classes, so repeated single-property rules (`display: flex`, `gap`, alignment…) stop needing a combo per base class. Gated on spike S7 (stacked standalone classes through the MCP), which passed 2026-09-27. Three sub-decisions: responsive utilities use suffix naming (`-tablet`/`-mobile`/`-phone`, max-width only); panel colors move from `fk-panel is-*` combos to `fk-bg-*` utilities; a new primitive `fk-section-header-action` replaces the repeated `*-action` block elements. Full spec and the S7 evidence in [`css-system.md`](css-system.md) | 2026-09-27 | `css-system.md` (proposed, becomes contract 1.6 once migrated) |
 | D-12 | How It Works card art redesigned from Figma (node 5746:992 desktop, 5483:860 mobile), **supersedes H-4** ("one image per card"). Cards now get a solid `color-tertiary` background (`is-brand-light` → `color-brand-light` on card 5 "Start work") with a full-bleed `-bg` raster (photo/gradient/pattern) and, on 5 of 6 cards, a floating `-art` illustration on top (card 4 "Relocate" has none); cards 2 and 6 (inverse copy over a photo) add a `-scrim` gradient. Card 3's copy also changed to match Figma ("Interview Directly with Facilities" / "We present you with facilities. You choose who to interview.") | 2026-09-27 | `classes.md` → `fk-how`, `components.md` → Section / How It Works, `sections/HowItWorks.tsx` |
 | D-13 | Twitter card values come from each page's Open Graph settings (Webflow has no separate Twitter fields); no exception needed (was P-11) | 2026-09-27 | `seo.md` S-02 |
@@ -77,7 +77,7 @@ All must be closed before the phase noted in "Needed by".
 | P-06 | Which custom domain, and who manages DNS? | Client's domain; DNS access from the client | Phase 10 | open. The plan part is answered by D-09 (Business/Enterprise allows CMS and site custom code) |
 | P-07 | Is it acceptable that stat numbers animate as a whole instead of digit by digit? _(proposed)_ | (a) Yes, native `ix-count-in` · (b) no, add a digit script exception | Phase 7 | open |
 | P-08 | Who supplies the missing content? _(proposed)_ | FAQ answers 2+, real footer URLs, About Team copy, bodies for non-featured posts | Phase 9 | open |
-| P-09 | Production access: which site and workspace, which role, and can the Webflow MCP be authorized on the client's account? | We need Designer access with site settings and custom code rights, and the MCP's OAuth app approved for the client's workspace (may need a workspace admin). Confirm the exact plan and whether the site is new and empty | Track P | open |
+| P-09 | Production access: which site and workspace, which role, and can the Webflow MCP be authorized on the client's account? | We need Designer access with site settings and custom code rights, and the MCP's OAuth app approved for the client's workspace (may need a workspace admin). Confirm the exact plan and whether the site is new and empty | Track P | access answered 2026-09-29: the Webflow MCP is authorized on the client's workspace and `get_site` returns the production site (new, empty, never published). Exact plan still to confirm: the MCP doesn't expose it, so ask the client or read it in the Designer |
 | P-12 | Which page is the "role page" in the PageSpeed check (`seo.md` S-15)? The roadmap has no role pages yet | Name the page, and add it to `components.md` → Pages if it's new | Phase 5 | open, to decide later (user, 2026-09-27) |
 | P-13 | The post main images are text banners (about 2.1:1) and the card crops them to 1.4:1 (3.5:1 on mobile landscape), cutting off the headline | (a) New card-ready images from the client · (b) change the card image ratio to fit the banners · (c) accept the crop | Phase 6 | open |
 | P-14 | Do post FAQs get `FAQPage` schema (`seo.md` S-08)? The FAQs are now rich text | (a) A plain-text field holding each post's FAQ JSON-LD, inserted by `x-schema-post` (pairs ready in `blog-embeds/faq-pairs.json`) · (b) no FAQ schema on posts | Phase 6 | open |
@@ -134,19 +134,20 @@ when the page is built there.
 
 ## Track P — Production site
 
-Starts when P-09 is answered. Follow `mcp-playbook.md` in its fixed order; each step replays what
+Started 2026-09-29 (P-09 access answered). Follow `mcp-playbook.md` in its fixed order; each step replays what
 the repo already holds, so no new design work happens here.
 
 ### P.1 Access and setup
 
 - [ ] Access granted per P-09; exact plan confirmed; D-09 updated with the site's name, short name,
-      ID, workspace and time zone
-- [ ] Webflow MCP authorized on the client's account; `get_site` returns the production ID
-- [ ] `AGENTS.md` §9 filled in with the production site's name, short name, ID, workspace and home
+      ID, workspace and time zone. _Access and D-09 done 2026-09-29; the exact plan is still to
+      confirm (the MCP doesn't return it)_
+- [x] Webflow MCP authorized on the client's account; `get_site` returns the production ID (2026-09-29)
+- [x] `AGENTS.md` §9 filled in with the production site's name, short name, ID, workspace and home
       page ID (the rule "agents never target another site" then names that ID)
 - [x] Ids per site: `webflow-ids.json` is the empty production template (the sync scripts read it)
       and the test stage's ids are archived in `archive/test-site/webflow-ids.json`
-- [ ] Site instruction (`rules/flint-contract.md`) created from `AGENTS.md`
+- [x] Site instruction (`rules/flint-contract.md`) created from `AGENTS.md` (id `6abbd3d2ad685df9550206d7`, 2026-09-29; update it whenever the contract version changes)
 - [ ] Tag styles seeded once in the Designer (Body, All Links)
 - [ ] **MCP Bridge** app installed and connected in the production Designer
 - [ ] SEO site settings (`seo.md`): global canonical URL (with the domain, P-06), auto sitemap,
@@ -156,19 +157,17 @@ the repo already holds, so no new design work happens here.
 
 In this order. Record every id in `webflow-ids.json` and add one `sync-log.md` row per step.
 
-- [ ] Fonts: SN Pro 400/500, STIX Two Text 400
-- [ ] Variable collection `Flint` with every token in `tokens.md`
-- [ ] Assets: every SVG and image the migrated code uses (`webflow-upload-batch.mjs`)
-- [ ] Classes: every class and combo in `classes.md`, with breakpoints and states;
-      `webflow-diff.mjs` clean against production
+- [x] Fonts: SN Pro 400/500/600 (600 = current page in `fk-pagination`), STIX Two Text 400, latin `.woff2`, `swap` (2026-09-29)
+- [x] Variable collection `Flint` with every token in `tokens.md`: 65 variables (30 color, 2 font family, 33 size), read back equal to `tokens.css` (2026-09-29)
+- [x] Assets (class CSS scope, 2026-09-29): the 2 SVG masks the class CSS references (`cta-ring.svg`, `cta-circle.svg`), uploaded with `webflow-upload-batch.mjs`. Component and page images (WebP, `webflow-markup.mjs` lookups) come later, with the components and pages that use them
+- [x] Classes (2026-09-29): every non-legacy class in `layout.css`, `typography.css`, `utilities.css` and `components/*.css`, with breakpoints and states: 441 style chains (347 base incl. 178 utilities, 94 combos), 189 breakpoint/state updates; `webflow-diff.mjs` reports "No differences.". **Still Designer-only:** the five `w--current` / `w--open` state rules (`fk-nav-link`, `fk-nav-menu-link`, `fk-dropdown-link`, `fk-pagination-page`, `fk-input-field.is-select`), which the API can't create (`classes.md`)
 - [ ] Components: `Global / Nav`, `Global / Footer`, the `UI / *` and `Section / *` components
       marked `migrated` in `components.md`, with props and variants
 - [ ] CMS: Categories, Authors, Posts with the fields in `cms.md`, seeded from `src/content/`
 - [ ] Pages: Home (`/`, `src/pages/HomePage.tsx`) as composed in `components.md` → Pages;
       `/style-guide` as a draft
 - [ ] Interactions: every interaction in `interactions.md` marked `migrated`, with reduced-motion settings
-- [ ] Custom code: `x-button-gradient`, `x-text-rendering` and `x-scroll-lock` (the plan allows it, D-09, D-10),
-      plus `x-schema-site` and `x-deferred-tracking` (`seo.md` S-06, S-13)
+- [ ] Custom code: CSS part done 2026-09-29 (`x-button-gradient` and `x-text-rendering`, one `<style>` block in the site head code, source `docs/webflow/custom-code/site-head.html`; `x-scroll-lock` retired, `overscroll-behavior` moved to the nav classes, D-10). **Waiting:** `x-schema-site` (real social profile URLs for `sameAs`) and `x-deferred-tracking` (a GTM container ID), deferred by the user (`seo.md` S-06, S-13)
 - [ ] Assets uploaded as resized WebP (`seo.md` S-10); fonts only as uploaded custom fonts (S-12)
 - [ ] Staging publish to the `webflow.io` subdomain (with confirmation), then the
       [carried checks](#carried-into-production-qa)

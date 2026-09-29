@@ -1,13 +1,100 @@
 {
-  "$comment": "Ids of everything created on the production Webflow site by MCP syncs (see sync-log.md). Empty until roadmap step P.1. Update by id or name; never re-create an entry listed here. Shapes: site {id, homePageId}; pages {\"/path\": id}; components {name: {id, props: {Prop: id}}}; collections {name: {id, fields?, items?}}; interactions {name: id}; assets {repo path (/assets/… or src/assets/…): {id, url}}; variableCollections {name: id}; variables {token name: id}. The test site's ids are archived in archive/test-site/webflow-ids.json.",
-  "site": { "id": null, "homePageId": null },
-  "siteInstructions": {},
-  "fonts": {},
+  "$comment": "Ids of everything created on the production Webflow site by MCP syncs (see sync-log.md). Site and site instruction recorded in roadmap step P.1 (2026-09-29); the rest is filled as track P.2 runs. Update by id or name; never re-create an entry listed here. Shapes: site {id, homePageId}; pages {\"/path\": id}; components {name: {id, props: {Prop: id}}}; collections {name: {id, fields?, items?}}; interactions {name: id}; assets {repo path (/assets/… or src/assets/…): {id, url}}; variableCollections {name: id}; variables {token name: id}. The test site's ids are archived in archive/test-site/webflow-ids.json.",
+  "site": {
+    "id": "6ab9ba4aeffb3329202448ee",
+    "homePageId": "6ab9ba4ceffb3329202448f2"
+  },
+  "siteInstructions": {
+    "rules/flint-contract.md": "6abbd3d2ad685df9550206d7"
+  },
+  "fonts": {
+    "SN Pro 400": "6abbd47ae9ffc3afc212ad26",
+    "SN Pro 500": "6abbd47ae9ffc3afc212ad4d",
+    "SN Pro 600": "6abbd47b287bf955edbf2ede",
+    "STIX Two Text 400": "6abbd47b287bf955edbf2f05"
+  },
   "pages": {},
   "components": {},
   "collections": {},
   "interactions": {},
-  "assets": {},
-  "variableCollections": {},
-  "variables": {}
+  "assets": {
+    "/assets/home/cta-ring.svg": {
+      "id": "6abbd67e76b5d041f5e39e5a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbd67e76b5d041f5e39e5a_cta-ring.svg"
+    },
+    "/assets/home/cta-circle.svg": {
+      "id": "6abbd67f92bbe90d74fbf5f5",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbd67f92bbe90d74fbf5f5_cta-circle.svg"
+    }
+  },
+  "variableCollections": {
+    "Flint": "collection-d73e84dd-ed18-1d22-612a-95bbf12f2163"
+  },
+  "variables": {
+    "color-white": "variable-eed8a552-ee14-4e54-0fec-1d128e158c2c",
+    "color-ink": "variable-9fea9fef-1ee9-6190-a029-ddaebb623c78",
+    "color-subtle": "variable-7cb29c39-bbb5-9362-e940-940550eae0a8",
+    "color-brand": "variable-3702eb74-bf1a-4032-97d5-5c626efc5f25",
+    "color-brand-light": "variable-a77bfe25-81cb-efba-534b-e15472bd49e6",
+    "color-brand-foreground": "variable-f5cb4fc0-f8f2-fb05-8ba9-1640098ad740",
+    "color-secondary": "variable-e9a1719f-a77d-e6c3-bf86-4accf5532a38",
+    "color-tertiary": "variable-51a0e01e-9d4a-b8d3-ee65-81250714c275",
+    "color-surface": "variable-a5ce3b9a-be44-4243-cb20-bc0cec829e1a",
+    "color-stone-50": "variable-aa6a7979-2fb4-7dd9-3779-bd7d115522fb",
+    "color-stone-100": "variable-8e3037df-22ef-7c44-29de-b26d5b93a745",
+    "color-stone-200": "variable-5f5a3ff8-289d-c7c5-e5a4-ccd966d1c3f0",
+    "color-stone-400": "variable-831a1ff8-3fa6-3589-511b-e476757031d9",
+    "color-stone-800": "variable-87153af8-e1a9-4431-c738-6212e2d55a8b",
+    "color-neutral-hover": "variable-4edc4e5e-625a-1f02-3417-5566ee78099d",
+    "color-white-80": "variable-1c40c089-ef66-25ad-acda-fa2cdc4f60c5",
+    "color-white-60": "variable-7213b0d5-b2f5-5581-83e1-877e920c5fc4",
+    "color-white-20": "variable-6c8cd468-3d85-8603-d658-6f401fff33f0",
+    "color-white-10": "variable-08fab8b6-07d5-1e0b-1977-34f3dc62ac98",
+    "color-brand-80": "variable-5a1f1bb9-3be7-6349-7f50-675a812c335b",
+    "color-subtle-80": "variable-cb0a2223-4776-6905-37d4-5abad2c43a3f",
+    "color-ink-60": "variable-c117ea0c-c9df-375b-646e-9383d315201e",
+    "color-scrim": "variable-8bdac060-0c44-5722-96ea-0bb61a9e9dbf",
+    "color-brand-10": "variable-6630f9f2-6d5c-9f5e-7762-dfd5032d594c",
+    "color-brand-focus": "variable-419b2221-f4e6-732f-2695-2968f36a77c3",
+    "color-accent-rose": "variable-b70448c5-98fb-6883-e182-fe12d41887a3",
+    "color-accent-blue": "variable-eb22ffb9-368f-8579-114c-9cf727696a9c",
+    "color-peach-100": "variable-12201713-c6dc-69dd-2fc4-2b8d2638f0f5",
+    "color-peach-200": "variable-29383b86-1680-62a2-673d-2854ae5df3a4",
+    "color-sand-100": "variable-fedb3298-275a-04f5-e3b8-879f04e83ea0",
+    "font-sans": "variable-c018d016-ca58-7457-e705-7474ffa71fd6",
+    "font-serif": "variable-f070e3ae-2245-c049-461c-e504726ad957",
+    "radius-sm": "variable-16ce5597-5984-5e27-6ff4-b4cb14da34d5",
+    "radius-md": "variable-14512fbd-ebb5-9eac-4002-a24833e19999",
+    "radius-lg": "variable-592c8752-1019-3593-c3b7-9f5db87c6265",
+    "radius-lg-plus": "variable-8686f8d3-17e2-c826-03fa-e791ec8c86c4",
+    "radius-xl": "variable-575c6e95-f385-68f7-e61f-0c1dc082b899",
+    "radius-2xl": "variable-dc3358df-604d-72ac-270d-982ed6db65b5",
+    "radius-full": "variable-d842fa5a-7d64-766e-76ca-0cd20bc1526d",
+    "space-0-5": "variable-617489e8-00b3-e00d-03fd-5e88d137caa1",
+    "space-1": "variable-b811e853-4efd-e12c-ed30-23a6a7aed870",
+    "space-1-5": "variable-087aec3e-98f0-1264-3e85-b0db07ef77b0",
+    "space-2": "variable-b71cedde-bd80-870a-144e-39c958815958",
+    "space-2-5": "variable-32c9f6db-d3ad-9200-92af-50579b8dabe2",
+    "space-3": "variable-946cc17a-b55c-3ca1-d1a4-d6efa65916a0",
+    "space-3-5": "variable-02cbf3a4-a64f-35f7-e0de-a47b2bf3a6c6",
+    "space-4": "variable-a332dc7c-42f1-0f24-a675-55a189d89ffe",
+    "space-5": "variable-fc68713f-31e4-540b-9be1-fd36d5f4422f",
+    "space-6": "variable-78c61ec9-cf77-2831-8f64-5b7d6ffa85ce",
+    "space-7": "variable-337f66ca-14df-4b59-75fb-baa9e0d1d199",
+    "space-8": "variable-11f58ab4-37bc-3aeb-1702-538adc1270eb",
+    "space-10": "variable-75bd06da-5676-0bc9-7850-0b26d4765892",
+    "space-12": "variable-e500df6e-750e-a68a-e29c-a9fe7d0d44a6",
+    "space-14": "variable-b2df3b80-7079-862e-a373-754c56157d30",
+    "space-16": "variable-6f93a5ae-593f-a376-422a-6f6f3b42be79",
+    "space-19": "variable-e84b5bcc-8fe6-fd91-4324-e7c67fccea7c",
+    "space-20": "variable-b13e0ca1-b90c-4632-b048-80e767fdc3b2",
+    "space-24": "variable-a536cad7-0588-c96b-7acd-1cebaa6d8b06",
+    "space-32": "variable-3e6fd028-abb7-c328-0641-5ba63440d006",
+    "space-36": "variable-bba8ee30-a32e-99d9-bb35-891e2d667bc1",
+    "width-container": "variable-e4030e28-65e6-dce9-fed8-0a2887ecd198",
+    "width-container-md": "variable-64912cfd-2974-3dfb-fe49-8021bc26f227",
+    "width-content": "variable-d7261268-3544-0a6c-c094-dd0f31885343",
+    "width-content-sm": "variable-582548b9-7a05-9ca6-e01f-33fc66081aae",
+    "width-nav-pill": "variable-a86919ed-e333-2b2a-7c49-1c4ffd39b775"
+  }
 }

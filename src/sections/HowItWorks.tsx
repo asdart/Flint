@@ -98,7 +98,7 @@ export default function HowItWorks() {
                         data-how-card={number}
                       >
                         <img
-                          className="fk-how-bg"
+                          className={cx("fk-how-bg", (number === 3 || number === 5) && `is-card-${number}`)}
                           src={`/assets/home/how-card-bg-${number}.webp`}
                           alt=""
                           width={bgWidth}
@@ -107,7 +107,7 @@ export default function HowItWorks() {
                         {step.scrim && <div className="fk-how-scrim" aria-hidden="true" />}
                         {step.artSize && (
                           <img
-                            className="fk-how-art"
+                            className={cx("fk-how-art", [1, 2, 3, 6].includes(number) && `is-card-${number}`)}
                             src={`/assets/home/how-card-art-${number}.webp`}
                             alt=""
                             width={step.artSize[0]}

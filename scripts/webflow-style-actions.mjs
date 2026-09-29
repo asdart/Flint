@@ -8,7 +8,8 @@ import { readFileSync } from "node:fs";
 
 // --vars-only: emit only properties that reference a variable (re-linking raw var() values).
 // --create: the classes don't exist yet. Each class chain starts with a create_style action (holding
-// its desktop values); the other breakpoints and states follow as update_style actions.
+// its desktop values); the other breakpoints and states follow as update_style actions. Rules on
+// Webflow's own states (`w--current`, `w--open`) are skipped: they can't be created through the API.
 const varsOnly = process.argv.includes("--vars-only");
 const create = process.argv.includes("--create");
 const args = process.argv.slice(2).filter((arg) => arg !== "--vars-only" && arg !== "--create");
@@ -71,7 +72,8 @@ function expand(name, value) {
       return [["overflow-x", value], ["overflow-y", value]];
     case "grid-area": {
       const [rs, cs, re, ce] = value.split("/").map((v) => v.trim());
-      return [["grid-row-start", rs], ["grid-column-start", cs], ["grid-row-end", re], ["grid-column-end", ce]];
+      // `grid-area: 1 / 1` has no end lines (auto): send only the starts rather than `undefined` ends.
+      return [["grid-row-start", rs], ["grid-column-start", cs], ["grid-row-end", re], ["grid-column-end", ce]].filter(([, v]) => v !== undefined);
     }
     case "flex":
       if (value === "none") return [["flex-grow", "0"], ["flex-shrink", "0"], ["flex-basis", "auto"]];
@@ -82,8 +84,11 @@ function expand(name, value) {
       }
       return [[name, value]];
     case "border":
-    case "border-top": {
-      const edges = name === "border" ? ["top", "right", "bottom", "left"] : ["top"];
+    case "border-top":
+    case "border-right":
+    case "border-bottom":
+    case "border-left": {
+      const edges = name === "border" ? ["top", "right", "bottom", "left"] : [name.slice("border-".length)];
       const [width, style = width === "0" ? "none" : "solid", color] = value.split(/\s+(?![^(]*\))/);
       return edges.flatMap((edge) => [
         [`border-${edge}-width`, width === "0" ? "0px" : width],
@@ -174,6 +179,13 @@ for (const file of files) {
 }
 
 if (create) {
+  // Webflow's own states can't be created through the API: `create_style` with the name `w--current`
+  // makes an ordinary combo class named that (selector `.a._w--current`), not the state. Skip them;
+  // they're styled in the Designer (classes.md).
+  const isState = (action) => [action.update_style.style_name, ...(action.update_style.parent_style_names ?? [])].some((n) => /^w--/.test(n));
+  const skipped = actions.filter(isState).map((a) => a.label);
+  if (skipped.length) console.error(`Skipped (Designer-only Webflow states): ${skipped.join(", ")}`);
+  actions.splice(0, actions.length, ...actions.filter((a) => !isState(a)));
   const chain = (action) => [...(action.update_style.parent_style_names ?? []), action.update_style.style_name].join(".");
   const created = new Set();
   const createActions = [];

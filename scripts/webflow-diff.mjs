@@ -80,8 +80,8 @@ for (const [k, props] of expected) {
   const selector = k.slice(0, k.indexOf(" @"));
   expectedSelectors.add(selector);
   if (!selectors.has(selector)) {
-    // w--current can't be created through the MCP (classes.md); it's set in the Designer.
-    if (selector.includes("w--current")) continue;
+    // w--current and w--open can't be created through the MCP (classes.md); they're set in the Designer.
+    if (/w--(current|open)/.test(selector)) continue;
     if (!lines.includes(`MISSING STYLE ${selector}`)) lines.push(`MISSING STYLE ${selector}`);
     continue;
   }

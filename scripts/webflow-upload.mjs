@@ -14,7 +14,10 @@ if (!file) {
 }
 
 const result = JSON.parse(readFileSync(0, "utf8"));
-const { uploadUrl, uploadDetails } = result;
+// create_asset returns { uploadUrl, uploadDetails } (camelCase keys); create_font returns
+// { upload: { url, fields } } with the S3 form field names already exact (checked 2026-09-29).
+const uploadUrl = result.uploadUrl ?? result.upload?.url;
+const uploadDetails = result.uploadDetails ?? result.upload?.fields;
 if (!uploadUrl || !uploadDetails) throw new Error("stdin must be the create_asset/create_font result");
 
 const FIELD_NAMES = {
@@ -29,7 +32,7 @@ const fieldName = (key) =>
 
 const form = new FormData();
 for (const [key, value] of Object.entries(uploadDetails)) form.append(fieldName(key), value);
-const type = uploadDetails.contentType ?? result.contentType ?? "application/octet-stream";
+const type = uploadDetails.contentType ?? uploadDetails["Content-Type"] ?? result.contentType ?? "application/octet-stream";
 form.append("file", new Blob([readFileSync(file)], { type }), basename(file));
 
 const response = await fetch(uploadUrl, { method: "POST", body: form });

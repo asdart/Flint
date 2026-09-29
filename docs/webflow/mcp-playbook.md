@@ -9,7 +9,7 @@ Every rule in `AGENTS.md` still applies, especially rules 11, 12 and 13.
 1. **Authenticated.** If calls fail with an auth error, re-authenticate the server (Cursor: its `mcp_auth`; Claude Code:
    reconnect the Webflow connector). If
    `data_sites_tool` → `list_sites` returns no sites, the wrong Webflow account is connected. Stop and ask the user.
-2. **Site ID known.** Read it from `AGENTS.md` §9. Never guess it or pick one from a list without asking the user. While §9 still says "to set" (before roadmap step P.1), no write happens.
+2. **Site ID known.** Read it from `AGENTS.md` §9. Never guess it or pick one from a list without asking the user. If `list_sites` doesn't return this ID, stop and ask.
 3. **Designer tools** (`designer_tool`, selection, canvas) need the Webflow Designer open with the
    MCP Bridge app running. **Data tools** (`data_*`) are headless and preferred.
 4. Call `webflow_guide_tool` once at the start of each session, then
@@ -48,7 +48,7 @@ Always sync in this order, because later steps depend on earlier ones:
 
 | Step | Registry | Tools (actions) |
 | --- | --- | --- |
-| 0. Site instruction (first sync only) | `AGENTS.md` | `data_agent_instructions_tool`: `search_instructions`, then `create_instruction` with a short summary of rules 1–13 and a link to this repo, so agents working inside Webflow follow the same contract |
+| 0. Site instruction (first sync only) | `AGENTS.md` | `data_agent_instructions_tool`: `search_instructions`, then `create_instruction` with a short summary of the rules (1–15 in contract 1.6) that says AGENTS.md wins, so agents working inside Webflow follow the same contract |
 | 1. Fonts | `tokens.md` → Fonts | `data_fonts_tool`: `list_fonts`, `create_font` (MD5 of the file), then POST the bytes to the returned S3 URL within 15 minutes |
 | 2. Variables | `tokens.md` | `data_variable_tool`: `get_variable_collections`, `query_variables`, then `create_variable_collection` (`Flint`), `create_color_variable`, `create_size_variable`, `create_font_family_variable`, `update_*` |
 | 3. Assets | images, SVGs (`src/assets/icons/`), Lotties | `data_assets_tool`: `list_assets`, `create_asset` → pipe the result into `node scripts/webflow-upload.mjs <file>` (S3 POST) → record id + hosted URL in `webflow-ids.json`. Folders can't be deleted, so don't create them without approval |
@@ -57,7 +57,7 @@ Always sync in this order, because later steps depend on earlier ones:
 | 6. Pages | `components.md` → Pages | `data_pages_tool` `create_page`, then `data_component_builder` `insert_in_element` for component instances. Page-level markup (e.g. Collection Lists) with `data_whtml_builder` / `data_element_builder`. A Collection List needs its collection (step 7) first. Then the page settings from `seo.md`: `update_page_settings` with `seo`, `openGraph` and, for FAQ pages, `jsonLdSchema`; heading levels with `set_heading_level`; noindex (Sitemap indexing) is Designer-only |
 | 7. CMS | `cms.md` | `data_cms_tool` (`get_collection_list`, `create_collection`, `create_collection_static_field`, `create_collection_reference_field`, `create_collection_items`, `update_collection_items`) or `/cms-collection-setup`, `/bulk-cms-update` |
 | 8. Interactions | `interactions.md` | `data_interactions_tool`: `guide`, `list_interactions`, `create_interaction`, `update_interaction` |
-| 9. Custom code | `interactions.md` → exceptions only | `data_scripts_tool` (`register_inline_script`, `add_page_script`). SEO exceptions: `x-schema-site`, `x-schema-post`, `x-deferred-tracking` (`seo.md`) |
+| 9. Custom code | `interactions.md` → exceptions only | `data_scripts_tool`: raw CSS or JSON-LD goes in the freeform head/footer blocks (`set_site_freeform_code`, `set_page_freeform_code`; CSS exceptions come from `docs/webflow/custom-code/site-head.html`), scripts through `register_inline_script` (max 2,000 characters) + `add_site_script` / `add_page_script`. Read before write (`get_site_freeform_code`), because the write replaces the whole block. SEO exceptions: `x-schema-site`, `x-schema-post`, `x-deferred-tracking` (`seo.md`) |
 | 10. Verify | — | `node scripts/webflow-diff.mjs` on a fresh `get_styles` dump (skill recipe "Diff"), `element_snapshot_tool`, `data_element_tool` → `query_elements`, `/site-audit`, `/accessibility-audit`, and the `seo.md` checks on staging (one H1, page settings, schema in the Rich Results Test, image sizes and lazy loading, `curl -I` for the 404) |
 | 11. Publish | — | Only on user request, via `/safe-publish` |
 
@@ -74,13 +74,17 @@ Always sync in this order, because later steps depend on earlier ones:
 | Native `<button>`, `<span>` etc. as DOM elements (`data_element_builder`, `type: "DOM"`, `set_dom_config.dom_tag`) | The WHTML builder turns `<button>` into a Link, and its `<span>` can't bind a prop. Use DOM elements for both |
 | CMS collections, fields, references, items | Reserved field slugs get `-2` (`published-on`). Slugs can't be renamed: create the new field, copy values, repoint sorts/bindings, then delete the old one |
 | Collection List source/sort/limit, CMS field bindings (incl. referenced fields) | Draft items aren't shown on the canvas |
-| Assets and fonts (with an S3 upload step, `scripts/webflow-upload.mjs`) | Images inserted by URL aren't linked to the asset → `set_settings` `assetId` (or `set_image_asset`) |
+| Site instructions (`data_agent_instructions_tool`: search, create, update, read) ([recipe](../../.agents/skills/flint-webflow-sync/recipes.md#site-instruction)) | `get_site` doesn't return the Webflow plan: confirm it with the client or in the Designer |
+| Assets and fonts (with an S3 upload step, `scripts/webflow-upload.mjs`; `create_font` returns `upload.{url,fields}`, `create_asset` returns `uploadUrl`/`uploadDetails`, the script reads both) | Images inserted by URL aren't linked to the asset → `set_settings` `assetId` (or `set_image_asset`) |
 | Removing properties from a class or variant (`remove_properties`) | `remove_style` fails while any element still uses the style; removing a base removes its combos |
+| Classes with no markup: `create_style` (with `parent_style_names` for combos, empty `properties` accepted) then `update_style` per breakpoint and state (`hover`, `active`, `focus-visible`, `focus-within`, `placeholder`) (checked 2026-09-29, 441 chains) | Webflow's own `w--current` / `w--open` states (`create_style` makes a combo *named* that, `.a._w--current`). Style writes are rate-limited (~170 actions in a few minutes → `Too Many Requests`; failed actions create nothing): batches of at most 45 |
 | Standard CSS properties | Vendor-prefixed ones (`-webkit-line-clamp`, `-webkit-box-orient`, `-webkit-font-smoothing`) are rejected, also unprefixed → exception `x-text-rendering` |
 | CSS transitions of colors, shadows, transforms, opacity | No transition of a gradient angle or custom property, and IX3 can't animate them either → exception (`x-button-gradient`) |
 | IX3 interactions by class, attribute, body; class toggles; reduced-motion and breakpoint conditions; `customEase` path eases; click `jump`, hover `pause`/`resume` on one timeline | Multi-group click interactions only accept `play`; no `filter` (blur); a scroll trigger must be the interaction's only trigger (no in-view pause for a carousel that also has hover or clicks) |
 | Snapshots and page switching with the Bridge app | Newly uploaded fonts/CMS data may need a Designer reload to show |
 | Stacking several standalone classes on one element (spike S7, 2026-09-27): each keeps its own properties, element `class` carries every name | Webflow auto-creates an empty combo style per new chain depth (harmless: no properties, and not emitted in the published CSS, checked in the test stage). `set_style` only reuses an existing chain by name; it can't create a new one (use the WHTML builder for the first use of a combination). See `css-system.md` → S7 result and the skill's [Stack utility classes](../../.agents/skills/flint-webflow-sync/recipes.md#stack-utility-classes) recipe |
+| Site and page custom code: raw `<style>` / `<script>` / JSON-LD blocks in the head or footer (`data_scripts_tool` → `set_site_freeform_code`, `set_page_freeform_code`, checked 2026-09-29 on production: the write returns and `get_site_freeform_code` reads back the same content) | The write **replaces** the whole block (read it first and send the merged content). Registered inline scripts are limited to 2,000 characters (`register_inline_script`), and `get_site_scripts` returns 404 "Custom code block not found" until the first script is applied (harmless). Nothing is live until the site is published |
+| `overscroll-behavior` (checked 2026-09-29) | None: the style API accepts it, so it is a class property, not an exception |
 | Deleting a page | No MCP action deletes a page (`data_pages_tool` and `designer_tool` have none; checked 2026-09-27). Delete it in the Designer; set `draft: true` meanwhile so it isn't published |
 
 Creates are **not idempotent**: a variable, field or class name that already exists is created

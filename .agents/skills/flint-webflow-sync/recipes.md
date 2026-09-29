@@ -6,10 +6,14 @@ Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 
 ## Contents
 
+- [Site instruction](#site-instruction)
 - [Diff the repo against Webflow](#diff-the-repo-against-webflow)
 - [Push classes](#push-classes)
+- [Site head code (custom CSS exceptions)](#site-head-code-custom-css-exceptions)
 - [Build a page from the repo markup](#build-a-page-from-the-repo-markup)
 - [Upload an asset](#upload-an-asset)
+- [Fonts](#fonts)
+- [Variables from tokens.css](#variables-from-tokenscss)
 - [SVG icons and optional icons](#svg-icons-and-optional-icons)
 - [Component from markup](#component-from-markup)
 - [Props and bindings](#props-and-bindings)
@@ -22,13 +26,42 @@ Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 - [Collection List settings](#collection-list-settings)
 - [Verify](#verify)
 
+## Site instruction
+
+First sync of a site (playbook step 0). `data_agent_instructions_tool`, `site_id` inside each action
+(checked 2026-09-29, production):
+
+```json
+{ "actions": [
+  { "label": "search", "search_instructions": { "site_id": "<site id>" } }
+] }
+```
+
+An empty site returns `instructions: []`. Then create the rule (one call; the markdown is a summary
+of `AGENTS.md` rules, breakpoints and sync order, with a note that `AGENTS.md` wins):
+
+```json
+{ "actions": [
+  { "label": "create", "create_instruction": {
+      "site_id": "<site id>", "kind": "rule", "path": "rules/flint-contract.md",
+      "description": "Flint repo to Webflow contract: rules every agent follows when changing this site.",
+      "markdown": "# Flint contract (AGENTS.md, version 1.6)\n…" } }
+] }
+```
+
+The result has the instruction `id` (record it in `webflow-ids.json` → `siteInstructions`) and
+`version: 1`. To change it later use `update_instruction` (`kind`, `path`, `markdown`), which bumps
+the version; do this whenever the contract version changes. `get_site` doesn't return the Webflow
+plan, and the repo has no public URL to link, so the rule refers to "the Flint repo".
+
 ## Diff the repo against Webflow
 
 1. `data_style_tool` → `get_styles` with `query: "all"`, `include_properties: true`,
    `include_breakpoints: ["main","medium","small","tiny"]`,
-   `include_base_pseudos: ["noPseudo","hover","active","focus","focus-visible","placeholder"]`.
+   `include_base_pseudos: ["noPseudo","hover","active","focus","focus-visible","focus-within","placeholder"]`.
    The client writes the large result to a file and prints its path.
-2. `node scripts/webflow-diff.mjs <that file> src/styles/layout.css src/styles/typography.css src/styles/components/*.css --unregistered`
+2. `node scripts/webflow-diff.mjs <that file> src/styles/layout.css src/styles/typography.css src/styles/utilities.css src/styles/components/*.css --unregistered`
+   (include `utilities.css`: the generated utilities are classes too)
 3. Each line is `selector @breakpoint:state property: repo → webflow`. "No differences." (exit 0) is
    the goal. It already ignores Webflow's own grid defaults, empty two-combo stacks and `w--current`.
 
@@ -41,8 +74,14 @@ Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 - **New classes without markup (preferred since 2026-09-25):** `--create` prints a `create_style` per
   class chain (desktop values, combos with `parent_style_names`), then `update_style` for the other
   breakpoints. Only pass chains that don't exist yet (`query_styles` first; filter the output by
-  chain when a file also holds existing classes). The builder's quirks (same-name combos dropped)
+  chain when a file also holds existing classes). The script skips rules on `w--current`/`w--open`. The builder's quirks (same-name combos dropped)
   don't apply, and a later WHTML insert without `css` reuses the classes by name.
+- **Whole-site first push (630 actions, 441 chains, checked 2026-09-29):** run `--create` on every non-legacy
+  file, merge the outputs into one list (creates first, ordered by chain depth so a base exists before its
+  combo; then every `update_style`), and send it in batches of at most 45 actions with short labels
+  (`c1`…, `u1`…). The payload is re-typed into the tool call, so expect ~250 KB in total. A combo whose only
+  rules are at other breakpoints still needs its `create_style` (empty `properties` is accepted). The API
+  rate-limits after ~170 actions in a few minutes: see the pitfalls table. Then run the diff.
 - Both scripts turn `url("/assets/…")` into the hosted asset URL from `webflow-ids.json`, so upload
   mask and background images first.
 - WHTML without `css` reuses classes that already exist, by name.
@@ -56,6 +95,22 @@ Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 - **Alias token** (`--a: var(--b)`): `create_size_variable` with
   `value: { existing_variable_id: "<b's id>" }`; it reads back as `{ id }`. Prefer using the
   existing token directly: an alias only earns its place when it can diverge later.
+
+## Site head code (custom CSS exceptions)
+
+For the registered CSS exceptions (`x-button-gradient`, `x-text-rendering`; checked 2026-09-29,
+production). The repo source of the pasted block is `docs/webflow/custom-code/site-head.html`:
+one `<style>` with a comment per exception id, each `var(--token)` renamed to
+`var(--_flint---token)`, `@property` and the `prefers-reduced-motion` media query exactly as in
+`src/styles/exceptions/*.css`, minified. Keep it in step with the exception files.
+
+1. Read: `data_scripts_tool` → `{ "get_site_freeform_code": { "site_id": "…", "location": "head" } }`
+   (`get_site_scripts` may 404 "Custom code block not found" on a site with no scripts: normal).
+2. Write: `{ "set_site_freeform_code": { "site_id": "…", "location": "head", "content": "<style>…</style>" } }`.
+   It **replaces** the block, so merge with what step 1 returned. The result echoes the stored content.
+3. Read it back and compare with the file (trim the trailing newline).
+4. Nothing is live until the site is published (`/safe-publish`).
+`register_inline_script` is for real scripts only (max 2,000 characters), never for CSS.
 
 ## Build a page from the repo markup
 
@@ -131,8 +186,41 @@ Check the fit numerically before sending (max |bezier − spring| × travel in p
    `node scripts/webflow-upload.mjs src/assets/icons/menu.svg <<'EOF' … EOF` → `201` means done.
 3. Record `id` and `hostedUrl` in `webflow-ids.json` → `assets`, keyed by the repo path.
 
-The same script works for `create_font` results. For several files from one batched `create_asset`
+The same script works for `create_font` results ([Fonts](#fonts)). For several files from one batched `create_asset`
 call, use `scripts/webflow-upload-batch.mjs` (see its header; `--check` verifies the rebuilt policy).
+
+## Fonts
+
+Checked 2026-09-29 (production). Files: latin `.woff2` from `node_modules/@fontsource/<family>/files/`
+(`sn-pro-latin-400-normal.woff2`, `stix-two-text-latin-400-normal.woff2`); weights = what migrated CSS uses.
+
+1. `data_fonts_tool` → `list_fonts` (`site_id`), then one `create_font` per file, all in one call:
+   `{ "site_id", "file_name", "file_hash": "<md5 -q file>", "font_family": "SN Pro", "weight": 600, "italic": false, "font_display": "swap" }`.
+   Copy the hash from the `md5` output, don't retype it (a 31-char hash fails validation).
+2. Each result has `customFont.id` and `upload: { url, fields }` (not `uploadUrl`/`uploadDetails` like
+   `create_asset`). Save each result as JSON and run `node scripts/webflow-upload.mjs <file> < result.json`
+   within 15 minutes (the script reads both shapes; the shell needs network access to S3). `201` = done.
+3. `list_fonts` again: every font is listed with its `hostedUrl`. Record `customFont.id` in `webflow-ids.json` → `fonts`
+   (`"SN Pro 600": "<id>"`).
+
+## Variables from tokens.css
+
+Checked 2026-09-29 (production, 65 tokens). `create_variable_collection` `{ "name": "Flint" }` returns the
+collection id (`collection-…`, mode `base`). Then, in `data_variable_tool` (top-level `siteId` + `pageId`),
+one create per token with `variable_collection_id`, `variable_name` (`--color-ink` → `color-ink`) and:
+
+| Token | Action | `value` |
+| --- | --- | --- |
+| `color-*` (hex or `rgba(…)` string as in the CSS) | `create_color_variable` | `{ "static_value": "rgba(255, 255, 255, 0.8)" }` |
+| `font-*` (family name only) | `create_font_family_variable` | `{ "static_value": "SN Pro" }` |
+| `radius-*`, `space-*`, `width-*` | `create_size_variable` | `{ "static_value": { "value": 12, "unit": "px" } }` |
+| `--a: var(--b)` alias | same action | `{ "existing_variable_id": "<b's id>" }` |
+
+Generate the `actions` array from `src/styles/tokens.css` with a throwaway Node script (regex over
+`--name: value;`), probe one token per type first, then send the rest in batches of about 30 (a 61-action
+call worked). Read back with `get_variables` (`variable_collection_id`; returns every variable with `id`,
+`type`, `value`) and diff against the CSS by script; record the ids in `webflow-ids.json` → `variables`
+and check them with `get_variables` + `filter_variables_by_ids` (all ids must come back).
 
 ## SVG icons and optional icons
 

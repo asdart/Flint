@@ -79,9 +79,9 @@
 
 /* Cards 3 and 5 use the same ring quarter, drawn at a third of its 882×723 size and pinned to the
    top-left of the card (card 5 shifted 33px left), not stretched over the card. Local geometry,
-   one card each. */
-[data-how-card="3"] .fk-how-bg,
-[data-how-card="5"] .fk-how-bg {
+   one combo per card (`is-card-3`, `is-card-5`): combos can't share a rule, so card 5 repeats the
+   contained-size values next to its own margin. */
+.fk-how-bg.is-card-3 {
   align-self: start;
   justify-self: start;
   width: 294px;
@@ -89,8 +89,13 @@
   object-fit: contain;
 }
 
-[data-how-card="5"] .fk-how-bg {
+.fk-how-bg.is-card-5 {
+  align-self: start;
+  justify-self: start;
+  width: 294px;
+  height: 241px;
   margin-left: -33px;
+  object-fit: contain;
 }
 
 .fk-how-scrim {
@@ -101,7 +106,7 @@
 
 /* `-art`: a floating illustration widget at the top of the cell, as wide as the card minus
    `space-8` each side (like `-copy`), height from the asset's own ratio. Only the top offset
-   differs per card (local, one card each). */
+   differs per card (local, one combo `is-card-n` per card). */
 .fk-how-art {
   grid-area: 1 / 1;
   align-self: start;
@@ -112,20 +117,20 @@
   margin-top: 0;
 }
 
-[data-how-card="1"] .fk-how-art {
+.fk-how-art.is-card-1 {
   margin-top: 50px;
 }
 
-[data-how-card="2"] .fk-how-art {
+.fk-how-art.is-card-2 {
   margin-top: 29px;
 }
 
-[data-how-card="3"] .fk-how-art {
+.fk-how-art.is-card-3 {
   width: calc(100% - var(--space-4));
   margin-top: 32px;
 }
 
-[data-how-card="6"] .fk-how-art {
+.fk-how-art.is-card-6 {
   width: calc(100% - var(--space-4));
   margin-top: 32px;
 }

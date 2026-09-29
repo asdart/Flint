@@ -50,7 +50,7 @@ export default function InputField({
         {label}
       </label>
       <input
-        className={cx("fk-input-field-input w-input", action && "is-action")}
+        className={cx("fk-input-field-input w-input", action && "is-action", disabled && "is-disabled")}
         id={id}
         type={type}
         name={name}

@@ -16,8 +16,9 @@ pushed to Webflow through the Webflow MCP without reinterpretation.
 - **Status:** The test stage (roadmap phases 0–2: foundations, a vertical slice and the homepage)
   closed on 2026-09-25 and its records are archived in
   [`docs/webflow/archive/test-site/`](docs/webflow/archive/test-site/README.md). The production
-  site will live in the client's Webflow account and be built from scratch from this repo
-  (roadmap track P); nothing is copied from the test stage. Everything in `src/` outside the
+  site lives in the client's Webflow account (created 2026-09-28, see [§9](#9-webflow-project)),
+  is empty and never published, and is built from scratch from this repo (roadmap track P, in
+  progress); nothing is copied from the test stage. Everything in `src/` outside the
   migrated pieces is still _legacy_ (Tailwind utilities + Framer Motion). See
   [Legacy code policy](#8-legacy-code-policy).
 
@@ -248,20 +249,20 @@ The current `src/` predates this contract. Until each piece is migrated:
 ## 9. Webflow project
 
 The production site lives in the client's Webflow account (roadmap D-09) and is built from scratch
-from this repo (track P). Its ids don't exist yet: the values below are set in roadmap step P.1.
+from this repo (track P). Its values were recorded in roadmap step P.1 (2026-09-29).
 
 | Field | Value |
 | --- | --- |
-| Site name | To set in roadmap P.1 |
-| Site short name | To set in roadmap P.1 (its staging subdomain is `<short name>.webflow.io`) |
-| Site ID | To set in roadmap P.1. This is the value MCP tools expect as `site_id` / `siteId` |
-| Workspace | To set in roadmap P.1 |
-| Home page ID | To set in roadmap P.1. Default `pageId` for site-level data tools |
+| Site name | Flint |
+| Site short name | `fint-fc2589` (sic, "fint", kept on purpose; its staging subdomain is `fint-fc2589.webflow.io`) |
+| Site ID | `6ab9ba4aeffb3329202448ee`. This is the value MCP tools expect as `site_id` / `siteId` |
+| Workspace | `6903cd68560df35a819fcc12` (the client's workspace) |
+| Home page ID | `6ab9ba4ceffb3329202448f2`. Default `pageId` for site-level data tools |
 | Time zone | America/Vancouver |
 | Custom domain | None yet (roadmap P-06) |
 | Primary locale | English (`en`) |
-| Variable collection | `Flint` (to create. Webflow's default `Base collection` stays unused) |
+| Variable collection | `Flint` (to create in roadmap P.2. Webflow's default `Base collection` stays unused) |
 | MCP server | Webflow's official MCP, OAuth. Named `plugin-webflow-webflow` in Cursor (Webflow plugin); a claude.ai connector in Claude Code. Same tools in both |
 
-Until the production site ID is recorded here, no Webflow write happens. After that, agents never
-target another site: if `list_sites` doesn't return this ID, stop and ask the user.
+Agents never target another site: if `list_sites` doesn't return this ID, stop and ask the user.
+The test site (archived, see `docs/webflow/archive/test-site/`) is never a sync target.

@@ -82,8 +82,8 @@ Colors that only appear **inside illustrations** (greens, oranges, flag colors i
 
 | Token | Value | Notes |
 | --- | --- | --- |
-| `font-sans` | `"SN Pro", ui-sans-serif, system-ui, sans-serif` | Body. Upload as a custom font (Fontsource package `@fontsource/sn-pro`): weights 400, 500 and 600 (600 only for the current page in `fk-pagination`) |
-| `font-serif` | `"STIX Two Text", ui-serif, Georgia, serif` | Headings. Available on Google Fonts |
+| `font-sans` | `"SN Pro", ui-sans-serif, system-ui, sans-serif` | Body. Upload as a custom font (Fontsource package `@fontsource/sn-pro`): weights 400, 500 and 600 (600 only for the current page in `fk-pagination`). Files are the latin-subset `.woff2` from Fontsource, uploaded with `font-display: swap` (ids in `webflow-ids.json`, production 2026-09-29) |
+| `font-serif` | `"STIX Two Text", ui-serif, Georgia, serif` | Headings. Upload as a custom font (Fontsource package `@fontsource/stix-two-text`): weight 400 only. Never add it from Google Fonts in the Designer (`seo.md` S-12) |
 
 The type scale is defined as classes and tag styles in [`classes.md`](classes.md#typography).
 

@@ -102,7 +102,7 @@
   opacity: 0.7;
 }
 
-.fk-input-field-input:disabled {
+.fk-input-field-input.is-disabled {
   cursor: not-allowed;
 }
 
