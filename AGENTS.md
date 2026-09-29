@@ -4,7 +4,9 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.6 (2026-09-27). 1.6 adds the utilities layer (rules 3 and 4,
+- **Contract version:** 1.7 (2026-09-29). 1.7 adds the mixed section model (rule 6, §3, §4, roadmap
+  D-17): only sections used, or planned, on more than one page become `Section /` components; the
+  others are plain page markup until a second page needs them. 1.6 adds the utilities layer (rules 3 and 4,
   [`css-system.md`](docs/webflow/css-system.md)): generated, token-valued utility classes stacked
   after an element's main class. 1.5 adds the SEO, performance and accessibility
   requirements (rule 15, [`seo.md`](docs/webflow/seo.md)) and one H1 per page (rule 10). 1.4 narrows tokens to system values and allows raw
@@ -80,7 +82,10 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 5. **Global sections are single components.** `Global / Nav` and `Global / Footer` exist once and
    are placed on every page. They never live inside another section.
 6. **Reuse before create.** A new section is only added when no existing section plus a variant
-   or prop can express it. Content differences are props, not new components.
+   or prop can express it. Content differences are props, not new components. **A section becomes
+   a `Section /` component only when more than one page uses it or is planned to** (roadmap D-17); a section used
+   once stays plain page markup, listed as such in `components.md`, and is turned into a component
+   the moment a second page needs it.
 7. **Webflow Interactions, not JS animation.** Motion uses the interactions in `interactions.md`.
    No Framer Motion in new code. Every interaction respects `prefers-reduced-motion`.
 8. **Custom code is an exception.** Scripts, embeds and custom CSS are only allowed if listed in
@@ -121,7 +126,7 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 | **Combo class** | A variant/state modifier on a base class (`is-*`) | Combo class |
 | **Component** | A reusable UI piece with props (Button, Post Card) | Component (group `UI`) |
 | **Global** | A component present once on every page (Nav, Footer) | Component (group `Global`) |
-| **Section** | A full-width page band composed of components | Component (group `Section`) |
+| **Section** | A full-width page band composed of components. Used or planned on more than one page: a component. Used once: plain page markup (D-17) | Component (group `Section`), or plain elements on the page |
 | **Page** | An ordered list of sections | Static page or CMS template page |
 | **Collection** | Structured editor content | CMS Collection |
 | **Interaction** | A named, reusable animation with a trigger | Interaction (IX3) |
@@ -142,11 +147,11 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 | `src/styles/exceptions/*.css` | Site custom code for a registered exception (`interactions.md`), never pushed as classes |
 | `src/components/global/*.tsx` | Components in group `Global` |
 | `src/components/ui/*.tsx` | Components in group `UI` |
-| `src/sections/*.tsx` | Components in group `Section` |
+| `src/sections/*.tsx` | Components in group `Section` when the section is used or planned on more than one page; otherwise page-level markup (the same elements written straight into the page), listed as such in `components.md` (D-17) |
 | React props (`eyebrowText`) | Component props in Title Case ("Eyebrow Text") |
 | React `variant` prop union | Component variants, same names |
 | `src/content/*.json` | CMS collection items (seed import) |
-| `src/pages/*.tsx` (not `legacy/`) | Pages: section instances in the same order |
+| `src/pages/*.tsx` (not `legacy/`) | Pages: section component instances and page-level section markup, in the same order |
 | Class `fk-reveal` etc. + `src/ix/` preview runtime | Interactions from `interactions.md` |
 
 ## 5. Breakpoints
@@ -182,8 +187,8 @@ src/
     icons/                # SVG icons, one file per icon, sized and colored in the file
   components/
     global/               # Webflow group "Global": Nav, Footer
-    ui/                   # Webflow group "UI": Button, SectionHeader, PostCard…
-  sections/               # Webflow group "Section": one file per section, named like the component
+    ui/                   # Webflow group "UI": Button, PostCard…
+  sections/               # one file per section; a reused section is Webflow group "Section" (named like the component), a single-page one is page-level markup (D-17)
   content/                # CMS seed data as JSON, shaped exactly like cms.md
   ix/                     # local preview runtime for registered interactions (not shipped to Webflow)
   lib/                    # repo-only helpers with no Webflow equivalent (cx, SmartLink)
@@ -192,7 +197,8 @@ src/
 ```
 
 A file's name equals its Webflow component name without spaces (`Section / Stats Band` →
-`src/sections/StatsBand.tsx`).
+`src/sections/StatsBand.tsx`). A section that is page-level markup keeps the same file name, so it
+can become a component later without a rename.
 
 ## 7. Workflow for every change
 

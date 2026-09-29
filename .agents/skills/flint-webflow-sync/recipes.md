@@ -12,6 +12,10 @@ Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 - [Tag styles](#tag-styles)
 - [Site head code (custom CSS exceptions)](#site-head-code-custom-css-exceptions)
 - [Build a page from the repo markup](#build-a-page-from-the-repo-markup)
+- [Home sections: component or page markup](#home-sections-component-or-page-markup)
+- [Compare a page with the repo](#compare-a-page-with-the-repo)
+- [Carousel dots and repeated instances](#carousel-dots-and-repeated-instances)
+- [CMS-bound grid (Post Grid)](#cms-bound-grid-post-grid)
 - [Upload an asset](#upload-an-asset)
 - [Fonts](#fonts)
 - [Variables from tokens.css](#variables-from-tokenscss)
@@ -21,6 +25,8 @@ Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 - [Variants](#variants)
 - [Instances inside a component](#instances-inside-a-component)
 - [Native elements (button, span)](#native-elements-button-span)
+- [Text around a bound span](#text-around-a-bound-span)
+- [Delete a component](#delete-a-component)
 - [Stack utility classes](#stack-utility-classes)
 - [Remove elements](#remove-elements)
 - [Replace a CMS field](#replace-a-cms-field)
@@ -46,13 +52,13 @@ of `AGENTS.md` rules, breakpoints and sync order, with a note that `AGENTS.md` w
   { "label": "create", "create_instruction": {
       "site_id": "<site id>", "kind": "rule", "path": "rules/flint-contract.md",
       "description": "Flint repo to Webflow contract: rules every agent follows when changing this site.",
-      "markdown": "# Flint contract (AGENTS.md, version 1.6)\n…" } }
+      "markdown": "# Flint contract (AGENTS.md, version 1.7)\n…" } }
 ] }
 ```
 
 The result has the instruction `id` (record it in `webflow-ids.json` → `siteInstructions`) and
 `version: 1`. To change it later use `update_instruction` (`kind`, `path`, `markdown`), which bumps
-the version; do this whenever the contract version changes. `get_site` doesn't return the Webflow
+the version; do this whenever the contract version changes (`read_instruction` with `resolve_references: false` first, then send the whole markdown again; done for 1.7 on 2026-09-29, version 2; version 3 the same day reworded rule 6 to "used or planned on more than one page" and dropped the retired `x-scroll-lock` from rule 8). `get_site` doesn't return the Webflow
 plan, and the repo has no public URL to link, so the rule refers to "the Flint repo".
 
 ## Diff the repo against Webflow
@@ -160,7 +166,76 @@ into the empty slots and set props), and drop the repo's list markup where a Col
 Link every image afterwards with `set_settings` → `assetId` + `altText`. Then transform each section
 root (`replace: true`) into its `Section /` component and bind its texts to props.
 
-**CMS-bound grid (Post Grid):** `data_element_builder` → `element_schema: { type: "CMSCollection" }`
+## Home sections: component or page markup
+
+Checked 2026-09-29 (production, Stage 7a; roadmap D-17). The page shell first:
+
+1. `data_whtml_builder` into Body: `<div class="fk-page"><main></main></div>` (an empty `main` is accepted,
+   the result gives the wrapper's id). `get_all_elements` gives `main`'s id.
+2. `insert_component_instance` with `parent_element_id` = `main` and `creation_position` `"before"` for `Global / Nav`,
+   `"after"` for `Global / Footer`.
+3. Each section: `node scripts/webflow-markup.mjs src/sections/X.tsx`, blank every `<a class="fk-button…">…</a>`
+   (regex, keep its wrapper div), replace ` />` by `/>`, keep `data-ix`, `data-*` and `aria-*` in the markup,
+   and insert it with WHTML (`append` to `main`, one root, no `css`). The result is `partial_success` with one
+   warning per image ("inserted without a managed asset"): expected. Then:
+   - `query_elements` with `scope_element_id` = the section and `element_filter: { "type": "Image" }` lists the image ids in DOM order;
+   - one `set_settings` call with an operation per image (up to 40 in one call): `assetId` (from `webflow-ids.json` → `assets`)
+     and `altText` (`""` for decorative, the facility name for the first Logo Marquee row). Generate the operations with a
+     throwaway script from the id list and the repo's image order;
+   - `insert_component_instance` (`UI / Button`) `append` into each emptied slot, then `set_component_instance_prop_values`
+     for `Variant`, `Label` and `Link` when they differ from the defaults (Primary, "Apply now", `#apply`).
+4. **Component sections** (Hero, Logo Marquee): finish the section on the page (assets, Button instances), then
+   `transform_element_to_component` (`group: "Section"`, `replace: true`), read the page tree again
+   (`get_all_elements`, `depth: 3`) for a stray instance (none appeared when the section wasn't the first child of
+   `fk-page`) and spot-check an image inside the component with `get_settings` + `scope_component_id`
+   (assets and alt survive the transform). Create props only where the content differs per page.
+5. **Page-level sections** (Two Ways, Pricing, Partners Map…) stay as the inserted elements.
+6. Verify with [Compare a page with the repo](#compare-a-page-with-the-repo), a class diff and snapshots.
+
+## Compare a page with the repo
+
+`data_element_tool` with `get_all_elements` (`depth: -1`) for the page and, per section component, one more with
+`scope_component_id` in the same call; the client saves the ~90k characters to a file. Then write a jobs file
+(`[{ "name": "Hero", "file": "src/sections/Hero.tsx", "source": "action:1" }, { "name": "Two Ways", "file": "src/sections/TwoWays.tsx", "source": "main:2" }]`)
+and run `node scripts/webflow-markup.mjs <files> > markup.json` and
+`node scripts/webflow-tree-diff.mjs <saved file> markup.json jobs.json`. It compares tag, classes, `data-*`/`aria-*`,
+image alt, text and order node by node (a `UI / Button` link in the repo must be a Button instance in Webflow) and exits 1
+on any difference. It doesn't check asset ids or `width`/`height` (spot-check with `get_settings`; a Testimonial Card's Image prop id is
+compared with a throwaway script over the dump). A `UI / Button` instance is compared by Label and Link (skipped when bound to a host prop) and a
+`UI / Testimonial Card` by Name, Role and Quote; a text element bound to a prop counts as "bound text skipped".
+
+## Carousel dots and repeated instances
+
+Checked 2026-09-29 (production, Stage 7b: How It Works with 6 dots, Testimonials with 7 dots and 21 cards).
+
+1. Insert the section with WHTML and **empty** containers: `<div class="fk-carousel-dots"></div>` and one empty
+   `<div class="fk-testimonials-slide" data-tm-slide="n" aria-hidden="true"></div>` per slide (`is-center` on the resting one).
+   `query_elements` with `element_filter: { "style": "fk-carousel-dots" }` and `{ "style": "fk-testimonials-slide" }`
+   (scoped to the section) lists the container ids; slide ids are consecutive hex values.
+2. Dots: one `data_element_builder` action per dot, `append` into the container, children nested in the same action
+   (button > bar span > fill span), 7 dots in one call worked:
+   ```json
+   { "build_label": "how-dot-1", "parent_element_id": {...}, "creation_position": "append",
+     "element_schema": { "type": "DOM", "set_dom_config": { "dom_tag": "button" },
+       "set_style": { "style_names": ["fk-carousel-dots-button"] },
+       "set_attributes": { "attributes": [{ "name": "type", "value": "button" }, { "name": "data-dot", "value": "how-1" }, { "name": "aria-label", "value": "Go to step 1" }] },
+       "children": [{ "type": "DOM", "set_dom_config": { "dom_tag": "span" },
+         "set_style": { "style_names": ["fk-carousel-dots-bar", "is-active"] },
+         "set_attributes": { "attributes": [{ "name": "data-dot-bar", "value": "how-1" }] },
+         "children": [{ "type": "DOM", "set_dom_config": { "dom_tag": "span" },
+           "set_style": { "style_names": ["fk-carousel-dots-fill"] },
+           "set_attributes": { "attributes": [{ "name": "data-dot-fill", "value": "how-1" }] } }] }] } }
+   ```
+3. Cards: `insert_component_instance` (`Testimonial Card`) `append` into each slide (21 in one call), then
+   `set_component_instance_prop_values` per instance for the props that differ from the defaults; an image prop value is the
+   asset id as `string_value`. Rate limit: see the pitfalls table (`GET /v2/assets` 429).
+4. Transform the section root (`transform_element_to_component`, `replace: true`), read the page tree for a stray instance,
+   then create the host props (`create_prop`) and bind them (`set_settings` key `text`, plus the inner Button instance
+   with `type: "bindable"`, see the pitfalls table).
+
+## CMS-bound grid (Post Grid)
+
+`data_element_builder` → `element_schema: { type: "CMSCollection" }`
 inside the block; `set_style` on the DynamoList (the stacked utilities
 `fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4`, which `set_style` can only apply
 once that chain exists, so create it through WHTML first); `set_settings` on the wrapper:
@@ -280,6 +355,15 @@ don't use them.
   "replace": true } }
 ```
 
+**Components that contain other components or native buttons (Nav, Footer), checked 2026-09-29:** build
+everything at page level first, then transform once. Insert the WHTML with empty containers where the
+instances and native buttons go, add the DOM `button` elements with `data_element_builder`
+(`children` nests the icon image), put the UI instances in the containers with
+`insert_component_instance` (no `scope_component_id` needed at page level) and pick their variants
+with the `Variant` prop, then transform the root. The instances and buttons come along, and no
+in-definition insert is needed. For a component whose root is a link (Button), the WHTML `<a>` becomes
+the root, with its label as a prepended DOM `span` and the icon `img` after it.
+
 3. The page now holds an instance of the new component. Remove it once the real instances are
    placed (needs confirmation, see [Remove elements](#remove-elements)).
 
@@ -355,6 +439,29 @@ Then put the icon inside it ([SVG icons](#svg-icons-and-optional-icons)). `child
 elements in the same call, and combo classes work in `style_names` (`["fk-a", "is-b"]`). A text span is
 `{ "type": "BY_CUSTOM_TAG", "custom_tag": "span", "set_text": { "text": "…" } }`. Native buttons need
 a border reset in the class (`border-*-width: 0px`, `border-*-style: none`).
+
+## Text around a bound span
+
+For static text on both sides of a bound value (Testimonial Card: `“` + Quote + `”`). Checked 2026-09-29.
+
+1. Unbind the element and set its first text: `set_settings` `{ "key": "text", "static_text": { "value": "“" } }`
+   (the element then holds one `String` child).
+2. Add the value holder: `data_element_builder` `append`, `{ "type": "DOM", "set_dom_config": { "dom_tag": "span" } }`,
+   with `scope_component_id`; bind it (`set_settings` key `text`, `binding` prop) like a paragraph. Update the prop's default
+   with `data_component_props_tool` → `update_prop` (`default_text`).
+3. The trailing text node can't be created on its own (WHTML with a bare `”` → "No elements found"; a WHTML `<span>` there
+   is a rich-text Span, which can't bind). Insert a **scratch** element with WHTML inside the same component,
+   `<blockquote>“<span>x</span>”</blockquote>` (it stores `String`, `Span`, `String`), then
+   `move_element` its last `String` `after` the DOM span (`scope_component_id` goes **inside** `move_element`, not beside it),
+   and remove the scratch element. Text nodes move; the element ends as `String`, DOM span, `String`.
+4. Read it back with `query_elements` `children_depth: -1`, and check an instance's resolved Quote and a snapshot.
+
+## Delete a component
+
+`data_component_tool` → `unregister_component` `{ "component_id": "<id>" }`, only after the user confirmed. It "affects all
+existing instances", so read `get_component` with `options.includeInstanceCount` first and remove the instances (or stop) before it.
+It works headlessly: `get_all_components` no longer lists it (checked 2026-09-29, Section Header and Service Card). Remove its
+entry from `webflow-ids.json`.
 
 ## Stack utility classes
 

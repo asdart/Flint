@@ -5,7 +5,6 @@ import Button from "../components/ui/Button";
 import Dropdown from "../components/ui/Dropdown";
 import InputField from "../components/ui/InputField";
 import chevronDown from "../assets/icons/chevron-down.svg";
-import SectionHeader from "../components/ui/SectionHeader";
 import { useInteractions } from "../ix/useInteractions";
 
 // Draft page "Style Guide" at /style-guide — roadmap phase 2. Visual QA of every registered
@@ -50,11 +49,15 @@ export default function StyleGuidePage() {
         <section className="fk-section">
           <div className="fk-panel fk-bg-tertiary">
             <div className="fk-container is-content">
-              <SectionHeader
-                eyebrow="Draft · visual QA"
-                title="Style guide"
-                body={["Every registered class and UI component, rendered from the same markup in the repo and in Webflow."]}
-              />
+              <div className="fk-section-header is-center">
+                <p className="fk-eyebrow">Draft · visual QA</p>
+                <h2 className="fk-heading-xl">Style guide</h2>
+                <div className="fk-section-header-body">
+                  <p className="fk-text-lg fk-color-brand-80">
+                    Every registered class and UI component, rendered from the same markup in the repo and in Webflow.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

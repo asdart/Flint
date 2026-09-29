@@ -23,7 +23,7 @@ export default function TestimonialCard({ image, quote, name, role }: Testimonia
       <div className="fk-testimonial-card-scrim fk-absolute fk-inset-0" aria-hidden="true" />
       <div className="fk-testimonial-card-quote fk-absolute">
         <blockquote className="fk-testimonial-card-quote-text fk-absolute fk-w-full fk-color-white">
-          &ldquo;{quote}&rdquo;
+          &ldquo;<span>{quote}</span>&rdquo;
         </blockquote>
       </div>
       <div className="fk-testimonial-card-flag fk-absolute">

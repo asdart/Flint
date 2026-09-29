@@ -7,7 +7,11 @@ type ServiceCardProps = {
   variant?: "default" | "subtle";
 };
 
-/** UI / Service Card. Hover motion is `ix-card-hover`. */
+/**
+ * Service card markup (fk-card). Repo-side helper only, like CarouselDots: in Webflow this is not a
+ * component but plain divs and classes written into each section (decided 2026-09-29). The Subtle
+ * look is the `is-subtle` combo on the text. Hover motion is `ix-card-hover`.
+ */
 export default function ServiceCard({ icon, title, body, variant = "default" }: ServiceCardProps) {
   return (
     <article className="fk-card fk-flex fk-flex-col fk-items-start fk-justify-between fk-w-full fk-h-full fk-overflow-clip">
