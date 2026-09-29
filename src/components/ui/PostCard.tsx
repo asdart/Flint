@@ -14,6 +14,8 @@ export default function PostCard({ post }: PostCardProps) {
           className="fk-post-card-image"
           src={post["main-image"].url}
           alt={post["main-image"].alt}
+          width={post["main-image"].width}
+          height={post["main-image"].height}
           loading="lazy"
         />
       </div>
@@ -31,7 +33,7 @@ export default function PostCard({ post }: PostCardProps) {
           <div className="fk-post-card-meta-text" aria-hidden>
             ·
           </div>
-          <div className="fk-post-card-meta-text">{post["read-time"]}</div>
+          <div className="fk-post-card-meta-text">{post["read-time"]} min read</div>
         </div>
       </div>
     </SmartLink>

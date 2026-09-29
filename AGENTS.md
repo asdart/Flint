@@ -31,6 +31,7 @@ registries define the inventory. If they disagree, fix the registry, not the rul
 | [`classes.md`](docs/webflow/classes.md) | Naming system, tag styles, class registry |
 | [`components.md`](docs/webflow/components.md) | Components, sections, pages and their composition |
 | [`cms.md`](docs/webflow/cms.md) | CMS collections, fields, collection lists |
+| [`blog-custom-code.md`](docs/webflow/blog-custom-code.md) | Custom code blocks in the current site's blog posts, removed in the import, and which posts used them |
 | [`interactions.md`](docs/webflow/interactions.md) | Interactions registry and the custom-code exceptions list |
 | [`mcp-playbook.md`](docs/webflow/mcp-playbook.md) | How to push changes with the Webflow MCP, safely |
 | [`seo.md`](docs/webflow/seo.md) | SEO, performance and accessibility requirements every page must meet |

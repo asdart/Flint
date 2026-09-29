@@ -1,23 +1,9 @@
 [
   {
-    "name": "Jonathan Johnson",
-    "slug": "jonathan-johnson",
-    "short-name": "Jonathan",
-    "role": "Brand Manager",
-    "avatar": { "url": "/assets/blog/author.webp", "alt": "" }
-  },
-  {
-    "name": "Sarah",
-    "slug": "sarah",
-    "short-name": "Sarah",
+    "name": "Flint Editorial Team",
+    "slug": "flint-editorial-team",
+    "short-name": "Flint Editorial Team",
     "role": "",
-    "avatar": { "url": "/assets/blog/author.webp", "alt": "" }
-  },
-  {
-    "name": "Marcus",
-    "slug": "marcus",
-    "short-name": "Marcus",
-    "role": "",
-    "avatar": { "url": "/assets/blog/author.webp", "alt": "" }
+    "avatar": { "url": "/assets/home/Flint-logo-brand-circle.svg", "alt": "Flint Editorial Team" }
   }
 ]

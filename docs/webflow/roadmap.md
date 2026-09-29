@@ -60,6 +60,7 @@ next phase on production.
 | D-12 | How It Works card art redesigned from Figma (node 5746:992 desktop, 5483:860 mobile), **supersedes H-4** ("one image per card"). Cards now get a solid `color-tertiary` background (`is-brand-light` → `color-brand-light` on card 5 "Start work") with a full-bleed `-bg` raster (photo/gradient/pattern) and, on 5 of 6 cards, a floating `-art` illustration on top (card 4 "Relocate" has none); cards 2 and 6 (inverse copy over a photo) add a `-scrim` gradient. Card 3's copy also changed to match Figma ("Interview Directly with Facilities" / "We present you with facilities. You choose who to interview.") | 2026-09-27 | `classes.md` → `fk-how`, `components.md` → Section / How It Works, `sections/HowItWorks.tsx` |
 | D-13 | Twitter card values come from each page's Open Graph settings (Webflow has no separate Twitter fields); no exception needed (was P-11) | 2026-09-27 | `seo.md` S-02 |
 | D-14 | `llms.txt` uses Webflow's native upload (Site settings → SEO → LLMs.txt; UTF-8, under 100 KB), served at `/llms.txt` on the custom domain only and never indexed. The source is `public/llms.txt` in the repo, uploaded by hand after each change (not reachable through the MCP); checked after the custom-domain publish (was P-13) | 2026-09-27 | `seo.md` S-21 |
+| D-15 | Blog content comes from the client's current site (export of 2026-09-28): posts get categories assigned by topic, Flint Editorial Team is the author of every post for now, bodies are cleaned to plain rich text with the removed custom code tracked, excerpts are rewritten for SEO, read time is a Number field, and the quick answer moves to its field | 2026-09-28 | `cms.md`, `blog-custom-code.md` |
 
 ### Open
 
@@ -77,6 +78,8 @@ All must be closed before the phase noted in "Needed by".
 | P-08 | Who supplies the missing content? _(proposed)_ | FAQ answers 2+, real footer URLs, About Team copy, bodies for non-featured posts | Phase 9 | open |
 | P-09 | Production access: which site and workspace, which role, and can the Webflow MCP be authorized on the client's account? | We need Designer access with site settings and custom code rights, and the MCP's OAuth app approved for the client's workspace (may need a workspace admin). Confirm the exact plan and whether the site is new and empty | Track P | open |
 | P-12 | Which page is the "role page" in the PageSpeed check (`seo.md` S-15)? The roadmap has no role pages yet | Name the page, and add it to `components.md` → Pages if it's new | Phase 5 | open, to decide later (user, 2026-09-27) |
+| P-13 | The post main images are text banners (about 2.1:1) and the card crops them to 1.4:1 (3.5:1 on mobile landscape), cutting off the headline | (a) New card-ready images from the client · (b) change the card image ratio to fit the banners · (c) accept the crop | Phase 6 | open |
+| P-14 | Do post FAQs get `FAQPage` schema (`seo.md` S-08)? The FAQs are now rich text | (a) A plain-text field holding each post's FAQ JSON-LD, inserted by `x-schema-post` (pairs ready in `blog-embeds/faq-pairs.json`) · (b) no FAQ schema on posts | Phase 6 | open |
 
 ---
 
@@ -221,9 +224,10 @@ Grid (Cards), Testimonials (Slider), Post Grid (Home), CTA (Art). Also Text Pane
 
 ## Phase 6 — Blog and CMS
 
-Needs P-02 closed.
+Needs P-02 closed; P-13 and P-14 before the template.
 
-- [ ] Import all posts, categories and authors (`/bulk-cms-update`), as drafts
+- [x] Real posts prepared in the repo from the current site's export: categories, author, cleaned bodies, excerpts, WebP images with alt text (D-15, `cms.md` → Import from the current site)
+- [ ] Import all posts, categories and authors through the MCP, as drafts
 - [ ] Blog index with featured post and native pagination (6 per page)
 - [ ] Blog post template, including Related posts (D-02) and the P-02 result
 - [ ] Blog category template pages, and category links replacing the legacy `Select` filter
