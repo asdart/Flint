@@ -1,15 +1,29 @@
 /*
  * Local preview of ix-testimonials and ix-testimonial-hover. Position/scale use the exact sampled
  * Framer duration-spring (1.4s, bounce .22); Webflow uses a CustomEase path traced from it.
- * Hovering the row freezes every running animation, as the IX3 pause does (decision H-12).
+ * Hovering the track freezes every running animation, as the IX3 pause does (decision H-12).
+ *
+ * The slides sit in normal flow inside one flex track: a step slides the track by one card pitch
+ * and swaps which slide is the current one (scale 0.8 ↔ 0.88, with the side margin that keeps the
+ * 24px gap). The track holds three copies of the 7 testimonials. Before a move, the current index
+ * is shifted by whole copies into a safe range, which is invisible because the copies are
+ * identical, so the loop never runs out of cards and never jumps in view.
+ * Only the current card reacts to hover.
  */
 
 type Cleanup = () => void;
 
 const COUNT = 7;
-const CENTER_SLOT = 3;
-const CARD_HALF = 198;
-const SLOT_X = [-1038.24, -697.44, -356.64, 0, 356.64, 697.44, 1038.24];
+const RING = COUNT * 3;
+const START_CURRENT = COUNT + 3;
+/** Current-index range in which every slot from -2 to 8 has a card (slots are relative to it). */
+const SAFE_MIN = 5;
+const SAFE_MAX = 15;
+const CARD_WIDTH = 396;
+const PITCH = 340.8;
+const CENTER_HALF = 174.24;
+const SIDE_SCALE = 0.8;
+const CENTER_SCALE = 0.88;
 const STEP_MS = 5_000;
 const MOVE_MS = 1_400;
 const OPACITY_MS = 500;
@@ -25,8 +39,26 @@ function modulo(value: number, divisor: number) {
   return ((value % divisor) + divisor) % divisor;
 }
 
-function slotFor(index: number, offset: number) {
-  return modulo(index - offset, COUNT);
+/** Shifts the current index by whole copies so it and its target both stay in the safe range. */
+function safeCurrent(current: number, delta: number) {
+  const base = modulo(current, COUNT);
+  for (let candidate = base; candidate < RING; candidate += COUNT) {
+    const target = candidate + delta;
+    if (candidate >= SAFE_MIN && candidate <= SAFE_MAX && target >= SAFE_MIN && target <= SAFE_MAX) {
+      return candidate;
+    }
+  }
+  return current;
+}
+
+/** Track offset (px from the row centre) that puts the slide at `current` under the centre. */
+function trackX(current: number) {
+  return -(current * PITCH + CENTER_HALF);
+}
+
+/** Margin on each side of a slide that cancels the space its scale takes away. */
+function marginFor(scale: number) {
+  return (CARD_WIDTH * scale - CARD_WIDTH) / 2;
 }
 
 function springProgress(progress: number) {
@@ -41,21 +73,27 @@ function springProgress(progress: number) {
   );
 }
 
-function transformFor(slot: number, progress = 1, fromSlot = slot) {
-  const spring = springProgress(progress);
-  const fromX = SLOT_X[fromSlot] - CARD_HALF;
-  const toX = SLOT_X[slot] - CARD_HALF;
-  const fromScale = fromSlot === CENTER_SLOT ? 0.88 : 0.8;
-  const toScale = slot === CENTER_SLOT ? 0.88 : 0.8;
-  const x = fromX + (toX - fromX) * spring;
-  const scale = fromScale + (toScale - fromScale) * spring;
-  return `translateX(${x}px) scale(${scale})`;
+function mix(from: number, to: number, progress: number) {
+  return from + (to - from) * springProgress(progress);
 }
 
-function springFrames(fromSlot: number, toSlot: number): Keyframe[] {
+function trackFrames(fromCurrent: number, toCurrent: number): Keyframe[] {
   return Array.from({ length: SPRING_SAMPLES + 1 }, (_, index) => {
     const offset = index / SPRING_SAMPLES;
-    return { offset, transform: transformFor(toSlot, offset, fromSlot) };
+    return { offset, transform: `translateX(${mix(trackX(fromCurrent), trackX(toCurrent), offset)}px)` };
+  });
+}
+
+function slideFrames(fromScale: number, toScale: number): Keyframe[] {
+  return Array.from({ length: SPRING_SAMPLES + 1 }, (_, index) => {
+    const offset = index / SPRING_SAMPLES;
+    const scale = mix(fromScale, toScale, offset);
+    return {
+      offset,
+      transform: `scale(${scale})`,
+      marginLeft: `${marginFor(scale)}px`,
+      marginRight: `${marginFor(scale)}px`,
+    };
   });
 }
 
@@ -75,7 +113,10 @@ function animateTo(
   return animation;
 }
 
-function setupCardHover(card: HTMLElement, reduceMotion: boolean): Cleanup {
+type CardHover = { close: () => void; cleanup: Cleanup };
+
+/** Hover opens the card only while `isCurrent()` is true; leaving always closes it. */
+function setupCardHover(card: HTMLElement, isCurrent: () => boolean, reduceMotion: boolean): CardHover {
   const quote = card.querySelector<HTMLElement>(".fk-testimonial-card-quote");
   const scrim = card.querySelector<HTMLElement>(".fk-testimonial-card-scrim");
   const animations = new Set<Animation>();
@@ -103,46 +144,65 @@ function setupCardHover(card: HTMLElement, reduceMotion: boolean): Cleanup {
     }
   };
 
-  const onEnter = () => setOpen(true);
+  const onEnter = () => {
+    if (isCurrent()) setOpen(true);
+  };
   const onLeave = () => setOpen(false);
   card.addEventListener("pointerenter", onEnter);
   card.addEventListener("pointerleave", onLeave);
 
-  return () => {
-    card.removeEventListener("pointerenter", onEnter);
-    card.removeEventListener("pointerleave", onLeave);
-    animations.forEach((animation) => animation.cancel());
-    quote?.classList.remove("is-open");
-    if (quote) quote.style.height = "";
-    if (scrim) scrim.style.opacity = "";
+  return {
+    close: () => {
+      if (quote?.classList.contains("is-open")) setOpen(false);
+    },
+    cleanup: () => {
+      card.removeEventListener("pointerenter", onEnter);
+      card.removeEventListener("pointerleave", onLeave);
+      animations.forEach((animation) => animation.cancel());
+      quote?.classList.remove("is-open");
+      if (quote) quote.style.height = "";
+      if (scrim) scrim.style.opacity = "";
+    },
   };
 }
 
 function setupTestimonials(root: HTMLElement): Cleanup {
-  const row = root.querySelector<HTMLElement>(".fk-testimonials-row");
+  const track = root.querySelector<HTMLElement>(".fk-testimonials-track");
   const slides = Array.from(root.querySelectorAll<HTMLElement>("[data-tm-slide]"));
   const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot^="tm-"]'));
   const bars = dots.map((dot) => dot.querySelector<HTMLElement>("[data-dot-bar]"));
   const fills = dots.map((dot) => dot.querySelector<HTMLElement>("[data-dot-fill]"));
-  if (!row || slides.length !== COUNT || dots.length !== COUNT) return () => {};
+  if (!track || slides.length !== RING || dots.length !== COUNT) return () => {};
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const animations = new Set<Animation>();
-  const hoverCleanups = slides.map((slide) => {
-    const card = slide.querySelector<HTMLElement>(".fk-testimonial-card");
-    return card ? setupCardHover(card, reduceMotion) : () => {};
-  });
-  let offset = 0;
-  let activeIndex = CENTER_SLOT;
+  let current = START_CURRENT;
+  let activeIndex = modulo(current, COUNT);
   let fillAnimation: Animation | null = null;
   let stopped = false;
 
-  const setSlideFrame = (index: number, slot: number) => {
+  const hovers = slides.map((slide, index) => {
+    const card = slide.querySelector<HTMLElement>(".fk-testimonial-card");
+    return card
+      ? setupCardHover(card, () => index === current, reduceMotion)
+      : { close: () => {}, cleanup: () => {} };
+  });
+
+  const setSlideFrame = (index: number, isCurrent: boolean) => {
     const slide = slides[index];
-    slide.style.transform = transformFor(slot);
-    slide.style.opacity = slot === CENTER_SLOT ? "1" : "0.6";
-    slide.style.zIndex = slot === CENTER_SLOT ? "1" : "0";
-    slide.classList.toggle("is-center", slot === CENTER_SLOT);
+    const scale = isCurrent ? CENTER_SCALE : SIDE_SCALE;
+    slide.style.transform = `scale(${scale})`;
+    slide.style.marginLeft = `${marginFor(scale)}px`;
+    slide.style.marginRight = `${marginFor(scale)}px`;
+    slide.style.opacity = isCurrent ? "1" : "0.6";
+    slide.classList.toggle("is-center", isCurrent);
+  };
+
+  /** Places the whole ring for `next` being current, with no animation. */
+  const setFrame = (next: number) => {
+    current = next;
+    track.style.transform = `translateX(${trackX(next)}px)`;
+    slides.forEach((_, index) => setSlideFrame(index, index === next));
   };
 
   const setDotFrame = (index: number, active: boolean) => {
@@ -150,7 +210,7 @@ function setupTestimonials(root: HTMLElement): Cleanup {
     const fill = fills[index];
     if (bar) {
       bar.classList.toggle("is-active", active);
-      bar.style.width = active ? "57px" : "7px";
+      bar.style.width = active ? "52px" : "12px";
     }
     if (fill) fill.style.width = "0%";
   };
@@ -161,7 +221,7 @@ function setupTestimonials(root: HTMLElement): Cleanup {
       const from = getComputedStyle(bar).width;
       const active = index === nextIndex;
       bar.classList.toggle("is-active", active);
-      animateTo(bar, [{ width: from }, { width: active ? "57px" : "7px" }], {
+      animateTo(bar, [{ width: from }, { width: active ? "52px" : "12px" }], {
         duration: reduceMotion ? 0 : MORPH_MS,
         easing: EASE_OUT,
         fill: "forwards",
@@ -187,57 +247,69 @@ function setupTestimonials(root: HTMLElement): Cleanup {
       animations.delete(fillAnimation);
       fillAnimation.cancel();
       fillAnimation = null;
-      moveTo(offset + 1);
+      moveBy(1);
     };
   };
 
-  const moveTo = (nextOffset: number) => {
-    const previousOffset = offset;
-    offset = nextOffset;
-    slides.forEach((slide, index) => {
-      const fromSlot = slotFor(index, previousOffset);
-      const toSlot = slotFor(index, offset);
-      const wrap = Math.abs(toSlot - fromSlot) > COUNT / 2;
-      slide.style.zIndex = toSlot === CENTER_SLOT ? "1" : "0";
-      slide.classList.toggle("is-center", toSlot === CENTER_SLOT);
-      slide.getAnimations().forEach((animation) => animation.cancel());
-      if (reduceMotion || wrap) {
-        setSlideFrame(index, toSlot);
-        return;
-      }
-      animateTo(slide, springFrames(fromSlot, toSlot), {
+  /** Moves the current card `delta` places along the track. */
+  const moveBy = (delta: number) => {
+    if (delta === 0) return;
+    [track, ...slides].forEach((element) => element.getAnimations().forEach((a) => a.cancel()));
+    hovers[current].close();
+    // Shift by whole copies first: same picture, but the target stays inside the ring.
+    setFrame(safeCurrent(current, delta));
+    const previous = current;
+    const next = current + delta;
+
+    current = next;
+    slides[previous].classList.remove("is-center");
+    slides[next].classList.add("is-center");
+    if (reduceMotion) {
+      setFrame(next);
+    } else {
+      animateTo(track, trackFrames(previous, next), {
         duration: MOVE_MS,
         easing: "linear",
         fill: "forwards",
       }, animations);
-      animateTo(
-        slide,
-        [
-          { opacity: fromSlot === CENTER_SLOT ? 1 : 0.6 },
-          { opacity: toSlot === CENTER_SLOT ? 1 : 0.6 },
-        ],
-        { duration: OPACITY_MS, easing: EASE_OUT, fill: "forwards" },
-        animations,
-      );
-    });
-    morphDots(modulo(CENTER_SLOT + offset, COUNT));
+      animateTo(slides[previous], slideFrames(CENTER_SCALE, SIDE_SCALE), {
+        duration: MOVE_MS,
+        easing: "linear",
+        fill: "forwards",
+      }, animations);
+      animateTo(slides[next], slideFrames(SIDE_SCALE, CENTER_SCALE), {
+        duration: MOVE_MS,
+        easing: "linear",
+        fill: "forwards",
+      }, animations);
+      animateTo(slides[previous], [{ opacity: 1 }, { opacity: 0.6 }], {
+        duration: OPACITY_MS,
+        easing: EASE_OUT,
+        fill: "forwards",
+      }, animations);
+      animateTo(slides[next], [{ opacity: 0.6 }, { opacity: 1 }], {
+        duration: OPACITY_MS,
+        easing: EASE_OUT,
+        fill: "forwards",
+      }, animations);
+    }
+    morphDots(modulo(next, COUNT));
     startClock();
   };
 
-  slides.forEach((_, index) => setSlideFrame(index, slotFor(index, offset)));
-  dots.forEach((_, index) => setDotFrame(index, index === CENTER_SLOT));
+  setFrame(current);
+  dots.forEach((_, index) => setDotFrame(index, index === activeIndex));
   startClock();
 
   const onEnter = () => animations.forEach((animation) => animation.pause());
   const onLeave = () => animations.forEach((animation) => animation.play());
-  row.addEventListener("pointerenter", onEnter);
-  row.addEventListener("pointerleave", onLeave);
+  track.addEventListener("pointerenter", onEnter);
+  track.addEventListener("pointerleave", onLeave);
 
   const dotCleanups = dots.map((dot, index) => {
     const onClick = () => {
-      const forward = modulo(index - CENTER_SLOT - offset, COUNT);
-      const shortest = forward > COUNT / 2 ? forward - COUNT : forward;
-      moveTo(offset + shortest);
+      const forward = modulo(index - activeIndex, COUNT);
+      moveBy(forward > COUNT / 2 ? forward - COUNT : forward);
     };
     dot.addEventListener("click", onClick);
     return () => dot.removeEventListener("click", onClick);
@@ -245,15 +317,18 @@ function setupTestimonials(root: HTMLElement): Cleanup {
 
   return () => {
     stopped = true;
-    row.removeEventListener("pointerenter", onEnter);
-    row.removeEventListener("pointerleave", onLeave);
+    track.removeEventListener("pointerenter", onEnter);
+    track.removeEventListener("pointerleave", onLeave);
     dotCleanups.forEach((cleanup) => cleanup());
-    hoverCleanups.forEach((cleanup) => cleanup());
+    hovers.forEach((hover) => hover.cleanup());
     animations.forEach((animation) => animation.cancel());
-    slides.forEach((slide) => {
+    track.style.transform = "";
+    slides.forEach((slide, index) => {
       slide.style.transform = "";
+      slide.style.marginLeft = "";
+      slide.style.marginRight = "";
       slide.style.opacity = "";
-      slide.style.zIndex = "";
+      slide.classList.toggle("is-center", index === START_CURRENT);
     });
     bars.forEach((bar) => {
       if (bar) bar.style.width = "";

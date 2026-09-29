@@ -1,51 +1,36 @@
 /* fk-testimonials-* — Section / Testimonials, Slider variant, placed inside
-   fk-panel.is-brand-light[data-ix="testimonials"]. Row heights and absolute stage offsets are
-   local geometry copied from the legacy carousel. The pagination row is generic (flex, centered,
-   container width) and now lives entirely on utilities in markup; no block class left for it. */
+   fk-panel.is-brand-light[data-ix="testimonials"]. The slides are in normal flow inside one flex
+   track (`fk-flex fk-gap-6` utilities on the track); ix-testimonials slides the track and scales
+   the current card. Track offset and slide margins are local geometry copied from the legacy
+   carousel. The row is a flex column (utilities) holding the track and, 24px below it, the
+   pagination row, which is generic (flex, centered, container width) and lives entirely on
+   utilities in markup; no block class left for it. */
 
 .fk-testimonials-row {
-  position: relative;
-  height: 488px;
   width: 100%;
   user-select: none;
 }
 
+/* Starts at the row's centre; the resting offset puts slide 11 (the current one, the middle copy's
+   4th card) under it: -(10 × 340.8 + 174.24)px. The track is wider than the row, the panel clips it. */
+.fk-testimonials-track {
+  width: max-content;
+  margin-left: 50%;
+  transform: translateX(-3582.24px);
+}
+
+/* A slide keeps the card's 396px layout width; its side margin cancels the space the scale takes
+   away, so the 24px track gap is the visible gap between cards. */
 .fk-testimonials-slide {
-  position: absolute;
-  top: 0;
-  left: 50%;
+  flex: none;
+  margin-inline: -39.6px;
   opacity: 0.6;
-  transform: translateX(-198px) scale(0.8);
+  transform: scale(0.8);
   transform-origin: center center;
 }
 
 .fk-testimonials-slide.is-center {
-  z-index: 1;
+  margin-inline: -23.76px;
   opacity: 1;
-  transform: translateX(-198px) scale(0.88);
-}
-
-/* Resting slots, so the row is laid out before (or without) ix-testimonials. Slot 3 is is-center. */
-.fk-testimonials-slide.is-slot-0 {
-  transform: translateX(-1236.24px) scale(0.8);
-}
-
-.fk-testimonials-slide.is-slot-1 {
-  transform: translateX(-895.44px) scale(0.8);
-}
-
-.fk-testimonials-slide.is-slot-2 {
-  transform: translateX(-554.64px) scale(0.8);
-}
-
-.fk-testimonials-slide.is-slot-4 {
-  transform: translateX(158.64px) scale(0.8);
-}
-
-.fk-testimonials-slide.is-slot-5 {
-  transform: translateX(499.44px) scale(0.8);
-}
-
-.fk-testimonials-slide.is-slot-6 {
-  transform: translateX(840.24px) scale(0.8);
+  transform: scale(0.88);
 }

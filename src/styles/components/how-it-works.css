@@ -1,6 +1,6 @@
 /* fk-how — Section / How It Works (Home). Each card layers a full-bleed `-bg` raster (photo,
    gradient or pattern), an optional `-scrim` (cards 2 and 6, inverse copy over a photo) and an
-   optional `-art` illustration (card 4 "Relocate" has none) under the live `-copy`. Card
+   optional `-art` illustration (card 4 "Relocate" has none) under the live `-copy`. The layers are stacked in one grid cell (`grid-area: 1 / 1` on each), not positioned absolutely. Card
    background defaults to `color-tertiary`; `is-brand-light` (card 5) switches to
    `color-brand-light`. Carousel dimensions, the card model and every `-art` offset below are local
    to this block (see `classes.md` → `fk-how` and roadmap decision D-12). The generic shell (`fk-how` wrapper, pagination row) moved
@@ -20,19 +20,26 @@
   overflow: hidden;
 }
 
+/* Slides sit in normal flow: the track starts at the viewport's centre (minus half the current
+   slide) and ix-how-carousel slides it left one step at a time. The track is wider than the
+   viewport, which clips it. */
 .fk-how-track {
-  position: relative;
-  left: calc(50% - 199px);
   display: flex;
   flex: none;
   align-items: center;
   gap: var(--space-8);
+  margin-left: calc(50% - 199px);
   transform: translateX(0px);
 }
 
+/* The slide is the card's size (360×464, 398×512 when current, animated by ix-how-carousel) and
+   the card fills it, so its content lays out at the real width (a current card is wider, its text
+   stays 20px). Phone keeps the legacy fit: a 360×464 card scaled down (see the ≤479 block). */
 .fk-how-slide {
-  position: relative;
+  display: flex;
   flex: none;
+  align-items: center;
+  justify-content: center;
   width: 360px;
   height: 464px;
   border-radius: var(--radius-xl);
@@ -44,22 +51,18 @@
   height: 512px;
 }
 
+/* One grid cell; every layer sits in it (`grid-area: 1 / 1`), later layers on top. */
 .fk-how-card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 360px;
-  height: 464px;
-  margin-top: -232px;
-  margin-left: -180px;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 100%;
+  flex: none;
+  width: 100%;
+  height: 100%;
   border-radius: var(--radius-2xl);
   overflow: clip;
   background-color: var(--color-tertiary);
   transform: scale(1);
-}
-
-.fk-how-card.is-active {
-  transform: scale(1.1055556);
 }
 
 .fk-how-card.is-brand-light {
@@ -67,57 +70,74 @@
 }
 
 .fk-how-bg {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Cards 3 and 5 use the same ring quarter, drawn at a third of its 882×723 size and pinned to the
+   top-left of the card (card 5 shifted 33px left), not stretched over the card. Local geometry,
+   one card each. */
+[data-how-card="3"] .fk-how-bg,
+[data-how-card="5"] .fk-how-bg {
+  align-self: start;
+  justify-self: start;
+  width: 294px;
+  height: 241px;
+  object-fit: contain;
+}
+
+[data-how-card="5"] .fk-how-bg {
+  margin-left: -33px;
+}
+
 .fk-how-scrim {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
   background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
   pointer-events: none;
 }
 
-/* `-art`: a floating illustration widget, left/right inset like `-copy`, width auto and height
-   from the asset's own ratio. Only `top` differs per card (local, one card each). */
+/* `-art`: a floating illustration widget at the top of the cell, as wide as the card minus
+   `space-8` each side (like `-copy`), height from the asset's own ratio. Only the top offset
+   differs per card (local, one card each). */
 .fk-how-art {
-  position: absolute;
-  top: 0;
-  right: var(--space-8);
-  left: var(--space-8);
-  width: auto;
-  height: auto;
+  grid-area: 1 / 1;
+  align-self: start;
+  justify-self: center;
   display: block;
+  width: calc(100% - var(--space-16));
+  height: auto;
+  margin-top: 0;
 }
 
 [data-how-card="1"] .fk-how-art {
-  top: 50px;
+  margin-top: 50px;
 }
 
 [data-how-card="2"] .fk-how-art {
-  top: 29px;
+  margin-top: 29px;
 }
 
 [data-how-card="3"] .fk-how-art {
-  top: 94px;
+  width: calc(100% - var(--space-4));
+  margin-top: 32px;
 }
 
 [data-how-card="6"] .fk-how-art {
-  top: 32px;
+  width: calc(100% - var(--space-4));
+  margin-top: 32px;
 }
 
+/* `-copy`: at the bottom of the cell, `space-8` in from the sides and bottom. */
 .fk-how-copy {
-  position: absolute;
-  right: var(--space-8);
-  bottom: var(--space-8);
-  left: var(--space-8);
+  grid-area: 1 / 1;
+  align-self: end;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  padding: 0 var(--space-8) var(--space-8);
   color: var(--color-ink);
 }
 
@@ -146,21 +166,9 @@
   opacity: 0.6;
 }
 
-@media screen and (max-width: 991px) {
-  .fk-how-pagination {
-    padding-bottom: var(--space-16);
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .fk-how-viewport {
-    height: 380px;
-  }
-}
-
 @media screen and (max-width: 479px) {
   .fk-how-track {
-    left: calc(50% - 167px);
+    margin-left: calc(50% - 167px);
     gap: 29.9417px;
   }
 
@@ -175,6 +183,9 @@
   }
 
   .fk-how-card {
+    flex: none;
+    width: 360px;
+    height: 464px;
     transform: scale(0.839196);
   }
 

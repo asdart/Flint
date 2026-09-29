@@ -76,64 +76,60 @@ export default function HowItWorks() {
           </div>
         </div>
 
-        <div className="fk-w-full" data-ix="reveal">
-          <div className="fk-how-viewport" data-ix="how-carousel">
-            <div className="fk-how-track" data-how-track>
-              {STEPS.map((step, index) => {
-                const number = index + 1;
-                const [bgWidth, bgHeight] = step.bgSize;
-                return (
-                  <div
-                    key={step.title}
-                    className={cx("fk-how-slide", index === 0 && "is-active")}
-                    data-how-slide={number}
-                  >
-                    <article
-                      className={cx(
-                        "fk-how-card",
-                        index === 0 && "is-active",
-                        step.variant === "brand-light" && "is-brand-light",
-                      )}
-                      data-how-card={number}
+        <div className="fk-flex fk-flex-col fk-gap-12 fk-w-full">
+          <div className="fk-w-full" data-ix="reveal">
+            <div className="fk-how-viewport" data-ix="how-carousel">
+              <div className="fk-how-track" data-how-track>
+                {STEPS.map((step, index) => {
+                  const number = index + 1;
+                  const [bgWidth, bgHeight] = step.bgSize;
+                  return (
+                    <div
+                      key={step.title}
+                      className={cx("fk-how-slide", index === 0 && "is-active")}
+                      data-how-slide={number}
                     >
-                      <img
-                        className="fk-how-bg"
-                        src={`/assets/home/how-card-bg-${number}.webp`}
-                        alt=""
-                        width={bgWidth}
-                        height={bgHeight}
-                      />
-                      {step.scrim && <div className="fk-how-scrim" aria-hidden="true" />}
-                      {step.artSize && (
-                        <img
-                          className="fk-how-art"
-                          src={`/assets/home/how-card-art-${number}.webp`}
-                          alt=""
-                          width={step.artSize[0]}
-                          height={step.artSize[1]}
-                        />
-                      )}
-                      <div
+                      <article
                         className={cx(
-                          "fk-how-copy",
-                          step.tone === "inverse" && "is-inverse",
+                          "fk-how-card",
+                          index === 0 && "is-active",
+                          step.variant === "brand-light" && "is-brand-light",
                         )}
+                        data-how-card={number}
                       >
-                        <h3 className="fk-how-title">{step.title}</h3>
-                        <p className="fk-how-body">{step.body}</p>
-                      </div>
-                    </article>
-                  </div>
-                );
-              })}
+                        <img
+                          className="fk-how-bg"
+                          src={`/assets/home/how-card-bg-${number}.webp`}
+                          alt=""
+                          width={bgWidth}
+                          height={bgHeight}
+                        />
+                        {step.scrim && <div className="fk-how-scrim" aria-hidden="true" />}
+                        {step.artSize && (
+                          <img
+                            className="fk-how-art"
+                            src={`/assets/home/how-card-art-${number}.webp`}
+                            alt=""
+                            width={step.artSize[0]}
+                            height={step.artSize[1]}
+                          />
+                        )}
+                        <div
+                          className={cx(
+                            "fk-how-copy",
+                            step.tone === "inverse" && "is-inverse",
+                          )}
+                        >
+                          <h3 className="fk-how-title">{step.title}</h3>
+                          <p className="fk-how-body">{step.body}</p>
+                        </div>
+                      </article>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
-
-        <div
-          className="fk-how-pagination fk-flex fk-justify-center fk-w-full fk-max-w-container fk-mx-auto"
-          data-ix="reveal"
-        >
           <Pagination id="how" count={STEPS.length} label={(index) => `Go to step ${index + 1}`} />
         </div>
       </div>

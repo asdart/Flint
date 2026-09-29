@@ -22,6 +22,11 @@ const TESTIMONIALS: Testimonial[] = [
   { name: "Chrismene jones", role: "California", image: "/assets/testimonial-photo-3.webp", quote: QUOTE },
 ];
 
+/** Three copies in a row: the middle one is the real set, the outer two let the track slide in
+ * either direction without running out of cards (`ix-testimonials`). */
+const RING = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
+const CURRENT = TESTIMONIALS.length + 3;
+
 type TestimonialsProps = {
   title?: React.ReactNode;
   body?: string;
@@ -47,22 +52,22 @@ export default function Testimonials({
             </div>
           </div>
 
-          <div className="fk-testimonials-row">
-            {TESTIMONIALS.map((testimonial, index) => (
-              <div
-                key={`${testimonial.image}-${index}`}
-                className={cx("fk-testimonials-slide", index === 3 ? "is-center" : `is-slot-${index}`)}
-                data-tm-slide={index + 1}
-              >
-                <TestimonialCard {...testimonial} />
-              </div>
-            ))}
-          </div>
-
-          <div
-            className="fk-flex fk-justify-center fk-w-full fk-max-w-container fk-mx-auto"
-            data-ix="reveal"
-          >
+          <div className="fk-flex fk-flex-col fk-gap-8 fk-w-full">
+            <div className="fk-testimonials-track fk-flex fk-gap-6">
+              {RING.map((testimonial, index) => {
+                const isClone = index < TESTIMONIALS.length || index >= TESTIMONIALS.length * 2;
+                return (
+                  <div
+                    key={`${testimonial.image}-${index}`}
+                    className={cx("fk-testimonials-slide", index === CURRENT && "is-center")}
+                    data-tm-slide={index + 1}
+                    aria-hidden={isClone || undefined}
+                  >
+                    <TestimonialCard {...testimonial} />
+                  </div>
+                );
+              })}
+            </div>
             <Pagination
               id="tm"
               count={TESTIMONIALS.length}

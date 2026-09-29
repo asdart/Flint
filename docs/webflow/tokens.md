@@ -37,11 +37,10 @@ card sizes, a width used by several sections) need one shared class or token (`A
 | `color-tertiary` | `#fbf5f2` | Tertiary panel background |
 | `color-surface` | `#f3f4f6` | Neutral surface panels |
 | `color-stone-50` | `#edeff2` | Borders on white buttons |
-| `color-stone-100` | `#d3d7de` | Footer link text, muted borders |
+| `color-stone-100` | `#d3d7de` | Footer link text, muted borders, carousel pagination track (`fk-pagination-bar`) |
 | `color-stone-400` | `#8c929b` | Form placeholder text |
+| `color-stone-800` | `#373839` | Carousel pagination progress fill (`fk-pagination-fill`) |
 | `color-neutral-hover` | `#f5f5f5` | Hover background of white buttons |
-| `color-neutral-100` | `#ebebe5` | Carousel pagination track (`fk-pagination-bar`) |
-| `color-neutral-700` | `#444444` | Carousel pagination progress fill (`fk-pagination-fill`) |
 
 ### Accent
 

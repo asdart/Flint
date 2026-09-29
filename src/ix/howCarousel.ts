@@ -21,8 +21,9 @@ const DESKTOP: Layout = {
   largeWidth: 398,
   largeHeight: 512,
   gap: 32,
+  // The card fills its slide at desktop, so it is sized by the slide, not scaled.
   smallScale: 1,
-  largeScale: 398 / 360,
+  largeScale: 1,
 };
 
 // Legacy fit at a 390px phone: the viewport is the section's content box (390 − 2·16), minus 24.
@@ -130,7 +131,7 @@ function setupCarousel(viewport: HTMLElement): Cleanup {
       ...bars.map((bar, index) => ({
         element: bar,
         from: { width: getComputedStyle(bar).width },
-        to: { width: index === active ? "57px" : "7px" },
+        to: { width: index === active ? "52px" : "12px" },
         duration: BAR_MS,
       })),
     ];
