@@ -9,7 +9,7 @@ Every rule in `AGENTS.md` still applies, especially rules 11, 12 and 13.
 1. **Authenticated.** If calls fail with an auth error, re-authenticate the server (Cursor: its `mcp_auth`; Claude Code:
    reconnect the Webflow connector). If
    `data_sites_tool` → `list_sites` returns no sites, the wrong Webflow account is connected. Stop and ask the user.
-2. **Site ID known.** Read it from `AGENTS.md` §9. Never guess it or pick one from a list without asking the user.
+2. **Site ID known.** Read it from `AGENTS.md` §9. Never guess it or pick one from a list without asking the user. While §9 still says "to set" (before roadmap step P.1), no write happens.
 3. **Designer tools** (`designer_tool`, selection, canvas) need the Webflow Designer open with the
    MCP Bridge app running. **Data tools** (`data_*`) are headless and preferred.
 4. Call `webflow_guide_tool` once at the start of each session, then
@@ -61,7 +61,7 @@ Always sync in this order, because later steps depend on earlier ones:
 | 10. Verify | — | `node scripts/webflow-diff.mjs` on a fresh `get_styles` dump (skill recipe "Diff"), `element_snapshot_tool`, `data_element_tool` → `query_elements`, `/site-audit`, `/accessibility-audit`, and the `seo.md` checks on staging (one H1, page settings, schema in the Rich Results Test, image sizes and lazy loading, `curl -I` for the 404) |
 | 11. Publish | — | Only on user request, via `/safe-publish` |
 
-## What the MCP can and can't do (MVP 2026-09-23, updated 2026-09-24)
+## What the MCP can and can't do (found in the test stage, 2026-09-23 to 2026-09-27)
 
 | Works headlessly | Doesn't (or needs care) |
 | --- | --- |
@@ -80,7 +80,7 @@ Always sync in this order, because later steps depend on earlier ones:
 | CSS transitions of colors, shadows, transforms, opacity | No transition of a gradient angle or custom property, and IX3 can't animate them either → exception (`x-button-gradient`) |
 | IX3 interactions by class, attribute, body; class toggles; reduced-motion and breakpoint conditions; `customEase` path eases; click `jump`, hover `pause`/`resume` on one timeline | Multi-group click interactions only accept `play`; no `filter` (blur); a scroll trigger must be the interaction's only trigger (no in-view pause for a carousel that also has hover or clicks) |
 | Snapshots and page switching with the Bridge app | Newly uploaded fonts/CMS data may need a Designer reload to show |
-| Stacking several standalone classes on one element (spike S7, 2026-09-27): each keeps its own properties, element `class` carries every name | Webflow auto-creates an empty combo style per new chain depth (harmless: no properties, and not emitted in the published CSS, checked on staging). `set_style` only reuses an existing chain by name; it can't create a new one (use the WHTML builder for the first use of a combination). See `css-system.md` → S7 result and the skill's [Stack utility classes](../../.agents/skills/flint-webflow-sync/recipes.md#stack-utility-classes) recipe |
+| Stacking several standalone classes on one element (spike S7, 2026-09-27): each keeps its own properties, element `class` carries every name | Webflow auto-creates an empty combo style per new chain depth (harmless: no properties, and not emitted in the published CSS, checked in the test stage). `set_style` only reuses an existing chain by name; it can't create a new one (use the WHTML builder for the first use of a combination). See `css-system.md` → S7 result and the skill's [Stack utility classes](../../.agents/skills/flint-webflow-sync/recipes.md#stack-utility-classes) recipe |
 | Deleting a page | No MCP action deletes a page (`data_pages_tool` and `designer_tool` have none; checked 2026-09-27). Delete it in the Designer; set `draft: true` meanwhile so it isn't published |
 
 Creates are **not idempotent**: a variable, field or class name that already exists is created
@@ -94,7 +94,7 @@ Anyone may fix things directly in the Designer. Before the next push, pull them 
 
 Not every difference is an edit. A Designer tab that was open before an MCP push can save its
 older copy of a style over the push (seen 2026-09-24: `fk-button` lost its new gradient and
-`transition` while padding stayed). If Webflow's value equals an earlier synced value and
+`transition` while padding stayed). If Webflow's value equals an earlier pushed value and
 contradicts a recorded decision, treat it as stale: re-push and tell the user. If unsure, ask.
 After every push, ask the user to reload the Designer.
 

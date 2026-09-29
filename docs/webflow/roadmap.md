@@ -9,28 +9,28 @@ on them. Don't start a phase before the previous phase's exit criteria are met, 
 
 **Status legend:** ☐ to do · ◐ in progress · ☑ done
 
-## Two Webflow sites
+## Webflow target
 
-| Site | Role | Account | Status |
-| --- | --- | --- | --- |
-| **Test** `Flint` (`flint-4167fa`, `6ab46032460da07da9dc6231`) | Sandbox. Proved the contract and the MCP recipes (phases 0–2). Rehearsal target until production exists, then spikes only | Paulo's workspace | Active. Ids in `webflow-ids.json` today |
-| **Production** | The real site. Populated **from scratch** by replaying the repo (track P), then the sync target for every later phase | Client's account | Waiting for access (P-09) |
+**Production** is the only Webflow target: the client's account, populated **from scratch** by
+replaying the repo (track P), then the sync target for every later phase. It is waiting for
+access (P-09). The test stage's records (ids, sync log, homepage plan) are archived in
+[`archive/test-site/`](archive/test-site/README.md).
 
-The repo is the source of truth for both. Nothing is copied from the test site to production: every
-class, component, page and item is rebuilt from `src/` and the registries with the recipes in the
+The repo is the source of truth. Nothing is copied from the test site to production: every class,
+component, page and item is rebuilt from `src/` and the registries with the recipes in the
 [`flint-webflow-sync`](../../.agents/skills/flint-webflow-sync/SKILL.md) skill.
 
 ## Phases
 
 | Phase | Goal | Webflow target | Status |
 | --- | --- | --- | --- |
-| 0–2 | **Test stage**: contract, foundations, MVP 1 (vertical slice) and MVP 2 (homepage at 1:1 parity) | Test | ☑ closed 2026-09-25 (D-08) |
+| 0–2 | **Test stage**: contract, foundations, MVP 1 (vertical slice) and MVP 2 (homepage at 1:1 parity) | Test site (archived) | ☑ closed 2026-09-25 (D-08) |
 | P | **Production site**: access, then populate from scratch with everything built so far | Production | ☐ starts when access arrives (P-09) |
-| 3 | Global and UI components | Test until P is done, then Production | ◐ partly done in MVP 2 |
-| 4 | Sections | same | ◐ Home sections done in MVP 2 |
-| 5 | Static pages | same | ☐ |
-| 6 | Blog and CMS | same | ☐ |
-| 7 | Motion and illustrations | same | ☐ |
+| 3 | Global and UI components | Production | ◐ Home components built in the repo |
+| 4 | Sections | Production | ◐ Home sections built in the repo |
+| 5 | Static pages | Production | ☐ |
+| 6 | Blog and CMS | Production | ☐ |
+| 7 | Motion and illustrations | Production | ☐ |
 | 8 | Custom-code exceptions | Production | ☐ |
 | 9 | QA and launch prep | Production | ☐ |
 | 10 | Launch and cleanup | Production | ☐ |
@@ -48,13 +48,13 @@ next phase on production.
 | --- | --- | --- | --- |
 | D-01 | Class naming is FlowKit v2 (`fk-` prefix, `is-*` combos) | 2026-09-23 | `classes.md` |
 | D-02 | Related posts show posts from the same category, excluding the current post. Legacy showed the first 3 posts | 2026-09-23 | `cms.md` → Collection lists |
-| D-03 | The **test** site is `Flint` (short name `flint-4167fa`, ID `6ab46032460da07da9dc6231`), workspace `paulos-workspace-442e65` (see D-09 for production) | 2026-09-23 | `AGENTS.md` §9 |
+| D-03 | The test stage runs on a separate **test** Webflow site (see D-09 for production). Its records are archived | 2026-09-23 | `archive/test-site/README.md` |
 | D-04 | MVP closed after the user's review. The approach (repo → MCP, contract v1.1) holds | 2026-09-24 | This file, `AGENTS.md` status |
 | D-05 | The nav has a single CTA (Secondary Small) in both rest and pill states | 2026-09-24 | `components.md`, `classes.md` |
 | D-06 | The primary button hover matches the repo exactly (gradient angle rotation) through custom-CSS exception `x-button-gradient`, installed once the plan allows custom code. Icons are SVG files; buttons have no icon by default | 2026-09-24 | `interactions.md`, `classes.md`, `components.md`, `AGENTS.md` rules 10 and 14 |
 | D-07 | Two-line clamps and antialiased font smoothing match the repo through custom-CSS exception `x-text-rendering` (the style API rejects those properties), installed with `x-button-gradient` | 2026-09-25 | `interactions.md`, `classes.md` |
 | D-08 | The test stage (phases 0–2) is closed. Its open reviews and staging re-checks are closed as test findings and re-checked on production ([carried checks](#carried-into-production-qa)) | 2026-09-25 | This file |
-| D-09 | Production lives in the **client's Webflow account** on a **Business/Enterprise** plan (exact plan to confirm in P-09). It starts empty and is populated from scratch from the repo. Until access, work continues in the repo and is rehearsed on the test site | 2026-09-25 | This file, `AGENTS.md` §9 once the site exists |
+| D-09 | Production lives in the **client's Webflow account** on a **Business/Enterprise** plan (exact plan to confirm in P-09). It starts empty and is populated from scratch from the repo. Until access, work continues in the repo only | 2026-09-25 | This file, `AGENTS.md` §9 once the site exists |
 | D-10 | The mobile menu's scroll lock keeps `overscroll-behavior: contain` through custom-CSS exception `x-scroll-lock`, installed with the other two exceptions. The body lock stays native (`ix-nav-menu`) | 2026-09-26 | `interactions.md`, `classes.md` |
 | D-11 | New CSS system direction: a utilities layer (`tokens → utilities → primitives → blocks`) sits between tokens and classes, so repeated single-property rules (`display: flex`, `gap`, alignment…) stop needing a combo per base class. Gated on spike S7 (stacked standalone classes through the MCP), which passed 2026-09-27. Three sub-decisions: responsive utilities use suffix naming (`-tablet`/`-mobile`/`-phone`, max-width only); panel colors move from `fk-panel is-*` combos to `fk-bg-*` utilities; a new primitive `fk-section-header-action` replaces the repeated `*-action` block elements. Full spec and the S7 evidence in [`css-system.md`](css-system.md) | 2026-09-27 | `css-system.md` (proposed, becomes contract 1.6 once migrated) |
 | D-12 | How It Works card art redesigned from Figma (node 5746:992 desktop, 5483:860 mobile), **supersedes H-4** ("one image per card"). Cards now get a solid `color-tertiary` background (`is-brand-light` → `color-brand-light` on card 5 "Start work") with a full-bleed `-bg` raster (photo/gradient/pattern) and, on 5 of 6 cards, a floating `-art` illustration on top (card 4 "Relocate" has none); cards 2 and 6 (inverse copy over a photo) add a `-scrim` gradient. Card 3's copy also changed to match Figma ("Interview Directly with Facilities" / "We present you with facilities. You choose who to interview.") | 2026-09-27 | `classes.md` → `fk-how`, `components.md` → Section / How It Works, `sections/HowItWorks.tsx` |
@@ -76,15 +76,15 @@ All must be closed before the phase noted in "Needed by".
 | P-07 | Is it acceptable that stat numbers animate as a whole instead of digit by digit? _(proposed)_ | (a) Yes, native `ix-count-in` · (b) no, add a digit script exception | Phase 7 | open |
 | P-08 | Who supplies the missing content? _(proposed)_ | FAQ answers 2+, real footer URLs, About Team copy, bodies for non-featured posts | Phase 9 | open |
 | P-09 | Production access: which site and workspace, which role, and can the Webflow MCP be authorized on the client's account? | We need Designer access with site settings and custom code rights, and the MCP's OAuth app approved for the client's workspace (may need a workspace admin). Confirm the exact plan and whether the site is new and empty | Track P | open |
-| P-10 | What happens to the test site after launch? | (a) Keep as a sandbox for spikes · (b) archive or delete (with confirmation) | Phase 10 | open |
 | P-12 | Which page is the "role page" in the PageSpeed check (`seo.md` S-15)? The roadmap has no role pages yet | Name the page, and add it to `components.md` → Pages if it's new | Phase 5 | open, to decide later (user, 2026-09-27) |
 
 ---
 
 ## Test stage — phases 0–2 (closed)
 
-Everything here was built in the repo and on the **test** site. Details per sync are in
-`sync-log.md`; the homepage plan and spike results are in [`mvp2-home.md`](mvp2-home.md).
+Everything here was built in the repo and rehearsed on the separate **test** Webflow site. The
+per-sync log, the ids and the homepage plan and spike results are archived in
+[`archive/test-site/`](archive/test-site/README.md).
 
 ### What it produced
 
@@ -93,13 +93,13 @@ Everything here was built in the repo and on the **test** site. Details per sync
   `webflow-diff.mjs`, `webflow-markup.mjs`, `webflow-upload*.mjs`).
 - **Foundations:** every token in `tokens.md` and every class in `classes.md`, with parity proven by
   `webflow-diff.mjs`. Legacy Tailwind reads the tokens (`@theme reference`). Style guide page `/style-guide`.
-- **MVP 1** (`/mvp`, removed 2026-09-27; its pieces live on in the homepage and registries): Nav, Footer, Text Panel, Stats Band, Post Grid (Related) bound to the CMS
+- **MVP 1** (a vertical slice, since superseded by the homepage and the registries): Nav, Footer, Text Panel, Stats Band, Post Grid (Related) bound to the CMS
   (Categories, Authors, Posts), and the first interactions.
-- **MVP 2** (`/mvp-home`): the full homepage at 1:1 parity with legacy `/`: Hero (Home), Logo
+- **MVP 2**: the full homepage at 1:1 parity with the legacy home (`/legacy`): Hero (Home), Logo
   Marquee, Two Ways, Partners Map, How It Works (Home), Feature Grid, Testimonials (Slider), Post
   Grid (Home), CTA (Art), plus `UI / Button`, `UI / Service Card` and `UI / Testimonial Card`.
-- **Spikes** (`/lab`): blur reveal, marquee, arc, ticker, carousels and staggered reveals proven
-  native in IX3 (S1–S6), verified on the staging subdomain.
+- **Spikes**: blur reveal, marquee, arc, ticker, carousels and staggered reveals proven
+  native in IX3 (S1–S6), verified on a published test-site page.
 
 ### What the MVP proved about the MCP
 
@@ -120,7 +120,7 @@ when the page is built there.
 
 - [ ] Style guide reviewed in the Designer against the repo at the four breakpoints
 - [ ] Homepage wave 3 (Hero, How It Works, Testimonials) reviewed in the Designer
-- [ ] On the staging subdomain: S1 blur reveal with reduced motion (`skip-to-end`), then close H-1 in `mvp2-home.md`
+- [ ] On the staging subdomain: S1 blur reveal with reduced motion (`skip-to-end`), then close H-1 in `archive/test-site/mvp2-home.md`
 - [ ] On staging: S4 ticker cycle (unique items × step), and loop coverage for the arc, marquee and ticker
 - [ ] On staging: How It Works carousel motion (H-11) and the testimonial hover freeze (H-12)
 - [ ] Two Ways 2-line card titles against legacy (legacy is +3px per line from its word masks)
@@ -137,12 +137,12 @@ the repo already holds, so no new design work happens here.
 - [ ] Access granted per P-09; exact plan confirmed; D-09 updated with the site's name, short name,
       ID, workspace and time zone
 - [ ] Webflow MCP authorized on the client's account; `get_site` returns the production ID
-- [ ] `AGENTS.md` §9 rewritten for two sites (production as the default target, test for spikes);
-      the rule "agents never target another site" names both IDs
-- [ ] Ids split per site: today's `webflow-ids.json` archived as `webflow-ids.test.json`, a fresh
-      `webflow-ids.json` for production; the sync scripts read the right one
+- [ ] `AGENTS.md` §9 filled in with the production site's name, short name, ID, workspace and home
+      page ID (the rule "agents never target another site" then names that ID)
+- [x] Ids per site: `webflow-ids.json` is the empty production template (the sync scripts read it)
+      and the test stage's ids are archived in `archive/test-site/webflow-ids.json`
 - [ ] Site instruction (`rules/flint-contract.md`) created from `AGENTS.md`
-- [ ] Tag styles seeded once in the Designer (Body, All Links) as on the test site
+- [ ] Tag styles seeded once in the Designer (Body, All Links)
 - [ ] **MCP Bridge** app installed and connected in the production Designer
 - [ ] SEO site settings (`seo.md`): global canonical URL (with the domain, P-06), auto sitemap,
       robots.txt with the sitemap link and no AI crawlers blocked, `llms.txt` uploaded per D-14, 404 page
@@ -157,24 +157,24 @@ In this order. Record every id in `webflow-ids.json` and add one `sync-log.md` r
 - [ ] Classes: every class and combo in `classes.md`, with breakpoints and states;
       `webflow-diff.mjs` clean against production
 - [ ] Components: `Global / Nav`, `Global / Footer`, the `UI / *` and `Section / *` components
-      marked `synced` in `components.md`, with props and variants
+      marked `migrated` in `components.md`, with props and variants
 - [ ] CMS: Categories, Authors, Posts with the fields in `cms.md`, seeded from `src/content/`
-- [ ] Pages: Home built from the MVP 2 composition (as the real Home, not a `/mvp-home` draft);
+- [ ] Pages: Home (`/`, `src/pages/HomePage.tsx`) as composed in `components.md` → Pages;
       `/style-guide` as a draft
-- [ ] Interactions: every interaction in `interactions.md` marked synced, with reduced-motion settings
+- [ ] Interactions: every interaction in `interactions.md` marked `migrated`, with reduced-motion settings
 - [ ] Custom code: `x-button-gradient`, `x-text-rendering` and `x-scroll-lock` (the plan allows it, D-09, D-10),
       plus `x-schema-site` and `x-deferred-tracking` (`seo.md` S-06, S-13)
 - [ ] Assets uploaded as resized WebP (`seo.md` S-10); fonts only as uploaded custom fonts (S-12)
 - [ ] Staging publish to the `webflow.io` subdomain (with confirmation), then the
       [carried checks](#carried-into-production-qa)
 
-**Not replayed:** `/lab` and its `fk-lab-*` classes and interactions, `/mvp` (superseded by the
-homepage and later pages), and anything listed as pending cleanup in the test ids file.
+**Not replayed:** anything that isn't in the registries (the test stage's spike pages, `fk-lab-*`
+classes and throwaway interactions stay in the archive).
 
 ### Exit criteria
 
 - [ ] Production matches the repo for everything built so far: diff clean, Home reviewed in the Designer
-- [ ] From here on, phases 3–10 sync to production; the test site only takes spikes
+- [ ] From here on, phases 3–10 sync to production
 
 ---
 
@@ -184,15 +184,16 @@ Runs alongside Phase 3, ahead of the rest of the homepage refactor. Details in
 [`css-system.md`](css-system.md).
 
 - [x] Spike S7: stacked global classes through the MCP (passed 2026-09-27, `css-system.md` → S7 result)
-- [ ] `utilities.css` + registry section, generated from `tokens.css` by a small script; contract 1.6
-- [ ] Homepage refactored onto utilities (section by section, arc/carousel/testimonials geometry left for their own pass)
+- [x] `utilities.css` + registry section, generated from `tokens.css` by `scripts/gen-utilities.mjs`; contract 1.6 (2026-09-27)
+- [x] Homepage refactored onto utilities (section by section, arc/carousel/testimonials geometry left for their own pass; 2026-09-27)
+- [x] Grids become utilities; shared components (Nav, Footer, Button, Icon, Pagination, Post Card) keep component classes (2026-09-28)
 
 ## Phase 3 — Global and UI components
 
-Done in MVP 2: `UI / Button` (4 variants), `UI / Service Card`, `UI / Testimonial Card`, Pagination markup.
+Built in the repo: `UI / Button` (4 variants), `UI / Service Card`, `UI / Testimonial Card`, Pagination markup.
 
 - [ ] `Global / Nav` Dark variant, and move the Nav out of all 6 legacy heroes
-- [ ] Footer props (CTA Title, CTA Body) created in Webflow
+- [ ] Footer props (CTA Title, CTA Body) defined on the Webflow component
 - [ ] `UI / Section Header` Left and Inverse variants; `UI / Stat` Default; `UI / Post Card` Featured
       and a component-with-props version
 - [ ] Remaining UI components: FAQ Item, Newsletter Form, Portrait, Illustration (see `components.md`)
@@ -200,7 +201,7 @@ Done in MVP 2: `UI / Button` (4 variants), `UI / Service Card`, `UI / Testimonia
 ## Phase 4 — Sections
 
 Needs P-03 and P-05 closed. Illustrations use static SVGs until phase 7.
-Done in MVP 2 (Home variants): Hero, Logo Marquee, Two Ways, Partners Map, How It Works, Feature
+Built in the repo (Home variants): Hero, Logo Marquee, Two Ways, Partners Map, How It Works, Feature
 Grid (Cards), Testimonials (Slider), Post Grid (Home), CTA (Art). Also Text Panel and Stats Band (Large).
 
 - [ ] Hero: Candidates, Facility Partners, About, Blog; and Article Hero
@@ -213,7 +214,7 @@ Grid (Cards), Testimonials (Slider), Post Grid (Home), CTA (Art). Also Text Pane
 
 ## Phase 5 — Static pages
 
-- [ ] Home (from MVP 2), Candidates, Facility partners, About: composed as in `components.md` → Pages
+- [ ] Home, Candidates, Facility partners, About: composed as in `components.md` → Pages
 - [ ] Page settings per `seo.md`: title, meta description, OG image (also used for the Twitter card, D-13), noindex
       where needed, clean slugs; `FAQPage` schema on pages with an FAQ block (S-01…S-05, S-08)
 - [ ] Delete each legacy section/page file once its replacement is migrated (with user confirmation)
@@ -233,7 +234,7 @@ Needs P-02 closed.
 
 Needs P-04 and P-07 closed.
 
-- [ ] Remaining interactions in `interactions.md`: parallax, FAQ, and any not yet synced
+- [ ] Remaining interactions in `interactions.md`: parallax, FAQ, and any still `legacy`
 - [ ] Illustrations produced and placed per P-04, with static fallbacks for reduced motion
 
 ## Phase 8 — Custom-code exceptions
@@ -259,7 +260,6 @@ Needs P-04 and P-07 closed.
 - [ ] Custom domain connected (P-06)
 - [ ] Publish via `/safe-publish`, with explicit confirmation
 - [ ] Remove `tailwindcss`, `@tailwindcss/vite`, `framer-motion` and legacy files from the repo
-- [ ] Test site handled per P-10
 - [ ] `AGENTS.md` status set to "migrated". From then on the repo is maintained per the contract only
 
 ---
@@ -273,6 +273,6 @@ Needs P-04 and P-07 closed.
 - [ ] FAQ answers after the first are placeholders
 - [ ] Featured article: remove the placeholder bullets about Flint, Michigan
 - [ ] Non-featured posts have only an excerpt, and need bodies
-- [ ] Home, kept verbatim in MVP 2 (H-7): testimonials "Minesota" and "Chrismene jones"; How It
+- [ ] Home, kept verbatim from the legacy home (H-7): testimonials "Minesota" and "Chrismene jones"; How It
       Works "13:30PM-14:30PM" and the "Jonathan Johnson" name on the `andrew` avatar; the Two Ways
       Facilities card repeats the Nurses body; How It Works Facility call and Processing share a body

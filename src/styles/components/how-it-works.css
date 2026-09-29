@@ -3,8 +3,7 @@
    optional `-art` illustration (card 4 "Relocate" has none) under the live `-copy`. Card
    background defaults to `color-tertiary`; `is-brand-light` (card 5) switches to
    `color-brand-light`. Carousel dimensions, the card model and every `-art` offset below are local
-   to this block (2026-09-27, supersedes decision H-4 in `mvp2-home.md`: see `classes.md` →
-   `fk-how` and roadmap decision D-12). The generic shell (`fk-how` wrapper, pagination row) moved
+   to this block (see `classes.md` → `fk-how` and roadmap decision D-12). The generic shell (`fk-how` wrapper, pagination row) moved
    to utilities in the markup; `fk-how` itself stays as an interaction target (howCarousel.ts
    `.closest(".fk-how")`) with only its local padding left here. */
 

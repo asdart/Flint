@@ -6,7 +6,7 @@ import, **Webflow is the source of truth for content**. Don't edit the JSON to c
 
 Legacy source: `src/sections/blog/posts.ts` and `src/sections/blog/featuredArticle.ts`.
 
-Seed files: `src/content/categories.json` (5), `authors.json` (3) and `posts.json` (3, the MVP
+Seed files: `src/content/categories.json` (5), `authors.json` (3) and `posts.json` (3, a
 subset). Image fields are `{ "url", "alt" }`, and reference fields hold the referenced item's slug
 (the import maps slugs to Webflow item ids, recorded in `webflow-ids.json`).
 `src/content/index.ts` loads them for the preview.
@@ -46,15 +46,15 @@ subset). Image fields are `{ "url", "alt" }`, and reference fields hold the refe
 
 `published-on` is reserved by Webflow (the system publish date), so don't name a field
 "Published on": it gets the slug `published-on-2`. Field slugs can't be changed after creation, so
-the MVP field was replaced by `publish-date` on 2026-09-24 (created, values copied, sort
-repointed, old field deleted).
+a field with the wrong slug is replaced: create the new one, copy the values, repoint sorts and
+bindings, delete the old one (skill recipe "Replace a CMS field"). Posts uses `publish-date`.
 
-Other MVP findings:
+Other findings from the test stage:
 
 - Image fields accept `{ fileId, url, alt }`. Webflow copies the file into the CMS's own asset
   store, so the item's image URL differs from the uploaded asset's.
 - The Designer canvas doesn't list draft items; a Collection List with only drafts shows "No items
-  found". MVP items were set to `isDraft: false` (staged, not published).
+  found". Set an item to `isDraft: false` (staged, not published) to see it there.
 - Collection Lists can be bound headlessly: `source` = `{ "collectionId": … }`, `sort` =
   `[{ "fieldSlug": …, "direction": "descending" }]`, `limit`. Fields bind with
   `{ source_type: "cms", collection_id, field_id }`; referenced fields use `refFieldId:::fieldId`.
@@ -102,4 +102,4 @@ client-side `Select` + filter in `AllPosts.tsx`. No script needed.
    Use `/cms-collection-setup` or `data_cms_tool` (see `mcp-playbook.md`).
 2. Upload images to Assets and keep the asset ids.
 3. Import items with `/bulk-cms-update`, starting as drafts. Review, then publish items explicitly.
-4. Record the collection ids in `sync-log.md`.
+4. Record the collection ids in `webflow-ids.json` and log the step in `sync-log.md`.

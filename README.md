@@ -40,18 +40,20 @@ node scripts/webflow-style-actions.mjs src/styles/layout.css --only fk-panel  # 
 
 | Route | Page |
 | --- | --- |
-| `/` | Home |
+| `/` | Home (`src/pages/HomePage.tsx`, on the contract) |
+| `/legacy` | Legacy home (`src/pages/legacy/HomePage.tsx`, until it is retired) |
 | `/candidates` | Candidates |
 | `/facility-partners` | Facility partners |
 | `/about` | About |
 | `/blog` | Blog index |
 | `/blog/:slug` | Blog post |
+| `/style-guide` | Style guide (QA page, not in the nav) |
 
 ## Structure
 
 Current:
 
-- `src/pages/` — page composition
+- `src/pages/` — page composition (`legacy/` holds the pre-contract pages until they are migrated)
 - `src/sections/` — page sections (`blog/`, `facilities/`, `facility-partners/` subfolders)
 - `src/components/` — shared pieces, illustrations, nav
 - `src/sections/blog/posts.ts`, `featuredArticle.ts` — hardcoded blog content (future CMS seed)
@@ -65,14 +67,15 @@ defined in [`AGENTS.md` §6](AGENTS.md#6-target-repository-structure).
 | Document | Purpose |
 | --- | --- |
 | [`AGENTS.md`](AGENTS.md) | Rules, definitions, workflow, definition of done |
-| [`docs/webflow/roadmap.md`](docs/webflow/roadmap.md) | Migration phases, the MVP, decisions |
+| [`docs/webflow/roadmap.md`](docs/webflow/roadmap.md) | Migration phases, the production track, decisions |
 | [`docs/webflow/tokens.md`](docs/webflow/tokens.md) | Variables (colors, fonts, sizes, motion) |
 | [`docs/webflow/classes.md`](docs/webflow/classes.md) | FlowKit class registry and tag styles |
 | [`docs/webflow/components.md`](docs/webflow/components.md) | Global/UI/Section components, pages, migration status |
 | [`docs/webflow/cms.md`](docs/webflow/cms.md) | Collections and collection lists |
 | [`docs/webflow/interactions.md`](docs/webflow/interactions.md) | Interactions and custom-code exceptions |
 | [`docs/webflow/mcp-playbook.md`](docs/webflow/mcp-playbook.md) | Syncing to Webflow with the MCP |
-| [`docs/webflow/sync-log.md`](docs/webflow/sync-log.md) | History of Webflow syncs |
+| [`docs/webflow/sync-log.md`](docs/webflow/sync-log.md) | History of syncs to the production site |
+| [`docs/webflow/archive/test-site/`](docs/webflow/archive/test-site/README.md) | Read-only records of the test stage |
 
 ## Notes
 

@@ -1,21 +1,21 @@
 import { Navigate, useParams } from "react-router-dom";
-import { useStaggerReveal } from "../hooks/useStaggerReveal";
-import Footer from "../sections/Footer";
-import ArticleContent from "../sections/blog/ArticleContent";
-import ArticleHero from "../sections/blog/ArticleHero";
-import RelatedInsights from "../sections/blog/RelatedInsights";
+import { useStaggerReveal } from "../../hooks/useStaggerReveal";
+import Footer from "../../sections/Footer";
+import ArticleContent from "../../sections/blog/ArticleContent";
+import ArticleHero from "../../sections/blog/ArticleHero";
+import RelatedInsights from "../../sections/blog/RelatedInsights";
 import {
   FEATURED_ARTICLE,
   FEATURED_TOC,
   type ArticleBlock,
   type TocItem,
-} from "../sections/blog/featuredArticle";
+} from "../../sections/blog/featuredArticle";
 import {
   FEATURED_POST,
   getPostBySlug,
   getRelatedPosts,
   type BlogPost,
-} from "../sections/blog/posts";
+} from "../../sections/blog/posts";
 
 function fallbackArticle(post: BlogPost): { article: ArticleBlock[]; toc: TocItem[] } {
   return {

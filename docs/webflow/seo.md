@@ -38,7 +38,7 @@ profile URLs come with P-08. Every block is validated with Google's Rich Results
 | --- | --- | --- | --- | --- |
 | S-10 | Images are resized, served as WebP, and have width and height set | Source images in `public/assets/` are exported at 2× their largest rendered size, as WebP, before upload: `npm run webp -- <files> --width <2× rendered px>` (`scripts/to-webp.mjs`, keeps transparency, prints the size to use). Every `<img>` has `width` and `height` (the file's size) | Upload the WebP files; Webflow adds responsive `srcset` sizes for uploaded assets (to verify). Image settings keep width and height. CMS images: upload WebP in the item | ◐ Home: every PNG is WebP and `<img>` sizes are set (2026-09-28); 5 JPGs left (`map-bg`, `blog-card-01…03`, `cta-room`) |
 | S-11 | Images below the first screen load lazily | `loading="lazy"` on every image below the fold; above-the-fold images (hero) `loading="eager"` | Image settings → Load: Lazy (Webflow's default) / Eager for the hero (to verify the MCP setting) | ◐ Post card only |
-| S-12 | Fonts are self-hosted and limited to the weights used, with nothing in the head that holds up loading | `@fontsource` SN Pro 400/500 and STIX Two Text 400 only (`src/main.tsx`) | Fonts uploaded as custom fonts (self-hosted by Webflow; created in the MVP). Never add Google Fonts in the Designer (it loads WebFont.js in the head). Every head exception must be small and non-blocking (`async`/`defer`, inline CSS under 1 KB) | ◐ weights OK; head check pending |
+| S-12 | Fonts are self-hosted and limited to the weights used, with nothing in the head that holds up loading | `@fontsource` SN Pro 400/500 and STIX Two Text 400 only (`src/main.tsx`) | Fonts uploaded as custom fonts (self-hosted by Webflow). Never add Google Fonts in the Designer (it loads WebFont.js in the head). Every head exception must be small and non-blocking (`async`/`defer`, inline CSS under 1 KB) | ◐ weights OK; head check pending |
 | S-13 | Tracking scripts (GTM, Meta, TikTok, Google Ads) load after the page does | — | Exception `x-deferred-tracking`: one loader that injects GTM after `load`; Meta, TikTok and Google Ads run as tags inside GTM, never as separate head scripts | ☐ |
 | S-14 | Video and webinar embeds load on click, behind a thumbnail | A thumbnail image + a labelled play button | Native first: a Lightbox (video) with the thumbnail loads the player only when opened (to verify). Inline click-to-play would be exception `x-video-facade` | ☐ |
 | S-15 | PageSpeed Insights mobile score of 90+ on the homepage, a role page and a blog post, before launch | — | Run on the published staging URLs; record the scores in `sync-log.md`. "Role page" is open (P-12) | ☐ |
@@ -66,6 +66,6 @@ These add to `/accessibility-audit` and the focus-visible rule in `AGENTS.md`.
 
 Tracked in `roadmap.md`:
 
-- **P-12:** What is a "role page"? The roadmap has no role pages yet (`/mvp-home` lists a Role Grid).
+- **P-12:** What is a "role page"? The roadmap has no role pages yet (Home has a Role Grid section).
 
 Decided: Twitter card values come from Open Graph (D-13, was P-11); `llms.txt` through Webflow's native upload (D-14, was P-13).

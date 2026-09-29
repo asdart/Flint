@@ -9,22 +9,24 @@ pushed to Webflow through the Webflow MCP without reinterpretation.
   after an element's main class. 1.5 adds the SEO, performance and accessibility
   requirements (rule 15, [`seo.md`](docs/webflow/seo.md)) and one H1 per page (rule 10). 1.4 narrows tokens to system values and allows raw
   local sizes only after checking they don't repeat (rule 2). 1.3 added SVG-only icons (rule 10), 1:1 behavior (rule 14) and
-  `src/styles/exceptions/`. 1.1 added what the MVP proved about the Webflow MCP:
+  `src/styles/exceptions/`. 1.1 added what the test stage proved about the Webflow MCP:
   typography on classes instead of tag styles, `fk-page` as a wrapper div, exact breakpoint query
   syntax, `data-ix` interaction triggers, and the sync scripts in `scripts/`. 1.2 adds rule 13
   (save every learning) and the `flint-webflow-sync` skill.
-- **Status:** The test stage (roadmap phases 0–2: foundations, MVP 1 `/mvp`, MVP 2 homepage
-  `/mvp-home`) closed on 2026-09-25 on the **test** site. The production site will live in the
-  client's Webflow account and be populated from scratch from this repo (roadmap track P); until
-  then, work is rehearsed on the test site. Everything in `src/` outside the migrated pieces is
-  still _legacy_ (Tailwind utilities + Framer Motion). See [Legacy code policy](#8-legacy-code-policy).
+- **Status:** The test stage (roadmap phases 0–2: foundations, a vertical slice and the homepage)
+  closed on 2026-09-25 and its records are archived in
+  [`docs/webflow/archive/test-site/`](docs/webflow/archive/test-site/README.md). The production
+  site will live in the client's Webflow account and be built from scratch from this repo
+  (roadmap track P); nothing is copied from the test stage. Everything in `src/` outside the
+  migrated pieces is still _legacy_ (Tailwind utilities + Framer Motion). See
+  [Legacy code policy](#8-legacy-code-policy).
 
 Detailed registries live in [`docs/webflow/`](docs/webflow/). This file defines the rules; the
 registries define the inventory. If they disagree, fix the registry, not the rule.
 
 | Document | Defines |
 | --- | --- |
-| [`roadmap.md`](docs/webflow/roadmap.md) | Phases, the MVP, decisions taken and decisions still open |
+| [`roadmap.md`](docs/webflow/roadmap.md) | Phases, the production track, decisions taken and decisions still open |
 | [`tokens.md`](docs/webflow/tokens.md) | Variables: colors, fonts, sizes, radii, spacing, shadows, motion |
 | [`classes.md`](docs/webflow/classes.md) | Naming system, tag styles, class registry |
 | [`components.md`](docs/webflow/components.md) | Components, sections, pages and their composition |
@@ -32,8 +34,9 @@ registries define the inventory. If they disagree, fix the registry, not the rul
 | [`interactions.md`](docs/webflow/interactions.md) | Interactions registry and the custom-code exceptions list |
 | [`mcp-playbook.md`](docs/webflow/mcp-playbook.md) | How to push changes with the Webflow MCP, safely |
 | [`seo.md`](docs/webflow/seo.md) | SEO, performance and accessibility requirements every page must meet |
-| [`sync-log.md`](docs/webflow/sync-log.md) | What has been pushed to Webflow, and when |
-| [`webflow-ids.json`](docs/webflow/webflow-ids.json) | Ids of everything created in Webflow (variables, assets, collections, components…) |
+| [`sync-log.md`](docs/webflow/sync-log.md) | What has been pushed to the production site, and when |
+| [`webflow-ids.json`](docs/webflow/webflow-ids.json) | Ids of everything created on the production site (variables, assets, collections, components…) |
+| [`archive/test-site/`](docs/webflow/archive/test-site/README.md) | Read-only records of the test stage (ids, sync log, homepage plan). Not a sync target |
 
 ---
 
@@ -127,7 +130,7 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 | In this repo | Becomes in Webflow |
 | --- | --- |
 | `src/styles/tokens.css` custom properties (`--color-ink`) | Variables with the same name (`color-ink`) |
-| `src/styles/base.css` tag selectors | Tag styles, after a one-time seed in the Designer (the MCP can update but not create them). Synced markup never relies on them |
+| `src/styles/base.css` tag selectors | Tag styles, after a one-time seed in the Designer (the MCP can update but not create them). Markup pushed to Webflow never relies on them |
 | `.fk-page` on the page root div | The same wrapper div, first child of Body |
 | `src/styles/**/*.css` `.fk-*` / `.fk-*.is-*` rules, including the generated `utilities.css` | Classes / combo classes, pushed with `scripts/webflow-css.mjs` (new) and `scripts/webflow-style-actions.mjs` (changes, states) |
 | Media queries at 991 / 767 / 479px (see §5) | Tablet (`medium`) / Mobile landscape (`small`) / Mobile portrait (`tiny`) styles |
@@ -141,7 +144,7 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 | React props (`eyebrowText`) | Component props in Title Case ("Eyebrow Text") |
 | React `variant` prop union | Component variants, same names |
 | `src/content/*.json` | CMS collection items (seed import) |
-| `src/pages/*.tsx` | Pages: section instances in the same order |
+| `src/pages/*.tsx` (not `legacy/`) | Pages: section instances in the same order |
 | Class `fk-reveal` etc. + `src/ix/` preview runtime | Interactions from `interactions.md` |
 
 ## 5. Breakpoints
@@ -182,6 +185,7 @@ src/
   ix/                     # local preview runtime for registered interactions (not shipped to Webflow)
   lib/                    # repo-only helpers with no Webflow equivalent (cx, SmartLink)
   pages/                  # composition only — no styling, no data
+    legacy/               # pre-contract pages (Tailwind + Framer Motion), removed as each is migrated
 ```
 
 A file's name equals its Webflow component name without spaces (`Section / Stats Band` →
@@ -232,27 +236,30 @@ The current `src/` predates this contract. Until each piece is migrated:
   contract classes win over Tailwind's preflight. Tag styles in `base.css` are scoped to
   `:where(.fk-page)`, so they don't restyle legacy pages. In Webflow they are global tag styles;
   drop the wrapper once no page is legacy.
-- Migrated pages render inside `.fk-page` and call `useInteractions()` from `src/ix/`.
+- Migrated pages (`src/pages/`, e.g. `HomePage.tsx` at `/`) render inside `.fk-page` and call
+  `useInteractions()` from `src/ix/`. Legacy pages live in `src/pages/legacy/` (the old home is at
+  `/legacy`) and move out of it as they are migrated.
 - Legacy Tailwind utilities read token values from `tokens.css` (`@theme reference` in
   `src/index.css`); never redefine a token there. Tailwind utilities whose variables share a
   token name (`rounded-sm`…`rounded-2xl` → `--radius-*`) resolve to the Flint values.
 
 ## 9. Webflow project
 
-The values below are the **test** site (roadmap D-03). The production site (client's account,
-D-09) replaces them as the default target in roadmap step P.1; until then there is no production ID.
+The production site lives in the client's Webflow account (roadmap D-09) and is built from scratch
+from this repo (track P). Its ids don't exist yet: the values below are set in roadmap step P.1.
 
 | Field | Value |
 | --- | --- |
-| Site name | `Flint` |
-| Site short name | `flint-4167fa` (staging: `flint-4167fa.webflow.io`) |
-| Site ID | `6ab46032460da07da9dc6231`. This is the value MCP tools expect as `site_id` / `siteId` |
-| Workspace | `paulos-workspace-442e65` (ID `63710ac27d23ec60732eb6bc`) |
-| Home page ID | `6ab46033460da07da9dc623a`. Default `pageId` for site-level data tools |
+| Site name | To set in roadmap P.1 |
+| Site short name | To set in roadmap P.1 (its staging subdomain is `<short name>.webflow.io`) |
+| Site ID | To set in roadmap P.1. This is the value MCP tools expect as `site_id` / `siteId` |
+| Workspace | To set in roadmap P.1 |
+| Home page ID | To set in roadmap P.1. Default `pageId` for site-level data tools |
 | Time zone | America/Vancouver |
 | Custom domain | None yet (roadmap P-06) |
 | Primary locale | English (`en`) |
 | Variable collection | `Flint` (to create. Webflow's default `Base collection` stays unused) |
 | MCP server | Webflow's official MCP, OAuth. Named `plugin-webflow-webflow` in Cursor (Webflow plugin); a claude.ai connector in Claude Code. Same tools in both |
 
-Agents never target another site. If `list_sites` doesn't return this ID, stop and ask the user.
+Until the production site ID is recorded here, no Webflow write happens. After that, agents never
+target another site: if `list_sites` doesn't return this ID, stop and ask the user.

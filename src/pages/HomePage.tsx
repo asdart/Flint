@@ -1,29 +1,41 @@
-import Hero from "../sections/legacy/Hero";
-import Clients from "../sections/Clients";
-import TwoWays from "../sections/legacy/TwoWays";
-import PartnersMap from "../sections/legacy/PartnersMap";
-import HowItWorks from "../sections/legacy/HowItWorks";
-import WhatWeOffer from "../sections/WhatWeOffer";
-import Testimonials from "../sections/legacy/Testimonials";
-import Blog from "../sections/Blog";
-import Cta from "../sections/legacy/Cta";
-import Footer from "../sections/Footer";
-import { useStaggerReveal } from "../hooks/useStaggerReveal";
+import Footer from "../components/global/Footer";
+import Nav from "../components/global/Nav";
+import { useInteractions } from "../ix/useInteractions";
+import Cta from "../sections/Cta";
+import FeatureGrid from "../sections/FeatureGrid";
+import Hero from "../sections/Hero";
+import HowItWorks from "../sections/HowItWorks";
+import LogoMarquee from "../sections/LogoMarquee";
+import PartnersMap from "../sections/PartnersMap";
+import PostGrid from "../sections/PostGrid";
+import Pricing from "../sections/Pricing";
+import RoleGrid from "../sections/RoleGrid";
+import Testimonials from "../sections/Testimonials";
+import TwoWays from "../sections/TwoWays";
+import Webinar from "../sections/Webinar";
 
+// Home page at / — the homepage built from contract sections (roadmap phase 2b). The pre-contract
+// version lives at /legacy (src/pages/legacy/HomePage.tsx).
 export default function HomePage() {
-  const revealRef = useStaggerReveal<HTMLDivElement>();
+  useInteractions();
 
   return (
-    <div ref={revealRef} className="flex w-full flex-col">
-      <Hero />
-      <Clients />
-      <TwoWays />
-      <PartnersMap />
-      <HowItWorks />
-      <WhatWeOffer />
-      <Testimonials />
-      <Blog />
-      <Cta />
+    <div className="fk-page">
+      <Nav />
+      <main>
+        <Hero />
+        <LogoMarquee />
+        <TwoWays />
+        <Pricing />
+        <PartnersMap />
+        <HowItWorks />
+        <Webinar />
+        <RoleGrid />
+        <FeatureGrid />
+        <Testimonials />
+        <PostGrid />
+        <Cta />
+      </main>
       <Footer />
     </div>
   );

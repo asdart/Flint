@@ -71,7 +71,7 @@ The Webflow page uses the markup the repo page renders, so nothing is retyped:
 4. Remove the `class` attribute from DOM elements (`hr`), then place `Global / Nav` before `main`,
    `Global / Footer` after it, and UI instances with `insert_component_instance` + prop values.
 
-Tested on `/mvp-home` (2026-09-25): in the extraction script, also remove preview-runtime state
+Found in the test stage (a full homepage build): in the extraction script, also remove preview-runtime state
 (`is-revealed`, `is-inverse`, inline `style`), empty the Button slots, keep one copy of a repeated
 UI component (transform it, then `data_component_builder` → `insert_in_element` by component name
 into the empty slots and set props), and drop the repo's list markup where a Collection List goes.
@@ -79,16 +79,16 @@ Link every image afterwards with `set_settings` → `assetId` + `altText`. Then 
 root (`replace: true`) into its `Section /` component and bind its texts to props.
 
 **CMS-bound grid (Post Grid):** `data_element_builder` → `element_schema: { type: "CMSCollection" }`
-inside the block; `set_style` on the DynamoList (on the test site `fk-grid is-3`; on production the
-stacked utilities `fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4`, which `set_style`
-can only apply once that chain exists, so create it through WHTML first); `set_settings` on the wrapper:
+inside the block; `set_style` on the DynamoList (the stacked utilities
+`fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4`, which `set_style` can only apply
+once that chain exists, so create it through WHTML first); `set_settings` on the wrapper:
 `source`, `limit`, `sort` (**before** inserting anything into the item); WHTML of the card markup
 into the DynamoItem; bind each element to its field (`binding: { source_type: "cms", collection_id,
 field_id }`, referenced fields as `<ref-field>:::<field>`).
 
 ## Loops and multi-step timelines (IX3)
 
-Payloads accepted by `create_interaction` (runtime verification in `mvp2-home.md` → spikes):
+Payloads accepted by `create_interaction` (runtime verification in the archived plan, `docs/webflow/archive/test-site/mvp2-home.md` → spikes):
 
 - **Infinite loop:** `timing: { duration: 20, ease: 0, repeat: -1 }`. `repeat` lives on each
   action, not on the timeline.
@@ -105,7 +105,7 @@ Payloads accepted by `create_interaction` (runtime verification in `mvp2-home.md
   `filterContext: { relationship: "within", filterBy: ["wf:class", [<block id>]], firstMatchOnly: false }`.
 - The host expands a combo leaf id into its chain (`[base, combo]`) on save; pass the leaf.
 - **Click and hover triggers on a data attribute** work: `target: { extensionKey: "wf:attribute",
-  value: "[data-dot=\"how-1\"]" }` (created 2026-09-25, `ix-how-carousel`).
+  value: "[data-dot=\"how-1\"]" }` (used by `ix-how-carousel`).
 - **Generate big timelines with a throwaway Node script** (how the wave 3 carousels were built):
   one `act(id, name, target, position, duration, cycle, ease, props)` helper that sets
   `repeatDelay = cycle − duration`, steps emitted from last to first, output printed as JSON.
@@ -151,7 +151,7 @@ Icons are images of files in `src/assets/icons/`, never styled spans (rule 10).
 The element you transform becomes the component root. Blank components get a `div` root, so
 don't use them.
 
-1. `data_whtml_builder` on the draft `/mvp` page (append to `main`), no `css` if the classes exist.
+1. `data_whtml_builder` on a draft page (append to `main`), no `css` if the classes exist.
 2. `data_component_tool`:
 
 ```json

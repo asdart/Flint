@@ -4,7 +4,7 @@ All tokens live in the Webflow variable collection **`Flint`**. In the repo they
 properties in `src/styles/tokens.css`. The variable name is identical in both places: Webflow
 variable `color-ink` ⇄ CSS `--color-ink`. Ids are in `webflow-ids.json`.
 
-How Webflow stores them (checked in the MVP):
+How Webflow stores them (checked in the test stage):
 
 - Webflow's own CSS name is `--_flint---color-ink` (collection prefix). Don't use it in the repo.
   The WHTML builder links `var(--color-ink)` to the variable by **name**, and `update_style` links
@@ -63,7 +63,7 @@ step that's in use is its own token. Add a row before using a new one.
 | --- | --- | --- |
 | `color-white-80` | `rgba(255, 255, 255, 0.8)` | Body text on brand panels |
 | `color-white-60` | `rgba(255, 255, 255, 0.6)` | Pressed text on primary buttons |
-| `color-white-20` | `rgba(255, 255, 255, 0.2)` | Not used by contract classes since 2026-09-24 (was the inverse divider) |
+| `color-white-20` | `rgba(255, 255, 255, 0.2)` | Not used by contract classes |
 | `color-white-10` | `rgba(255, 255, 255, 0.1)` | Dividers (`fk-divider`) |
 | `color-brand-80` | `rgba(68, 56, 109, 0.8)` | Long-form body text |
 | `color-subtle-80` | `rgba(97, 101, 106, 0.8)` | Stat labels |
@@ -119,9 +119,8 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 (`space-2-5` / `space-5`), small 6 × 14 (`space-1-5` / `space-3-5`), as in the legacy
 `ApplyButton`. The 1px border sits outside the padding. `space-7` is the paragraph gap in long-form text. `space-5` is also the page gutter (`fk-container` inline padding).
 
-`space-14`, `space-19` and `space-36` — **repo ahead of Webflow (2026-09-27)**: added with the
-homepage section-shell refactor, not yet pushed to Webflow. `space-14` is the row gap in
-`fk-logo-marquee`. `space-19` is the gap between the heading and the ticker viewport in
+`space-14`, `space-19` and `space-36` come from the homepage section shell. `space-14` is the row
+gap in `fk-logo-marquee`. `space-19` is the gap between the heading and the ticker viewport in
 `fk-partners-map-inner`. `space-36` is the top padding of `fk-panel.is-hero` (Hero's rhythm combo).
 
 ## Widths (size variables)
