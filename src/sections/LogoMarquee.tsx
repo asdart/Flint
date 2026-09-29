@@ -1,10 +1,10 @@
 const LOGOS = [
-  { src: "/assets/home/logo-01.png", width: 132 },
-  { src: "/assets/home/logo-02.png", width: 96 },
-  { src: "/assets/home/logo-03.png", width: 101 },
-  { src: "/assets/home/logo-04.png", width: 187 },
-  { src: "/assets/home/logo-05.png", width: 146 },
-  { src: "/assets/home/logo-06.png", width: 121 },
+  { src: "/assets/home/logo-01.webp", width: 132 },
+  { src: "/assets/home/logo-02.webp", width: 96 },
+  { src: "/assets/home/logo-03.webp", width: 101 },
+  { src: "/assets/home/logo-04.webp", width: 187 },
+  { src: "/assets/home/logo-05.webp", width: 146 },
+  { src: "/assets/home/logo-06.webp", width: 121 },
 ];
 
 // One set is 1071px; the strip is up to ≈1540px wide at 1920. Three copies keep it filled while
@@ -14,20 +14,24 @@ const COPIES = 3;
 /** Section / Logo Marquee. */
 export default function LogoMarquee() {
   return (
-    <section className="fk-logo-marquee">
-      <div className="fk-logo-marquee-label" data-ix="blur-reveal">
+    <section className="fk-logo-marquee fk-flex fk-items-center fk-w-full fk-gap-14 fk-flex-col-mobile fk-gap-6-mobile">
+      <div className="fk-shrink-0" data-ix="blur-reveal">
         <div className="fk-blur-reveal">
-          <p className="fk-text-md is-brand-muted">Partnering with the top facilities</p>
+          <p className="fk-text-md fk-color-brand-80">Partnering with the top facilities</p>
         </div>
       </div>
-      <div className="fk-logo-marquee-viewport">
-        <div className="fk-logo-marquee-track">
+      <div className="fk-logo-marquee-viewport fk-relative fk-min-w-0 fk-w-full">
+        <div className="fk-logo-marquee-track fk-flex fk-items-center">
           {Array.from({ length: COPIES }, (_, copy) => (
-            <div key={copy} className="fk-logo-marquee-row" aria-hidden={copy > 0 || undefined}>
+            <div
+              key={copy}
+              className="fk-logo-marquee-row fk-flex fk-shrink-0 fk-items-center fk-gap-12"
+              aria-hidden={copy > 0 || undefined}
+            >
               {LOGOS.map((logo) => (
                 <img
                   key={logo.src}
-                  className="fk-logo-marquee-logo"
+                  className="fk-logo-marquee-logo fk-shrink-0"
                   src={logo.src}
                   alt=""
                   width={logo.width}
@@ -37,8 +41,8 @@ export default function LogoMarquee() {
             </div>
           ))}
         </div>
-        <div className="fk-logo-marquee-fade is-left" aria-hidden="true" />
-        <div className="fk-logo-marquee-fade is-right" aria-hidden="true" />
+        <div className="fk-logo-marquee-fade is-left fk-absolute" aria-hidden="true" />
+        <div className="fk-logo-marquee-fade is-right fk-absolute" aria-hidden="true" />
       </div>
     </section>
   );

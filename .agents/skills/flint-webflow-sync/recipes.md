@@ -79,7 +79,9 @@ Link every image afterwards with `set_settings` → `assetId` + `altText`. Then 
 root (`replace: true`) into its `Section /` component and bind its texts to props.
 
 **CMS-bound grid (Post Grid):** `data_element_builder` → `element_schema: { type: "CMSCollection" }`
-inside the block; `set_style` on the DynamoList (`fk-grid is-3`); `set_settings` on the wrapper:
+inside the block; `set_style` on the DynamoList (on the test site `fk-grid is-3`; on production the
+stacked utilities `fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4`, which `set_style`
+can only apply once that chain exists, so create it through WHTML first); `set_settings` on the wrapper:
 `source`, `limit`, `sort` (**before** inserting anything into the item); WHTML of the card markup
 into the DynamoItem; bind each element to its field (`binding: { source_type: "cms", collection_id,
 field_id }`, referenced fields as `<ref-field>:::<field>`).

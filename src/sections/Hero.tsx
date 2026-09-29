@@ -1,16 +1,16 @@
 import Button from "../components/ui/Button";
 
 const CANDIDATES = [
-  { image: "/assets/home/candidate-01.png", name: "Maria", flag: "/assets/flags/ph.svg" },
-  { image: "/assets/home/candidate-02.png", name: "Chrismene", flag: "/assets/flags/ht.svg" },
-  { image: "/assets/home/candidate-03.png", name: "Wanjiru", flag: "/assets/flags/ke.svg" },
-  { image: "/assets/home/candidate-04.png", name: "Kwame", flag: "/assets/flags/gh.svg" },
-  { image: "/assets/home/candidate-05.png", name: "Emeka", flag: "/assets/flags/ng.svg" },
-  { image: "/assets/home/candidate-06.png", name: "Ama", flag: "/assets/flags/gh.svg" },
-  { image: "/assets/home/candidate-07.png", name: "Daniel", flag: "/assets/flags/ke.svg" },
-  { image: "/assets/home/candidate-08.png", name: "Ngozi", flag: "/assets/flags/ng.svg" },
-  { image: "/assets/home/candidate-09.png", name: "Linh", flag: "/assets/flags/vn.svg" },
-  { image: "/assets/home/candidate-10.png", name: "Samuel", flag: "/assets/flags/et.svg" },
+  { image: "/assets/home/candidate-01.webp", name: "Maria", flag: "/assets/flags/ph.svg" },
+  { image: "/assets/home/candidate-02.webp", name: "Chrismene", flag: "/assets/flags/ht.svg" },
+  { image: "/assets/home/candidate-03.webp", name: "Wanjiru", flag: "/assets/flags/ke.svg" },
+  { image: "/assets/home/candidate-04.webp", name: "Kwame", flag: "/assets/flags/gh.svg" },
+  { image: "/assets/home/candidate-05.webp", name: "Emeka", flag: "/assets/flags/ng.svg" },
+  { image: "/assets/home/candidate-06.webp", name: "Ama", flag: "/assets/flags/gh.svg" },
+  { image: "/assets/home/candidate-07.webp", name: "Daniel", flag: "/assets/flags/ke.svg" },
+  { image: "/assets/home/candidate-08.webp", name: "Ngozi", flag: "/assets/flags/ng.svg" },
+  { image: "/assets/home/candidate-09.webp", name: "Linh", flag: "/assets/flags/vn.svg" },
+  { image: "/assets/home/candidate-10.webp", name: "Samuel", flag: "/assets/flags/et.svg" },
 ] as const;
 
 const ARC_CARDS = [...CANDIDATES, ...CANDIDATES];
@@ -19,17 +19,17 @@ const ARC_CARDS = [...CANDIDATES, ...CANDIDATES];
 export default function Hero() {
   return (
     <section className="fk-section is-last">
-      <div className="fk-panel is-secondary is-hero">
+      <div className="fk-panel fk-bg-secondary is-hero">
         <div className="fk-container">
           <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
             <div className="fk-blur-reveal">
               <h1 className="fk-heading-xl">Find Healthcare Jobs with Green Card Sponsorship</h1>
             </div>
             <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg is-brand-muted">Flint helps you secure a sponsored healthcare job, relocate, and work towards your Green Card in the US.</p>
+              <p className="fk-text-lg fk-color-brand-80">Flint helps you secure a sponsored healthcare job, relocate, and work towards your Green Card in the US.</p>
             </div>
             <div className="fk-blur-reveal is-delay-2">
-              <div className="fk-hero-action">
+              <div className="fk-section-header-action fk-pt-2-mobile">
                 <Button />
               </div>
             </div>

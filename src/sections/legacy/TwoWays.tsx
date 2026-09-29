@@ -106,13 +106,13 @@ function NursesIllustration({ play, reduceMotion, offset }: RevealState) {
           symmetrically on narrower cards. */}
       <div className="absolute left-1/2 top-0 h-[172px] w-[592px] -translate-x-1/2">
         <motion.img
-          src="/assets/home/two-ways-nurse-right.png"
+          src="/assets/home/two-ways-nurse-right.webp"
           alt=""
           className="absolute left-[312px] top-[25px] h-[211px] w-[159px] object-cover"
           {...rise(AT.photoFollow + 0.08, 52)}
         />
         <motion.img
-          src="/assets/home/two-ways-nurse-left.png"
+          src="/assets/home/two-ways-nurse-left.webp"
           alt=""
           className="absolute left-[60px] top-[38px] h-[311px] w-[249px] object-cover"
           {...rise(AT.photoFollow, 52)}
@@ -138,7 +138,7 @@ function NursesIllustration({ play, reduceMotion, offset }: RevealState) {
           }}
         />
         <motion.img
-          src="/assets/home/two-ways-nurse-center.png"
+          src="/assets/home/two-ways-nurse-center.webp"
           alt=""
           className="absolute left-[207px] top-[35px] h-[184px] w-[173px] object-cover"
           {...rise(AT.photoLead, 68)}
@@ -152,7 +152,7 @@ function FacilityIllustration({ play, reduceMotion, offset }: RevealState) {
   return (
     <Illustration fade={FACILITY_FADE}>
       <motion.img
-        src="/assets/home/two-ways-facility.png"
+        src="/assets/home/two-ways-facility.webp"
         alt=""
         className="absolute inset-x-0 -top-[49px] h-[230px] w-full rounded-[16px] object-cover"
         initial={reduceMotion ? false : { opacity: 0, scale: 1.06 }}

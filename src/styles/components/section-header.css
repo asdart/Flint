@@ -26,3 +26,9 @@
   margin-top: var(--space-4);
   text-align: left;
 }
+
+/* The button row under a header (Hero, CTA…). Centered by the header's own alignment. */
+.fk-section-header-action {
+  display: flex;
+  padding-top: var(--space-4);
+}

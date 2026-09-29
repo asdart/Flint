@@ -10,7 +10,7 @@ type TextPanelProps = {
 export default function TextPanel({ eyebrow, title, body }: TextPanelProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel is-tertiary is-radius-lg">
+      <div className="fk-panel fk-bg-tertiary is-radius-lg">
         <div className="fk-container is-content-sm" data-ix="reveal">
           <SectionHeader eyebrow={eyebrow} title={title} body={body} />
         </div>

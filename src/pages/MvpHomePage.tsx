@@ -12,6 +12,7 @@ import Pricing from "../sections/Pricing";
 import RoleGrid from "../sections/RoleGrid";
 import Testimonials from "../sections/Testimonials";
 import TwoWays from "../sections/TwoWays";
+import Webinar from "../sections/Webinar";
 
 // Draft page "MVP Home" at /mvp-home — roadmap phase 2b (docs/webflow/mvp2-home.md). The homepage
 // rebuilt from contract sections, compared against the legacy / until sign-off.
@@ -28,6 +29,7 @@ export default function MvpHomePage() {
         <Pricing />
         <PartnersMap />
         <HowItWorks />
+        <Webinar />
         <RoleGrid />
         <FeatureGrid />
         <Testimonials />

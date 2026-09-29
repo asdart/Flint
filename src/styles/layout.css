@@ -36,26 +36,6 @@
   position: relative;
 }
 
-.fk-panel.is-brand {
-  background-color: var(--color-brand);
-}
-
-.fk-panel.is-brand-light {
-  background-color: var(--color-brand-light);
-}
-
-.fk-panel.is-secondary {
-  background-color: var(--color-secondary);
-}
-
-.fk-panel.is-tertiary {
-  background-color: var(--color-tertiary);
-}
-
-.fk-panel.is-surface {
-  background-color: var(--color-surface);
-}
-
 .fk-panel.is-compact {
   padding-block: var(--space-20);
 }
@@ -87,10 +67,6 @@
   padding-inline: var(--space-5);
 }
 
-.fk-container.is-full-height {
-  height: 100%;
-}
-
 /* Narrow content blocks sit inside a page container, so they don't add the gutter again. */
 .fk-container.is-md {
   max-width: var(--width-container-md);
@@ -105,48 +81,6 @@
 .fk-container.is-content-sm {
   max-width: var(--width-content-sm);
   padding-inline: 0;
-}
-
-.fk-grid {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.fk-grid.is-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.fk-grid.is-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.fk-grid.is-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.fk-stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.fk-stack.is-gap-sm {
-  gap: var(--space-2);
-}
-
-.fk-stack.is-gap-lg {
-  gap: var(--space-6);
-}
-
-.fk-stack.is-gap-xl {
-  gap: var(--space-8);
-}
-
-.fk-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
 }
 
 .fk-divider {
@@ -169,15 +103,7 @@
   border: 0;
 }
 
-.fk-hide-desktop {
-  display: none;
-}
-
 @media screen and (max-width: 991px) {
-  .fk-hide-desktop {
-    display: block;
-  }
-
   .fk-section.is-open {
     padding: var(--space-24) var(--space-10);
   }
@@ -196,18 +122,6 @@
 
   .fk-panel-content {
     gap: var(--space-10);
-  }
-
-  .fk-grid.is-3 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .fk-grid.is-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .fk-hide-tablet {
-    display: none;
   }
 }
 
@@ -230,21 +144,5 @@
 
   .fk-panel.is-relaxed {
     padding-block: var(--space-16);
-  }
-
-  .fk-grid.is-2 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fk-grid.is-3 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fk-grid.is-4 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fk-hide-mobile {
-    display: none;
   }
 }

@@ -56,12 +56,12 @@ export default function Footer({
 
   return (
     <footer className="fk-footer">
-      <div className="fk-panel is-brand is-compact">
-        <div className="fk-container fk-footer-panel">
+      <div className="fk-panel is-compact fk-bg-brand">
+        <div className="fk-container fk-flex fk-flex-col fk-gap-16 fk-gap-8-mobile">
           <div className="fk-footer-cta">
-            <div className="fk-footer-cta-text" data-ix="blur-reveal">
+            <div className="fk-flex fk-flex-col fk-gap-4 fk-max-w-content" data-ix="blur-reveal">
               <div className="fk-blur-reveal">
-                <p className="fk-heading-xl is-inverse">
+                <p className="fk-heading-xl fk-color-white">
                   {titleLines.map((line, index) => (
                     <Fragment key={line}>
                       {index > 0 ? <br /> : null}
@@ -71,7 +71,7 @@ export default function Footer({
                 </p>
               </div>
               <div className="fk-blur-reveal is-delay-1">
-                <p className="fk-text-lg is-inverse-muted">{ctaBody}</p>
+                <p className="fk-text-lg fk-color-white-80">{ctaBody}</p>
               </div>
             </div>
             <div data-ix="blur-reveal">
@@ -106,7 +106,7 @@ export default function Footer({
             <SmartLink href="/" className="fk-footer-logo">
               <img src="/assets/wordmark-white.svg" alt="Flint" width={49} height={24} />
             </SmartLink>
-            <p className="fk-text-md is-inverse-muted">
+            <p className="fk-text-md fk-color-white-80">
               © 2026 Flint. All rights reserved.
             </p>
           </div>

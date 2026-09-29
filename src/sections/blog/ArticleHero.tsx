@@ -47,7 +47,7 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
               <div className="flex flex-col items-center gap-3">
                 <span className="size-11 shrink-0 overflow-clip rounded-full bg-stone-100">
                   <img
-                    src="/assets/blog/author.png"
+                    src="/assets/blog/author.webp"
                     alt=""
                     className="size-full object-cover"
                   />

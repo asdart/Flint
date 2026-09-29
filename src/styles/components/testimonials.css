@@ -1,6 +1,7 @@
 /* fk-testimonials-* — Section / Testimonials, Slider variant, placed inside
    fk-panel.is-brand-light[data-ix="testimonials"]. Row heights and absolute stage offsets are
-   local geometry copied from the legacy carousel. */
+   local geometry copied from the legacy carousel. The pagination row is generic (flex, centered,
+   container width) and now lives entirely on utilities in markup; no block class left for it. */
 
 .fk-testimonials-row {
   position: relative;
@@ -47,12 +48,4 @@
 
 .fk-testimonials-slide.is-slot-6 {
   transform: translateX(840.24px) scale(0.8);
-}
-
-.fk-testimonials-pagination {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: var(--width-container);
-  margin: 0 auto;
 }

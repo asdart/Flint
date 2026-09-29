@@ -27,10 +27,6 @@
   letter-spacing: -0.96px;
 }
 
-.fk-heading-xl.is-inverse {
-  color: var(--color-white);
-}
-
 .fk-heading-lg {
   margin: 0;
   font-family: var(--font-serif);
@@ -73,31 +69,11 @@
   line-height: 28px;
 }
 
-.fk-text-lg.is-brand-muted {
-  color: var(--color-brand-80);
-}
-
-.fk-text-lg.is-inverse-muted {
-  color: var(--color-white-80);
-}
-
 .fk-text-md {
   margin: 0;
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 24px;
-}
-
-.fk-text-md.is-brand-muted {
-  color: var(--color-brand-80);
-}
-
-.fk-text-md.is-subtle {
-  color: var(--color-subtle);
-}
-
-.fk-text-md.is-inverse-muted {
-  color: var(--color-white-80);
 }
 
 .fk-text-sm {

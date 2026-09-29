@@ -1,10 +1,6 @@
-/* fk-hero — Section / Hero, Home. The wheel geometry reproduces the legacy 3400px circular arc. */
-
-.fk-hero-action {
-  display: flex;
-  justify-content: center;
-  padding-top: var(--space-4);
-}
+/* fk-hero — Section / Hero, Home. The wheel geometry reproduces the legacy 3400px circular arc.
+   The button row uses the shared `fk-section-header-action` primitive (+ `fk-pt-2-mobile`), not a
+   block class; only the arc/cards/chips stay as block geometry here. */
 
 .fk-hero-stage {
   position: relative;
@@ -217,10 +213,6 @@
 }
 
 @media screen and (max-width: 767px) {
-  .fk-hero-action {
-    padding-top: var(--space-2);
-  }
-
   .fk-hero-stage {
     bottom: var(--space-4);
     height: 240px;

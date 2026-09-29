@@ -1,12 +1,12 @@
 import BlurReveal from "../components/BlurReveal";
 
 const LOGOS = [
-  { src: "/assets/home/logo-01.png", w: 132 },
-  { src: "/assets/home/logo-02.png", w: 96 },
-  { src: "/assets/home/logo-03.png", w: 101 },
-  { src: "/assets/home/logo-04.png", w: 187 },
-  { src: "/assets/home/logo-05.png", w: 146 },
-  { src: "/assets/home/logo-06.png", w: 121 },
+  { src: "/assets/home/logo-01.webp", w: 132 },
+  { src: "/assets/home/logo-02.webp", w: 96 },
+  { src: "/assets/home/logo-03.webp", w: 101 },
+  { src: "/assets/home/logo-04.webp", w: 187 },
+  { src: "/assets/home/logo-05.webp", w: 146 },
+  { src: "/assets/home/logo-06.webp", w: 121 },
 ];
 
 export default function Clients() {

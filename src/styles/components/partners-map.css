@@ -1,52 +1,21 @@
-/* fk-partners-map — Section / Partners Map. The panel, ticker line and content width are local
-   geometry inherited from the legacy section. */
+/* fk-partners-map — Section / Partners Map. Fixed heights, the ticker track/rows/viewport mask
+   and the overlay tint are local geometry inherited from the legacy section; everything else is
+   utilities (see the markup in PartnersMap.tsx). */
 
 .fk-partners-map {
-  position: relative;
-  width: 100%;
   height: 680px;
-  border-radius: var(--radius-xl);
-  background-color: var(--color-tertiary);
-  overflow: clip;
 }
 
 .fk-partners-map-image {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   filter: blur(3px);
   transform: scale(1.05);
 }
 
 .fk-partners-map-overlay {
-  position: absolute;
-  inset: 0;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.fk-partners-map-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.fk-partners-map-inner {
-  position: relative;
-  display: flex;
-  gap: var(--space-19);
-  width: 100%;
-  height: 100%;
-}
-
 .fk-partners-map-heading {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   height: 100%;
 }
 
@@ -98,14 +67,10 @@
   }
 
   .fk-partners-map-inner {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-4);
     padding-block: var(--space-16);
   }
 
   .fk-partners-map-heading {
-    flex-direction: row;
     height: auto;
   }
 

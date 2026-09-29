@@ -16,15 +16,15 @@ export default function Cta({
 }: CtaProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel is-tertiary is-relaxed">
+      <div className="fk-panel fk-bg-tertiary is-relaxed">
         <div className="fk-cta-ring" aria-hidden="true">
-          <img className="fk-cta-ring-image" src="/assets/home/cta-flower.png" alt="" />
+          <img className="fk-cta-ring-image" src="/assets/home/cta-flower.webp" alt="" />
         </div>
         <div className="fk-cta-room" aria-hidden="true">
           <div className="fk-cta-window">
             <img className="fk-cta-window-image" src="/assets/home/cta-room.jpg" alt="" />
           </div>
-          <img className="fk-cta-photo" src="/assets/home/cta-photo.png" alt="" />
+          <img className="fk-cta-photo" src="/assets/home/cta-photo.webp" alt="" />
         </div>
         <div className="fk-container">
           <div className="fk-section-header is-narrow" data-ix="blur-reveal">
@@ -32,10 +32,10 @@ export default function Cta({
               <h2 className="fk-heading-xl">{title}</h2>
             </div>
             <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg is-brand-muted">{body}</p>
+              <p className="fk-text-lg fk-color-brand-80">{body}</p>
             </div>
             <div className="fk-blur-reveal is-delay-2">
-              <div className="fk-cta-action">
+              <div className="fk-section-header-action">
                 <Button label={buttonLabel} link={buttonLink} />
               </div>
             </div>

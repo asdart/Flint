@@ -14,7 +14,7 @@ export default function SectionHeader({ eyebrow, title, body }: SectionHeaderPro
       {body?.length ? (
         <div className="fk-section-header-body">
           {body.map((paragraph) => (
-            <p key={paragraph} className="fk-text-lg is-brand-muted">
+            <p key={paragraph} className="fk-text-lg fk-color-brand-80">
               {paragraph}
             </p>
           ))}

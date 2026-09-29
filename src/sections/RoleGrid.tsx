@@ -71,22 +71,22 @@ export default function RoleGrid({
 }: RoleGridProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel is-brand-light">
+      <div className="fk-panel fk-bg-brand-light">
         <div className="fk-container">
-          <div className="fk-role-grid">
+          <div className="fk-flex fk-flex-col fk-items-center fk-gap-16 fk-gap-10-mobile fk-w-full">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
               <div className="fk-blur-reveal">
                 <h2 className="fk-heading-xl">{title}</h2>
               </div>
               <div className="fk-blur-reveal is-delay-1">
-                <p className="fk-text-lg is-brand-muted">{body}</p>
+                <p className="fk-text-lg fk-color-brand-80">{body}</p>
               </div>
               <div className="fk-blur-reveal is-delay-2">
                 <Button label={buttonLabel} link={buttonLink} />
               </div>
             </div>
 
-            <div data-ix="reveal-stagger" className="fk-role-grid-cards">
+            <div data-ix="reveal-stagger" className="fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-2 fk-w-full">
               {items.map((item) => (
                 <div key={item.title} data-ix-item>
                   <ServiceCard title={item.title} body={item.body} variant="subtle" />

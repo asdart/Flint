@@ -62,7 +62,7 @@ export default function BlogHero() {
                 <div className="flex items-center gap-2 pt-4">
                   <span className="size-6 shrink-0 overflow-clip rounded-full bg-[#e6e5e0]">
                     <img
-                      src="/assets/blog/author.png"
+                      src="/assets/blog/author.webp"
                       alt=""
                       className="size-full object-cover"
                     />

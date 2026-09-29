@@ -40,7 +40,7 @@ export default function Cta() {
           className="pointer-events-none absolute -right-[535.49px] -top-[298.62px] hidden h-[812.83px] w-[1196.15px] md:block"
           style={RING_MASK}
         >
-          <img src="/assets/home/cta-flower.png" alt="" className="size-full object-cover" />
+          <img src="/assets/home/cta-flower.webp" alt="" className="size-full object-cover" />
         </div>
 
         <div
@@ -55,7 +55,7 @@ export default function Cta() {
             />
           </div>
           <img
-            src="/assets/home/cta-photo.png"
+            src="/assets/home/cta-photo.webp"
             alt=""
             className="absolute inset-0 size-full -scale-x-100 object-cover"
           />

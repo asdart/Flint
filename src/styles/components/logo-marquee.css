@@ -1,43 +1,26 @@
-/* fk-logo-marquee — Section / Logo Marquee (legacy Clients.tsx). */
+/* fk-logo-marquee — Section / Logo Marquee (legacy Clients.tsx). Generic layout, alignment,
+   sizing and color moved to utilities (docs/webflow/css-system.md); block classes keep only
+   geometry: fixed sizes, shorthand values and offsets utilities can't express. */
 
 .fk-logo-marquee {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  gap: var(--space-14);
   padding: var(--space-8) var(--space-12);
 }
 
-.fk-logo-marquee-label {
-  flex-shrink: 0;
-}
-
 .fk-logo-marquee-viewport {
-  position: relative;
   height: 36px;
-  min-width: 0;
-  width: 100%;
   flex: 1;
   overflow: hidden;
 }
 
 .fk-logo-marquee-track {
-  display: flex;
   width: max-content;
-  align-items: center;
 }
 
 .fk-logo-marquee-row {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: var(--space-12);
   padding-right: var(--space-12);
 }
 
 .fk-logo-marquee-logo {
-  flex: none;
   height: 36px;
   opacity: 0.8;
   object-fit: contain;
@@ -45,7 +28,6 @@
 
 .fk-logo-marquee-fade {
   pointer-events: none;
-  position: absolute;
   top: 0;
   bottom: 0;
   width: var(--space-32);
@@ -63,9 +45,6 @@
 
 @media screen and (max-width: 767px) {
   .fk-logo-marquee {
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-6);
     padding: var(--space-8) var(--space-5);
   }
 

@@ -1,17 +1,15 @@
 /* fk-testimonial-card — UI / Testimonial Card. All raw dimensions are local to its 396×488
-   portrait canvas; shared flag sizing and system radius/spacing/colors stay tokenized. */
+   portrait canvas; shared flag sizing and system radius/spacing/colors stay tokenized. Generic
+   display/position/overflow/radius/background/color declarations moved to utilities in markup
+   (docs/webflow/css-system.md); block classes here keep only fixed sizes, offsets, masks and the
+   properties `ix-testimonial-hover` reads/animates (`-quote` height, `-scrim` opacity). */
 
 .fk-testimonial-card {
-  position: relative;
   width: 396px;
   height: 488px;
-  border-radius: var(--radius-2xl);
-  background-color: var(--color-white);
-  overflow: clip;
 }
 
 .fk-testimonial-card-media {
-  position: absolute;
   top: -71px;
   left: 50%;
   width: 612px;
@@ -21,33 +19,22 @@
 }
 
 .fk-testimonial-card-image {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
   max-width: none;
-  object-fit: cover;
   user-select: none;
 }
 
 .fk-testimonial-card-gradient {
-  position: absolute;
-  inset: 0;
   background-image: linear-gradient(to bottom, transparent 61.475%, black 100%);
   pointer-events: none;
 }
 
 .fk-testimonial-card-scrim {
-  position: absolute;
-  inset: 0;
   background-image: linear-gradient(to bottom, transparent 0%, black 100%);
   opacity: 0.6;
   pointer-events: none;
 }
 
 .fk-testimonial-card-quote {
-  position: absolute;
   bottom: 110px;
   left: var(--space-8);
   width: 338px;
@@ -69,43 +56,26 @@
 }
 
 .fk-testimonial-card-quote-text {
-  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
   margin: 0;
   font-family: var(--font-serif);
   font-size: 24px;
   line-height: 32px;
   font-weight: 400;
   letter-spacing: -0.48px;
-  color: var(--color-white);
 }
 
 .fk-testimonial-card-flag {
-  position: absolute;
   right: var(--space-8);
   bottom: var(--space-8);
   pointer-events: none;
 }
 
 .fk-testimonial-card-person {
-  position: absolute;
   bottom: var(--space-8);
   left: var(--space-8);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
   pointer-events: none;
-}
-
-.fk-testimonial-card-name {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 500;
-  color: var(--color-white);
 }
 
 .fk-testimonial-card-role {
@@ -114,6 +84,5 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  color: var(--color-white);
   opacity: 0.6;
 }

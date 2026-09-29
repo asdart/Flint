@@ -39,7 +39,7 @@ export default function Nav() {
       </div>
 
       <div className="fk-nav-actions">
-        <div className="fk-hide-tablet">
+        <div className="fk-hidden-tablet">
           <Button variant="secondary" size="small" />
         </div>
         <button type="button" className="fk-nav-toggle" aria-label="Open menu">

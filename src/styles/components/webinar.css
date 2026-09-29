@@ -1,0 +1,58 @@
+/* fk-webinar-* — Section / Webinar, placed inside fk-section > fk-panel.fk-bg-tertiary. The three
+   images were exported from Figma node 5987:3227 at 3× (call, arc) and 2× (participants), so
+   their box sizes and offsets below are the Figma canvas values. The stage is the size of the
+   call card (577×324) plus the room its shadow needs; the call and participants are placed as
+   percentages of it, so the pair scales together below the desktop width. Layout, colors and the
+   header are utilities and shared primitives (docs/webflow/css-system.md). */
+
+/* The arc: as wide as the panel up to 1200px, centered and anchored to its bottom edge, so the
+   ring scales down with the panel instead of being clipped. */
+.fk-webinar-bg {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  margin-inline: auto;
+  pointer-events: none;
+}
+
+/* Stage: 627 wide, 349 tall (the call card's bottom edge). The call image is taller (418) and
+   overflows by its own drop shadow, which lands in the panel's bottom padding. */
+.fk-webinar-stage {
+  position: relative;
+  width: 100%;
+  max-width: 627px;
+  margin-inline: auto;
+  aspect-ratio: 627 / 349;
+}
+
+.fk-webinar-call {
+  position: absolute;
+  top: 5.73%;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Sits 20px left of center and 26px above the card's top edge, as in Figma. */
+.fk-webinar-participants {
+  position: absolute;
+  top: -1.72%;
+  left: 20.25%;
+  display: block;
+  width: 56.46%;
+  height: auto;
+}
+
+@media screen and (max-width: 767px) {
+  .fk-webinar-participants {
+    top: -8%;
+    left: 12.5%;
+    width: 75%;
+  }
+}

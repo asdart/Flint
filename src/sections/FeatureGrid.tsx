@@ -53,21 +53,21 @@ export default function FeatureGrid({
 }: FeatureGridProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel is-secondary">
+      <div className="fk-panel fk-bg-secondary">
         <div className="fk-container">
-          <div className="fk-feature-grid">
+          <div className="fk-flex fk-flex-col fk-items-center fk-gap-16 fk-gap-10-mobile fk-w-full">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
               <div className="fk-blur-reveal">
                 <h2 className="fk-heading-xl">{title}</h2>
               </div>
               <div className="fk-blur-reveal is-delay-1">
-                <p className="fk-text-lg is-brand-muted">{body}</p>
+                <p className="fk-text-lg fk-color-brand-80">{body}</p>
               </div>
             </div>
 
-            <div data-ix="reveal-stagger" className="fk-feature-grid-cards">
+            <div data-ix="reveal-stagger" className="fk-feature-grid-cards fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-2 fk-w-full">
               {items.map((item) => (
-                <div key={item.title} data-ix-item className="fk-feature-grid-item">
+                <div key={item.title} data-ix-item className="fk-feature-grid-item fk-h-full">
                   <ServiceCard icon={item.icon} title={item.title} body={item.body} />
                 </div>
               ))}

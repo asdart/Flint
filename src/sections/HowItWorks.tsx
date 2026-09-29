@@ -64,19 +64,19 @@ const STEPS = [
 export default function HowItWorks() {
   return (
     <section className="fk-section is-x-flush">
-      <div className="fk-how">
+      <div className="fk-how fk-flex fk-flex-col fk-gap-12 fk-overflow-clip">
         <div className="fk-container">
           <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
             <div className="fk-blur-reveal">
               <h2 className="fk-heading-xl">How Flint works</h2>
             </div>
             <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg is-brand-muted">Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.<br/><br/>From step one to day one on the job, Flint is with you every step of the way.</p>
+              <p className="fk-text-lg fk-color-brand-80">Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.<br/><br/>From step one to day one on the job, Flint is with you every step of the way.</p>
             </div>
           </div>
         </div>
 
-        <div className="fk-how-reveal" data-ix="reveal">
+        <div className="fk-w-full" data-ix="reveal">
           <div className="fk-how-viewport" data-ix="how-carousel">
             <div className="fk-how-track" data-how-track>
               {STEPS.map((step, index) => {
@@ -98,7 +98,7 @@ export default function HowItWorks() {
                     >
                       <img
                         className="fk-how-bg"
-                        src={`/assets/home/how-card-bg-${number}.png`}
+                        src={`/assets/home/how-card-bg-${number}.webp`}
                         alt=""
                         width={bgWidth}
                         height={bgHeight}
@@ -107,7 +107,7 @@ export default function HowItWorks() {
                       {step.artSize && (
                         <img
                           className="fk-how-art"
-                          src={`/assets/home/how-card-art-${number}.png`}
+                          src={`/assets/home/how-card-art-${number}.webp`}
                           alt=""
                           width={step.artSize[0]}
                           height={step.artSize[1]}
@@ -130,7 +130,10 @@ export default function HowItWorks() {
           </div>
         </div>
 
-        <div className="fk-how-pagination" data-ix="reveal">
+        <div
+          className="fk-how-pagination fk-flex fk-justify-center fk-w-full fk-max-w-container fk-mx-auto"
+          data-ix="reveal"
+        >
           <Pagination id="how" count={STEPS.length} label={(index) => `Go to step ${index + 1}`} />
         </div>
       </div>

@@ -10,14 +10,20 @@ type ServiceCardProps = {
 /** UI / Service Card. Hover motion is `ix-card-hover`. */
 export default function ServiceCard({ icon, title, body, variant = "default" }: ServiceCardProps) {
   return (
-    <article className="fk-card">
+    <article className="fk-card fk-flex fk-flex-col fk-items-start fk-justify-between fk-w-full fk-h-full fk-overflow-clip">
       {icon ? <img className="fk-icon is-lg" src={icon} alt="" width={40} height={40} /> : null}
-      <div className="fk-card-body" data-ix="blur-reveal">
+      <div className="fk-flex fk-flex-col fk-gap-2 fk-w-full" data-ix="blur-reveal">
         <div className="fk-blur-reveal">
-          <h3 className="fk-card-title">{title}</h3>
+          <h3 className="fk-card-title fk-text-md fk-font-medium">{title}</h3>
         </div>
         <div className="fk-blur-reveal is-delay-1">
-          <p className={variant === "subtle" ? "fk-card-text is-subtle" : "fk-card-text"}>{body}</p>
+          <p
+            className={
+              variant === "subtle" ? "fk-card-text is-subtle fk-text-md" : "fk-card-text fk-text-md"
+            }
+          >
+            {body}
+          </p>
         </div>
       </div>
     </article>

@@ -4,18 +4,12 @@
    background defaults to `color-tertiary`; `is-brand-light` (card 5) switches to
    `color-brand-light`. Carousel dimensions, the card model and every `-art` offset below are local
    to this block (2026-09-27, supersedes decision H-4 in `mvp2-home.md`: see `classes.md` →
-   `fk-how` and roadmap decision D-12). */
+   `fk-how` and roadmap decision D-12). The generic shell (`fk-how` wrapper, pagination row) moved
+   to utilities in the markup; `fk-how` itself stays as an interaction target (howCarousel.ts
+   `.closest(".fk-how")`) with only its local padding left here. */
 
 .fk-how {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
   padding: var(--space-24) 0;
-  overflow: clip;
-}
-
-.fk-how-reveal {
-  width: 100%;
 }
 
 .fk-how-viewport {
@@ -151,14 +145,6 @@
   letter-spacing: -0.04px;
   color: inherit;
   opacity: 0.6;
-}
-
-.fk-how-pagination {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: var(--width-container);
-  margin: 0 auto;
 }
 
 @media screen and (max-width: 991px) {

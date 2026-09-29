@@ -24,17 +24,17 @@ const TYPE_SCALE = [
 ];
 
 const PANELS = [
-  { combo: "is-brand", label: "is-brand · color-brand", inverse: true },
-  { combo: "is-brand-light", label: "is-brand-light · color-brand-light" },
-  { combo: "is-secondary", label: "is-secondary · color-secondary" },
-  { combo: "is-tertiary", label: "is-tertiary · color-tertiary" },
-  { combo: "is-surface", label: "is-surface · color-surface" },
+  { bg: "fk-bg-brand", label: "fk-bg-brand · color-brand", inverse: true },
+  { bg: "fk-bg-brand-light", label: "fk-bg-brand-light · color-brand-light" },
+  { bg: "fk-bg-secondary", label: "fk-bg-secondary · color-secondary" },
+  { bg: "fk-bg-tertiary", label: "fk-bg-tertiary · color-tertiary" },
+  { bg: "fk-bg-surface", label: "fk-bg-surface · color-surface" },
 ];
 
 const GRIDS = [
-  { combo: "is-2", cells: 2 },
-  { combo: "is-3", cells: 3 },
-  { combo: "is-4", cells: 4 },
+  { classes: "fk-grid fk-cols-2 fk-cols-1-mobile fk-gap-4", cells: 2 },
+  { classes: "fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4", cells: 3 },
+  { classes: "fk-grid fk-cols-4 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4", cells: 4 },
 ];
 
 export default function StyleGuidePage() {
@@ -45,7 +45,7 @@ export default function StyleGuidePage() {
       <Nav />
       <main>
         <section className="fk-section">
-          <div className="fk-panel is-tertiary">
+          <div className="fk-panel fk-bg-tertiary">
             <div className="fk-container is-content">
               <SectionHeader
                 eyebrow="Draft · visual QA"
@@ -57,13 +57,13 @@ export default function StyleGuidePage() {
         </section>
 
         <section className="fk-section">
-          <div className="fk-panel is-surface">
+          <div className="fk-panel fk-bg-surface">
             <div className="fk-container">
-              <div className="fk-stack is-gap-xl">
+              <div className="fk-flex fk-flex-col fk-gap-8">
                 <h2 className="fk-heading-md">Typography</h2>
                 {TYPE_SCALE.map((item) => (
-                  <div key={item.className} className="fk-stack is-gap-sm">
-                    <p className="fk-text-md is-subtle">{item.label}</p>
+                  <div key={item.className} className="fk-flex fk-flex-col fk-gap-2">
+                    <p className="fk-text-md fk-color-subtle">{item.label}</p>
                     <p className={item.className}>{SAMPLE}</p>
                   </div>
                 ))}
@@ -73,14 +73,14 @@ export default function StyleGuidePage() {
         </section>
 
         <section className="fk-section">
-          <div className="fk-panel is-surface">
+          <div className="fk-panel fk-bg-surface">
             <div className="fk-container">
-              <div className="fk-stack is-gap-lg">
+              <div className="fk-flex fk-flex-col fk-gap-6">
                 <h2 className="fk-heading-md">Buttons</h2>
-                <p className="fk-text-md is-subtle">
+                <p className="fk-text-md fk-color-subtle">
                   UI / Button: Primary, Secondary, Primary Small, Secondary Small, and Secondary with an icon
                 </p>
-                <div className="fk-row">
+                <div className="fk-flex fk-wrap fk-items-center fk-gap-2">
                   <Button />
                   <Button variant="secondary" />
                   <Button size="small" />
@@ -93,14 +93,14 @@ export default function StyleGuidePage() {
         </section>
 
         <section className="fk-section">
-          <div className="fk-panel is-surface">
+          <div className="fk-panel fk-bg-surface">
             <div className="fk-container">
-              <div className="fk-stack is-gap-lg">
+              <div className="fk-flex fk-flex-col fk-gap-6">
                 <h2 className="fk-heading-md">Panels</h2>
-                <div className="fk-grid is-3">
+                <div className="fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4">
                   {PANELS.map((panel) => (
-                    <div key={panel.combo} className={`fk-panel ${panel.combo} is-compact`}>
-                      <p className={panel.inverse ? "fk-text-md is-inverse-muted" : "fk-text-md is-subtle"}>
+                    <div key={panel.bg} className={`fk-panel is-compact ${panel.bg}`}>
+                      <p className={panel.inverse ? "fk-text-md fk-color-white-80" : "fk-text-md fk-color-subtle"}>
                         {panel.label}
                       </p>
                     </div>
@@ -112,15 +112,15 @@ export default function StyleGuidePage() {
         </section>
 
         <section className="fk-section">
-          <div className="fk-panel is-brand-light">
+          <div className="fk-panel fk-bg-brand-light">
             <div className="fk-container">
-              <div className="fk-stack is-gap-lg">
+              <div className="fk-flex fk-flex-col fk-gap-6">
                 <h2 className="fk-heading-md">Grid</h2>
                 {GRIDS.map((grid) => (
-                  <div key={grid.combo} className={`fk-grid ${grid.combo}`}>
+                  <div key={grid.classes} className={grid.classes}>
                     {Array.from({ length: grid.cells }, (_, index) => (
-                      <div key={index} className="fk-panel is-surface is-compact">
-                        <p className="fk-text-md is-subtle">fk-grid {grid.combo}</p>
+                      <div key={index} className="fk-panel is-compact fk-bg-surface">
+                        <p className="fk-text-md fk-color-subtle">{grid.classes}</p>
                       </div>
                     ))}
                   </div>
@@ -131,13 +131,13 @@ export default function StyleGuidePage() {
         </section>
 
         <section className="fk-section is-last">
-          <div className="fk-panel is-brand">
+          <div className="fk-panel fk-bg-brand">
             <div className="fk-container">
-              <div className="fk-stack is-gap-lg">
-                <h2 className="fk-heading-xl is-inverse">Divider</h2>
-                <p className="fk-text-md is-inverse-muted">fk-divider · 1px, color-white-10</p>
+              <div className="fk-flex fk-flex-col fk-gap-6">
+                <h2 className="fk-heading-xl fk-color-white">Divider</h2>
+                <p className="fk-text-md fk-color-white-80">fk-divider · 1px, color-white-10</p>
                 <hr className="fk-divider" />
-                <p className="fk-text-md is-inverse-muted">Used between footer groups</p>
+                <p className="fk-text-md fk-color-white-80">Used between footer groups</p>
               </div>
             </div>
           </div>

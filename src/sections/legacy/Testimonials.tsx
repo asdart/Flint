@@ -24,13 +24,13 @@ const QUOTE =
   "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.";
 
 const TESTIMONIALS: Testimonial[] = [
-  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-2.png", quote: QUOTE },
-  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-1.png", quote: QUOTE },
-  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-3.png", quote: QUOTE },
-  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-3.png", quote: QUOTE },
-  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-1.png", quote: QUOTE },
-  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-2.png", quote: QUOTE },
-  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-3.png", quote: QUOTE },
+  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-2.webp", quote: QUOTE },
+  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-1.webp", quote: QUOTE },
+  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-3.webp", quote: QUOTE },
+  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-3.webp", quote: QUOTE },
+  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-1.webp", quote: QUOTE },
+  { name: "Brandon Terry", location: "Minesota", photo: "/assets/testimonial-photo-2.webp", quote: QUOTE },
+  { name: "Chrismene jones", location: "California", photo: "/assets/testimonial-photo-3.webp", quote: QUOTE },
 ];
 
 // Native card canvas — the Card component's internal layout (photo, quote

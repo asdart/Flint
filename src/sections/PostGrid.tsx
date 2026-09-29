@@ -13,7 +13,7 @@ export default function PostGrid() {
 
   return (
     <section className="fk-section">
-      <div className="fk-panel is-brand-light">
+      <div className="fk-panel fk-bg-brand-light">
         <div className="fk-container">
           <div className="fk-panel-content">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
@@ -21,14 +21,14 @@ export default function PostGrid() {
                 <h2 className="fk-heading-lg">{title}</h2>
               </div>
               <div className="fk-blur-reveal is-delay-1">
-                <p className="fk-text-md is-subtle">{body}</p>
+                <p className="fk-text-md fk-color-subtle">{body}</p>
               </div>
                 <div className="fk-blur-reveal is-delay-2">
                   <Button label="See all posts" link="/blog" variant="secondary" />
                 </div>
             </div>
             <div>
-              <div className="fk-grid is-3" role="list">
+              <div className="fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4" role="list">
                 {posts.map((post) => (
                   <div key={post.slug} role="listitem">
                     <PostCard post={post} />

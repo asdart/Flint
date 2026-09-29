@@ -13,13 +13,13 @@ const QUOTE =
   "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.";
 
 const TESTIMONIALS: Testimonial[] = [
-  { name: "Brandon Terry", role: "Minesota", image: "/assets/testimonial-photo-2.png", quote: QUOTE },
-  { name: "Brandon Terry", role: "Minesota", image: "/assets/testimonial-photo-1.png", quote: QUOTE },
-  { name: "Brandon Terry", role: "Minesota", image: "/assets/testimonial-photo-3.png", quote: QUOTE },
-  { name: "Chrismene jones", role: "California", image: "/assets/testimonial-photo-3.png", quote: QUOTE },
-  { name: "Chrismene jones", role: "California", image: "/assets/testimonial-photo-1.png", quote: QUOTE },
-  { name: "Brandon Terry", role: "Minesota", image: "/assets/testimonial-photo-2.png", quote: QUOTE },
-  { name: "Chrismene jones", role: "California", image: "/assets/testimonial-photo-3.png", quote: QUOTE },
+  { name: "Brandon Terry", role: "Minesota", image: "/assets/testimonial-photo-2.webp", quote: QUOTE },
+  { name: "Brandon Terry", role: "Minesota", image: "/assets/testimonial-photo-1.webp", quote: QUOTE },
+  { name: "Brandon Terry", role: "Minesota", image: "/assets/testimonial-photo-3.webp", quote: QUOTE },
+  { name: "Chrismene jones", role: "California", image: "/assets/testimonial-photo-3.webp", quote: QUOTE },
+  { name: "Chrismene jones", role: "California", image: "/assets/testimonial-photo-1.webp", quote: QUOTE },
+  { name: "Brandon Terry", role: "Minesota", image: "/assets/testimonial-photo-2.webp", quote: QUOTE },
+  { name: "Chrismene jones", role: "California", image: "/assets/testimonial-photo-3.webp", quote: QUOTE },
 ];
 
 type TestimonialsProps = {
@@ -34,7 +34,7 @@ export default function Testimonials({
 }: TestimonialsProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel is-brand-light" data-ix="testimonials">
+      <div className="fk-panel fk-bg-brand-light" data-ix="testimonials">
         <div className="fk-panel-content">
           <div className="fk-container">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
@@ -42,7 +42,7 @@ export default function Testimonials({
                 <h2 className="fk-heading-xl">{title}</h2>
               </div>
               <div className="fk-blur-reveal is-delay-1">
-                <p className="fk-text-lg is-brand-muted">{body}</p>
+                <p className="fk-text-lg fk-color-brand-80">{body}</p>
               </div>
             </div>
           </div>
@@ -59,7 +59,10 @@ export default function Testimonials({
             ))}
           </div>
 
-          <div className="fk-testimonials-pagination" data-ix="reveal">
+          <div
+            className="fk-flex fk-justify-center fk-w-full fk-max-w-container fk-mx-auto"
+            data-ix="reveal"
+          >
             <Pagination
               id="tm"
               count={TESTIMONIALS.length}

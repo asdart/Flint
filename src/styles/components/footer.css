@@ -4,24 +4,11 @@
   padding: var(--space-4);
 }
 
-.fk-footer-panel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-}
-
 .fk-footer-cta {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-6);
-}
-
-.fk-footer-cta-text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  max-width: var(--width-content);
 }
 
 .fk-footer-groups {
@@ -77,10 +64,6 @@
 @media screen and (max-width: 767px) {
   .fk-footer {
     padding: var(--space-2);
-  }
-
-  .fk-footer-panel {
-    gap: var(--space-8);
   }
 
   .fk-footer-cta {

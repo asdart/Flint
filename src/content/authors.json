@@ -4,20 +4,20 @@
     "slug": "jonathan-johnson",
     "short-name": "Jonathan",
     "role": "Brand Manager",
-    "avatar": { "url": "/assets/blog/author.png", "alt": "" }
+    "avatar": { "url": "/assets/blog/author.webp", "alt": "" }
   },
   {
     "name": "Sarah",
     "slug": "sarah",
     "short-name": "Sarah",
     "role": "",
-    "avatar": { "url": "/assets/blog/author.png", "alt": "" }
+    "avatar": { "url": "/assets/blog/author.webp", "alt": "" }
   },
   {
     "name": "Marcus",
     "slug": "marcus",
     "short-name": "Marcus",
     "role": "",
-    "avatar": { "url": "/assets/blog/author.png", "alt": "" }
+    "avatar": { "url": "/assets/blog/author.webp", "alt": "" }
   }
 ]

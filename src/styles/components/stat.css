@@ -1,36 +1,23 @@
-/* fk-stat and fk-stats-band. */
-
-.fk-stats-band {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-12);
-  width: 100%;
-  max-width: var(--width-container);
-  margin-inline: auto;
-}
+/* fk-stat and fk-stats-band. Wrapper/grid layout is utilities in the markup; the desktop-flex/
+   tablet-grid switch on `fk-stats-band-grid` and each value's fixed sizes stay here. `fk-stat-value`
+   also stays as a class (ix-count-in target), reduced to its non-utility declarations. */
 
 .fk-stats-band-grid {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
   height: 120px;
 }
 
-.fk-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+@media screen and (max-width: 991px) {
+  .fk-stats-band-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: auto;
+  }
 }
 
 .fk-stat-value {
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: var(--font-serif);
-  color: var(--color-brand);
 }
 
 .fk-stat-suffix {
@@ -44,24 +31,9 @@
   margin: 0;
   font-size: 16px;
   line-height: 24px;
-  text-align: center;
-  color: var(--color-subtle-80);
-}
-
-@media screen and (max-width: 991px) {
-  .fk-stats-band-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-8);
-    height: auto;
-  }
 }
 
 @media screen and (max-width: 767px) {
-  .fk-stats-band {
-    gap: var(--space-10);
-  }
-
   .fk-stat-suffix {
     font-size: 20px;
     line-height: 28px;

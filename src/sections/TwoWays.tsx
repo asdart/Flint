@@ -11,27 +11,30 @@ type TwoWaysCardProps = {
 
 function NursesArt() {
   return (
-    <div className="fk-two-ways-art is-nurses" aria-hidden="true">
-      <div className="fk-two-ways-canvas">
+    <div
+      className="fk-two-ways-art is-nurses fk-relative fk-shrink-0 fk-w-full fk-overflow-clip"
+      aria-hidden="true"
+    >
+      <div className="fk-two-ways-canvas fk-absolute fk-h-full">
         <img
-          className="fk-two-ways-nurse-right"
-          src="/assets/home/two-ways-nurse-right.png"
+          className="fk-two-ways-nurse-right fk-absolute fk-block fk-object-cover"
+          src="/assets/home/two-ways-nurse-right.webp"
           alt=""
           width={159}
           height={211}
         />
         <img
-          className="fk-two-ways-nurse-left"
-          src="/assets/home/two-ways-nurse-left.png"
+          className="fk-two-ways-nurse-left fk-absolute fk-block fk-object-cover"
+          src="/assets/home/two-ways-nurse-left.webp"
           alt=""
           width={249}
           height={311}
         />
-        <div className="fk-two-ways-orb is-left" />
-        <div className="fk-two-ways-orb is-right" />
+        <div className="fk-two-ways-orb is-left fk-absolute fk-rounded-full fk-bg-tertiary" />
+        <div className="fk-two-ways-orb is-right fk-absolute fk-rounded-full fk-bg-tertiary" />
         <img
-          className="fk-two-ways-nurse-center"
-          src="/assets/home/two-ways-nurse-center.png"
+          className="fk-two-ways-nurse-center fk-absolute fk-block fk-object-cover"
+          src="/assets/home/two-ways-nurse-center.webp"
           alt=""
           width={173}
           height={184}
@@ -43,10 +46,13 @@ function NursesArt() {
 
 function FacilitiesArt() {
   return (
-    <div className="fk-two-ways-art is-facilities" aria-hidden="true">
+    <div
+      className="fk-two-ways-art is-facilities fk-relative fk-shrink-0 fk-w-full fk-overflow-clip"
+      aria-hidden="true"
+    >
       <img
-        className="fk-two-ways-facility-image"
-        src="/assets/home/two-ways-facility.png"
+        className="fk-two-ways-facility-image fk-absolute fk-block fk-w-full fk-rounded-lg fk-object-cover"
+        src="/assets/home/two-ways-facility.webp"
         alt=""
         width={2346}
         height={1560}
@@ -60,18 +66,29 @@ function TwoWaysCard({ variant, eyebrow, title, body, buttonLabel }: TwoWaysCard
 
   return (
     <article
-      className={cx("fk-two-ways-card", isNurses ? "is-brand-light" : "is-secondary")}
+      className={cx(
+        "fk-two-ways-card",
+        isNurses ? "is-brand-light" : "is-secondary",
+        "fk-flex fk-flex-col fk-items-center fk-justify-center fk-min-w-0 fk-rounded-xl fk-overflow-clip",
+        isNurses ? "fk-bg-brand-light" : "fk-bg-secondary",
+      )}
       data-ix="two-ways-card"
     >
       {isNurses ? <NursesArt /> : <FacilitiesArt />}
-      <div className="fk-two-ways-content">
-        <div className="fk-two-ways-copy">
-          <p className="fk-text-md is-brand-muted">{eyebrow}</p>
-          <h3 className="fk-heading-sm is-sans">{title}</h3>
-          <p className="fk-text-md is-subtle">{body}</p>
+      <div className="fk-two-ways-content fk-flex fk-flex-col fk-items-center fk-gap-6 fk-w-full">
+        <div className="fk-flex fk-flex-col fk-items-center fk-gap-2 fk-w-full fk-text-center">
+          <p className="fk-text-md fk-color-brand-80" data-two-ways="eyebrow">
+            {eyebrow}
+          </p>
+          <h3 className="fk-heading-sm is-sans" data-two-ways="title">
+            {title}
+          </h3>
+          <p className="fk-text-md fk-color-subtle" data-two-ways="body">
+            {body}
+          </p>
         </div>
         <div className="fk-blur-reveal">
-          <div className="fk-two-ways-action">
+          <div className="fk-flex">
             <Button label={buttonLabel} link="#apply" variant="secondary" />
           </div>
         </div>
@@ -100,11 +117,11 @@ export default function TwoWays({
                 <h2 className="fk-heading-xl">{title}</h2>
               </div>
               <div className="fk-blur-reveal is-delay-1">
-                <p className="fk-text-lg is-brand-muted">{body}</p>
+                <p className="fk-text-lg fk-color-brand-80">{body}</p>
               </div>
             </div>
 
-            <div className="fk-two-ways-cards">
+            <div className="fk-flex fk-items-stretch fk-gap-4 fk-w-full fk-flex-col-tablet">
               <TwoWaysCard
                 variant="nurses"
                 eyebrow="For Healthcare Professionals"

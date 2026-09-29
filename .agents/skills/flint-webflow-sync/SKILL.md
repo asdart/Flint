@@ -54,6 +54,8 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | Claude Code: `webflow_guide_tool` result (~87k chars) is too large and saved to a file instead | The `ses_…` id is still in it: `grep -o 'ses_[0-9A-Za-z]\{27\}' <saved file> \| head -1`. Read the rest with `jq` only if needed |
 | Asked to delete a page | The MCP can't (no page delete action). Ask the user to delete it in the Designer and keep it `draft: true` until then; track it in `webflow-ids.json` → `pendingCleanup` |
 | Need to change `llms.txt`, robots.txt, the sitemap or the canonical URL | Site settings → SEO, not reachable through the MCP. Edit the repo source (`public/llms.txt`), then ask the user to upload or paste it. `llms.txt` isn't served on the staging domain: check it on the custom domain |
+| A refactor moved generic CSS to utilities and something shifted (a collapsed height, a lost mobile gap) | Build the baseline commit in a worktree and the refactor side by side (`vite preview`, two ports), capture `getComputedStyle` + rects for every element under `.fk-page` at 1440/800/600/390, and diff them. Exclude moving carousels and animated tracks. Found 2026-09-27: `height` dropped with `flex: none`, and a responsive `gap` not carried over |
+| An interaction stops finding its targets after a class cleanup (Two Ways word reveal) | The markup lost the class it queried. Target a `data-*` attribute instead, and grep `src/ix/` + `interactions.md` before removing any class |
 | Validation error about a missing `siteId` / `site_id` / `pageId` | Placement differs per tool; see playbook → Call conventions |
 | Media query rejected, tag selectors dropped | Write queries exactly as in `AGENTS.md` §5; typography lives on classes, not tag selectors |
 | `0 -1px` minified to `0-1px`, or a shadow/gradient replaced by one color variable | Write `0px -1px`; push with `scripts/webflow-style-actions.mjs`, which resolves compound `var()` values to literals |
@@ -62,6 +64,7 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | The Vite dev server serves an old module (a new route redirects to `/`, `curl localhost:5180/src/App.tsx` lacks the change) | Its file watcher stopped after a long session. Restart the dev server before browser QA |
 | `set_attributes` with name `data-ix` → "An internal error occurred" (every time; `data-ix-item` works) | `data-ix` is reserved by Webflow's legacy interactions and can only be written by the WHTML builder. Insert a new element with the attribute (`<div class="…" data-ix="…"></div>`), `move_element` the children into it, then remove the old one (with confirmation). Put `data-ix` in the markup of the first insert whenever possible |
 | WHTML into a new Collection Item → "Connect this Collection List to a Collection before adding elements" | Set the list's `source` (and `sort`, `limit`) with `data_element_settings_tool` first, then insert the card markup into the DynamoItem |
+| `webflow-markup.mjs` / `webflow-css.mjs` throw "No hosted asset for /assets/….webp" | The repo image moved to WebP (2026-09-28) and `webflow-ids.json` → `assets` still holds the old `.png` key. Upload the WebP and record it under the new key; delete the stale `.png` entry only once nothing on the site uses that asset |
 | Uploading many assets | Batch `create_asset` in one call, then `node scripts/webflow-upload-batch.mjs <xAmzCredential> < uploads.json` with `{file, key, date, signature}` per asset; run it once with `--check <one verbatim policy>` first |
 | Two elements need the same scroll timeline, one offset in time (e.g. the second card +0.12s) | Scroll triggers take no `delay`. Create a second interaction triggered by the other element's combo class with every `position` shifted |
 | A subagent stacks a typography class on a block element (`fk-partners-map-row fk-heading-xl`) | Still the two-block-identity problem (unlike the utility case above, `fk-heading-xl` and `fk-partners-map-row` are both meant to fully own an element's typography/geometry, so their empty auto-combo hides a real conflict, not a harmless stack). Copy the typography into the block class, including its breakpoint overrides; check where legacy switches size (`lg:` = 1024 means tablet keeps the small size) |
@@ -91,7 +94,8 @@ Run it for every page or template you build or change (`AGENTS.md` rule 15, deta
   Noindex (Sitemap indexing) isn't in the MCP: ask the user to set it in the Designer.
 - **Schema:** `FAQPage` through `jsonLdSchema` on pages with an FAQ block, built from the same
   copy. Site and post schema only through `x-schema-site` / `x-schema-post`.
-- **Images:** upload resized WebP; `width` and `height` on every image; lazy below the fold, eager
+- **Images:** upload resized WebP (`npm run webp -- <files> --width <2× the largest rendered width>`,
+  `seo.md` S-10); `width` and `height` on every image; lazy below the fold, eager
   for the hero; alt text per `seo.md` S-16 (logos: facility name, people: their name, decorative:
   empty inside `aria-hidden` art).
 - **Controls:** icon-only buttons get an `aria-label`; hit areas at least 24 × 24 px.

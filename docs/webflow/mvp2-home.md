@@ -333,7 +333,7 @@ Two Ways and Partners Map on `/mvp-home` from a fresh Figma pass (nodes 6011:238
 6011:2529) — no legacy page carries this section. Built as two equal `flex: 1 1 0` cards (`gap
 space-4`, matching `fk-two-ways-cards`) instead of Figma's single 580px card + 480px text block 96px
 apart, per direct instruction; the second card carries no background. The avatar photo
-(`Image 49.png`) replaces Figma's placeholder "This is you" ellipse, cropped per the separate
+(`pricing-avatar.webp`) replaces Figma's placeholder "This is you" ellipse, cropped per the separate
 avatar-only Figma node (6011:2529) and scaled to this card's 104px circle. Review fix: the diagram
 card's avatar/line/bubbles were first placed with fixed `top`/`left` offsets copied straight from
 the Figma canvas; reworked the same day to a plain flex column with padding (no absolute

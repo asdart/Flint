@@ -82,9 +82,9 @@ export function twoWays(): Cleanup {
   };
 
   const records = cards.map((card) => {
-    const eyebrow = card.querySelector<HTMLElement>(".fk-two-ways-eyebrow");
-    const title = card.querySelector<HTMLElement>(".fk-two-ways-title");
-    const body = card.querySelector<HTMLElement>(".fk-two-ways-body");
+    const eyebrow = card.querySelector<HTMLElement>('[data-two-ways="eyebrow"]');
+    const title = card.querySelector<HTMLElement>('[data-two-ways="title"]');
+    const body = card.querySelector<HTMLElement>('[data-two-ways="body"]');
     const cta = card.querySelector<HTMLElement>(".fk-blur-reveal");
     const left = card.querySelector<HTMLElement>(".fk-two-ways-nurse-left");
     const right = card.querySelector<HTMLElement>(".fk-two-ways-nurse-right");

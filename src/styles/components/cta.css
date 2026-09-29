@@ -1,6 +1,8 @@
 /* fk-cta-* — Section / CTA (Art) art layer, placed inside fk-panel.is-tertiary.is-relaxed. The
    art is laid out on Figma's 1408×560 card and anchored to the right edge; its offsets and mask
-   geometry are local to this block. */
+   geometry are local to this block, left untouched by the utilities refactor. The button row
+   (`fk-cta-action`) matched the `fk-section-header-action` primitive exactly and was replaced by
+   it in markup; the rule below is removed. */
 
 .fk-cta-ring {
   position: absolute;
@@ -56,11 +58,6 @@
   height: 100%;
   object-fit: cover;
   transform: scaleX(-1);
-}
-
-.fk-cta-action {
-  display: flex;
-  padding-top: var(--space-4);
 }
 
 @media screen and (max-width: 767px) {

@@ -8,10 +8,10 @@ type TestimonialCardProps = {
 /** UI / Testimonial Card. Hover motion is `ix-testimonial-hover`. */
 export default function TestimonialCard({ image, quote, name, role }: TestimonialCardProps) {
   return (
-    <article className="fk-testimonial-card">
-      <div className="fk-testimonial-card-media">
+    <article className="fk-testimonial-card fk-relative fk-rounded-2xl fk-bg-white fk-overflow-clip">
+      <div className="fk-testimonial-card-media fk-absolute">
         <img
-          className="fk-testimonial-card-image"
+          className="fk-testimonial-card-image fk-absolute fk-inset-0 fk-block fk-w-full fk-h-full fk-object-cover"
           src={image}
           alt={name}
           width={612}
@@ -19,12 +19,14 @@ export default function TestimonialCard({ image, quote, name, role }: Testimonia
           draggable={false}
         />
       </div>
-      <div className="fk-testimonial-card-gradient" aria-hidden="true" />
-      <div className="fk-testimonial-card-scrim" aria-hidden="true" />
-      <div className="fk-testimonial-card-quote">
-        <blockquote className="fk-testimonial-card-quote-text">&ldquo;{quote}&rdquo;</blockquote>
+      <div className="fk-testimonial-card-gradient fk-absolute fk-inset-0" aria-hidden="true" />
+      <div className="fk-testimonial-card-scrim fk-absolute fk-inset-0" aria-hidden="true" />
+      <div className="fk-testimonial-card-quote fk-absolute">
+        <blockquote className="fk-testimonial-card-quote-text fk-absolute fk-w-full fk-color-white">
+          &ldquo;{quote}&rdquo;
+        </blockquote>
       </div>
-      <div className="fk-testimonial-card-flag">
+      <div className="fk-testimonial-card-flag fk-absolute">
         <img
           className="fk-flag is-lg"
           src="/assets/country-flag.svg"
@@ -34,9 +36,9 @@ export default function TestimonialCard({ image, quote, name, role }: Testimonia
           draggable={false}
         />
       </div>
-      <div className="fk-testimonial-card-person">
-        <p className="fk-testimonial-card-name">{name}</p>
-        <p className="fk-testimonial-card-role">{role}</p>
+      <div className="fk-testimonial-card-person fk-absolute fk-flex fk-flex-col fk-gap-1">
+        <p className="fk-text-md fk-font-medium fk-color-white">{name}</p>
+        <p className="fk-testimonial-card-role fk-color-white">{role}</p>
       </div>
     </article>
   );
