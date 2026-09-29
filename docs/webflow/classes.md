@@ -100,8 +100,16 @@ works; the WHTML builder still rejects tag selectors). So:
 - Tag styles in the table below are seeded once in the Designer (any one property is enough), then
   kept in sync through the MCP like classes.
 
-Seed **All Links (`a`)** with `text-decoration: none` (roadmap P.1). Webflow's Body tag style
-ships with its own defaults (Arial 14/20, `#333`); `.fk-page` overrides them.
+**Status (production, 2026-09-29): all nine seeded and synced from `base.css`, diff clean.**
+Webflow names them by bare tag: `body`, `h1`–`h4`, `p`, `a`, `blockquote`, `img` (ids `default-<tag>`,
+`type: "tag"`); `update_style` targets them with `style_name: "h1"` and no `parent_style_names`.
+Webflow has no `figure` tag style until one is seeded in the Designer, so `figure { margin: 0 }`
+isn't pushed (`webflow-style-actions.mjs --tags` skips it). Webflow's own defaults (Body Arial 14/20,
+headings 700 with their own sizes, Blockquote 5px `#E2E2E2` left rule) are overwritten or removed,
+so `.fk-page` on the wrapper div and the tag styles now agree. Body font family and color and every
+heading color and font family link the Flint variables by id. Breakpoints: the repo only has a ≤767
+query, so Tablet and Mobile portrait hold nothing (they inherit). `node scripts/webflow-style-actions.mjs --tags
+src/styles/base.css` prints the actions; `webflow-diff.mjs` takes `base.css` among its files.
 
 Desktop value, then values at the breakpoints where it changes (Tablet ≤991, Mobile ≤767).
 In the repo they live in `src/styles/base.css`, scoped to `:where(.fk-page)` during the transition

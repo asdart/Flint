@@ -4,6 +4,10 @@
 // Webflow stores, and `var(--token)` values are linked by id from docs/webflow/webflow-ids.json.
 // Use it to sync changes to classes that already exist (the WHTML builder only creates new ones).
 // Usage: node scripts/webflow-style-actions.mjs src/styles/layout.css [--only fk-panel,fk-section]
+// --tags: also emit the tag styles of src/styles/base.css (`:where(.fk-page)` → body, `:where(.fk-page)
+// :where(h1, h2)` → h1 and h2 …). They're plain `update_style` actions with the tag as `style_name`; the
+// tag style must already exist (seeded in the Designer, classes.md → Tag styles), so `--create` never
+// creates them. Without --tags, `:where()` rules are skipped as before.
 import { readFileSync } from "node:fs";
 
 // --vars-only: emit only properties that reference a variable (re-linking raw var() values).
@@ -12,7 +16,8 @@ import { readFileSync } from "node:fs";
 // Webflow's own states (`w--current`, `w--open`) are skipped: they can't be created through the API.
 const varsOnly = process.argv.includes("--vars-only");
 const create = process.argv.includes("--create");
-const args = process.argv.slice(2).filter((arg) => arg !== "--vars-only" && arg !== "--create");
+const tags = process.argv.includes("--tags");
+const args = process.argv.slice(2).filter((arg) => arg !== "--vars-only" && arg !== "--create" && arg !== "--tags");
 const onlyIndex = args.indexOf("--only");
 const only = onlyIndex >= 0 ? new Set(args[onlyIndex + 1].split(",")) : null;
 const files = onlyIndex >= 0 ? args.filter((_, i) => i !== onlyIndex && i !== onlyIndex + 1) : args;
@@ -124,6 +129,16 @@ function toProperty([name, value]) {
   };
 }
 
+// Tag styles Webflow has no seeded style for: skipped until someone seeds them in the Designer.
+const UNSEEDED_TAGS = new Set(["figure"]);
+const tagActions = new WeakSet();
+
+function parseTagSelector(selector) {
+  const match = selector.match(/^:where\(\.fk-page\)(?:\s+:where\(([^)]*)\))?$/);
+  if (!match) throw new Error(`Unsupported tag selector "${selector}"`);
+  return match[1] ? match[1].split(",").map((t) => t.trim()) : ["body"];
+}
+
 function parseSelector(selector) {
   const pseudo = PSEUDOS.find((p) => selector.endsWith(`:${p}`) || selector.endsWith(`::${p}`));
   const bare = pseudo ? selector.replace(new RegExp(`::?${pseudo}$`), "") : selector;
@@ -147,8 +162,9 @@ for (const file of files) {
   for (const { breakpoint, body } of blocks) {
     for (const [, selector, declarations] of body.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
       const trimmed = selector.trim();
-      if (trimmed.includes(":where(")) continue;
-      const { classes, pseudo } = parseSelector(trimmed);
+      const isTag = trimmed.includes(":where(");
+      if (isTag && !tags) continue;
+      const { classes, pseudo } = isTag ? { classes: parseTagSelector(trimmed), pseudo: undefined } : parseSelector(trimmed);
       if (only && !only.has(classes[0])) continue;
       const properties = declarations
         .split(";")
@@ -163,6 +179,14 @@ for (const file of files) {
         .filter((property, index, all) => all.findLastIndex((p) => p.property_name === property.property_name) === index)
         .filter((property) => !varsOnly || property.variable_as_value);
       if (properties.length === 0) continue;
+      if (isTag) {
+        for (const tag of classes.filter((t) => !UNSEEDED_TAGS.has(t))) {
+          const action = { label: `${tag} @${breakpoint}`, update_style: { style_name: tag, breakpoint_id: breakpoint, properties } };
+          tagActions.add(action);
+          actions.push(action);
+        }
+        continue;
+      }
       const action = {
         label: `${trimmed} @${breakpoint}`,
         update_style: {
@@ -190,6 +214,7 @@ if (create) {
   const created = new Set();
   const createActions = [];
   for (const action of actions) {
+    if (tagActions.has(action)) continue;
     const key = chain(action);
     if (created.has(key)) continue;
     created.add(key);
@@ -204,7 +229,7 @@ if (create) {
       },
     });
   }
-  const rest = actions.filter((a) => a.update_style.breakpoint_id !== "main" || a.update_style.pseudo);
+  const rest = actions.filter((a) => tagActions.has(a) || a.update_style.breakpoint_id !== "main" || a.update_style.pseudo);
   process.stdout.write(JSON.stringify([...createActions, ...rest]));
 } else {
   process.stdout.write(JSON.stringify(actions));

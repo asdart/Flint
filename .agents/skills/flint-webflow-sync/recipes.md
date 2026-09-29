@@ -9,6 +9,7 @@ Tested payloads for the Webflow MCP. Ids in `<angle brackets>` come from
 - [Site instruction](#site-instruction)
 - [Diff the repo against Webflow](#diff-the-repo-against-webflow)
 - [Push classes](#push-classes)
+- [Tag styles](#tag-styles)
 - [Site head code (custom CSS exceptions)](#site-head-code-custom-css-exceptions)
 - [Build a page from the repo markup](#build-a-page-from-the-repo-markup)
 - [Upload an asset](#upload-an-asset)
@@ -60,8 +61,8 @@ plan, and the repo has no public URL to link, so the rule refers to "the Flint r
    `include_breakpoints: ["main","medium","small","tiny"]`,
    `include_base_pseudos: ["noPseudo","hover","active","focus","focus-visible","focus-within","placeholder"]`.
    The client writes the large result to a file and prints its path.
-2. `node scripts/webflow-diff.mjs <that file> src/styles/layout.css src/styles/typography.css src/styles/utilities.css src/styles/components/*.css --unregistered`
-   (include `utilities.css`: the generated utilities are classes too)
+2. `node scripts/webflow-diff.mjs <that file> src/styles/base.css src/styles/layout.css src/styles/typography.css src/styles/utilities.css src/styles/components/*.css --unregistered`
+   (include `utilities.css`: the generated utilities are classes too; `base.css` covers the tag styles)
 3. Each line is `selector @breakpoint:state property: repo → webflow`. "No differences." (exit 0) is
    the goal. It already ignores Webflow's own grid defaults, empty two-combo stacks and `w--current`.
 
@@ -95,6 +96,32 @@ plan, and the repo has no public URL to link, so the rule refers to "the Flint r
 - **Alias token** (`--a: var(--b)`): `create_size_variable` with
   `value: { existing_variable_id: "<b's id>" }`; it reads back as `{ id }`. Prefer using the
   existing token directly: an alias only earns its place when it can diverge later.
+
+## Tag styles
+
+Checked 2026-09-29 (production). Precondition: each tag style was seeded once in the Designer (a
+seeded style shows up in `get_styles` with `type: "tag"`, `id: "default-h1"`, `selector: "h1"`; Webflow
+also gives `body`, `p`, `a`, `img`, `blockquote`, `h1`–`h4` these names). `update_style` is idempotent:
+
+```json
+{ "label": "h1", "update_style": { "style_name": "h1", "breakpoint_id": "main",
+  "properties": [
+    { "property_name": "font-family", "variable_as_value": "<font-serif id>" },
+    { "property_name": "font-size", "property_value": "48px" },
+    { "property_name": "margin-top", "property_value": "0px" } ] } }
+{ "label": "h1-s", "update_style": { "style_name": "h1", "breakpoint_id": "small", "properties": [ … ] } }
+```
+
+- Generate the actions: `node scripts/webflow-style-actions.mjs --tags src/styles/base.css` (`:where(.fk-page)`
+  → `body`, `:where(.fk-page) :where(h1, h2)` → `h1` and `h2`; shorthands expand to the longhands
+  Webflow stores: `margin: 0` → four `margin-*`, `border: 0` → `border-*-width: 0px` + `-style: none`).
+  `--tags` never creates styles, and `figure` is skipped (no tag style).
+- Color, font family and `font-family` on `body` take `variable_as_value`; `color: inherit` and
+  `transition: color 300ms ease-out` are plain values.
+- Webflow's defaults that `base.css` doesn't hold must be removed (`remove_properties`): only
+  `blockquote`'s `border-left-color` needed it, everything else was overwritten by longhands.
+- Verify: fresh `get_styles` dump → `node scripts/webflow-diff.mjs <dump> src/styles/base.css <class css files> --unregistered`.
+  Run it before the push too: it lists exactly what the Designer seed left behind.
 
 ## Site head code (custom CSS exceptions)
 

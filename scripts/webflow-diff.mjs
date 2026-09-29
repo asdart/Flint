@@ -5,6 +5,8 @@
 // ["main","medium","small","tiny"], include_base_pseudos: [...] } — large results are written to a
 // file by the MCP client, pass that path.
 // Usage: node scripts/webflow-diff.mjs <get_styles-dump.json> <css files…> [--unregistered]
+// Include src/styles/base.css to cover the tag styles (body, h1…h4, p, a, blockquote, img): its
+// `:where(.fk-page)` rules are mapped to Webflow's tag selectors (see webflow-style-actions.mjs --tags).
 // Exit code 1 when anything differs. Each line: selector @breakpoint:state property expected → actual.
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -23,7 +25,7 @@ const ids = JSON.parse(readFileSync(new URL("../docs/webflow/webflow-ids.json", 
 const variableNames = Object.fromEntries(Object.entries(ids.variables).map(([name, id]) => [id, name]));
 
 const actions = JSON.parse(
-  execFileSync("node", [new URL("./webflow-style-actions.mjs", import.meta.url).pathname, ...files], {
+  execFileSync("node", [new URL("./webflow-style-actions.mjs", import.meta.url).pathname, "--tags", ...files], {
     encoding: "utf8",
   }),
 );
@@ -46,9 +48,11 @@ const normalize = (value) => {
 
 const key = (selector, breakpoint, pseudo) => `${selector} @${breakpoint}:${pseudo}`;
 
+// Tag styles come back from Webflow with the bare tag as selector (`h1`), classes with a dot.
+const TAG_NAMES = new Set(["body", "h1", "h2", "h3", "h4", "p", "a", "blockquote", "img", "figure"]);
 const expected = new Map();
 for (const { update_style: u } of actions) {
-  const selector = `.${[...(u.parent_style_names ?? []), u.style_name].join(".")}`;
+  const selector = TAG_NAMES.has(u.style_name) && !u.parent_style_names ? u.style_name : `.${[...(u.parent_style_names ?? []), u.style_name].join(".")}`;
   const k = key(selector, u.breakpoint_id, u.pseudo ?? "noPseudo");
   const props = expected.get(k) ?? {};
   for (const p of u.properties) {
