@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { blurReveal } from "./blurReveal";
 import { cardHover } from "./cardHover";
+import { dropdown } from "./dropdown";
+import { form } from "./form";
 import { heroArc } from "./heroArc";
 import { howCarousel } from "./howCarousel";
 import { marquee } from "./marquee";
@@ -116,6 +118,8 @@ export function useInteractions() {
       countIn(),
       navPill(),
       navMenu(),
+      dropdown(),
+      form(),
       blurReveal(),
       revealStagger(),
       marquee(),

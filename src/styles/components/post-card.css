@@ -71,16 +71,6 @@
   padding-top: var(--space-4);
 }
 
-.fk-post-card-avatar {
-  flex: none;
-  width: 24px;
-  height: 24px;
-  margin-right: var(--space-1);
-  border-radius: var(--radius-full);
-  background-color: var(--color-stone-50);
-  object-fit: cover;
-}
-
 .fk-post-card-meta-text {
   font-size: 16px;
   line-height: 24px;

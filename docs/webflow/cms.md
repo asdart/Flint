@@ -104,13 +104,15 @@ image, `avatar` is the author's name (S-16). The post template also carries `x-s
 | --- | --- | --- | --- | --- | --- |
 | Home — `Section / Post Grid` (Home) | Posts | — | Publish date ↓ | 3 | — |
 | Blog post — `Section / Post Grid` (Related) | Posts | Category = current post's category, exclude current (roadmap D-02) | Publish date ↓ | 3 | — |
-| Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page |
+| Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page (numbered links: roadmap P-15) |
 | Blog — featured post | Posts | Featured = on | — | 1 | — |
 | Blog category template — `Section / Post Index` | Posts | Category = current category | Publish date ↓ | 6 | Native |
-| Category links above the Post Index | Categories | — | Name ↑ | all | — |
+| Category links in the Post Index's Dropdown (`fk-dropdown`) | Categories | — | Name ↑ | all | — |
 
-Category filtering uses Category template pages and plain links, which replaces the legacy
-client-side `Select` + filter in `AllPosts.tsx`. No script needed.
+Category filtering uses Category template pages and plain links inside Webflow's native Dropdown (the
+design's category select, `classes.md` → `fk-dropdown`), which replaces the legacy client-side `Select` +
+filter in `AllPosts.tsx`. No script needed. The preview serves the same URLs: `/blog`,
+`/blog-categories/{slug}` and `?page=n`, from `src/content/index.ts` (`postPage`, `featuredPost`).
 
 ## Import from the current site
 

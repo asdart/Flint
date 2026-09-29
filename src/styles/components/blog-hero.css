@@ -1,0 +1,24 @@
+/* fk-blog-hero-art — Section / Blog Hero's background: two arcs of the purple ring that Figma
+   (5683:4995) draws as a masked photo. The ring (2019px box, 200px stroke) is flattened into one
+   transparent WebP, cropped to the part a panel can show (x ≥ 560, y ≤ 800 of the ring box), so no
+   CSS mask is needed. Desktop keeps Figma's placement (ring box at −905, 354 → this crop at −345, 354);
+   phone is the same art at 0.4547 (Figma 918px box at −272, 386). Sits behind the header and card. */
+
+.fk-blog-hero-art {
+  position: absolute;
+  top: 354px;
+  left: -345px;
+  display: block;
+  width: 1459px;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 767px) {
+  .fk-blog-hero-art {
+    top: 386px;
+    left: -17px;
+    width: 663px;
+  }
+}

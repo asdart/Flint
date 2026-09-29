@@ -50,8 +50,8 @@ These add to `/accessibility-audit` and the focus-visible rule in `AGENTS.md`.
 | ID | Requirement | Current gaps | Status |
 | --- | --- | --- | --- |
 | S-16 | Images carry alt text: logos get the facility name; testimonial photos get the person's name; purely decorative images (arc cards, orbs, masks) have empty alt inside `aria-hidden` art | Logo Marquee logos have `alt=""`: give the first row the facility names (the duplicate rows stay `aria-hidden`). Testimonial photos already bind alt to Name. CMS images: alt required (`cms.md`) | ◐ |
-| S-17 | Icon-only buttons (menu, close, slider arrows, pagination dots) have labels | Nav toggle, menu close and pagination dots have `aria-label`s. Any new arrow button needs one | ◐ |
-| S-18 | Tap targets are at least 24 × 24 px | Pagination dots are 7 px wide (hit area 7 × 23): give `fk-pagination-dot` a 24 px minimum hit area (padding) without changing the visible bar | ◐ |
+| S-17 | Icon-only buttons (menu, close, slider arrows, carousel dots) have labels | Nav toggle, menu close and pagination dots have `aria-label`s. Any new arrow button needs one | ◐ |
+| S-18 | Tap targets are at least 24 × 24 px | Carousel dots are 7 px wide (hit area 7 × 23): give `fk-carousel-dots-button` a 24 px minimum hit area (padding) without changing the visible bar | ◐ |
 
 ## Files
 

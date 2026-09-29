@@ -2,6 +2,9 @@ import chevronRight from "../assets/icons/chevron-right.svg";
 import Footer from "../components/global/Footer";
 import Nav from "../components/global/Nav";
 import Button from "../components/ui/Button";
+import Dropdown from "../components/ui/Dropdown";
+import InputField from "../components/ui/InputField";
+import chevronDown from "../assets/icons/chevron-down.svg";
 import SectionHeader from "../components/ui/SectionHeader";
 import { useInteractions } from "../ix/useInteractions";
 
@@ -86,6 +89,59 @@ export default function StyleGuidePage() {
                   <Button size="small" />
                   <Button variant="secondary" size="small" />
                   <Button variant="secondary" label="Read more" icon={chevronRight} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="fk-section">
+          <div className="fk-panel fk-bg-surface">
+            <div className="fk-container">
+              <div className="fk-flex fk-flex-col fk-gap-6">
+                <h2 className="fk-heading-md">Dropdown</h2>
+                <p className="fk-text-md fk-color-subtle">UI / Dropdown: placeholder look, options slot (the first link is the current one)</p>
+                <div className="fk-flex fk-items-start">
+                  <Dropdown>
+                    <a href="#all" className="fk-dropdown-link w-dropdown-link w--current">All</a>
+                    <a href="#careers" className="fk-dropdown-link w-dropdown-link">Careers</a>
+                    <a href="#licensing" className="fk-dropdown-link w-dropdown-link">Licensing</a>
+                  </Dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="fk-section">
+          <div className="fk-panel fk-bg-surface">
+            <div className="fk-container">
+              <div className="fk-flex fk-flex-col fk-gap-6">
+                <h2 className="fk-heading-md">Input field</h2>
+                <p className="fk-text-md fk-color-subtle">
+                  UI / Input Field: medium and large, with an icon, with a phone prefix, disabled, and the Action variation with a
+                  submit Button (stacks on phones). Hover and focus a field to see the states.
+                </p>
+                <div className="fk-flex fk-flex-col fk-gap-4 fk-max-w-content-sm">
+                  <InputField label="Medium" name="Medium" placeholder="e.g. Maria" />
+                  <InputField label="Large" name="Large" placeholder="e.g. Maria" size="large" />
+                  <InputField label="With icon" name="Icon" placeholder="e.g. Maria" icon={chevronDown} />
+                  <InputField
+                    label="Phone number"
+                    name="Phone"
+                    type="tel"
+                    placeholder="e.g. Maria"
+                    prefix={
+                      <>
+                        <img className="fk-flag" src="/assets/flags/us.svg" alt="" width={20} height={20} />
+                        <img className="fk-input-field-icon" src={chevronDown} alt="" width={20} height={20} />
+                      </>
+                    }
+                  />
+                  <InputField label="Disabled" name="Disabled" placeholder="e.g. Maria" disabled />
+                  <InputField variant="action" label="Email address" name="Email" type="email" placeholder="Email address">
+                    <Button submit label="Subscribe" className="fk-w-full-mobile" />
+                  </InputField>
                 </div>
               </div>
             </div>

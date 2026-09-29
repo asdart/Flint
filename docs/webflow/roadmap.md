@@ -61,6 +61,7 @@ next phase on production.
 | D-13 | Twitter card values come from each page's Open Graph settings (Webflow has no separate Twitter fields); no exception needed (was P-11) | 2026-09-27 | `seo.md` S-02 |
 | D-14 | `llms.txt` uses Webflow's native upload (Site settings → SEO → LLMs.txt; UTF-8, under 100 KB), served at `/llms.txt` on the custom domain only and never indexed. The source is `public/llms.txt` in the repo, uploaded by hand after each change (not reachable through the MCP); checked after the custom-domain publish (was P-13) | 2026-09-27 | `seo.md` S-21 |
 | D-15 | Blog content comes from the client's current site (export of 2026-09-28): posts get categories assigned by topic, Flint Editorial Team is the author of every post for now, bodies are cleaned to plain rich text with the removed custom code tracked, excerpts are rewritten for SEO, read time is a Number field, and the quick answer moves to its field | 2026-09-28 | `cms.md`, `blog-custom-code.md` |
+| D-16 | Blog: where the Figma frames disagree, the desktop frame wins. The phone keeps the category select and numbered pagination (no "Load more"), the hero copy is "The Flint blog" / "Immigration, licensing, and hiring tips…", and the phone featured card keeps the built look (gradient scrim, no full-image blur) | 2026-09-29 | `components.md`, `classes.md` → `fk-featured-post`, `fk-pager` |
 
 ### Open
 
@@ -80,6 +81,7 @@ All must be closed before the phase noted in "Needed by".
 | P-12 | Which page is the "role page" in the PageSpeed check (`seo.md` S-15)? The roadmap has no role pages yet | Name the page, and add it to `components.md` → Pages if it's new | Phase 5 | open, to decide later (user, 2026-09-27) |
 | P-13 | The post main images are text banners (about 2.1:1) and the card crops them to 1.4:1 (3.5:1 on mobile landscape), cutting off the headline | (a) New card-ready images from the client · (b) change the card image ratio to fit the banners · (c) accept the crop | Phase 6 | open |
 | P-14 | Do post FAQs get `FAQPage` schema (`seo.md` S-08)? The FAQs are now rich text | (a) A plain-text field holding each post's FAQ JSON-LD, inserted by `x-schema-post` (pairs ready in `blog-embeds/faq-pairs.json`) · (b) no FAQ schema on posts | Phase 6 | open |
+| P-15 | Does Webflow's native Collection List pagination offer numbered page links? The design (desktop, decided D-16) has numbered pages plus prev / next on every breakpoint. Webflow's native pagination is Previous / Next plus a page count; numbered links aren't confirmed native (asking Webflow AI, 2026-09-28, gave no answer). The repo builds numbered links | (a) Native numbered pagination if the Designer offers it (check before P.6) · (b) Previous / Next styled as the two arrows, with the page count · (c) numbered links from a script (exception `x-blog-pagination`) | Phase 6 | open |
 
 ---
 
@@ -189,17 +191,17 @@ Runs alongside Phase 3, ahead of the rest of the homepage refactor. Details in
 - [x] Spike S7: stacked global classes through the MCP (passed 2026-09-27, `css-system.md` → S7 result)
 - [x] `utilities.css` + registry section, generated from `tokens.css` by `scripts/gen-utilities.mjs`; contract 1.6 (2026-09-27)
 - [x] Homepage refactored onto utilities (section by section, arc/carousel/testimonials geometry left for their own pass; 2026-09-27)
-- [x] Grids become utilities; shared components (Nav, Footer, Button, Icon, Pagination, Post Card) keep component classes (2026-09-28)
+- [x] Grids become utilities; shared components (Nav, Footer, Button, Icon, Carousel Dots, Post Card) keep component classes (2026-09-28)
 
 ## Phase 3 — Global and UI components
 
-Built in the repo: `UI / Button` (4 variants), `UI / Service Card`, `UI / Testimonial Card`, Pagination markup.
+Built in the repo: `UI / Button` (4 variants), `UI / Service Card`, `UI / Testimonial Card`, Carousel Dots markup.
 
 - [ ] `Global / Nav` Dark variant, and move the Nav out of all 6 legacy heroes
 - [ ] Footer props (CTA Title, CTA Body) defined on the Webflow component
 - [ ] `UI / Section Header` Left and Inverse variants; `UI / Stat` Default; `UI / Post Card` Featured
       and a component-with-props version
-- [ ] Remaining UI components: FAQ Item, Newsletter Form, Portrait, Illustration (see `components.md`)
+- [ ] Remaining UI components: FAQ Item, Portrait, Illustration (Input Field and the newsletter form are built) (see `components.md`)
 
 ## Phase 4 — Sections
 
@@ -207,12 +209,12 @@ Needs P-03 and P-05 closed. Illustrations use static SVGs until phase 7.
 Built in the repo (Home variants): Hero, Logo Marquee, Two Ways, Partners Map, How It Works, Feature
 Grid (Cards), Testimonials (Slider), Post Grid (Home), CTA (Art). Also Text Panel and Stats Band (Large).
 
-- [ ] Hero: Candidates, Facility Partners, About, Blog; and Article Hero
+- [ ] Hero: Candidates, Facility Partners, About; and Article Hero (Blog Hero is built: page-level pattern, `components.md`)
 - [ ] How It Works: Candidates and Facilities variants
 - [ ] Feature Grid: Benefits variant, plus the result of P-03
 - [ ] Stats Band Default; Testimonials Single; FAQ; Facility Grid
 - [ ] Media Split, Logo Grid, Team Grid
-- [ ] CTA Gallery (placeholder until P-01) and Simple; Apply Form; Newsletter
+- [ ] CTA Gallery (placeholder until P-01) and Simple; Apply Form (Newsletter is built in the repo)
 - [ ] Post Index, Article Body
 
 ## Phase 5 — Static pages
@@ -228,9 +230,9 @@ Needs P-02 closed; P-13 and P-14 before the template.
 
 - [x] Real posts prepared in the repo from the current site's export: categories, author, cleaned bodies, excerpts, WebP images with alt text (D-15, `cms.md` → Import from the current site)
 - [ ] Import all posts, categories and authors through the MCP, as drafts
-- [ ] Blog index with featured post and native pagination (6 per page)
+- [ ] Blog index with featured post and native pagination (6 per page). Built in the repo 2026-09-28 (`BlogPage.tsx`: `Section / Blog Hero`, `Section / Post Index`); Webflow build waits on P-15
 - [ ] Blog post template, including Related posts (D-02) and the P-02 result
-- [ ] Blog category template pages, and category links replacing the legacy `Select` filter
+- [ ] Blog category template pages, and category links replacing the legacy `Select` filter. Repo: `/blog-categories/:slug` renders the same page, the select is the native-Dropdown pattern `fk-dropdown`
 - [ ] Template SEO bound to CMS fields (`cms.md` → Posts); `x-schema-post` (`BlogPosting` +
       `BreadcrumbList`) and the blog index `BreadcrumbList` (`seo.md` S-07, S-09)
 

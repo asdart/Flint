@@ -1,0 +1,53 @@
+/* fk-carousel-dots — carousel dots shared by How It Works and Testimonials. Each dot is a native
+   button; the active dot's bar is 52px wide and its fill is the autoplay progress. Widths are
+   tweened by the carousel interaction; `is-active` is only the starting state. */
+
+.fk-carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.fk-carousel-dots-button {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2) 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.fk-carousel-dots-button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-white),
+    0 0 0 4px var(--color-brand-focus);
+}
+
+/* 12px dot, 52px when active. The radius is the exact 8px (`radius-sm`), not `radius-full`: it
+   rounds a 12px dot fully and never distorts while the width is tweened, and the fill inside
+   shares it. */
+.fk-carousel-dots-bar {
+  display: flex;
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-stone-100);
+  overflow: hidden;
+}
+
+.fk-carousel-dots-bar.is-active {
+  width: 52px;
+}
+
+.fk-carousel-dots-fill {
+  display: block;
+  flex: none;
+  width: 0;
+  height: 100%;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-stone-800);
+}

@@ -1,0 +1,28 @@
+/* fk-newsletter — Section / Newsletter (Figma 5674:3956 desktop, 5763:2625 phone). The panel is the
+   shared `fk-panel fk-bg-brand-light is-snug`, the row and its centering are utilities. The form is
+   Webflow's Form Block (`w-form`: form + success / error messages); the field inside it is
+   `UI / Input Field`. */
+
+/* 400px wide on desktop (Figma), the full width once the row stacks. Webflow's Form Block adds a
+   bottom margin, zeroed here. */
+.fk-newsletter-form {
+  flex: none;
+  width: 100%;
+  max-width: 400px;
+  margin: 0px;
+}
+
+/* Sets no `display`: Webflow shows `w-form-done` / `w-form-fail` itself. */
+.fk-newsletter-message {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: var(--color-ink);
+}
+
+.fk-newsletter-message.is-error {
+  color: var(--color-accent-rose);
+}

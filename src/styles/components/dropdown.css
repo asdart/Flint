@@ -1,0 +1,48 @@
+/* fk-dropdown — UI / Dropdown: Webflow's native Dropdown element (Figma 5862:1733). The toggle is an
+   input field (`fk-input-field is-select`, input-field.css) and Webflow supplies open/close and the
+   `w--open` state. The list holds plain links (`w--current` marks the current one). */
+
+.fk-dropdown {
+  width: 262px;
+}
+
+.fk-dropdown-list {
+  margin-top: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--color-stone-100);
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+  box-shadow: 0px 8px 24px rgba(15, 14, 23, 0.08);
+}
+
+.fk-dropdown-link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-white);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fk-dropdown-link:hover {
+  background-color: var(--color-neutral-hover);
+}
+
+.fk-dropdown-link:focus-visible {
+  outline: none;
+  box-shadow: 0px 0px 0px 2px var(--color-brand-focus);
+}
+
+.fk-dropdown-link.w--current {
+  background-color: var(--color-brand-light);
+  font-weight: 500;
+}
+
+@media screen and (max-width: 767px) {
+  .fk-dropdown {
+    width: 100%;
+  }
+}

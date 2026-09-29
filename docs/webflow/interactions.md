@@ -71,7 +71,8 @@ emulates it) · `legacy` = exists only in pre-contract code.
 
 Native Webflow elements are used instead of interactions for: **Slider** (testimonial carousel,
 replaces `CarouselPagination.tsx` and `Testimonials.tsx` paging), **Form select** (replaces the
-animated `components/Select.tsx`), **Collection List pagination** (replaces `AllPosts.tsx` paging
+animated `components/Select.tsx`), **Form Block** (the newsletter's success and error messages; the preview's `src/ix/form.ts` stands in for webflow.js), **Dropdown** (the blog's category select: a list of links to the category
+pages; the preview's `src/ix/dropdown.ts` only stands in for webflow.js), **Collection List pagination** (replaces `AllPosts.tsx` paging
 and `AnimatePresence`).
 
 ## Illustrations
@@ -103,7 +104,7 @@ attributes that load code, or Code Components.
 | `x-deferred-tracking` | Loads GTM after the `load` event; Meta, TikTok and Google Ads run as tags inside GTM (`seo.md` S-13) | Native integrations and pasted tags load in the head and hold up the page | Site (footer) | Small inline loader, under 1 KB, injecting GTM on `load` (or idle). No other tracking code anywhere | **required** (seo.md); container ID pending |
 | `x-video-facade` | Inline video/webinar embed that loads only on click, behind a thumbnail (`seo.md` S-14) | Only if the native Lightbox (which loads the player on open) doesn't fit the design | Pages with inline video | Thumbnail + labelled play button; the click swaps in the iframe | **candidate**: native Lightbox first |
 | `x-hero-arc-speed` | Hero arc slows to 0.35× on hover instead of pausing | IX3 can pause/resume a loop, not change its speed | Home hero | Small page script adjusting the GSAP timeline speed | **candidate, deferred** (`archive/test-site/mvp2-home.md` H-2). Native build pauses on hover |
-| `x-carousel-goto` | Pagination dot clicks animate directly from the current slide to the clicked one, backward as well as forward | IX3 keeps no "current slide" state: a click `jump` plays the target step's forward transition from its fixed start, so a smaller index snaps | How It Works and Testimonials | Small page script driving the IX3 timeline, or a Code Component | **candidate, deferred** (`archive/test-site/mvp2-home.md` S5). Native build: forward jumps animate, backward jumps snap |
+| `x-carousel-goto` | Carousel dot clicks animate directly from the current slide to the clicked one, backward as well as forward | IX3 keeps no "current slide" state: a click `jump` plays the target step's forward transition from its fixed start, so a smaller index snaps | How It Works and Testimonials | Small page script driving the IX3 timeline, or a Code Component | **candidate, deferred** (`archive/test-site/mvp2-home.md` S5). Native build: forward jumps animate, backward jumps snap |
 | `x-testimonial-drag` | Drag/swipe on the center-weighted testimonials carousel | No native drag on an IX3-driven carousel | Testimonials section | Page script or Code Component | **candidate, deferred** (`archive/test-site/mvp2-home.md` H-6). Native build has autoplay, dots, hover pause |
 
 Rules for exceptions:

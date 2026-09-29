@@ -4,16 +4,16 @@ import HomePage from "./pages/HomePage";
 import LegacyHomePage from "./pages/legacy/HomePage";
 import FacilitiesPage from "./pages/legacy/FacilitiesPage";
 import FacilityPartnersPage from "./pages/legacy/FacilityPartnersPage";
-import BlogPage from "./pages/legacy/BlogPage";
+import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/legacy/BlogPostPage";
 import AboutPage from "./pages/legacy/AboutPage";
 import StyleGuidePage from "./pages/StyleGuidePage";
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, search]);
   return null;
 }
 
@@ -29,6 +29,7 @@ export default function App() {
           <Route path="/facility-partners" element={<FacilityPartnersPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog-categories/:slug" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/style-guide" element={<StyleGuidePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,0 +1,39 @@
+/* PREVIEW ONLY — never pushed to Webflow. The few rules Webflow's own stylesheet applies to the
+   native Dropdown and Form Block elements (`w-dropdown*`, `w-form*`), so the repo renders it like the published site. Open and
+   close come from src/ix/dropdown.ts and form messages from src/ix/form.ts, standing in for webflow.js. */
+
+.w-dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 900;
+}
+
+.w-dropdown-toggle {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+}
+
+.w-dropdown-list {
+  position: absolute;
+  display: none;
+  min-width: 100%;
+}
+
+.w-dropdown-list.w--open {
+  display: block;
+}
+
+.w-dropdown-link {
+  position: relative;
+  display: block;
+}
+
+.w-form {
+  margin: 0px 0px 15px;
+}
+
+.w-form-done,
+.w-form-fail {
+  display: none;
+}

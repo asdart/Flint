@@ -24,7 +24,7 @@ export default function PostCard({ post }: PostCardProps) {
         <p className="fk-post-card-excerpt">{post.excerpt}</p>
         <div className="fk-post-card-meta">
           <img
-            className="fk-post-card-avatar"
+            className="fk-avatar"
             src={post.authorItem.avatar.url}
             alt={post.authorItem.avatar.alt}
             loading="lazy"

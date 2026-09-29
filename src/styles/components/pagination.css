@@ -1,53 +1,104 @@
-/* fk-pagination — carousel dots shared by How It Works and Testimonials. Each dot is a native
-   button; the active dot's bar is 52px wide and its fill is the autoplay progress. Widths are
-   tweened by the carousel interaction; `is-active` is only the starting state. */
+/* fk-pagination — numbered pagination under the post feed (Figma 5674:3979): previous / next arrows
+   (48px, `radius-xl`) around 48px round page links. The links are plain anchors to `?page=n`;
+   `w--current` marks the page being shown (semibold with an ink border; Figma only draws the
+   semibold, the border is the active state added on request) and `is-disabled` dims an arrow at either end. Phone (≤767): 40px buttons and tighter
+   gaps, so five pages fit 375px (the phone keeps numbered pages, D-16); the
+   row wraps if there are more. */
 
 .fk-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.fk-pagination-pages {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
 }
 
-.fk-pagination-dot {
+.fk-pagination-arrow {
   display: flex;
+  flex: none;
   align-items: center;
-  padding: var(--space-2) 0;
-  border: 0;
-  border-radius: var(--radius-full);
-  background-color: transparent;
-  cursor: pointer;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-stone-100);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-white);
+  transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.fk-pagination-dot:focus-visible {
+.fk-pagination-arrow:hover {
+  background-color: var(--color-neutral-hover);
+}
+
+.fk-pagination-arrow:focus-visible {
   outline: none;
   box-shadow:
-    0 0 0 2px var(--color-white),
-    0 0 0 4px var(--color-brand-focus);
+    0px 0px 0px 2px var(--color-white),
+    0px 0px 0px 4px var(--color-brand-focus);
 }
 
-/* 12px dot, 52px when active. The radius is the exact 8px (`radius-sm`), not `radius-full`: it
-   rounds a 12px dot fully and never distorts while the width is tweened, and the fill inside
-   shares it. */
-.fk-pagination-bar {
+.fk-pagination-arrow.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.fk-pagination-page {
   display: flex;
   flex: none;
-  width: 12px;
-  height: 12px;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-stone-100);
-  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-stone-100);
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.fk-pagination-bar.is-active {
-  width: 52px;
+.fk-pagination-page:hover {
+  background-color: var(--color-neutral-hover);
 }
 
-.fk-pagination-fill {
-  display: block;
-  flex: none;
-  width: 0;
-  height: 100%;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-stone-800);
+.fk-pagination-page:focus-visible {
+  outline: none;
+  box-shadow:
+    0px 0px 0px 2px var(--color-white),
+    0px 0px 0px 4px var(--color-brand-focus);
+}
+
+.fk-pagination-page.w--current {
+  border-color: var(--color-ink);
+  font-weight: 600;
+}
+
+@media screen and (max-width: 767px) {
+  .fk-pagination {
+    gap: var(--space-2);
+  }
+
+  .fk-pagination-pages {
+    gap: var(--space-1);
+  }
+
+  .fk-pagination-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .fk-pagination-page {
+    width: 40px;
+    height: 40px;
+  }
 }

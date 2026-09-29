@@ -94,6 +94,10 @@
   flex-shrink: 0;
 }
 
+.fk-gap-0-5 {
+  gap: var(--space-0-5);
+}
+
 .fk-gap-1 {
   gap: var(--space-1);
 }

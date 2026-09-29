@@ -86,7 +86,7 @@ class next to them keeps only what they can't express (Feature Grid's fixed row 
 
 Shared components whose look must be identical on every page keep their own classes on every
 non-trivial element, instead of being rebuilt from utilities: **Nav, Footer, Button, Icon,
-Pagination and Post Card**. One class per element makes the component a single thing to change
+Carousel Dots and Post Card**. One class per element makes the component a single thing to change
 and to sync, and keeps a Webflow component's elements from depending on stacked utility chains.
 Plain layout wrappers inside them (a flex column around other elements) and colors that a retired
 combo used to set are utilities (Footer's container and CTA text wrapper, `fk-bg-brand`,

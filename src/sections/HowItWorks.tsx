@@ -1,4 +1,4 @@
-import Pagination from "../components/ui/Pagination";
+import CarouselDots from "../components/ui/CarouselDots";
 import { cx } from "../lib/cx";
 
 const STEPS = [
@@ -130,7 +130,7 @@ export default function HowItWorks() {
               </div>
             </div>
           </div>
-          <Pagination id="how" count={STEPS.length} label={(index) => `Go to step ${index + 1}`} />
+          <CarouselDots id="how" count={STEPS.length} label={(index) => `Go to step ${index + 1}`} />
         </div>
       </div>
     </section>

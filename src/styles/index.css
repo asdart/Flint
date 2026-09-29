@@ -1,12 +1,14 @@
 /* Contract styles, imported after the legacy src/index.css. Order mirrors the Webflow layers. */
 @import "./tokens.css";
 @import "./base.css";
+@import "./webflow-base.css";
 @import "./layout.css";
 @import "./typography.css";
 @import "./components/reveal.css";
 @import "./components/icon.css";
 @import "./components/flag.css";
-@import "./components/pagination.css";
+@import "./components/avatar.css";
+@import "./components/carousel-dots.css";
 @import "./components/button.css";
 @import "./components/section-header.css";
 @import "./components/stat.css";
@@ -15,6 +17,12 @@
 @import "./components/nav.css";
 @import "./components/footer.css";
 @import "./components/hero.css";
+@import "./components/blog-hero.css";
+@import "./components/featured-post.css";
+@import "./components/dropdown.css";
+@import "./components/pagination.css";
+@import "./components/input-field.css";
+@import "./components/newsletter.css";
 @import "./components/logo-marquee.css";
 @import "./components/two-ways.css";
 @import "./components/pricing.css";

@@ -1,5 +1,5 @@
 import TestimonialCard from "../components/ui/TestimonialCard";
-import Pagination from "../components/ui/Pagination";
+import CarouselDots from "../components/ui/CarouselDots";
 import { cx } from "../lib/cx";
 
 type Testimonial = {
@@ -68,7 +68,7 @@ export default function Testimonials({
                 );
               })}
             </div>
-            <Pagination
+            <CarouselDots
               id="tm"
               count={TESTIMONIALS.length}
               active={3}

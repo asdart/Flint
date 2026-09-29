@@ -1,0 +1,12 @@
+/* fk-avatar — the 24px round author photo shared by Post Card and the featured post. The 4px
+   margin plus the row's 4px gap give the 8px between photo and name in Figma. */
+
+.fk-avatar {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-right: var(--space-1);
+  border-radius: var(--radius-full);
+  background-color: var(--color-stone-50);
+  object-fit: cover;
+}

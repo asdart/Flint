@@ -37,9 +37,10 @@ card sizes, a width used by several sections) need one shared class or token (`A
 | `color-tertiary` | `#fbf5f2` | Tertiary panel background |
 | `color-surface` | `#f3f4f6` | Neutral surface panels |
 | `color-stone-50` | `#edeff2` | Borders on white buttons |
-| `color-stone-100` | `#d3d7de` | Footer link text, muted borders, carousel pagination track (`fk-pagination-bar`) |
+| `color-stone-100` | `#d3d7de` | Footer link text, muted borders, carousel dots track (`fk-carousel-dots-bar`) |
+| `color-stone-200` | `#bac0c9` | Hover border of an input field or select (Figma `border/neutral/hover`) |
 | `color-stone-400` | `#8c929b` | Form placeholder text |
-| `color-stone-800` | `#373839` | Carousel pagination progress fill (`fk-pagination-fill`) |
+| `color-stone-800` | `#373839` | Carousel dots progress fill (`fk-carousel-dots-fill`) |
 | `color-neutral-hover` | `#f5f5f5` | Hover background of white buttons |
 
 ### Accent
@@ -67,6 +68,8 @@ step that's in use is its own token. Add a row before using a new one.
 | `color-brand-80` | `rgba(68, 56, 109, 0.8)` | Long-form body text |
 | `color-subtle-80` | `rgba(97, 101, 106, 0.8)` | Stat labels |
 | `color-ink-60` | `rgba(15, 14, 23, 0.6)` | Muted supporting lines inside the Pricing message bubbles |
+| `color-brand-10` | `rgba(68, 56, 109, 0.1)` | Focus ring around a focused input field (`fk-input-field:focus-within`), with a `color-brand` border |
+| `color-scrim` | `rgba(0, 0, 0, 0.8)` | Bottom of the gradient over the featured post image on mobile (`fk-featured-post-scrim`), fading to `transparent` |
 
 Snapped legacy values: the post card excerpt (`rgba(38,37,30,0.6)`) → `color-subtle`, the post
 card meta (`rgba(38,37,30,0.5)`) → `color-stone-400`, the avatar background `#e6e5e0` → `color-stone-50`.
@@ -79,7 +82,7 @@ Colors that only appear **inside illustrations** (greens, oranges, flag colors i
 
 | Token | Value | Notes |
 | --- | --- | --- |
-| `font-sans` | `"SN Pro", ui-sans-serif, system-ui, sans-serif` | Body. Upload as a custom font (Fontsource package `@fontsource/sn-pro`) |
+| `font-sans` | `"SN Pro", ui-sans-serif, system-ui, sans-serif` | Body. Upload as a custom font (Fontsource package `@fontsource/sn-pro`): weights 400, 500 and 600 (600 only for the current page in `fk-pagination`) |
 | `font-serif` | `"STIX Two Text", ui-serif, Georgia, serif` | Headings. Available on Google Fonts |
 
 The type scale is defined as classes and tag styles in [`classes.md`](classes.md#typography).
@@ -102,6 +105,7 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 
 | Token | Value | | Token | Value |
 | --- | --- | --- | --- | --- |
+| `space-0-5` | 2px | | | |
 | `space-1` | 4px | | `space-7` | 28px |
 | `space-1-5` | 6px | | `space-8` | 32px |
 | `space-2` | 8px | | `space-10` | 40px |
@@ -120,7 +124,7 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 
 `space-14`, `space-19` and `space-36` come from the homepage section shell. `space-14` is the row
 gap in `fk-logo-marquee`. `space-19` is the gap between the heading and the ticker viewport in
-`fk-partners-map-inner`. `space-36` is the top padding of `fk-panel.is-hero` (Hero's rhythm combo).
+`fk-partners-map-inner`. `space-36` is the top padding of `fk-panel.is-hero` (Hero's rhythm combo). `space-0-5` is the inset between an input field's border and the button inside it (`fk-input-field is-action`).
 
 ## Widths (size variables)
 
