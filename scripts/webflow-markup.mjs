@@ -24,6 +24,9 @@ const server = await createServer({
   server: { middlewareMode: true, hmr: false },
   appType: "custom",
   logLevel: "error",
+  // Never inline imported SVG icons as data: URIs, so they render as /src/assets/icons/x.svg paths
+  // and can be swapped for their hosted assets below.
+  build: { assetsInlineLimit: 0 },
 });
 
 try {
@@ -32,8 +35,9 @@ try {
     const { default: Component } = await server.ssrLoadModule(`/${file}`);
     const html = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(Component)));
     // React 19 hoists <link rel="preload"> tags for images; they aren't page elements.
-    out[file] = html.replace(/<link rel="preload"[^>]*\/>/g, "").replace(/src="(\/assets\/[^"]+)"/g, (_, path) => {
-      const asset = ids.assets[path];
+    // Imported icons (src/assets/icons/*.svg) are keyed without the leading slash, like their repo path.
+    out[file] = html.replace(/<link rel="preload"[^>]*\/>/g, "").replace(/src="(\/(?:src\/)?assets\/[^"]+)"/g, (_, path) => {
+      const asset = ids.assets[path.startsWith("/src/") ? path.slice(1) : path];
       if (!asset) throw new Error(`No hosted asset for ${path} in webflow-ids.json`);
       return `src="${asset.url}"`;
     });

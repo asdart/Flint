@@ -70,7 +70,7 @@ export default function Pricing() {
                     <PricingBubble
                       icon={
                         <div className="fk-pricing-bubble-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full">
-                          <img className="fk-icon is-sm" src={facilityIcon} alt="" />
+                          <img className="fk-icon is-sm" src={facilityIcon} alt="" width={16} height={16} />
                         </div>
                       }
                       name="Facility"
@@ -93,7 +93,7 @@ export default function Pricing() {
                     <PricingBubble
                       icon={
                         <div className="fk-pricing-bubble-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full">
-                          <img className="fk-icon is-sm" src={facilityIcon} alt="" />
+                          <img className="fk-icon is-sm" src={facilityIcon} alt="" width={16} height={16} />
                         </div>
                       }
                       name="Facility"
@@ -115,13 +115,13 @@ export default function Pricing() {
                   <ul className="fk-pricing-checklist fk-flex fk-flex-col fk-gap-4">
                     <li className="fk-flex fk-items-center fk-gap-3">
                       <span className="fk-pricing-checklist-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full fk-bg-brand-light">
-                        <img className="fk-icon is-sm" src={checkmarkIcon} alt="" />
+                        <img className="fk-icon is-sm" src={checkmarkIcon} alt="" width={16} height={16} />
                       </span>
                       <p className="fk-text-md">No placement fees</p>
                     </li>
                     <li className="fk-flex fk-items-center fk-gap-3">
                       <span className="fk-pricing-checklist-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full fk-bg-brand-light">
-                        <img className="fk-icon is-sm" src={checkmarkIcon} alt="" />
+                        <img className="fk-icon is-sm" src={checkmarkIcon} alt="" width={16} height={16} />
                       </span>
                       <p className="fk-text-md">No paycheck deductions</p>
                     </li>

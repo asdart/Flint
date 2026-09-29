@@ -35,8 +35,10 @@ export default function PartnersMap() {
       <div className="fk-partners-map fk-relative fk-w-full fk-rounded-xl fk-bg-tertiary fk-overflow-clip">
         <img
           className="fk-partners-map-image fk-absolute fk-inset-0 fk-block fk-w-full fk-h-full fk-object-cover"
-          src="/assets/home/map-bg.jpg"
+          src="/assets/home/partners-map-bg.webp"
           alt=""
+          width={1774}
+          height={887}
         />
         <div className="fk-partners-map-overlay fk-absolute fk-inset-0" aria-hidden="true" />
         <div className="fk-flex fk-items-center fk-justify-center fk-h-full">

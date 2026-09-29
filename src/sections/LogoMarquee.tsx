@@ -1,10 +1,10 @@
 const LOGOS = [
-  { src: "/assets/home/logo-01.webp", width: 132 },
-  { src: "/assets/home/logo-02.webp", width: 96 },
-  { src: "/assets/home/logo-03.webp", width: 101 },
-  { src: "/assets/home/logo-04.webp", width: 187 },
-  { src: "/assets/home/logo-05.webp", width: 146 },
-  { src: "/assets/home/logo-06.webp", width: 121 },
+  { src: "/assets/home/logo-01.webp", name: "Lincoln Health", width: 132 },
+  { src: "/assets/home/logo-02.webp", name: "Pleasant View Home", width: 96 },
+  { src: "/assets/home/logo-03.webp", name: "Miramont Behavioral Health", width: 101 },
+  { src: "/assets/home/logo-04.webp", name: "Gunnison Valley Health", width: 187 },
+  { src: "/assets/home/logo-05.webp", name: "CHRISTUS Health", width: 146 },
+  { src: "/assets/home/logo-06.webp", name: "Sandhills Care Center", width: 121 },
 ];
 
 // One set is 1071px; the strip is up to ≈1540px wide at 1920. Three copies keep it filled while
@@ -33,7 +33,7 @@ export default function LogoMarquee() {
                   key={logo.src}
                   className="fk-logo-marquee-logo fk-shrink-0"
                   src={logo.src}
-                  alt=""
+                  alt={copy === 0 ? logo.name : ""}
                   width={logo.width}
                   height={36}
                 />

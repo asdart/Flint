@@ -215,6 +215,10 @@ Check the fit numerically before sending (max |bezier − spring| × travel in p
 
 The same script works for `create_font` results ([Fonts](#fonts)). For several files from one batched `create_asset`
 call, use `scripts/webflow-upload-batch.mjs` (see its header; `--check` verifies the rebuilt policy).
+Keys: files under `public/` use their served path (`/assets/home/x.webp`); imported icons use the repo
+path without a leading slash (`src/assets/icons/menu.svg`). Both are what `webflow-markup.mjs` and
+`webflow-css.mjs` look up. Collect a Home-style list with a throwaway script that renders each file
+with Vite SSR and lists every `src`/`href` (missing assets throw one at a time in `webflow-markup.mjs`).
 
 ## Fonts
 

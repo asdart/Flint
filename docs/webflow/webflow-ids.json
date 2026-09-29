@@ -25,6 +25,258 @@
     "/assets/home/cta-circle.svg": {
       "id": "6abbd67f92bbe90d74fbf5f5",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbd67f92bbe90d74fbf5f5_cta-circle.svg"
+    },
+    "/assets/flint-logo-brand.svg": {
+      "id": "6abbebd551427eae6c312cfc",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd551427eae6c312cfc_flint-logo-brand.svg"
+    },
+    "/assets/flint-logo-white.svg": {
+      "id": "6abbebd585f236595bf7facb",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd585f236595bf7facb_flint-logo-white.svg"
+    },
+    "/assets/country-flag.svg": {
+      "id": "6abbebd510f8c54b2ab12917",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd510f8c54b2ab12917_country-flag.svg"
+    },
+    "/assets/testimonial-photo-1.webp": {
+      "id": "6abbebd585f236595bf7faf4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd585f236595bf7faf4_testimonial-photo-1.webp"
+    },
+    "/assets/testimonial-photo-2.webp": {
+      "id": "6abbebd551427eae6c312d4b",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd551427eae6c312d4b_testimonial-photo-2.webp"
+    },
+    "/assets/testimonial-photo-3.webp": {
+      "id": "6abbebd5f0ec45724fccaf67",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd5f0ec45724fccaf67_testimonial-photo-3.webp"
+    },
+    "/assets/flags/ph.svg": {
+      "id": "6abbebd6f0ec45724fccafca",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd6f0ec45724fccafca_ph.svg"
+    },
+    "/assets/flags/ht.svg": {
+      "id": "6abbebd6e160eb1be8fa91dc",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd6e160eb1be8fa91dc_ht.svg"
+    },
+    "/assets/flags/ke.svg": {
+      "id": "6abbebd7ae6930fca0bcfa45",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7ae6930fca0bcfa45_ke.svg"
+    },
+    "/assets/flags/gh.svg": {
+      "id": "6abbebd78b8e492698b557ab",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd78b8e492698b557ab_gh.svg"
+    },
+    "/assets/flags/ng.svg": {
+      "id": "6abbebd7b559bd0f608c0e82",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7b559bd0f608c0e82_ng.svg"
+    },
+    "/assets/flags/vn.svg": {
+      "id": "6abbebd7ae6930fca0bcfa95",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7ae6930fca0bcfa95_vn.svg"
+    },
+    "/assets/flags/et.svg": {
+      "id": "6abbebd730aee66eee7557ab",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd730aee66eee7557ab_et.svg"
+    },
+    "/assets/home/candidate-01.webp": {
+      "id": "6abbebd78b8e492698b557ff",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd78b8e492698b557ff_candidate-01.webp"
+    },
+    "/assets/home/candidate-02.webp": {
+      "id": "6abbebd78b8e492698b55814",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd78b8e492698b55814_candidate-02.webp"
+    },
+    "/assets/home/candidate-03.webp": {
+      "id": "6abbebd8ea8009d5390ab284",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd8ea8009d5390ab284_candidate-03.webp"
+    },
+    "/assets/home/candidate-04.webp": {
+      "id": "6abbebd820c655289b9d7014",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd820c655289b9d7014_candidate-04.webp"
+    },
+    "/assets/home/candidate-05.webp": {
+      "id": "6abbebd8f0ec45724fccb1df",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd8f0ec45724fccb1df_candidate-05.webp"
+    },
+    "/assets/home/candidate-06.webp": {
+      "id": "6abbebd88b8e492698b558a9",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd88b8e492698b558a9_candidate-06.webp"
+    },
+    "/assets/home/candidate-07.webp": {
+      "id": "6abbebd820c655289b9d7060",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd820c655289b9d7060_candidate-07.webp"
+    },
+    "/assets/home/candidate-08.webp": {
+      "id": "6abbebd910f8c54b2ab12be4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd910f8c54b2ab12be4_candidate-08.webp"
+    },
+    "/assets/home/candidate-09.webp": {
+      "id": "6abbebd9113c5daeca1d3dde",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9113c5daeca1d3dde_candidate-09.webp"
+    },
+    "/assets/home/candidate-10.webp": {
+      "id": "6abbebd9113c5daeca1d3df3",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9113c5daeca1d3df3_candidate-10.webp"
+    },
+    "/assets/home/logo-01.webp": {
+      "id": "6abbebd9b98080d5ea9b6df4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9b98080d5ea9b6df4_logo-01.webp"
+    },
+    "/assets/home/logo-02.webp": {
+      "id": "6abbebd9af22fdc604b8524d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9af22fdc604b8524d_logo-02.webp"
+    },
+    "/assets/home/logo-03.webp": {
+      "id": "6abbebd9f7bbc6735a209abd",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9f7bbc6735a209abd_logo-03.webp"
+    },
+    "/assets/home/logo-04.webp": {
+      "id": "6abbebd9ad5b1f1f5f70f4fc",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9ad5b1f1f5f70f4fc_logo-04.webp"
+    },
+    "/assets/home/logo-05.webp": {
+      "id": "6abbebd999eefa1af9bb0dc1",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd999eefa1af9bb0dc1_logo-05.webp"
+    },
+    "/assets/home/logo-06.webp": {
+      "id": "6abbebdab98080d5ea9b6e76",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6e76_logo-06.webp"
+    },
+    "/assets/home/two-ways-nurse-right.webp": {
+      "id": "6abbebdab98080d5ea9b6e99",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6e99_two-ways-nurse-right.webp"
+    },
+    "/assets/home/two-ways-nurse-left.webp": {
+      "id": "6abbebdab98080d5ea9b6eb6",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6eb6_two-ways-nurse-left.webp"
+    },
+    "/assets/home/two-ways-nurse-center.webp": {
+      "id": "6abbebda51427eae6c312ec3",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebda51427eae6c312ec3_two-ways-nurse-center.webp"
+    },
+    "/assets/home/two-ways-facility.webp": {
+      "id": "6abbec0de160eb1be8faa6c9",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0de160eb1be8faa6c9_two-ways-facility.webp"
+    },
+    "/assets/home/pricing-avatar.webp": {
+      "id": "6abbec0de160eb1be8faa6de",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0de160eb1be8faa6de_pricing-avatar.webp"
+    },
+    "/assets/home/webinar-bg-arc.webp": {
+      "id": "6abbec0ef906e24767eeb2a1",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ef906e24767eeb2a1_webinar-bg-arc.webp"
+    },
+    "/assets/home/webinar-call.webp": {
+      "id": "6abbec0e30aee66eee756c93",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0e30aee66eee756c93_webinar-call.webp"
+    },
+    "/assets/home/webinar-participants.webp": {
+      "id": "6abbec0ef906e24767eeb2b6",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ef906e24767eeb2b6_webinar-participants.webp"
+    },
+    "/assets/home/cta-flower.webp": {
+      "id": "6abbec0ef906e24767eeb2cb",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ef906e24767eeb2cb_cta-flower.webp"
+    },
+    "/assets/home/cta-room.webp": {
+      "id": "6abbec0e9a17c9a61e25c0d3",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0e9a17c9a61e25c0d3_cta-room.webp"
+    },
+    "/assets/home/cta-photo.webp": {
+      "id": "6abbec0ead5b1f1f5f710d79",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ead5b1f1f5f710d79_cta-photo.webp"
+    },
+    "/assets/home/Flint-logo-brand-circle.svg": {
+      "id": "6abbec0ead5b1f1f5f710d8e",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ead5b1f1f5f710d8e_Flint-logo-brand-circle.svg"
+    },
+    "/assets/home/how-card-bg-1.webp": {
+      "id": "6abbec0ed5d15564b576f67b",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ed5d15564b576f67b_how-card-bg-1.webp"
+    },
+    "/assets/home/how-card-bg-2.webp": {
+      "id": "6abbec0ed5d15564b576f690",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ed5d15564b576f690_how-card-bg-2.webp"
+    },
+    "/assets/home/how-card-bg-3.webp": {
+      "id": "6abbec0ff0ec45724fccd094",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ff0ec45724fccd094_how-card-bg-3.webp"
+    },
+    "/assets/home/how-card-bg-4.webp": {
+      "id": "6abbec0fb98080d5ea9b8364",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0fb98080d5ea9b8364_how-card-bg-4.webp"
+    },
+    "/assets/home/how-card-bg-5.webp": {
+      "id": "6abbec0ff0ec45724fccd094",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ff0ec45724fccd094_how-card-bg-3.webp"
+    },
+    "/assets/home/how-card-bg-6.webp": {
+      "id": "6abbec0fcfbf774ff6e193f3",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0fcfbf774ff6e193f3_how-card-bg-6.webp"
+    },
+    "/assets/home/how-card-art-1.webp": {
+      "id": "6abbec0f20c655289b9d8b99",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0f20c655289b9d8b99_how-card-art-1.webp"
+    },
+    "/assets/home/how-card-art-2.webp": {
+      "id": "6abbec0f4d3c9e6ae737c649",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0f4d3c9e6ae737c649_how-card-art-2.webp"
+    },
+    "/assets/home/how-card-art-3.webp": {
+      "id": "6abbec1010f8c54b2ab14ae9",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1010f8c54b2ab14ae9_how-card-art-3.webp"
+    },
+    "/assets/home/how-card-art-5.webp": {
+      "id": "6abbec10d5d15564b576f704",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f704_how-card-art-5.webp"
+    },
+    "/assets/home/how-card-art-6.webp": {
+      "id": "6abbec10d5d15564b576f733",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f733_how-card-art-6.webp"
+    },
+    "/assets/home/offer-hospital.svg": {
+      "id": "6abbec1010f8c54b2ab14b43",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1010f8c54b2ab14b43_offer-hospital.svg"
+    },
+    "/assets/home/offer-id.svg": {
+      "id": "6abbec10ad5b1f1f5f710e20",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10ad5b1f1f5f710e20_offer-id.svg"
+    },
+    "/assets/home/offer-travel.svg": {
+      "id": "6abbec10fa9a73b80d828521",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10fa9a73b80d828521_offer-travel.svg"
+    },
+    "/assets/home/offer-dashboard.svg": {
+      "id": "6abbec10d5d15564b576f79c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f79c_offer-dashboard.svg"
+    },
+    "/assets/home/offer-concierge.svg": {
+      "id": "6abbec1130aee66eee756d97",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1130aee66eee756d97_offer-concierge.svg"
+    },
+    "/assets/home/offer-check.svg": {
+      "id": "6abbec1210f8c54b2ab14c1a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1210f8c54b2ab14c1a_offer-check.svg"
+    },
+    "src/assets/icons/menu.svg": {
+      "id": "6abbec12d5d15564b576f84f",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec12d5d15564b576f84f_menu.svg"
+    },
+    "src/assets/icons/x-mark.svg": {
+      "id": "6abbec1295c6eccb4fdecc9c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1295c6eccb4fdecc9c_x-mark.svg"
+    },
+    "src/assets/icons/checkmark.svg": {
+      "id": "6abbec12d5d15564b576f879",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec12d5d15564b576f879_checkmark.svg"
+    },
+    "src/assets/icons/facility.svg": {
+      "id": "6abbec129a17c9a61e25c239",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec129a17c9a61e25c239_facility.svg"
+    },
+    "/assets/home/partners-map-bg.webp": {
+      "id": "6abbeee69a17c9a61e269b5c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbeee69a17c9a61e269b5c_partners-map-bg.webp"
     }
   },
   "variableCollections": {
