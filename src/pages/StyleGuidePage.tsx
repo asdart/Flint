@@ -186,7 +186,7 @@ export default function StyleGuidePage() {
           </div>
         </section>
 
-        <section className="fk-section is-last">
+        <section className="fk-section">
           <div className="fk-panel fk-bg-brand">
             <div className="fk-container">
               <div className="fk-flex fk-flex-col fk-gap-6">

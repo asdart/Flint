@@ -17,7 +17,7 @@
   padding: var(--space-4) var(--space-4) 0;
 }
 
-.fk-section.is-last {
+.fk-section.is-padded-bottom {
   padding-bottom: var(--space-4);
 }
 
@@ -151,7 +151,7 @@
     padding: var(--space-2) var(--space-2) 0;
   }
 
-  .fk-section.is-last {
+  .fk-section.is-padded-bottom {
     padding-bottom: var(--space-2);
   }
 

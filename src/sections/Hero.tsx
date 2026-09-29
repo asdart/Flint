@@ -18,7 +18,7 @@ const ARC_CARDS = [...CANDIDATES, ...CANDIDATES];
 /** Section / Hero, Home variant. */
 export default function Hero() {
   return (
-    <section className="fk-section is-last">
+    <section className="fk-section is-padded-bottom">
       <div className="fk-panel fk-bg-secondary is-hero">
         <div className="fk-container">
           <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
