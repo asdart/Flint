@@ -1,0 +1,14 @@
+/* Exception x-blog-pagination (style half) — docs/webflow/interactions.md → Custom-code exceptions.
+   Page head code on /blog and the Categories template, never pushed as classes. Webflow renders the
+   native pagination wrapper empty on a single-page list (a landmark with no links that still adds the
+   list gap), so it hides itself when it has no Previous / Next link. The numbered links are added by
+   the script half (docs/webflow/custom-code/blog-pagination.html, preview src/ix/blogPagination.ts). */
+
+.w-pagination-wrapper:not(:has(.w-pagination-next, .w-pagination-previous)) {
+  display: none;
+}
+
+/* Webflow only: the current-page state. In the repo it is `.fk-pagination-page.w--current` in
+   components/pagination.css; on Webflow the state can't be created through the MCP, so the head code
+   carries this rule with the published variable name (`--_flint---color-ink`) until the Designer's
+   Current state on `fk-pagination-page` is styled. */

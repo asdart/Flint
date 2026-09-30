@@ -1,0 +1,33 @@
+<!-- x-blog-pagination: numbered page links for the native Collection List pagination. Footer script (registered inline script xBlogPagination) on /blog and the Categories template, see docs/webflow/interactions.md. Preview mirror: src/ix/blogPagination.ts (keep in sync). The pasted source is the <script> body only, minified. -->
+<script>
+(function(){
+var w=document.querySelector(".w-pagination-wrapper"),
+c=w&&w.querySelector(".w-page-count"),
+a=w&&w.querySelector(".w-pagination-next,.w-pagination-previous"),
+m=c&&c.textContent.match(/(\d+)\s*\/\s*(\d+)/),
+k=a&&(a.getAttribute("href")||"").match(/^\?([^=&]+_page|page)=/);
+if(!m||!k||+m[2]<2)return;
+var p=+m[1],t=+m[2],n=w.querySelector(".w-pagination-next"),d=document.createElement("div"),g=0,i,e;
+d.className="fk-pagination-pages";
+for(i=1;i<=t;i++){
+if(t>7&&i!==1&&i!==t&&Math.abs(i-p)>1){
+if(!g){g=1;e=document.createElement("span");e.className="fk-pagination-gap";e.setAttribute("aria-hidden","true");e.textContent=String.fromCharCode(8230);d.appendChild(e)}
+continue}
+g=0;
+e=document.createElement("a");
+e.href="?"+k[1]+"="+i;
+e.className="fk-pagination-page"+(i===p?" w--current":"");
+e.textContent=i;
+e.setAttribute("aria-label","Page "+i);
+if(i===p)e.setAttribute("aria-current","page");
+d.appendChild(e)}
+n?w.insertBefore(d,n):w.appendChild(d)
+})();
+</script>
+
+<!-- x-blog-pagination style: page head freeform code on /blog and the Categories template (one <style>, read the existing head code first). Hides the pagination wrapper Webflow renders empty on single-page lists, and styles the current page link (the Designer's Current state can't be created through the MCP: move the rule into the state and drop it here once the user has styled it). -->
+<style>
+/* x-blog-pagination */
+.w-pagination-wrapper:not(:has(.w-pagination-next,.w-pagination-previous)){display:none}
+.fk-pagination-page.w--current{border-color:var(--_flint---color-ink);font-weight:600}
+</style>

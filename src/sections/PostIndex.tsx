@@ -1,10 +1,10 @@
 import { useSearchParams } from "react-router-dom";
-import arrowLeft from "../assets/icons/arrow-left.svg";
-import arrowRight from "../assets/icons/arrow-right.svg";
+import chevronLeft from "../assets/icons/chevron-left.svg";
+import chevronRight from "../assets/icons/chevron-right.svg";
 import Dropdown from "../components/ui/Dropdown";
 import PostCard from "../components/ui/PostCard";
 import { categories, categoryBySlug, postPage } from "../content";
-import { cx } from "../lib/cx";
+import EmptyState from "../components/ui/EmptyState";
 import SmartLink from "../lib/SmartLink";
 
 type PostIndexProps = {
@@ -28,8 +28,6 @@ export default function PostIndex({ category }: PostIndexProps) {
   const categoryOptions = [...categories]
     .sort((a, b) => a.name.localeCompare(b.name))
     .filter((item) => item.slug !== current?.slug);
-  const basePath = current ? `/categories/${current.slug}` : "/blog";
-  const pageHref = (n: number) => (n === 1 ? basePath : `${basePath}?page=${n}`);
 
   return (
     <section className="fk-section">
@@ -63,49 +61,57 @@ export default function PostIndex({ category }: PostIndexProps) {
                   </div>
                 </Dropdown>
               </div>
-              <div>
-                <div className="fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4" role="list">
-                  {posts.map((post) => (
-                    <div key={post.slug} role="listitem">
-                      <PostCard post={post} />
+              <div className="fk-flex fk-flex-col fk-gap-8">
+                {posts.length > 0 ? (
+                  <div className="fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4" role="list">
+                    {posts.map((post) => (
+                      <div key={post.slug} role="listitem">
+                        <PostCard post={post} />
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+                {posts.length === 0 ? (
+                  current ? (
+                    <EmptyState
+                      title="No articles in this category yet"
+                      body="We haven't published a guide under this topic yet. See everything else we've written."
+                      button={{ label: "All articles", link: "/blog" }}
+                    />
+                  ) : (
+                    <EmptyState
+                      title="No articles yet"
+                      body="Our first guides on green card sponsorship, licensing and relocation are coming soon. Subscribe below to get them first."
+                      button={{ label: "Subscribe", link: "#newsletter" }}
+                    />
+                  )
+                ) : null}
+                {/* Webflow's native Pagination (the wrapper sits inside the Collection List Wrapper): Previous and
+                    Next links only where a page exists, plus the native page count. The numbered links between the
+                    arrows are added by the registered script x-blog-pagination (preview: src/ix/blogPagination.ts);
+                    a one-page list renders the wrapper empty and x-blog-pagination hides it. Native links reload
+                    the page, so these are plain anchors. */}
+                <div role="navigation" aria-label="Pagination" className="w-pagination-wrapper fk-pagination">
+                  {totalPages > 1 && page > 1 ? (
+                    <a href={`?page=${page - 1}`} aria-label="Previous Page" className="w-pagination-previous fk-pagination-arrow">
+                      <img className="w-pagination-previous-icon fk-icon is-sm" src={chevronLeft} alt="" width={16} height={16} />
+                      <div className="fk-sr-only w-inline-block">Previous</div>
+                    </a>
+                  ) : null}
+                  {totalPages > 1 && page < totalPages ? (
+                    <a href={`?page=${page + 1}`} aria-label="Next Page" className="w-pagination-next fk-pagination-arrow">
+                      <div className="fk-sr-only w-inline-block">Next</div>
+                      <img className="w-pagination-next-icon fk-icon is-sm" src={chevronRight} alt="" width={16} height={16} />
+                    </a>
+                  ) : null}
+                  {totalPages > 1 ? (
+                    <div className="w-page-count fk-sr-only">
+                      {page} / {totalPages}
                     </div>
-                  ))}
+                  ) : null}
                 </div>
               </div>
             </div>
-            {totalPages > 1 ? (
-              <nav className="fk-pagination" aria-label="Pagination">
-                <SmartLink
-                  href={pageHref(Math.max(1, page - 1))}
-                  className={cx("fk-pagination-arrow", page === 1 && "is-disabled")}
-                  aria-label="Previous page"
-                  aria-disabled={page === 1 || undefined}
-                >
-                  <img className="fk-icon is-sm" src={arrowLeft} alt="" width={16} height={16} />
-                </SmartLink>
-                <div className="fk-pagination-pages">
-                  {Array.from({ length: totalPages }, (_, index) => index + 1).map((n) => (
-                    <SmartLink
-                      key={n}
-                      href={pageHref(n)}
-                      className={cx("fk-pagination-page", n === page && "w--current")}
-                      aria-label={`Page ${n}`}
-                      aria-current={n === page ? "page" : undefined}
-                    >
-                      {n}
-                    </SmartLink>
-                  ))}
-                </div>
-                <SmartLink
-                  href={pageHref(Math.min(totalPages, page + 1))}
-                  className={cx("fk-pagination-arrow", page === totalPages && "is-disabled")}
-                  aria-label="Next page"
-                  aria-disabled={page === totalPages || undefined}
-                >
-                  <img className="fk-icon is-sm" src={arrowRight} alt="" width={16} height={16} />
-                </SmartLink>
-              </nav>
-            ) : null}
           </div>
         </div>
       </div>

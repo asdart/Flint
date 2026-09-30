@@ -54,7 +54,8 @@
     "Global / Featured post": {
       "id": "4a57770e-f0a2-856c-9c05-60c32305f6cf",
       "props": {},
-      "note": "Built by the user in the Designer 2026-09-30 (Collection List inside, no props, no variants). Repo: src/components/global/FeaturedPost.tsx. 2 instances: /blog and the Categories template."
+      "note": "Built by the user in the Designer 2026-09-30 (Collection List inside, no props, no variants). Repo: src/components/global/FeaturedPost.tsx. 2 instances: /blog and the Categories template.",
+      "emptyState": "DynamoEmpty 4a57770e-f0a2-856c-9c05-60c32305f6e6 (block ...e7 emptied)"
     },
     "Global / Footer": {
       "id": "4920c00b-a26a-32ea-3bf1-c7b8ccef1a41",
@@ -210,11 +211,20 @@
       "appliedTo": "Posts template 6abc6c9673c0a3345b7a94bd, footer",
       "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6abcaefd329408191a9ae7c4%2Fxarticletoc-1.0.0.js",
       "source": "docs/webflow/custom-code/post-template-footer.html (script body)"
+    },
+    "xblogpagination": {
+      "id": "xblogpagination",
+      "displayName": "xBlogPagination",
+      "version": "1.0.0",
+      "appliedTo": "/blog 6abc95f3d5879b11ae14b088 and Categories template 6abc6c8adc4bd2e2066e91ea, footer",
+      "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6abd5efbd61d327d4f577f2a%2Fxblogpagination-1.0.0.js",
+      "source": "docs/webflow/custom-code/blog-pagination.html (script body)"
     }
   },
   "customCode": {
     "siteHead": "<style> x-button-gradient, x-text-rendering, x-blur-reveal; source docs/webflow/custom-code/site-head.html",
     "postsTemplateHead": "<style> x-related-empty + x-article-body on Posts template 6abc6c9673c0a3345b7a94bd (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/post-template-head-style.html",
+    "blogPaginationHead": "<style> x-blog-pagination on /blog 6abc95f3d5879b11ae14b088 and Categories template 6abc6c8adc4bd2e2066e91ea (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/blog-pagination.html",
     "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)"
   },
   "assets": {
@@ -701,7 +711,8 @@
       "collectionWrapper": "4802fd99-4f56-b19f-a2bb-e4ce38e666de",
       "collectionList": "4802fd99-4f56-b19f-a2bb-e4ce38e666df",
       "collectionItem": "4802fd99-4f56-b19f-a2bb-e4ce38e666e0",
-      "postCardInstance": "8d37a029-e9a9-9037-3473-0fe3175fd9bd"
+      "postCardInstance": "8d37a029-e9a9-9037-3473-0fe3175fd9bd",
+      "emptyState": "4802fd99-4f56-b19f-a2bb-e4ce38e666e1 (DynamoEmpty), block 4802fd99-4f56-b19f-a2bb-e4ce38e666e2"
     },
     "/blog": {
       "fkPage": "63732199-7797-a509-955e-af3bd8a7d748",
@@ -718,7 +729,9 @@
       "postsWrapper": "c0fd93a2-7900-f11b-6985-eea7b7160c5b",
       "postsItem": "c0fd93a2-7900-f11b-6985-eea7b7160c5d",
       "postCardInstance": "39fbc318-e15b-3426-97c6-dddafd60960c",
-      "pagination": "01d88026-0908-174c-d940-e395dab05e4e"
+      "pagination": "01d88026-0908-174c-d940-e395dab05e4e",
+      "paginationProbeBlock (hidden in flow with fk-sr-only, user to delete)": "3ddd2d05-2aae-98a1-64cd-8274e030bf33",
+      "postsEmptyState": "c0fd93a2-7900-f11b-6985-eea7b7160c5e (DynamoEmpty), block ...5f, button instance 4a78429f-44b4-66a4-6699-4fd3e6420d16"
     },
     "/categories (Categories template)": {
       "pageId": "6abc6c8adc4bd2e2066e91ea",
@@ -738,7 +751,8 @@
       "postsWrapper": "54cd20a7-ffa1-9f5f-9cec-1073823bec7d",
       "postsItem": "54cd20a7-ffa1-9f5f-9cec-1073823bec7f",
       "postCardInstance": "79cf1f92-0370-0928-e4d9-eb374fa37c79",
-      "pagination": "a03fc471-3577-4e32-4acb-545a09cbddd9"
+      "pagination": "a03fc471-3577-4e32-4acb-545a09cbddd9",
+      "postsEmptyState": "54cd20a7-ffa1-9f5f-9cec-1073823bec80 (DynamoEmpty), block ...81, button instance 5a4c9963-6311-b023-cecc-0499bd7f1eca"
     },
     "/blog/{slug} (Posts template)": {
       "pageId": "6abc6c9673c0a3345b7a94bd",

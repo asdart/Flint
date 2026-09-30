@@ -2,8 +2,17 @@
    Site custom CSS, never pushed as classes. The blur's resting value lives here instead of on
    `.fk-blur-reveal`: custom code doesn't run in the Designer, so the canvas and Preview show the
    content unblurred, while the live site blurs it until ix-blur-reveal adds `is-revealed`. Opacity
-   and the 16px rise are IX3 (a FromTo in ix-blur-reveal), not CSS. */
+   and the 16px rise are IX3 (a FromTo in ix-blur-reveal), not CSS. Reduced motion (decision D-30):
+   the class's filter transition is switched off so the blur never plays; the selector is
+   `:root .fk-blur-reveal[class]` (0,3,0) to beat the `is-delay-*` combos, which set their own
+   `transition` shorthand. */
 
 .fk-blur-reveal:not(.is-revealed) {
   filter: blur(16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root .fk-blur-reveal[class] {
+    transition: none;
+  }
 }

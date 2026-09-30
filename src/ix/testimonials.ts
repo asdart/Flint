@@ -116,13 +116,13 @@ function animateTo(
 type CardHover = { close: () => void; cleanup: Cleanup };
 
 /** Hover opens the card only while `isCurrent()` is true; leaving always closes it. */
-function setupCardHover(card: HTMLElement, isCurrent: () => boolean, reduceMotion: boolean): CardHover {
+function setupCardHover(card: HTMLElement, isCurrent: () => boolean): CardHover {
   const quote = card.querySelector<HTMLElement>(".fk-testimonial-card-quote");
   const scrim = card.querySelector<HTMLElement>(".fk-testimonial-card-scrim");
   const animations = new Set<Animation>();
 
   const setOpen = (open: boolean) => {
-    const duration = reduceMotion ? 0 : HOVER_MS;
+    const duration = HOVER_MS; // also under reduced motion (D-30)
     if (quote) {
       const height = getComputedStyle(quote).height;
       quote.getAnimations().forEach((animation) => animation.cancel());
@@ -184,7 +184,7 @@ function setupTestimonials(root: HTMLElement): Cleanup {
   const hovers = slides.map((slide, index) => {
     const card = slide.querySelector<HTMLElement>(".fk-testimonial-card");
     return card
-      ? setupCardHover(card, () => index === current, reduceMotion)
+      ? setupCardHover(card, () => index === current)
       : { close: () => {}, cleanup: () => {} };
   });
 

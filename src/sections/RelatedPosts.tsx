@@ -10,7 +10,8 @@ type RelatedPostsProps = {
  * on Posts, same Category as the current post, current post excluded, Publish date ↓, limit 3.
  * The two nested divs mirror the Collection List Wrapper and Collection List, as in Post Grid.
  * With no other post in the category the whole section is hidden (Webflow: exception
- * x-related-empty on `[data-x-related]`).
+ * x-related-empty on `[data-x-related]`). Its Empty State in Webflow is an empty container (P-20, D-32),
+ * which the repo mirrors by rendering nothing.
  */
 export default function RelatedPosts({ post }: RelatedPostsProps) {
   const posts = relatedPosts(post);

@@ -1,9 +1,14 @@
-/* fk-pagination — numbered pagination under the post feed (Figma 5674:3979): previous / next arrows
-   (48px, `radius-xl`) around 48px round page links. The links are plain anchors to `?page=n`;
-   `w--current` marks the page being shown (semibold with an ink border; Figma only draws the
-   semibold, the border is the active state added on request) and `is-disabled` dims an arrow at either end. Phone (≤767): 40px buttons and tighter
-   gaps, so five pages fit 375px (the phone keeps numbered pages, D-16); the
-   row wraps if there are more. */
+/* fk-pagination — pagination under the post feed (Figma 5674:3979): previous / next arrows (48px,
+   `radius-xl`) around 48px round page links. On Webflow this is the native Collection List
+   pagination (`w-pagination-wrapper fk-pagination`): only the Previous / Next links that exist (no
+   arrow at either end) plus the native page count (`w-page-count`, visually hidden). The numbered
+   links are plain anchors inserted between the arrows by the registered script x-blog-pagination
+   (`?<id>_page=n` on Webflow, `?page=n` in the preview), `w--current` marks the page being shown
+   (semibold with an ink border; Figma only draws the semibold, the border is the active state added
+   on request) and `fk-pagination-gap` is the ellipsis it adds past seven pages. `is-disabled` is no
+   longer used (native pagination omits the arrow instead). Phone (≤767): 40px buttons and tighter
+   gaps, so five pages fit 375px (the phone keeps numbered pages, D-16); the row wraps if there are
+   more. */
 
 .fk-pagination {
   display: flex;
@@ -47,6 +52,14 @@
 .fk-pagination-arrow.is-disabled {
   opacity: 0.4;
   pointer-events: none;
+}
+
+.fk-pagination-gap {
+  flex: none;
+  padding: 0 var(--space-1);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-subtle);
 }
 
 .fk-pagination-page {

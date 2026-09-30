@@ -1,10 +1,12 @@
 import Button from "../components/ui/Button";
 import PostCard from "../components/ui/PostCard";
 import { latestPosts } from "../content";
+import EmptyState from "../components/ui/EmptyState";
 
 /**
  * Section / Post Grid. The two nested divs mirror Webflow's Collection List Wrapper and
- * Collection List (Posts, sorted by Published on ↓, limit 3); each role="listitem" is a Collection Item.
+ * Collection List (Posts, sorted by Published on ↓, limit 3); each role="listitem" is a Collection Item. An empty list shows
+ * the Empty State (P-20, D-32), the list's `w-dyn-empty` sibling.
  */
 export default function PostGrid() {
   const posts = latestPosts(3);
@@ -28,13 +30,21 @@ export default function PostGrid() {
                 </div>
             </div>
             <div>
-              <div className="fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4" role="list">
-                {posts.map((post) => (
-                  <div key={post.slug} role="listitem">
-                    <PostCard post={post} />
-                  </div>
-                ))}
-              </div>
+              {posts.length > 0 ? (
+                <div className="fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4" role="list">
+                  {posts.map((post) => (
+                    <div key={post.slug} role="listitem">
+                      <PostCard post={post} />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+              {posts.length === 0 ? (
+                <EmptyState
+                  title="New guides are on the way"
+                  body="Check back soon for immigration, licensing and hiring tips for healthcare workers."
+                />
+              ) : null}
             </div>
           </div>
         </div>

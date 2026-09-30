@@ -1,5 +1,6 @@
 import { useLayoutEffect } from "react";
 import { articleToc } from "./articleToc";
+import { blogPagination } from "./blogPagination";
 import { blurReveal } from "./blurReveal";
 import { cardHover } from "./cardHover";
 import { dropdown } from "./dropdown";
@@ -137,6 +138,7 @@ export function useInteractions() {
       howCarousel(),
       testimonials(),
       articleToc(),
+      blogPagination(),
     ];
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);

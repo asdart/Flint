@@ -26,7 +26,7 @@ export default function Newsletter({
   errorMessage = "Something went wrong while submitting the form. Please try again.",
 }: NewsletterProps) {
   return (
-    <section className="fk-section">
+    <section className="fk-section" id="newsletter">
       <div className="fk-panel fk-bg-brand-light is-snug">
         <div className="fk-container">
           <div className="fk-flex fk-items-center fk-justify-center fk-gap-16 fk-flex-col-tablet fk-gap-6-tablet">

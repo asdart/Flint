@@ -27,9 +27,16 @@ function withRefs(post: Post): PostWithRefs {
   return { ...post, authorItem: findAuthor(post.author), categoryItem: findCategory(post.category) };
 }
 
+/** Preview only (dev server): `?empty=1` makes every Collection List come back empty so the empty
+ *  states (roadmap P-20, D-32) can be seen. Not part of the Webflow build, stripped from production. */
+export function previewEmpty(): boolean {
+  return import.meta.env.DEV && typeof window !== "undefined" && new URLSearchParams(window.location.search).has("empty");
+}
+
 /** Mirrors a Webflow Collection List on Posts, sorted by "Publish date" descending. Drafts are
  *  never listed on the live site, so they're skipped here too. */
 export function latestPosts(limit: number): PostWithAuthor[] {
+  if (previewEmpty()) return [];
   return posts
     .filter((post) => !post.isDraft)
     .sort((a, b) => b["publish-date"].localeCompare(a["publish-date"]))
@@ -47,6 +54,7 @@ export function categoryBySlug(slug: string): Category | undefined {
 
 /** The blog hero's Collection List: Posts filtered to Featured, limit 1. */
 export function featuredPost(): PostWithRefs | undefined {
+  if (previewEmpty()) return undefined;
   const post = posts.find((item) => item.featured && !item.isDraft);
   return post ? withRefs(post) : undefined;
 }
@@ -55,7 +63,7 @@ export function featuredPost(): PostWithRefs | undefined {
  *  page. Webflow's native pagination is `?<id>_page=n`; the preview uses `?page=n`. */
 export function postPage(categorySlug: string | undefined, page: number) {
   const listed = posts
-    .filter((post) => !post.isDraft && (!categorySlug || post.category === categorySlug))
+    .filter((post) => !previewEmpty() && !post.isDraft && (!categorySlug || post.category === categorySlug))
     .sort((a, b) => b["publish-date"].localeCompare(a["publish-date"]));
   const totalPages = Math.max(1, Math.ceil(listed.length / POSTS_PER_PAGE));
   const current = Math.min(Math.max(1, page), totalPages);
@@ -74,6 +82,7 @@ export function postBySlug(slug: string): PostWithRefs | undefined {
  *  excluded, Publish date descending, limit 3. Empty when the category has no other posts; the
  *  post page then hides the section (roadmap D-02, D-22). */
 export function relatedPosts(post: Post, limit = 3): PostWithAuthor[] {
+  if (previewEmpty()) return [];
   return posts
     .filter((item) => !item.isDraft && item.category === post.category && item.slug !== post.slug)
     .sort((a, b) => b["publish-date"].localeCompare(a["publish-date"]))

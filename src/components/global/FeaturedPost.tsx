@@ -5,7 +5,7 @@ import SmartLink from "../../lib/SmartLink";
  * Global / Featured post. Built by the user in the Designer (2026-09-30), mirrored here 1:1: a Collection
  * List of Posts (Featured on, limit 1) inside a component, which only the Designer could build. No props.
  * The wrapper, list and `role="listitem"` divs mirror Webflow's Collection List Wrapper, Collection List
- * and Collection Item; the "No items found." block is its empty state. The post's title is an `h2`
+ * and Collection Item; its empty state is an empty container (P-20, D-32): with no featured post the slot collapses. The post's title is an `h2`
  * (the page's `h1` belongs to the hero above it). Used by Blog Hero, on /blog and the category template.
  */
 export default function FeaturedPost() {
@@ -60,8 +60,8 @@ export default function FeaturedPost() {
         ) : null}
       </div>
       {post ? null : (
-        <div>
-          <div>No items found.</div>
+        <div className="w-dyn-empty">
+          <div />
         </div>
       )}
     </div>

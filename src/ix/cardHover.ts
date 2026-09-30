@@ -1,7 +1,7 @@
 /*
  * ix-card-hover preview: hovering a `.fk-card` tweens its background, title and text (300ms, legacy
  * ease) and adds `is-inverse` to its icon, whose filter transition turns it white. Reduced motion
- * switches instantly.
+ * plays the same tween: a hover is user-initiated, and IX3 can't skip a hover (decision D-30).
  */
 
 type Cleanup = () => void;
@@ -14,7 +14,6 @@ function token(name: string) {
 
 export function cardHover(): Cleanup {
   const cards = Array.from(document.querySelectorAll<HTMLElement>(".fk-card"));
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const cleanups = cards.map((card) => {
     const title = card.querySelector<HTMLElement>(".fk-card-title");
@@ -27,7 +26,7 @@ export function cardHover(): Cleanup {
       const style = getComputedStyle(element) as unknown as Record<string, string>;
       const from = Object.fromEntries(Object.keys(to).map((key) => [key, style[key]]));
       element.getAnimations().forEach((animation) => animation.cancel());
-      element.animate([from, to], { duration: reduceMotion ? 0 : 300, easing: EASE, fill: "forwards" });
+      element.animate([from, to], { duration: 300, easing: EASE, fill: "forwards" });
     };
 
     const set = (hovered: boolean) => {

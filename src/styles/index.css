@@ -24,6 +24,7 @@
 @import "./exceptions/x-article-body.css";
 @import "./components/dropdown.css";
 @import "./components/pagination.css";
+@import "./exceptions/x-blog-pagination.css";
 @import "./components/input-field.css";
 @import "./components/newsletter.css";
 @import "./components/logo-marquee.css";
