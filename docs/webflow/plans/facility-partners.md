@@ -1,0 +1,119 @@
+# Facility partners (`/facility-partners`): Figma pre-plan
+
+Source: Figma file `bFJIQUAnqKd2ueYqsV8rRd`, frame `facility-partners` = `5543:1164` (desktop, 1440 x 7598). Read 2026-09-30 with get_metadata, get_screenshot and get_design_context (copy and form). Anything marked (inferred) is my reading, not stated in Figma.
+
+**No tablet or mobile frames exist for this page.** The only canvas in the file is "Brand assets" and its top-level frames hold no sibling named facility-partners / tablet / mobile. All breakpoint notes below are therefore inferred from the registry's existing responsive patterns. No annotations, prototype notes or motion specs were found in the frame (only layer names, see section 3). I could not download screenshots (proxy blocks figma.com), so the layout was read from metadata plus the inline overview render.
+
+## 1. Sections in order
+
+Page order: Hero, Clients, stats, "Why facilities trust Flint" (3 illustrated rows), "Built for the modern facility" (3 cards), Testimonials, Application form, Footer. The hero contains the Nav.
+
+| # | Figma name / node | Height | Description and key copy |
+| --- | --- | --- | --- |
+| 1 | Hero `5543:1165` (inner Container `5543:1166`) | 880 | Full-bleed photo card (a wide lobby image "Timeline Editor 1 1" `5746:747`, 1508 wide, cropped) with dark Overlay `5543:1167`. Centered 436px text block. H1 "Find Top / Healthcare Talent"; body "Connect with 100,000+ vetted candidates. We simplify staffing for hospitals, clinics, and care facilities."; white pill button "Apply now". The Nav is drawn inside the card: Wordmark, links Services / Candidates / Facility partners / About / Blog, button "Apply now". A hidden `Background` frame `5543:1168` (ellipse + "image 10") is off. |
+| 2 | Clients `5543:1187` | 100 | Label "Partnering with the top facilities" (left) + "Section 03 — LogoMarquee (auto-scrolling)" `5543:1190`: one row of 6 logos (`image 30/31/32/34/35/36`), with Edge fade left and right (128px). |
+| 3 | stats `5543:1200` | 380 | Rounded light panel, 3 stats centered: "200+" Partner facilities, "23" States supported, "100,000" Vetted candidates. No section title. |
+| 4 | "faq-section" frame `5594:26787` > `5594:26788` (misnamed, it is not an FAQ) | 2692 | Header `5594:26789`: "Why facilities / trust Flint", sub "Get answers to common questions about our Green Card pathway, candidate vetting, and healthcare placement process." (this sub is FAQ copy carried over from the legacy file, see section 6). Then three alternating split rows (1200 wide, 696 tall, art 580 + text 480), each a cream/brand-light art card with an illustration, plus heading + body: **Row 1** `5594:26792` art left, "A stable team of familiar faces"; **Row 2** `5594:26851` art right, "Reduced staffing costs"; **Row 3** `5594:26877` art left, "Guaranteed retention". Body for all three is the legacy copy (same as legacy `FacilityHowItWorks`). |
+| 5 | Benefits `5543:1212` > `5543:1213` | 744 | Header `5543:1214`: "Built for the / modern facility", sub "Experience a partnership that prioritizes quality, reliability, and human support." Three white cards (394 x 296, icon 32px top-left, title + body at bottom): "Matched to the right hospital" / "Every clinician on our platform undergoes a rigorous 5-step credentialing and background check process."; second and third cards carry the same placeholder title "Matched to the right hospital" (layer text) with body "From per-diem shifts to long-term travel contracts and permanent placements, manage it all in one place." and "Your facility is assigned a dedicated account manager to assist with technical support and staffing strategy." Icons: a check-in-circle, a person/calendar, a support figure (screenshot, inferred). |
+| 5b | **HIDDEN** `5543:1279` (`Frame 2147242283`, hidden=true) | 744 | An older "Benefits" card-grid holding "Guaranteed retention", "Reduced staffing costs", "A Stable team of familiar faces" (the legacy WhyFacilities cards). Hidden in the final frame, i.e. dropped from the design. |
+| 6 | Testimonials `5543:1321` > `5543:1322` | 814 | Horizontal row of 360 x 536 white cards, 8px gap; 15 cards in the frame (`5899:3624` first) running off the right edge, so this is a carousel/slider. Each: quote (serif), 52px square photo, name, role + org. First: "We serve both military and civilian patients and previously faced high turnover rates, which made maintaining a reliable workforce challenging. Flint provided a solution by filling 12 critical roles with committed, full-time professionals." Sarah Jennings, Operations Manager, Metro General Hospital. Then Michael Thompson (HR Director, Coastal Health System), Emily Chen, Richard Martin, Jessica Lee, and 10 more. Dots row `5899:3673` below (5 dots: 1 active bar + 4 dots; 84 x 6). No section title. |
+| 7 | nurse-application-step-1 `5543:1330` > Main `5543:1331` | 1180 | Tertiary panel with the large ring background (`Background` `5543:1332`, 1855 ellipse + "image 10" purple texture) and a centered white `ApplicationCard` `5543:1335` (710 x 972, radius 24, padding 40). Title "See if your facility qualifies", sub "Fill out the form below and a member of our team will reach out within one business day." Fields in section 4. Button-Primary "Submit form". The frame name is a leftover ("nurse-application-step-1"). |
+| 8 | Footer `5543:1354` > footer-desktop `5543:1355` | 808 | Brand-color panel: CTA "It's time to find your / green card sponsor." sub "Apply now, it is free." white button "Apply now"; links grid Institutional (For nurses, For facilities), Resources (Blog, Webinars, About us, Brand, Careers), Social (Instagram, LinkeDin [sic], TikTok, Facebook, X), Legal (Privacy, Terms, Cookie settings); bottom bar Wordmark + "© 2026 Flint. All rights reserved." |
+
+## 2. Mapping to the registry (`docs/webflow/components.md`)
+
+| # | Maps to | Status | Variant / change needed | Breakpoint notes (inferred) |
+| --- | --- | --- | --- | --- |
+| 1 Hero | `Section / Hero` | Home variant `migrated`; **Facility Partners variant `to do`** | New variant, and probably a different structure (photo + overlay, no arc wheel), so per the registry's own rule ("a variant can't change the structure", see Blog Hero) treat it as page-level markup or a new sibling section, not a variant of the Home component. Reuses `Global / Nav`, the `is-hero` panel shell and a Primary/Secondary `UI / Button` instance (the white pill is the Secondary look, not Primary). The hero is an image, `hero.png` and `hero.mp4` exist (see section 5), the Figma shows a still. The Nav is drawn inside the card, same as Home. | Text block narrow (436px), will centre on all sizes. Card radius and height shrink on phones like the Home hero (needs the designer's mobile frame). |
+| 2 Clients | `Section / Logo Marquee` | `migrated` (a **component**, D-17, already earmarked "reused on Facility partners") | Reuse as is. Differences: Figma shows 6 logos in one row with edge fades; the component has 3 rows x 6 logos for the loop (row 1 real, rows 2-3 `aria-hidden`), which matches. Check the logo set against Home (same 6 files assumed). | Label above/beside logos; on phones the label stacks over the marquee (inferred). |
+| 3 stats | `Section / Stats Band` | `migrated` as **Large** only (brand-light panel, title + 4 stats); **Default `to do`** | Figma shows a untitled band with **3** stats. Needs either a "Default" variant (no title, 3 stats) or a "Large without title" option. `UI / Stat` variants: Large migrated, Default `to do`. Uses `ix-count-in`. Suffix "+" only on 200. Note P-07 (number animates as a whole). | 3 stats stack to 1 column on phone (inferred). |
+| 4 Why facilities trust Flint | **NEW**: a media-split row pattern. The closest registry items are `Section / Media Split` (`legacy`, Image Right / Image Left) and `Section / How It Works` (Facilities variant `to do`). | `to do` | This is the legacy `FacilityHowItWorks` content, so the registry Pages row "How It Works (Facilities)" is actually this section (three alternating rows with illustrations), not a carousel like Home's How It Works. Recommend: one `Section / Media Split` (Image Left / Image Right) used three times inside a "Why facilities" header, each art card holding a static illustration. Decide with the owner whether it is a Media Split variant or its own section (see open questions). | Two columns to a stacked column (art above text) on tablet/phone (inferred). |
+| 5 Built for the modern facility | **`ModernFacility`**, registry row "To classify (P-03)" | `legacy` | See the P-03 note below: a Feature Grid variant. Needs a "Benefits" variant of `Section / Feature Grid` (registry: "`Benefits` to do"): 3 Service Cards (Default, with icon) in a tertiary/cream panel. Service Card markup pattern already exists. Icons exist (`icon-verified/flexible/support.svg`). | 3 columns to 1 column on phone (inferred, as Feature Grid's 6-card grid does). |
+| 5b hidden cards | **`WhyFacilities`**, registry row "To classify (P-03)" | `legacy` | Dropped: hidden in the final frame. Its three titles survive only as the three rows of section 4. | none |
+| 6 Testimonials | `Section / Testimonials` + `UI / Testimonial Card` | `migrated` (Slider, a component) | The Pages row says "Testimonials (Single)". The design shows a **multi-card slider with dots**, not a single testimonial, so **Single is not needed**. But the card design differs from Home's card (Home: photo-led card with flag, hover-to-open, center-weighted 3-up carousel). Figma here is a flat 360 x 536 white card: quote, small photo, name, role. So either a new card variant of `UI / Testimonial Card` ("Text"), or a new variant of the section. `ix-testimonials` moves the track by 340.8px per step with center scaling and would not match the flat 368px step; needs tuning or a new variant. No section title (Home has one). | Card width 360 (~1 column visible on phone, inferred). |
+| 7 Apply form | `Section / Apply Form` | `legacy` | `to do`. Uses `UI / Input Field` (Medium 40px, `migrated`; label shown **above** the field here, but the component's Label is visually hidden and the design shows only a placeholder, so this needs a visible-label option) and native Form Select for the roles, a textarea (the Input Field covers only input types) and the Primary `UI / Button` full-width. The phone field needs the country prefix (markup only today, see the Input Field row). Panel = ring background (legacy file already masks `apply-ring-mask.svg` with `how-bg-purple.png`). | Card 710 max; padding 40 to 24 on phones; name rows (2 columns) stack below ~640px (inferred from legacy). |
+| 8 Footer | `Global / Footer` | `migrated` | **Copy differs:** registry default is "Find the right green card / sponsored role for you." and "It's free to apply and takes under a minute."; Figma here has "It's time to find your / green card sponsor." and "Apply now, it is free." Both props (CTA Title / CTA Body) are already overridable. Link columns in Figma match a 4-column grid; the registry footer has 4 titles + 15 links (same count). | already responsive |
+
+**What the design implies for P-03.** `ModernFacility` survives and is a plain 3-card grid with a centered title and sub: make it the **`Benefits` variant of `Section / Feature Grid`** (option (a)), which the roadmap already lists as Feature Grid's next variant (Candidates uses `Benefits` too). `WhyFacilities` does **not** survive: its hidden frame `5543:1279` is marked hidden and the same three messages appear as the illustrated rows (section 4). So close P-03 as: ModernFacility = Feature Grid variant; WhyFacilities = deleted (no section needed), with the illustrated rows handled as Media Split / How It Works (Facilities). Suggest noting the Feature Grid Benefits cards here are white on a tertiary panel while Home's cards are on a secondary panel; panel color is a utility/background choice.
+
+## 3. Motion and illustrations
+
+No prototype links, annotation nodes or motion specs exist in the frame. What is visible:
+
+- **Hero**: still image. Layer names suggest a video or a large still, and `hero.mp4` exists (see 5). No animation is drawn. Text probably uses `ix-blur-reveal` (the Home hero's pattern).
+- **Clients** `5543:1190`: named "LogoMarquee (auto-scrolling)": `ix-marquee` (migrated, 32s loop, reduced motion off). The edge fades are static overlays (128px).
+- **stats**: `ix-count-in` (migrated; digit-by-digit dropped, P-07).
+- **Three illustrated rows** (the only real illustrations):
+  1. `5594:26794` "network": a circle hub ("Ellipse 39" with an icon frame `5594:26817`) ringed by 8 avatar circles at the compass points, with 8 short connector lines. Static in Figma. The legacy `NetworkIllustration` animates it (avatars appearing around the hub).
+  2. `5594:26862` "cost savings": a white chart card "Agency Costs" with a descending line (two vectors), dots at both ends, "Saved this month $60,000" and a green chip "60%"; two stacked rounded rectangles behind it, on a big purple swoosh (the ring background). Legacy `CostSavingsIllustration` animates the line drawing and the counter.
+  3. `5942:4202` + `5942:4340` "retention": a "Hired Candidates" card ("2 total", rows Charlette Nono / Eizle with an avatar and a country flag each), a connector line with a small badge, and a facility card (map screenshot `5943:4395`, "Sandstone Healthcare Center, 109 Court Ave S, Sandstone, MN 55072, Estados Unidos").
+  All three are static compositions in the final Figma. The animation of the legacy versions is **not** confirmed by the design; per `interactions.md` → Illustrations / roadmap P-04, phase 4 uses static SVGs first. The scroll-in trigger would be `ix-illustration-play` (legacy row, Lottie, not built) or simple `ix-reveal` / `ix-reveal-stagger` for the avatars (a cheap native option for illustration 1: reveal-stagger on the 8 avatars).
+- **Testimonials**: a slider with pagination dots. `ix-testimonials` (autoplay, dots, hover pause) could cover the behaviour but its geometry (center-weighted, 340.8px step, scaled cards) is tuned to Home's cards, so this needs a variant/new timeline (new `ix-*` or a native Webflow Slider, which `interactions.md` lists as the native replacement for the testimonial paging). Decision needed.
+- **Benefits cards**: `ix-card-hover` / `ix-reveal-stagger` as on Feature Grid (inferred).
+- **Form**: native Webflow form states; no animation.
+
+## 4. Forms
+
+Card `5543:1335`, title "See if your facility qualifies". Fields in order (label above, placeholder inside, all 40px, radius 12, 20px column gap, 24px row gap):
+
+1. Your title: "Director of nursing" (text)
+2. First name: "Maria" / Last name: "Xavier" (two columns)
+3. Email address: "maria@facility.com" (email) / Phone number: country prefix (US flag + chevron), no placeholder text (tel)
+4. Facility name: "Sunrise Care Center" (text)
+5. Facility type: "Skilled nursing" (text in the placeholder; drawn as a plain input, **a select is likely intended** since the legacy file has it as plain text too)
+6. What type of roles are you looking to fill?: "Select all that apply" with a chevron (multi-select; legacy options RN, CNA, LPN, Allied Health)
+7. Anything else we should know?: textarea 160px, "Share staff goals, timeline, shift coverage needs, or anything helpful..."
+8. Button "Submit form" (Primary, full-width, pill).
+
+Required flags, validation, success/error states and the destination are **not** in the design. Per roadmap **P-05 (decided for now, D-29)**, submissions stay in Webflow's form inbox; integrations later; live submit untested (Turnstile on). Webflow's native select has no multi-select: "Select all that apply" needs either checkboxes in a dropdown (custom) or a native select with one choice (open question).
+
+## 5. Assets
+
+`public/assets/facility/`: `hero.png`, `hero.mp4`, `facility-01..05.png`, `testimonial.png`, `apply-ring-mask.svg`, and six icons `icon-verified`, `icon-flexible`, `icon-support` (used by Benefits), `icon-costs`, `icon-retention`, `icon-team` (legacy WhyFacilities, no longer used). Also existing: `assets/how-it-works/` (hub-people.svg, chart-fill.svg, chart-stroke.svg, retention-avatar-charlette/eizle.png, retention-facility.png, retention-map.png, retention-flag-angola/mexico.svg, retention-connector.svg, retention-divider.svg, arrow-down.svg), `assets/avatar-01..19.png`, `assets/network/hub-icon.svg`, `assets/home/how-bg-purple.png`, `assets/flags/*.svg`, `assets/testimonial-photo-1..3.webp`, `assets/stats-bg.png`.
+
+Likely present (inferred from names and legacy usage, not compared to pixels): the hero still (`hero.png`; the Figma image is a wide lobby photo, confirm it is the same), the partner logos used by Logo Marquee, the illustration pieces for rows 2 and 3 (how-it-works files) and row 1's avatars and hub icon, the 3 Benefits icons, the ring texture for the form.
+
+Probably **missing**: the testimonial photos (15 different 52px portraits; only `testimonial.png` and 3 `testimonial-photo-*.webp` exist, Home's 7 testimonial photos live elsewhere), the US flag + chevron for the phone prefix (markup exists), 10 of the 15 testimonial quotes are new copy (legacy had one). The retention illustration uses a screenshot image ("Screenshot 2026-08-30 ..." `5943:4395`), which suggests `retention-map.png` should be re-checked. No asset of the hidden `Background` frame is needed. Figma assets cannot be downloaded from the current proxy, so exports must be fetched with `download_assets` or by the user.
+
+## 6. Differences
+
+**Versus the legacy page** (`FacilityPartnersPage.tsx`: Hero, Clients, FacilityStats, FacilityHowItWorks, ModernFacility, FeaturedFacilities, WhyFacilities, FacilityTestimonial, FacilityApply, Footer):
+
+- **Removed**: `FeaturedFacilities` ("Join these leading facilities" + 5 facility cards + Apply button) and `WhyFacilities` (hidden in Figma). Therefore **`Section / Facility Grid` is not needed on this page**; it is `legacy` in the registry and unused here.
+- Order changed: legacy had How It Works, ModernFacility, Featured, Why, Testimonial; Figma has the illustrated "Why facilities trust Flint" rows, then "Built for the modern facility", then testimonials.
+- Testimonials: legacy was a single quote (Sarah Jennings); Figma is a slider of 15 cards (the first is still Sarah Jennings).
+- Stats and Clients: same copy and values (200+, 23, 100,000; "Partnering with the top facilities").
+- Hero: same heading and body copy as legacy. The layout is a photo card with the Nav inside (legacy had a video/image hero: `hero.mp4`).
+- Form: same fields and copy as legacy; Figma shows visible labels above the fields (legacy label is 14px; Figma 12px subtle) and "Submit form".
+- Footer CTA copy differs from the registry default (see 2-8).
+- The "Why facilities" subtitle is legacy copy about "common questions ... Green Card pathway" which reads like leftover FAQ text (inferred); the frame is also called "faq-section".
+
+**Versus the current Pages-table row** ("Hero (Facility Partners), Logo Marquee, Stats Band, How It Works (Facilities), `ModernFacility` (to classify), Facility Grid, `WhyFacilities` (to classify), Testimonials (Single), Apply Form"):
+
+Proposed replacement row: Hero (Facility Partners), Logo Marquee, Stats Band (Default, 3 stats), Media Split x3 under a "Why facilities trust Flint" header (replaces "How It Works (Facilities)"), Feature Grid (Benefits) (replaces `ModernFacility`), Testimonials (Slider, text-card variant) (replaces Testimonials (Single)), Apply Form. Drop Facility Grid and `WhyFacilities`. Footer stays global.
+
+## 7. Proposed build order
+
+- [ ] Close P-03 in `roadmap.md`: ModernFacility becomes Feature Grid `Benefits`; WhyFacilities deleted; update the components.md row and the Pages row.
+- [ ] Feature Grid `Benefits` variant (shared with Candidates): 3 cards, 3 icons (files exist). Check the placeholder card titles first (open question 1).
+- [ ] Stats Band `Default` (3 stats, no title) + `UI / Stat` Default.
+- [ ] Hero (Facility Partners): confirm component vs. page markup; Secondary-look "Apply now" button; hero image.
+- [ ] Logo Marquee: reuse the component on the page (no work beyond placing it).
+- [ ] Media Split (Image Left / Image Right) and the three static illustrations (SVG/PNG from existing how-it-works and avatar files). Animations later (P-04).
+- [ ] Testimonials: decide native Slider vs. `ix-testimonials` variant; card variant "Text"; gather 15 photos and copy.
+- [ ] Apply Form: visible-label Input Field option, textarea, select / multi-select, phone prefix, success and error messages; Webflow form inbox (P-05).
+- [ ] Compose the page in Webflow; link Nav "Facility partners" (both bar and menu) as a page link, update `w--current` check.
+- [ ] Footer copy props (title/body) for this page; page settings (title, meta description, OG): none exist for this page in the repo, propose them.
+- [ ] Tablet and mobile pass once the designer supplies frames; then remove the legacy files with user confirmation.
+
+### Open questions for the designer / owner
+
+1. Benefits cards: all three titles read "Matched to the right hospital" in the Figma layers (only the first has matching body copy: "Verified Talent" in legacy). Final titles? (Legacy: Verified Talent, Flexible Staffing, Dedicated Support.)
+2. Is WhyFacilities (hidden frame `5543:1279`) definitely dropped? Is the "Why facilities trust Flint" subtitle (FAQ wording) final?
+3. Are the three illustrations meant to animate? If yes, which (legacy has Framer Motion versions), and who produces Lottie or IX timelines (P-04)? Otherwise static at launch.
+4. Testimonials: autoplay carousel like Home, or manual slider with dots? Final list of quotes, names, roles and 15 portrait images? Is there a section title (none drawn)?
+5. Hero image or video? Hero CTA "Apply now" target: scroll to the form (`#apply`) presumably.
+6. Form: which fields are required, what are the Facility type options (dropdown?), and is "Select all that apply" a real multi-select? Phone country picker needed (Webflow has none)? Where do submissions go long term (P-05) and what is the success message?
+7. Tablet and mobile frames for this page (none in the file).
+8. Footer CTA copy: is "It's time to find your green card sponsor." specific to this page (it reads like a candidates message on a facility page) or the new site-wide default? Also "LinkeDin" typo in the footer link label.
+9. Hero H1 "Find Top Healthcare Talent" is unchanged from legacy; confirm the Nav order/labels (Figma shows a "Services" link that the registry Nav does not have: Home, Candidates, Facility partners, About, Blog).
