@@ -208,7 +208,7 @@ Home Post Grid 898px at 1440 on staging (= the repo, the old "950 / 91px" mismat
 
 **Open, to do (Designer unless noted):**
 
-- [ ] **Image `width` / `height` by hand.** The MCP can't set them (`set_attributes` and `set_settings` refuse them). Where: Designer,
+- [x] **Image `width` / `height` by hand.** **Done by the user in the Designer 2026-09-30 (Home, blog, the two wrong values fixed); staging read-back of the attributes pending.** From now on AGENTS.md rule 15 (1.10) requires them, with alt, on every image placed. The MCP can't set them (`set_attributes` and `set_settings` refuse them). Where: Designer,
       select the Image element, open its settings (double-click it, Enter, the cog in the element panel, or `D`), fill **Image width** and
       **Image height** (the HTML attributes; the Style panel's Width/Height is CSS). Keep the CSS (`width: 100%; height: auto`,
       `object-fit`), the browser only uses the numbers for the ratio. Values are the file's intrinsic size = the repo markup
@@ -221,7 +221,7 @@ Home Post Grid 898px at 1440 on staging (= the repo, the old "950 / 91px" mismat
       `width="1459" height="800"` (file is 1400 × 659; clear or set 1400 × 659, the CSS ratio covers layout shift) and every Post Card
       image has `width="Auto"` (invalid; clear the field). Home: about 140 images still carry none
 - [ ] **P-17** default OG image (1200 × 630) for Home, `/blog`, Categories (`update_page_settings` `openGraph.imageAssetId`). Later
-- [ ] **P-19** (closed as D-31, built 2026-09-30; **diagnosed 2026-09-30 after the 21:33 UTC publish: the numbers don't show because the native Page count element doesn't exist on either pagination (no `w-page-count` in the MCP tree or in staging's HTML); the script, its `<style>` and the publish are all fine; turn on Page count as below**) **user:** in the Designer turn on **Page count** on the Pagination of `/blog` and the Categories template and style it `fk-sr-only`, delete the hidden "PROBE - delete me (P-19)" block on `/blog`; then **check on staging after the publish** (the numbers appear and link, the current page is bold with the ink border, `aria-label` is "Pagination", a one-page category shows no wrapper, list-to-pagination gap 32); tick then
+- [ ] **P-19** (**Designer part done 2026-09-30: `PaginationCount` with `fk-sr-only` on `/blog` and the Categories template, probe block gone (MCP read-back); only the staging check below is left.** Closed as D-31, built 2026-09-30; **diagnosed 2026-09-30 after the 21:33 UTC publish: the numbers don't show because the native Page count element doesn't exist on either pagination (no `w-page-count` in the MCP tree or in staging's HTML); the script, its `<style>` and the publish are all fine; turn on Page count as below**) **user:** in the Designer turn on **Page count** on the Pagination of `/blog` and the Categories template and style it `fk-sr-only`, delete the hidden "PROBE - delete me (P-19)" block on `/blog`; then **check on staging after the publish** (the numbers appear and link, the current page is bold with the ink border, `aria-label` is "Pagination", a one-page category shows no wrapper, list-to-pagination gap 32); tick then
 - [ ] **P-20** empty state for the Collection Lists (closed as D-32, done on Webflow and in the repo 2026-09-30; **check on staging after the next publish**: an empty state is hard to see live because every list has posts. In the Designer, open each page, select the Collection List and use the Empty State view (or temporarily set a filter that matches nothing, e.g. Featured `isOff` on Home Post Grid, and undo it after), then compare with the repo at `?empty=1`: Home, `/blog` (Subscribe scrolls to `#newsletter`), a category (All articles goes to `/blog`), Featured slot collapsed, Related section hidden; tick then)
 - [ ] **P-21** hover interactions under reduced motion (closed as D-30, done on Webflow and in the repo 2026-09-30; **check on staging after the next publish**: with `reducedMotion: 'reduce'` (new context) the service card turns brand and the testimonial quote opens on hover, and a `.fk-blur-reveal` has `transition-duration: 0s` with no blur frames after load; tick then)
 - [ ] **Schema:** P-14 (`FAQPage` on posts), `x-schema-post` (draft in `docs/webflow/custom-code/post-template-head.html`, waits on P-14 and
@@ -235,12 +235,12 @@ Home Post Grid 898px at 1440 on staging (= the repo, the old "950 / 91px" mismat
       (the repo sends the longhands; same computed CSS; either ignore or resend the longhands and remove `overflow`), the stray empty chain
       `.fk-grid.fk-cols-3.fk-cols-2-tablet.fk-cols-1-mobile.fk-gap-4` (Webflow's auto combo), `.fk-button._w-button` and
       `.fk-input-field-input._w-input` (Webflow's auto combos for its native `w-*` classes). `webflow-diff.mjs --unregistered` lists them
-- [ ] **Category featured list** has a stray empty filter (`name equals ""`) next to `featured isOn`: harmless today, fragile; ask the
+- [x] **Category featured list** (user deleted the filter in the Designer 2026-09-30; the MCP reads `filters: []` either way, so confirm on the published page) had a stray empty filter (`name equals ""`) next to `featured isOn`: harmless today, fragile; ask the
       user to delete it in the Designer (the MCP reads `filters: []` for Designer bindings, verify on the published page)
 - [ ] **Unverified rules, need real data:** `x-related-empty` on a real empty Related list (all 28 published posts show 3 related cards, so
       none exists; only the simulated case passed), and the `blockquote`, `figure`, `img`, `figcaption` rules of `x-article-body` (no post
       body has any). Re-check when a post or a filtered list triggers them
-- [ ] **Newsletter live submit:** the form works through a stubbed network (handler, success block), but a real submission is
+- [x] **Newsletter live submit:** done by the user 2026-09-30 on staging, success shown and the submission is in Webflow's form inbox. the form works through a stubbed network (handler, success block), but a real submission is
       pending: Webflow's Turnstile bot protection is on (the submit stays disabled until the challenge passes, so it must be done by a
       person in a real browser); the user or the future integration (P-05) does it once. Check the form appears in Webflow's inbox
 - [ ] **Dropdown:** native Webflow behaviour leaves the list open after Tab moves focus out of the last link (click, Escape and outside

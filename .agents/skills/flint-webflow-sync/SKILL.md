@@ -225,7 +225,9 @@ Run it for every page or template you build or change (`AGENTS.md` rule 15, deta
 - **Schema:** `FAQPage` through `jsonLdSchema` on pages with an FAQ block, built from the same
   copy. Site and post schema only through `x-schema-site` / `x-schema-post`.
 - **Images:** upload resized WebP (`npm run webp -- <files> --width <2× the largest rendered width>`,
-  `seo.md` S-10); `width` and `height` on every image; lazy below the fold, eager
+  `seo.md` S-10); `width` and `height` on every image (on Webflow: the Designer's Image width /
+  height on static images, filled by the user every time an image is placed, AGENTS.md rule 15; the
+  MCP can't set them, so list each placed image with its size for the user); lazy below the fold, eager
   for the hero; alt text per `seo.md` S-16 (logos: facility name, people: their name, decorative:
   empty inside `aria-hidden` art).
 - **Controls:** icon-only buttons get an `aria-label`; hit areas at least 24 × 24 px.

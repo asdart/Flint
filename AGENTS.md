@@ -4,7 +4,8 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.9 (2026-09-30). 1.9: the Rich Text descendant rules (`.fk-article-body <tag>`) are the custom-code
+- **Contract version:** 1.10 (2026-09-30). 1.10: every Image added in Webflow gets its alt text and, if static, the Designer's
+  Image width / height (rule 15). 1.9: the Rich Text descendant rules (`.fk-article-body <tag>`) are the custom-code
   exception `x-article-body` (roadmap D-25, `src/styles/exceptions/x-article-body.css`, installed in the Posts template head),
   replacing 1.8's Designer nested styles (D-20 amended). 1.8 added Rich Text descendant rules (roadmap D-20,
   [`classes.md`](docs/webflow/classes.md)), the one exception to one selector per rule. 1.7 adds the mixed section model (rule 6, §3, §4, roadmap
@@ -118,6 +119,12 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
     [`seo.md`](docs/webflow/seo.md): page settings (title, description, OG), schema, image sizes,
     formats and lazy loading, alt text, labelled icon buttons, 24px tap targets. Tracking and
     schema code only through their registered exceptions.
+    **Every time an Image is added to a page or component in Webflow**, fill its alt text and, on a
+    static image, the Designer's **Image width** / **Image height** (image settings: double-click, Enter,
+    the cog, or `D`) with the file's intrinsic size, the same numbers as the repo's `width={}` / `height={}`.
+    A CMS-bound image keeps both fields empty (never "Auto"). The MCP can't set width/height, so an agent
+    that places a static image sets the alt itself and lists each image with its size for the user to
+    fill in the Designer (in its report and the `sync-log.md` row); the image isn't done until they're set.
 
 ## 3. Definitions
 
