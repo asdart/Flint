@@ -40,6 +40,18 @@ next phase on production.
 
 ---
 
+## Next steps (agreed 2026-09-30)
+
+The order the user agreed on 2026-09-30. Page pre-plans read from the final Figma frames are in [`plans/`](plans/) (D-33).
+
+1. **Close out Home and the Blog:** the [Blog sync carry-over](#blog-sync-carry-over) Designer checklist, the staging checks, then the track P exit criteria
+2. **Repo cleanup:** roadmap slimmed (decisions in `archive/decisions.md`), stray scratch file removed, merged `blog-post-page` branch deleted
+3. **Shared carousel (D-37):** build `x-carousel`, swap it onto Home (How It Works, Testimonials), and check swipe and backward navigation on staging
+4. **Candidates** ([plan](plans/candidates.md)): Hero (ring of 12 avatars, orbit from the legacy `ProximityOrbit`), Stats Band Default, Role Grid (reuse), How It Works (5 rows, `x-illustrations`), Testimonials with arrows, FAQ, arc-carousel CTA (D-34)
+5. **Facility partners** ([plan](plans/facility-partners.md)): Hero, Logo Marquee (reuse), Stats Band Default (reuse), Media Split ×3 with `x-illustrations`, Feature Grid Benefits, Testimonials (text cards), Apply Form (Webflow inbox, P-05)
+6. **About** ([plan](plans/about.md)): Hero, Text Panels (reuse), Team Grid, Media Split (reuse), Stats Band Large (reuse), Logo Grid, Split CTA
+7. **QA and launch** (phases 9–10), then merge `webflow` into `main` (D-39)
+
 ## Decisions
 
 ### Decided
@@ -80,6 +92,13 @@ Short index. The full text, date and where each decision is applied are in [`arc
 | D-30 | P-21 closed: hover interactions play normally under reduced motion (user approved option a, 2026-09-30) |
 | D-31 | P-19 closed: numbered pagination through the exception `x-blog-pagination` (option B), user-approved 2026-09-30 |
 | D-32 | P-20 closed: Collection List empty states, built as recommended (user approved 2026-09-30) |
+| D-33 | The final Figma frames are the design source for Candidates, Facility partners and About; legacy is reference only; smaller breakpoints are inferred |
+| D-34 | P-01 closed as obsolete: no physics gallery; Candidates CTA is an arc carousel like the Home hero, About CTA is a two-card Split CTA |
+| D-35 | P-03 closed per the final design: `ModernFacility` → Feature Grid (Benefits), `WhyFacilities` dropped, Media Split ×3, no Facility Grid |
+| D-36 | P-04 closed: illustrations animate at launch, ported from legacy to Motion (`x-illustrations`), Candidates and Facility partners only |
+| D-37 | Carousels move from IX3 to one shared Motion script (`x-carousel`) with back-and-forth springs, swipe, dots and arrows |
+| D-38 | P-08 closed: missing content doesn't block the build; the client updates the copy later |
+| D-39 | `webflow` is merged into `main` only when the whole migration is finished |
 
 ### Open
 
@@ -87,19 +106,15 @@ All must be closed before the phase noted in "Needed by".
 
 | ID | Question | Options | Needed by | Status |
 | --- | --- | --- | --- | --- |
-| P-01 | How is the physics avatar gallery (`x-gravity-gallery`) built? | (a) Webflow Code Component with Matter.js · (b) replace with a static collage + `ix-reveal-stagger` | Phase 8 (CTA Gallery in phase 4 needs a placeholder) | open |
-| P-03 | What do `WhyFacilities` and `ModernFacility` become? | (a) Variants of `Section / Feature Grid` · (b) their own sections. Review against Figma | Phase 4 | open |
-| P-04 | How are the ~9 animated illustrations produced? _(proposed)_ | (a) Lottie made in After Effects or a Figma plugin (who makes them?) · (b) rebuild as Interaction timelines · (c) static SVG at launch, animate later | Phase 7 (phase 4 uses static SVGs meanwhile) | open |
 | P-05 | Where do form submissions go (Facility Apply form, newsletter)? _(proposed)_ | Webflow Forms with email notifications · Webflow Forms + webhook to a CRM/ESP · an external embed (would be an exception) | Phase 4 | **decided for now (user, 2026-09-30, D-29): integrations later; submissions stay in Webflow's form inbox.** Reopen when the ESP/CRM is chosen. The live submit is still untested (Turnstile is on, see `interactions.md` → Staging runtime check) |
 | P-06 | Which custom domain, and who manages DNS? | Client's domain; DNS access from the client | Phase 10 | open. The plan is Premium per D-09 and covers what the build needs |
 | P-07 | Is it acceptable that stat numbers animate as a whole instead of digit by digit? _(proposed)_ | (a) Yes, native `ix-count-in` · (b) no, add a digit script exception | Phase 7 | open |
-| P-08 | Who supplies the missing content? _(proposed)_ | FAQ answers 2+, real footer URLs, About Team copy, bodies for non-featured posts | Phase 9 | open |
 | P-12 | Which page is the "role page" in the PageSpeed check (`seo.md` S-15)? The roadmap has no role pages yet | Name the page, and add it to `components.md` → Pages if it's new | Phase 5 | open, to decide later (user, 2026-09-27) |
 | P-13 | The post main images are text banners (about 2.1:1) and the card crops them to 1.4:1 (3.5:1 on mobile landscape), cutting off the headline | (a) New card-ready images from the client · (b) change the card image ratio to fit the banners · (c) accept the crop | Phase 6 | **accepted for now (user, 2026-09-30, D-29, option c):** the client will probably change the images; reopen then |
 | P-14 | Do post FAQs get `FAQPage` schema (`seo.md` S-08)? The FAQs are now rich text | (a) A plain-text field holding each post's FAQ JSON-LD, inserted by `x-schema-post` (pairs ready in `blog-embeds/faq-pairs.json`) · (b) no FAQ schema on posts | Phase 6 | open |
 | P-17 | No default social (Open Graph) image exists: `/blog`, the Categories template and Home have `openGraph.imageUrl: null`. `update_page_settings` accepts `openGraph.imageAssetId` (a site asset id), so the MCP can set it once an image exists. The Posts template binds the post's Main image (Designer) | Design a 1200×630 default social image, upload it (`create_asset`), then set it on Home, `/blog` and Categories | Before launch | open (user, 2026-09-30: later) |
 
-Closed questions (P-02, P-09, P-15, P-16, P-18 to P-21) are in [`archive/decisions.md`](archive/decisions.md#closed-questions).
+Closed questions (P-01 to P-04, P-08, P-09, P-15, P-16, P-18 to P-21) are in [`archive/decisions.md`](archive/decisions.md#closed-questions).
 
 ---
 
@@ -297,14 +312,16 @@ Needs P-02 (closed 2026-09-29); P-13 and P-14 before the template.
 
 ## Phase 7 — Motion and illustrations
 
-Needs P-04 and P-07 closed.
+Needs P-07 closed. P-04 closed (D-36): illustrations are ported to Motion (`x-illustrations`).
 
 - [ ] Remaining interactions in `interactions.md`: parallax, FAQ, and any still `legacy`
-- [ ] Illustrations produced and placed per P-04, with static fallbacks for reduced motion
+- [ ] Illustrations ported to Motion per D-36 (`x-illustrations`), with static fallbacks for first paint and reduced motion
 
 ## Phase 8 — Custom-code exceptions
 
-- [ ] `x-gravity-gallery` per P-01
+- [ ] `x-carousel` per D-37 (Home first, then Candidates and Facility partners)
+- [ ] `x-illustrations` per D-36 (Candidates, Facility partners)
+- ~~`x-gravity-gallery` per P-01~~ retired (D-34)
 - [x] `x-article-toc` per P-02 (approved, closed (a) 2026-09-29). **Installed on the Posts template 2026-09-30 (Blog sync Stage 7):** registered script `xarticletoc` 1.0.0 in the page footer. **Verified on staging 2026-09-30:** TOC builds from the 7 H2s and the scroll-spy moves `is-toc-active` (`interactions.md`)
 - [ ] Primary button hover checked in Preview against the repo (`x-button-gradient`, installed in P.2)
 - [ ] Exceptions table in `interactions.md` matches what is actually installed (`data_scripts_tool` → `get_site_scripts`). **Checked 2026-09-30 (Blog sync Stage 8, read-only):** site head `<style>` (`x-button-gradient`, `x-text-rendering`, `x-blur-reveal`), Posts template head `<style>` (`x-related-empty`), one registered script `xarticletoc` on the Posts footer; no site scripts, page footers empty (ids in `webflow-ids.json` → `scripts`, `customCode`); the other exceptions are not installed
