@@ -30,6 +30,7 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | Binding a prop to a WHTML `<span>` → "Setting text is not applicable" | Use a DOM `span` (or a Text Block); rich-text Spans can't bind |
 | Need a variant to add a combo class | Not possible; variants are style overrides. Copy the combo's values into `set_variant_styles` |
 | Field got slug `…-2`, or needs a new slug | Slugs are immutable. Create → copy values → repoint sorts/bindings → delete ([recipes → CMS field](recipes.md#replace-a-cms-field)) |
+| A CMS field needs a validation (Excerpt max length 160, integer minimum) | `create_collection_static_field` takes no validations, and `update_collection_field` only `displayName`, `isRequired`, `helpText`. Number fields come out `integer`, `allowNegative: true`. Set the limit in the Designer and tell the user. `create_collection` does accept `slug`, and the auto `Name` field can be renamed (`displayName: "Title"`) without changing its slug. Found 2026-09-29 (production collections) |
 | Creating something that exists returns `-2` or is silently dropped | Creates aren't idempotent. Query first; use update actions |
 | WHTML `<img>` → "inserted without a managed asset", even for an uploaded asset | Set the asset after insert: `set_settings` → `assetId` ([recipes → Icons](recipes.md#svg-icons-and-optional-icons)) |
 | `remove_style` → "Ensure there are no usages of this style" | Remove the elements first, in an earlier call (not in parallel). Removing a base style also removes its combos |

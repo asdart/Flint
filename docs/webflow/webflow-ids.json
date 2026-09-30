@@ -79,7 +79,44 @@
       }
     }
   },
-  "collections": {},
+  "collections": {
+    "Categories": {
+      "id": "6abc6c89dc4bd2e2066e91e4",
+      "slug": "blog-categories",
+      "fields": {
+        "name": "94195af35f4861a93177b016e305fba2",
+        "slug": "29b6e1d54aa51cfa5d7f3ff1a986a07b"
+      }
+    },
+    "Authors": {
+      "id": "6abc6c8aaa765ebc66472f65",
+      "slug": "authors",
+      "fields": {
+        "name": "c3707fb31734a5ba980793fe64857a8d",
+        "slug": "54f0aba5ca79774bcf35ee42dd9e637e",
+        "short-name": "beb4f12ea511bb380213ff6c13a4a2c7",
+        "role": "e5311a8de6b8c657885576967bef3d6e",
+        "avatar": "353b74d332d0b730468f1848ef5b1281"
+      }
+    },
+    "Posts": {
+      "id": "6abc6c9673c0a3345b7a94b7",
+      "slug": "blog",
+      "fields": {
+        "name": "16e1c3379f4c1ec215248ab0bcc6e467",
+        "slug": "48357f4612d88a995a59953df308f069",
+        "publish-date": "cd2557c6314d3fc00580b773eb48717d",
+        "category": "3ab1cfcd13887c38eb0e70fd4b251113",
+        "author": "66409074215caab6f4ca8b28b47940ef",
+        "excerpt": "ad2797e60bb4c9fe55b6b44f6d9ec5df",
+        "main-image": "fb3d2e2c61579eafeeb6c21628aa0856",
+        "read-time": "f246209d57b4881b4adca4c7361a900a",
+        "quick-answer": "95ae0cfae8eea9571ada0ba62e2f7435",
+        "body": "9adaf046c8608984c7b71b1b526ceb8f",
+        "featured": "329fb5b0c95547f6184947b51899586a"
+      }
+    }
+  },
   "interactions": {
     "ix-blur-reveal": "i-74d70492",
     "ix-reveal": "i-331fb235",
@@ -100,41 +137,145 @@
     "ix-testimonial-hover": "i-14706c57"
   },
   "assets": {
-    "/assets/home/cta-ring.svg": {
-      "id": "6abbd67e76b5d041f5e39e5a",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbd67e76b5d041f5e39e5a_cta-ring.svg"
+    "/assets/blog/posts/can-healthcare-workers-on-tps-daca-or-asylum-get-eb-3-green-card-sponsorship.webp": {
+      "id": "6abc6aeee3ded54f36c5b500",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6aeee3ded54f36c5b500_can-healthcare-workers-on-tps-daca-or-asylum-get-eb-3-green-card-sponsorship.webp"
     },
-    "/assets/home/cta-circle.svg": {
-      "id": "6abbd67f92bbe90d74fbf5f5",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbd67f92bbe90d74fbf5f5_cta-circle.svg"
+    "/assets/blog/posts/complete-guide-to-nurse-green-card-sponsorship-via-eb-3-visa-in-2026.webp": {
+      "id": "6abc6aefe3ded54f36c5b561",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6aefe3ded54f36c5b561_complete-guide-to-nurse-green-card-sponsorship-via-eb-3-visa-in-2026.webp"
     },
-    "/assets/flint-logo-brand.svg": {
-      "id": "6abbebd551427eae6c312cfc",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd551427eae6c312cfc_flint-logo-brand.svg"
+    "/assets/blog/posts/direct-hire-nursing-jobs-in-the-usa-for-foreign-nurses-already-in-the-u-s.webp": {
+      "id": "6abc6aef1231cdb52d934d99",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6aef1231cdb52d934d99_direct-hire-nursing-jobs-in-the-usa-for-foreign-nurses-already-in-the-u-s.webp"
     },
-    "/assets/flint-logo-white.svg": {
-      "id": "6abbebd585f236595bf7facb",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd585f236595bf7facb_flint-logo-white.svg"
+    "/assets/blog/posts/do-you-qualify-for-nurse-green-card-sponsorship-in-2026-quick-eligibility-guide.webp": {
+      "id": "6abc6af0efde9063164981de",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0efde9063164981de_do-you-qualify-for-nurse-green-card-sponsorship-in-2026-quick-eligibility-guide.webp"
+    },
+    "/assets/blog/posts/eb-3-visa-bulletin-september-2026-update.webp": {
+      "id": "6abc6af03f8ed6cc3a8c21da",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af03f8ed6cc3a8c21da_eb-3-visa-bulletin-september-2026-update.webp"
+    },
+    "/assets/blog/posts/eb-3-visa-for-nurses-from-india.webp": {
+      "id": "6abc6af0733009277228098d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0733009277228098d_eb-3-visa-for-nurses-from-india.webp"
+    },
+    "/assets/blog/posts/eb-3-visa-for-nurses-from-the-philippines.webp": {
+      "id": "6abc6af0dc4bd2e2066e3172",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0dc4bd2e2066e3172_eb-3-visa-for-nurses-from-the-philippines.webp"
+    },
+    "/assets/blog/posts/eb-3-visa-for-nurses-timeline-2026-from-application-to-green-card.webp": {
+      "id": "6abc6af0c6e41bca87ab7f7a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0c6e41bca87ab7f7a_eb-3-visa-for-nurses-timeline-2026-from-application-to-green-card.webp"
+    },
+    "/assets/blog/posts/eb3-processing-times-for-healthcare-workers.webp": {
+      "id": "6abc6af0b5c590b81dc0fcb0",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0b5c590b81dc0fcb0_eb3-processing-times-for-healthcare-workers.webp"
+    },
+    "/assets/blog/posts/green-card-for-nurses-step-by-step-process-in-2026-what-it-actually-looks-like.webp": {
+      "id": "6abc6af0dc4bd2e2066e319a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0dc4bd2e2066e319a_green-card-for-nurses-step-by-step-process-in-2026-what-it-actually-looks-like.webp"
+    },
+    "/assets/blog/posts/green-card-sponsorship-for-healthcare-workers.webp": {
+      "id": "6abc6af1e3ded54f36c5b604",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af1e3ded54f36c5b604_green-card-sponsorship-for-healthcare-workers.webp"
+    },
+    "/assets/blog/posts/green-card-sponsorship-for-nurses.webp": {
+      "id": "6abc6af13f8ed6cc3a8c22a4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af13f8ed6cc3a8c22a4_green-card-sponsorship-for-nurses.webp"
+    },
+    "/assets/blog/posts/hospitals-that-sponsor-green-card-for-nurses-in-2026.webp": {
+      "id": "6abc6af1098417409101f723",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af1098417409101f723_hospitals-that-sponsor-green-card-for-nurses-in-2026.webp"
+    },
+    "/assets/blog/posts/how-flint-works.webp": {
+      "id": "6abc6af1c6e41bca87ab7fc8",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af1c6e41bca87ab7fc8_how-flint-works.webp"
+    },
+    "/assets/blog/posts/how-green-card-sponsorship-for-nurses-actually-works.webp": {
+      "id": "6abc6af1efde90631649823a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af1efde90631649823a_how-green-card-sponsorship-for-nurses-actually-works.webp"
+    },
+    "/assets/blog/posts/how-hospitals-sponsor-nurses-for-green-cards.webp": {
+      "id": "6abc6af13523e994d763852c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af13523e994d763852c_how-hospitals-sponsor-nurses-for-green-cards.webp"
+    },
+    "/assets/blog/posts/how-to-apply-for-nurse-green-card-sponsorship-today-step-by-step-eligibility-check.webp": {
+      "id": "6abc6af2efde906316498288",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af2efde906316498288_how-to-apply-for-nurse-green-card-sponsorship-today-step-by-step-eligibility-check.webp"
+    },
+    "/assets/blog/posts/how-to-get-green-card-sponsorship-in-2026.webp": {
+      "id": "6abc6af216e6656f85072887",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af216e6656f85072887_how-to-get-green-card-sponsorship-in-2026.webp"
+    },
+    "/assets/blog/posts/is-eb-3-the-best-green-card-path-for-healthcare-workers-in-2026-a-guide-for-cnas-lpns-and-rns.webp": {
+      "id": "6abc6af2b973d1500598d446",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af2b973d1500598d446_is-eb-3-the-best-green-card-path-for-healthcare-workers-in-2026-a-guide-for-cnas-lpns-and-rns.webp"
+    },
+    "/assets/blog/posts/is-flint-legit-what-nurses-should-know.webp": {
+      "id": "6abc6af226ff140c11825b1a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af226ff140c11825b1a_is-flint-legit-what-nurses-should-know.webp"
+    },
+    "/assets/blog/posts/nclex-for-foreign-educated-nurses-what-you-need-to-know.webp": {
+      "id": "6abc6af27330092772280a41",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af27330092772280a41_nclex-for-foreign-educated-nurses-what-you-need-to-know.webp"
+    },
+    "/assets/blog/posts/nurse-agencies-vs-staffing-companies.webp": {
+      "id": "6abc6af3e3ded54f36c5b6a5",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af3e3ded54f36c5b6a5_nurse-agencies-vs-staffing-companies.webp"
+    },
+    "/assets/blog/posts/nurse-green-card-do-you-qualify-if-youre-already-working-in-the-us.webp": {
+      "id": "6abc6af31d2802da6459deb1",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af31d2802da6459deb1_nurse-green-card-do-you-qualify-if-youre-already-working-in-the-us.webp"
+    },
+    "/assets/blog/posts/nurse-green-card-sponsorship-explained-flints-free-program-3k-relocation-help.webp": {
+      "id": "6abc6af31231cdb52d935014",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af31231cdb52d935014_nurse-green-card-sponsorship-explained-flints-free-program-3k-relocation-help.webp"
+    },
+    "/assets/blog/posts/nurse-green-card-sponsorship-vs-h-1b-eb-2-and-staffing-agencies-whats-the-best-option-for-you.webp": {
+      "id": "6abc6af4e3ded54f36c5b75e",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af4e3ded54f36c5b75e_nurse-green-card-sponsorship-vs-h-1b-eb-2-and-staffing-agencies-whats-the-best-option-for-you.webp"
+    },
+    "/assets/blog/posts/nursing-agencies-that-offer-sponsorship-in-the-usa-how-they-work.webp": {
+      "id": "6abc6af4012613fd6959b1be",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af4012613fd6959b1be_nursing-agencies-that-offer-sponsorship-in-the-usa-how-they-work.webp"
+    },
+    "/assets/blog/posts/nursing-agency-for-eb-3-visa-what-nurses-should-know-before-applying.webp": {
+      "id": "6abc6af4012613fd6959b1ed",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af4012613fd6959b1ed_nursing-agency-for-eb-3-visa-what-nurses-should-know-before-applying.webp"
+    },
+    "/assets/blog/posts/relocation-for-nurse-green-card-sponsorship-3-000-support-what-to-expect.webp": {
+      "id": "6abc6af4c6e41bca87ab811d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af4c6e41bca87ab811d_relocation-for-nurse-green-card-sponsorship-3-000-support-what-to-expect.webp"
+    },
+    "/assets/blog/posts/rn-and-cna-job-placement-agencies-in-the-usa.webp": {
+      "id": "6abc6af4ff47620543e122d6",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af4ff47620543e122d6_rn-and-cna-job-placement-agencies-in-the-usa.webp"
+    },
+    "/assets/blog/posts/us-nursing-jobs-for-foreign-nurses-direct-hire-opportunities-with-flint.webp": {
+      "id": "6abc6af5ff47620543e122eb",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af5ff47620543e122eb_us-nursing-jobs-for-foreign-nurses-direct-hire-opportunities-with-flint.webp"
+    },
+    "/assets/blog/posts/what-is-the-eb-3-visa-for-nurses-simple-breakdown-success-rate.webp": {
+      "id": "6abc6af5098417409101f78f",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af5098417409101f78f_what-is-the-eb-3-visa-for-nurses-simple-breakdown-success-rate.webp"
+    },
+    "/assets/blog/posts/why-eb-3-is-one-of-the-best-green-card-pathways-for-nurses.webp": {
+      "id": "6abc6af5098417409101f7a4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af5098417409101f7a4_why-eb-3-is-one-of-the-best-green-card-pathways-for-nurses.webp"
     },
     "/assets/country-flag.svg": {
       "id": "6abbebd510f8c54b2ab12917",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd510f8c54b2ab12917_country-flag.svg"
     },
-    "/assets/testimonial-photo-1.webp": {
-      "id": "6abbebd585f236595bf7faf4",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd585f236595bf7faf4_testimonial-photo-1.webp"
+    "/assets/flags/et.svg": {
+      "id": "6abbebd730aee66eee7557ab",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd730aee66eee7557ab_et.svg"
     },
-    "/assets/testimonial-photo-2.webp": {
-      "id": "6abbebd551427eae6c312d4b",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd551427eae6c312d4b_testimonial-photo-2.webp"
-    },
-    "/assets/testimonial-photo-3.webp": {
-      "id": "6abbebd5f0ec45724fccaf67",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd5f0ec45724fccaf67_testimonial-photo-3.webp"
-    },
-    "/assets/flags/ph.svg": {
-      "id": "6abbebd6f0ec45724fccafca",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd6f0ec45724fccafca_ph.svg"
+    "/assets/flags/gh.svg": {
+      "id": "6abbebd78b8e492698b557ab",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd78b8e492698b557ab_gh.svg"
     },
     "/assets/flags/ht.svg": {
       "id": "6abbebd6e160eb1be8fa91dc",
@@ -144,21 +285,29 @@
       "id": "6abbebd7ae6930fca0bcfa45",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7ae6930fca0bcfa45_ke.svg"
     },
-    "/assets/flags/gh.svg": {
-      "id": "6abbebd78b8e492698b557ab",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd78b8e492698b557ab_gh.svg"
-    },
     "/assets/flags/ng.svg": {
       "id": "6abbebd7b559bd0f608c0e82",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7b559bd0f608c0e82_ng.svg"
+    },
+    "/assets/flags/ph.svg": {
+      "id": "6abbebd6f0ec45724fccafca",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd6f0ec45724fccafca_ph.svg"
     },
     "/assets/flags/vn.svg": {
       "id": "6abbebd7ae6930fca0bcfa95",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7ae6930fca0bcfa95_vn.svg"
     },
-    "/assets/flags/et.svg": {
-      "id": "6abbebd730aee66eee7557ab",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd730aee66eee7557ab_et.svg"
+    "/assets/flint-logo-brand.svg": {
+      "id": "6abbebd551427eae6c312cfc",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd551427eae6c312cfc_flint-logo-brand.svg"
+    },
+    "/assets/flint-logo-white.svg": {
+      "id": "6abbebd585f236595bf7facb",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd585f236595bf7facb_flint-logo-white.svg"
+    },
+    "/assets/home/Flint-logo-brand-circle.svg": {
+      "id": "6abbec0ead5b1f1f5f710d8e",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ead5b1f1f5f710d8e_Flint-logo-brand-circle.svg"
     },
     "/assets/home/candidate-01.webp": {
       "id": "6abbebd78b8e492698b557ff",
@@ -200,77 +349,45 @@
       "id": "6abbebd9113c5daeca1d3df3",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9113c5daeca1d3df3_candidate-10.webp"
     },
-    "/assets/home/logo-01.webp": {
-      "id": "6abbebd9b98080d5ea9b6df4",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9b98080d5ea9b6df4_logo-01.webp"
-    },
-    "/assets/home/logo-02.webp": {
-      "id": "6abbebd9af22fdc604b8524d",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9af22fdc604b8524d_logo-02.webp"
-    },
-    "/assets/home/logo-03.webp": {
-      "id": "6abbebd9f7bbc6735a209abd",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9f7bbc6735a209abd_logo-03.webp"
-    },
-    "/assets/home/logo-04.webp": {
-      "id": "6abbebd9ad5b1f1f5f70f4fc",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9ad5b1f1f5f70f4fc_logo-04.webp"
-    },
-    "/assets/home/logo-05.webp": {
-      "id": "6abbebd999eefa1af9bb0dc1",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd999eefa1af9bb0dc1_logo-05.webp"
-    },
-    "/assets/home/logo-06.webp": {
-      "id": "6abbebdab98080d5ea9b6e76",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6e76_logo-06.webp"
-    },
-    "/assets/home/two-ways-nurse-right.webp": {
-      "id": "6abbebdab98080d5ea9b6e99",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6e99_two-ways-nurse-right.webp"
-    },
-    "/assets/home/two-ways-nurse-left.webp": {
-      "id": "6abbebdab98080d5ea9b6eb6",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6eb6_two-ways-nurse-left.webp"
-    },
-    "/assets/home/two-ways-nurse-center.webp": {
-      "id": "6abbebda51427eae6c312ec3",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebda51427eae6c312ec3_two-ways-nurse-center.webp"
-    },
-    "/assets/home/two-ways-facility.webp": {
-      "id": "6abbec0de160eb1be8faa6c9",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0de160eb1be8faa6c9_two-ways-facility.webp"
-    },
-    "/assets/home/pricing-avatar.webp": {
-      "id": "6abbec0de160eb1be8faa6de",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0de160eb1be8faa6de_pricing-avatar.webp"
-    },
-    "/assets/home/webinar-bg-arc.webp": {
-      "id": "6abbec0ef906e24767eeb2a1",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ef906e24767eeb2a1_webinar-bg-arc.webp"
-    },
-    "/assets/home/webinar-call.webp": {
-      "id": "6abbec0e30aee66eee756c93",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0e30aee66eee756c93_webinar-call.webp"
-    },
-    "/assets/home/webinar-participants.webp": {
-      "id": "6abbec0ef906e24767eeb2b6",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ef906e24767eeb2b6_webinar-participants.webp"
+    "/assets/home/cta-circle.svg": {
+      "id": "6abbd67f92bbe90d74fbf5f5",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbd67f92bbe90d74fbf5f5_cta-circle.svg"
     },
     "/assets/home/cta-flower.webp": {
       "id": "6abbec0ef906e24767eeb2cb",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ef906e24767eeb2cb_cta-flower.webp"
     },
-    "/assets/home/cta-room.webp": {
-      "id": "6abbec0e9a17c9a61e25c0d3",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0e9a17c9a61e25c0d3_cta-room.webp"
-    },
     "/assets/home/cta-photo.webp": {
       "id": "6abbec0ead5b1f1f5f710d79",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ead5b1f1f5f710d79_cta-photo.webp"
     },
-    "/assets/home/Flint-logo-brand-circle.svg": {
-      "id": "6abbec0ead5b1f1f5f710d8e",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ead5b1f1f5f710d8e_Flint-logo-brand-circle.svg"
+    "/assets/home/cta-ring.svg": {
+      "id": "6abbd67e76b5d041f5e39e5a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbd67e76b5d041f5e39e5a_cta-ring.svg"
+    },
+    "/assets/home/cta-room.webp": {
+      "id": "6abbec0e9a17c9a61e25c0d3",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0e9a17c9a61e25c0d3_cta-room.webp"
+    },
+    "/assets/home/how-card-art-1.webp": {
+      "id": "6abbec0f20c655289b9d8b99",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0f20c655289b9d8b99_how-card-art-1.webp"
+    },
+    "/assets/home/how-card-art-2.webp": {
+      "id": "6abbec0f4d3c9e6ae737c649",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0f4d3c9e6ae737c649_how-card-art-2.webp"
+    },
+    "/assets/home/how-card-art-3.webp": {
+      "id": "6abbec1010f8c54b2ab14ae9",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1010f8c54b2ab14ae9_how-card-art-3.webp"
+    },
+    "/assets/home/how-card-art-5.webp": {
+      "id": "6abbec10d5d15564b576f704",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f704_how-card-art-5.webp"
+    },
+    "/assets/home/how-card-art-6.webp": {
+      "id": "6abbec10d5d15564b576f733",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f733_how-card-art-6.webp"
     },
     "/assets/home/how-card-bg-1.webp": {
       "id": "6abbec0ed5d15564b576f67b",
@@ -296,25 +413,41 @@
       "id": "6abbec0fcfbf774ff6e193f3",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0fcfbf774ff6e193f3_how-card-bg-6.webp"
     },
-    "/assets/home/how-card-art-1.webp": {
-      "id": "6abbec0f20c655289b9d8b99",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0f20c655289b9d8b99_how-card-art-1.webp"
+    "/assets/home/logo-01.webp": {
+      "id": "6abbebd9b98080d5ea9b6df4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9b98080d5ea9b6df4_logo-01.webp"
     },
-    "/assets/home/how-card-art-2.webp": {
-      "id": "6abbec0f4d3c9e6ae737c649",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0f4d3c9e6ae737c649_how-card-art-2.webp"
+    "/assets/home/logo-02.webp": {
+      "id": "6abbebd9af22fdc604b8524d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9af22fdc604b8524d_logo-02.webp"
     },
-    "/assets/home/how-card-art-3.webp": {
-      "id": "6abbec1010f8c54b2ab14ae9",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1010f8c54b2ab14ae9_how-card-art-3.webp"
+    "/assets/home/logo-03.webp": {
+      "id": "6abbebd9f7bbc6735a209abd",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9f7bbc6735a209abd_logo-03.webp"
     },
-    "/assets/home/how-card-art-5.webp": {
-      "id": "6abbec10d5d15564b576f704",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f704_how-card-art-5.webp"
+    "/assets/home/logo-04.webp": {
+      "id": "6abbebd9ad5b1f1f5f70f4fc",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9ad5b1f1f5f70f4fc_logo-04.webp"
     },
-    "/assets/home/how-card-art-6.webp": {
-      "id": "6abbec10d5d15564b576f733",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f733_how-card-art-6.webp"
+    "/assets/home/logo-05.webp": {
+      "id": "6abbebd999eefa1af9bb0dc1",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd999eefa1af9bb0dc1_logo-05.webp"
+    },
+    "/assets/home/logo-06.webp": {
+      "id": "6abbebdab98080d5ea9b6e76",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6e76_logo-06.webp"
+    },
+    "/assets/home/offer-check.svg": {
+      "id": "6abbec1210f8c54b2ab14c1a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1210f8c54b2ab14c1a_offer-check.svg"
+    },
+    "/assets/home/offer-concierge.svg": {
+      "id": "6abbec1130aee66eee756d97",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1130aee66eee756d97_offer-concierge.svg"
+    },
+    "/assets/home/offer-dashboard.svg": {
+      "id": "6abbec10d5d15564b576f79c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f79c_offer-dashboard.svg"
     },
     "/assets/home/offer-hospital.svg": {
       "id": "6abbec1010f8c54b2ab14b43",
@@ -328,25 +461,53 @@
       "id": "6abbec10fa9a73b80d828521",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10fa9a73b80d828521_offer-travel.svg"
     },
-    "/assets/home/offer-dashboard.svg": {
-      "id": "6abbec10d5d15564b576f79c",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec10d5d15564b576f79c_offer-dashboard.svg"
+    "/assets/home/partners-map-bg.webp": {
+      "id": "6abbeee69a17c9a61e269b5c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbeee69a17c9a61e269b5c_partners-map-bg.webp"
     },
-    "/assets/home/offer-concierge.svg": {
-      "id": "6abbec1130aee66eee756d97",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1130aee66eee756d97_offer-concierge.svg"
+    "/assets/home/pricing-avatar.webp": {
+      "id": "6abbec0de160eb1be8faa6de",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0de160eb1be8faa6de_pricing-avatar.webp"
     },
-    "/assets/home/offer-check.svg": {
-      "id": "6abbec1210f8c54b2ab14c1a",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1210f8c54b2ab14c1a_offer-check.svg"
+    "/assets/home/two-ways-facility.webp": {
+      "id": "6abbec0de160eb1be8faa6c9",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0de160eb1be8faa6c9_two-ways-facility.webp"
     },
-    "src/assets/icons/menu.svg": {
-      "id": "6abbec12d5d15564b576f84f",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec12d5d15564b576f84f_menu.svg"
+    "/assets/home/two-ways-nurse-center.webp": {
+      "id": "6abbebda51427eae6c312ec3",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebda51427eae6c312ec3_two-ways-nurse-center.webp"
     },
-    "src/assets/icons/x-mark.svg": {
-      "id": "6abbec1295c6eccb4fdecc9c",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1295c6eccb4fdecc9c_x-mark.svg"
+    "/assets/home/two-ways-nurse-left.webp": {
+      "id": "6abbebdab98080d5ea9b6eb6",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6eb6_two-ways-nurse-left.webp"
+    },
+    "/assets/home/two-ways-nurse-right.webp": {
+      "id": "6abbebdab98080d5ea9b6e99",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebdab98080d5ea9b6e99_two-ways-nurse-right.webp"
+    },
+    "/assets/home/webinar-bg-arc.webp": {
+      "id": "6abbec0ef906e24767eeb2a1",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ef906e24767eeb2a1_webinar-bg-arc.webp"
+    },
+    "/assets/home/webinar-call.webp": {
+      "id": "6abbec0e30aee66eee756c93",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0e30aee66eee756c93_webinar-call.webp"
+    },
+    "/assets/home/webinar-participants.webp": {
+      "id": "6abbec0ef906e24767eeb2b6",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ef906e24767eeb2b6_webinar-participants.webp"
+    },
+    "/assets/testimonial-photo-1.webp": {
+      "id": "6abbebd585f236595bf7faf4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd585f236595bf7faf4_testimonial-photo-1.webp"
+    },
+    "/assets/testimonial-photo-2.webp": {
+      "id": "6abbebd551427eae6c312d4b",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd551427eae6c312d4b_testimonial-photo-2.webp"
+    },
+    "/assets/testimonial-photo-3.webp": {
+      "id": "6abbebd5f0ec45724fccaf67",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd5f0ec45724fccaf67_testimonial-photo-3.webp"
     },
     "src/assets/icons/checkmark.svg": {
       "id": "6abbec12d5d15564b576f879",
@@ -356,9 +517,13 @@
       "id": "6abbec129a17c9a61e25c239",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec129a17c9a61e25c239_facility.svg"
     },
-    "/assets/home/partners-map-bg.webp": {
-      "id": "6abbeee69a17c9a61e269b5c",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbeee69a17c9a61e269b5c_partners-map-bg.webp"
+    "src/assets/icons/menu.svg": {
+      "id": "6abbec12d5d15564b576f84f",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec12d5d15564b576f84f_menu.svg"
+    },
+    "src/assets/icons/x-mark.svg": {
+      "id": "6abbec1295c6eccb4fdecc9c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1295c6eccb4fdecc9c_x-mark.svg"
     }
   },
   "variableCollections": {

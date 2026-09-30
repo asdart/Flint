@@ -132,7 +132,7 @@ filter in `AllPosts.tsx`. No script needed. The preview serves the same URLs: `/
 
 ## Import from the current site
 
-Done in the repo on 2026-09-28; nothing is in Webflow yet.
+Done in the repo on 2026-09-28. The three collections and their fields exist on production since 2026-09-29 (ids in `webflow-ids.json`; Excerpt's max length 160 and Read time's minimum 1 are still to set in the Designer); items were imported manually from CSV on 2026-09-29 (5 categories, 1 author, 34 posts of which 6 are drafts; alt text set through the MCP), nothing is published.
 
 - **Posts:** 40 in the export. 6 placeholders ("This is a test blog" and 5 template posts with
   invented authors) were dropped; 34 real posts are in the seed. 6 are drafts: the 4 drafts on the
@@ -147,16 +147,18 @@ Done in the repo on 2026-09-28; nothing is in Webflow yet.
   posts used it.
 - **Images:** 32 main images downloaded, converted to WebP (`public/assets/blog/posts/`,
   1.35 MB total, from 4.1 MB of PNG) and given alt text. They are text banners at about 2.1:1, and
-  the card crops them (1.4:1 on desktop), which cuts off the headline: see roadmap P-13.
-- **Format:** seed JSON imported through the MCP (`create_collection_items`), not Webflow's CSV
-  import. The CSV import needs publicly hosted image URLs and can't set image alt text, and the
-  JSON is also the preview's data. Upload the WebP files first (`scripts/webflow-upload.mjs`),
-  then create items with `main-image: { fileId, url, alt }`.
+  the card crops them (1.4:1 on desktop), which cuts off the headline: see roadmap P-13. All 32 images
+  have been uploaded to the production Webflow Assets and their hosted URLs are in `blog-posts-import.csv`.
+- **Format:** the seed JSON is the preview's data and can be imported through the MCP
+  (`create_collection_items`): upload the WebP files first (`scripts/webflow-upload.mjs`), then create
+  items with `main-image: { fileId, url, alt }`. For a manual import, `blog-posts-import.csv` has
+  the 34 posts with hosted image URLs in Main Image. The CSV import can't set image alt text (it was set afterwards through the MCP from the Main Image Alt column), and it matches Category and Author by name, so those
+  items must exist first.
 
 ## Import procedure
 
-1. Create the collections in this order: Categories → Authors → Posts. Posts references the other two.
+1. (Done 2026-09-29.) Create the collections in this order: Categories → Authors → Posts. Posts references the other two.
    Use `/cms-collection-setup` or `data_cms_tool` (see `mcp-playbook.md`).
-2. Upload images to Assets and keep the asset ids.
+2. (Done 2026-09-29.) Upload images to Assets and keep the asset ids.
 3. Import items with `/bulk-cms-update`, starting as drafts. Review, then publish items explicitly.
 4. Record the collection ids in `webflow-ids.json` and log the step in `sync-log.md`.
