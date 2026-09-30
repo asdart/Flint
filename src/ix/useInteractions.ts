@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { blurReveal } from "./blurReveal";
 import { cardHover } from "./cardHover";
 import { dropdown } from "./dropdown";
@@ -87,13 +87,15 @@ function navPill(): Cleanup {
   };
 }
 
-/** ix-nav-menu (toggle opens, locks body scroll) and ix-nav-menu-close (close button reverses it). */
+/** ix-nav-menu (toggle opens, locks html and body scroll) and ix-nav-menu-close (close button reverses it). */
 function navMenu(): Cleanup {
   const menu = document.querySelector<HTMLElement>(".fk-nav-menu");
   if (!menu) return () => {};
 
   const setOpen = (open: boolean) => {
     menu.classList.toggle("is-menu-open", open);
+    // Both, as the interactions do: iOS Safari and Preview scroll through html, so body alone isn't a lock.
+    document.documentElement.style.overflow = open ? "hidden" : "";
     document.body.style.overflow = open ? "hidden" : "";
   };
 
@@ -110,9 +112,13 @@ function navMenu(): Cleanup {
   };
 }
 
-/** Call once per page, after the page markup has mounted. */
+/**
+ * Call once per page, after the page markup has mounted. It runs as a layout effect so the from-states
+ * IX3 holds at rest (blur reveal, Two Ways) are applied before the first paint: nothing flashes
+ * visible and then hides.
+ */
 export function useInteractions() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const cleanups = [
       reveal(),
       countIn(),

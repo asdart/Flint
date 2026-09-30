@@ -64,7 +64,10 @@
 .fk-button.is-secondary {
   border-color: var(--color-stone-50);
   background-color: var(--color-white);
-  background-image: none;
+  /* A transparent layer, not `none`: the Designer canvas ignores a stored `none` and paints the
+     base gradient on secondary buttons (found 2026-09-29). Same look, and the base gradient's
+     x-button-gradient exception is also scoped to `:not(.is-secondary)`. */
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
   box-shadow: inset 0px -1px 2px 0px rgba(0, 0, 0, 0.15);
   color: var(--color-ink);
   transition:

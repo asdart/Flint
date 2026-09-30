@@ -131,8 +131,8 @@ also gives `body`, `p`, `a`, `img`, `blockquote`, `h1`–`h4` these names). `upd
 
 ## Site head code (custom CSS exceptions)
 
-For the registered CSS exceptions (`x-button-gradient`, `x-text-rendering`; checked 2026-09-29,
-production). The repo source of the pasted block is `docs/webflow/custom-code/site-head.html`:
+For the registered CSS exceptions (`x-button-gradient`, `x-text-rendering`, `x-blur-reveal`; checked
+2026-09-29, production; the block was re-written the same day for the primary-only scope and the blur rule). The repo source of the pasted block is `docs/webflow/custom-code/site-head.html`:
 one `<style>` with a comment per exception id, each `var(--token)` renamed to
 `var(--_flint---token)`, `@property` and the `prefers-reduced-motion` media query exactly as in
 `src/styles/exceptions/*.css`, minified. Keep it in step with the exception files.
@@ -249,6 +249,14 @@ Payloads accepted by `create_interaction` (runtime verification in the archived 
 
 - **Infinite loop:** `timing: { duration: 20, ease: 0, repeat: -1 }`. `repeat` lives on each
   action, not on the timeline.
+- **Loops and carousels use To tweens plus Sets, not FromTo (2026-09-29).** A tween is `tt: 0` with
+  `properties: { "wf:transform": { "width": [null, "360px"] } }`; the resting state is one Set per animated
+  element, first in the action list: `{ "id": "s-sl2", "name": "Set slide 2", "targets": [{ "extensionKey": "wf:attribute", "value": "[data-how-slide=\"2\"]" }], "timing": { "duration": 0, "position": 0 }, "tt": 3, "properties": { "wf:transform": { "width": "360px", "height": "464px" } } }`
+  (bare values; no `repeat`; nothing else on that element at position 0). To rewrite an existing
+  timeline: read it with `get_interaction` (the client saves a large result to a file; slice it with
+  `python3`/`jq`), transform the JSON with a throwaway script (FromTo → To by keeping the `to` value, drop the
+  host-added `filterContext` except on `within` targets, prepend the Sets) and send the whole `timelines`
+  array (`{ id, actions }`) to `update_interaction`; a 34 KB / 103-action payload went through in one call.
 - **Multi-step loop (ticker, carousel):** give every action the same cycle length C with
   `repeatDelay = C − duration` and its own `position` inside the cycle, so all actions repeat in
   step. An action may sit at `position = C` (a "return to start" step).
@@ -263,9 +271,10 @@ Payloads accepted by `create_interaction` (runtime verification in the archived 
 - The host expands a combo leaf id into its chain (`[base, combo]`) on save; pass the leaf.
 - **Click and hover triggers on a data attribute** work: `target: { extensionKey: "wf:attribute",
   value: "[data-dot=\"how-1\"]" }` (used by `ix-how-carousel`).
+- **A Set that repeats with the loop** (non-animatable `wf:style` values such as `pointerEvents`): `tt: 3`, `timing: { duration: 0, repeat: -1, repeatDelay: <cycle>, position }`, `properties: { "wf:style": { pointerEvents: "auto" } }`, attribute target per slide. Accepted and read back (`ix-testimonials`, 15 of them, 2026-09-29); whether it fires again each cycle is a staging check.
 - **Generate big timelines with a throwaway Node script** (how the wave 3 carousels were built):
   one `act(id, name, target, position, duration, cycle, ease, props)` helper that sets
-  `repeatDelay = cycle − duration`, steps emitted from last to first, output printed as JSON.
+  `repeatDelay = cycle − duration`, output printed as JSON (order among To tweens doesn't matter).
 
 ### Spring as a CustomEase
 
@@ -280,6 +289,8 @@ Values above 1 (the overshoot) are fine. Accepted and stored as:
 ```
 
 Check the fit numerically before sending (max |bezier − spring| × travel in px).
+
+For the legacy testimonial spring (ω 6.5275, ζ 0.78, 1.4s) these segment bounds gave a max error of 0.0003 (0.11px on 340.8px), found by random search over the inner bounds: `[0, 0.0615, 0.13, 0.2094, 0.3106, 0.47, 0.62, 0.8, 1]`; the string it produced is in `ix-testimonials` (`i-1d31deaf`) and is accepted in `timing.ease` of every action (22 copies, ~27 KB payload, no budget problem).
 
 ## Upload an asset
 

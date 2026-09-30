@@ -20,11 +20,16 @@
 }
 
 /* A slide keeps the card's 396px layout width; its side margin cancels the space the scale takes
-   away, so the 24px track gap is the visible gap between cards. */
+   away, so the 24px track gap is the visible gap between cards.
+   Only the current slide receives the pointer (decision D-18, P-16 option b): side slides let it
+   through to the track, so hovering them still pauses the carousel but never opens a card, and
+   the current card is the only hoverable one. In Webflow the timeline moves the two values with
+   its slides (pointerEvents Sets), since IX3 can't move `is-center` without a margin snap. */
 .fk-testimonials-slide {
   flex: none;
   margin-inline: -39.6px;
   opacity: 0.6;
+  pointer-events: none;
   transform: scale(0.8);
   transform-origin: center center;
 }
@@ -32,5 +37,6 @@
 .fk-testimonials-slide.is-center {
   margin-inline: -23.76px;
   opacity: 1;
+  pointer-events: auto;
   transform: scale(0.88);
 }

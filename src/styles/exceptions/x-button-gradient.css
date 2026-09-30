@@ -1,7 +1,12 @@
 /* Exception x-button-gradient — docs/webflow/interactions.md → Custom-code exceptions.
    Site custom CSS, never pushed as classes. Webflow styles can't animate a gradient angle, and IX3
    can't animate custom properties. Install in Webflow with each var(--token) renamed to
-   var(--_flint---token). */
+   var(--_flint---token). Scoped to primary buttons. A secondary button is either the
+   `is-secondary` combo (repo) or, in Webflow, a Button instance set to a Secondary variant: the
+   instance carries the variant class `w-variant-<variant id>` and no `is-secondary`, so each
+   Secondary variant id is excluded too (Secondary, Secondary Small, Secondary Full; ids in
+   webflow-ids.json → UI / Button). Update this list if a secondary variant is added. `:where()`
+   keeps the selector at one class of specificity. */
 
 @property --fk-button-angle {
   syntax: "<angle>";
@@ -9,7 +14,14 @@
   initial-value: 349.52deg;
 }
 
-.fk-button {
+.fk-button:where(
+  :not(
+    .is-secondary,
+    .w-variant-57899b6f-69a6-184a-cf8a-969acb17f20a,
+    .w-variant-9c3538bc-98b5-55b0-dde6-8cb67534e29c,
+    .w-variant-6bcbf217-a9d7-dccf-f66a-ef13f68597e0
+  )
+) {
   background-image: linear-gradient(
     var(--fk-button-angle),
     var(--color-accent-rose) -32.33%,
@@ -23,12 +35,26 @@
     color 150ms ease-out;
 }
 
-.fk-button:hover:not(:active) {
+.fk-button:where(
+    :not(
+      .is-secondary,
+      .w-variant-57899b6f-69a6-184a-cf8a-969acb17f20a,
+      .w-variant-9c3538bc-98b5-55b0-dde6-8cb67534e29c,
+      .w-variant-6bcbf217-a9d7-dccf-f66a-ef13f68597e0
+    )
+  ):hover:not(:active) {
   --fk-button-angle: 529.52deg;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fk-button {
+  .fk-button:where(
+    :not(
+      .is-secondary,
+      .w-variant-57899b6f-69a6-184a-cf8a-969acb17f20a,
+      .w-variant-9c3538bc-98b5-55b0-dde6-8cb67534e29c,
+      .w-variant-6bcbf217-a9d7-dccf-f66a-ef13f68597e0
+    )
+  ) {
     transition:
       box-shadow 300ms ease-out,
       color 150ms ease-out;

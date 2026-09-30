@@ -26,7 +26,7 @@ contract in the repo · `to do` = not built yet.
 
 Nav links (static, in this order): Home `/`, Candidates `/candidates`, Facility partners
 `/facility-partners`, About `/about`, Blog `/blog`. The active link uses Webflow's automatic
-`w--current` state, styled on `fk-nav-link`. There is no per-page prop. **Designer step still open:** the `w--current` state of `fk-nav-link` and `fk-nav-menu-link` (`color-ink`, `classes.md` → `fk-nav`) can't be created through the MCP; until it is styled in the Designer the current page's link looks like the others.
+`w--current` state, styled on `fk-nav-link`. There is no per-page prop. **Link types (2026-09-29):** Webflow only adds `w--current` to links that point to a page, so the two Home links and both logos in `Global / Nav` are **page links** to Home. Candidates, Facility partners, About and Blog are still URLs because those pages don't exist yet: **switch each to a page link (`set_link` `linkType: "page"`, both the bar link and the menu link) when its page is built.** **Designer step still open:** the `w--current` state of `fk-nav-link` and `fk-nav-menu-link` (`color-ink`, `classes.md` → `fk-nav`) can't be created through the MCP; until it is styled in the Designer the current page's link looks like the others.
 
 The Nav holds one `UI / Button` (Secondary Small) that stays the same when the nav
 turns into a pill, plus a full-width Secondary in the mobile menu (the repo renders `is-secondary is-full`; an earlier version of this line said Primary). The menu toggle and close controls are native

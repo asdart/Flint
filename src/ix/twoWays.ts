@@ -6,6 +6,7 @@
 type Cleanup = () => void;
 
 const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
+const EASE_CTA = "cubic-bezier(0.42, 0, 0.58, 1)"; // the CSS ease-in-out the blur reveal uses (D-19)
 const AT = {
   card: 0,
   photoLead: 0.4,
@@ -105,6 +106,7 @@ export function twoWays(): Cleanup {
       center,
       facility,
       ...orbs,
+      cta,
       ...(eyebrowSplit?.words ?? []),
       ...(titleSplit?.words ?? []),
     ].filter((element): element is HTMLElement => !!element);
@@ -117,6 +119,7 @@ export function twoWays(): Cleanup {
     setTransform(facility, "scale(1.06)", "0");
     orbs.forEach((orb) => setTransform(orb, "", "0"));
     setTransform(body, "translateY(12px)", "0");
+    setTransform(cta, "translateY(16px)", "0");
     eyebrowSplit?.words.forEach((word) => setTransform(word, "translateY(115%)"));
     titleSplit?.words.forEach((word) => setTransform(word, "translateY(115%)"));
 
@@ -204,6 +207,14 @@ export function twoWays(): Cleanup {
       offset + AT.body,
       0.6,
     );
+    animate(
+      record.cta,
+      { opacity: "0", transform: "translateY(16px)" },
+      { opacity: "1", transform: "translateY(0px)" },
+      offset + AT.cta,
+      0.75,
+      EASE_CTA,
+    );
     if (record.cta) {
       timers.push(
         window.setTimeout(
@@ -226,6 +237,7 @@ export function twoWays(): Cleanup {
       setTransform(record.body, "translateY(0px)", "0.8");
       record.eyebrowWords.forEach((word) => setTransform(word, "translateY(0%)"));
       record.titleWords.forEach((word) => setTransform(word, "translateY(0%)"));
+      setTransform(record.cta, "translateY(0px)", "1");
       record.cta?.classList.add("is-revealed");
     });
   } else {

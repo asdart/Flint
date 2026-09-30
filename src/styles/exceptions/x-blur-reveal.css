@@ -1,0 +1,9 @@
+/* Exception x-blur-reveal — docs/webflow/interactions.md → Custom-code exceptions (decision D-19).
+   Site custom CSS, never pushed as classes. The blur's resting value lives here instead of on
+   `.fk-blur-reveal`: custom code doesn't run in the Designer, so the canvas and Preview show the
+   content unblurred, while the live site blurs it until ix-blur-reveal adds `is-revealed`. Opacity
+   and the 16px rise are IX3 (a FromTo in ix-blur-reveal), not CSS. */
+
+.fk-blur-reveal:not(.is-revealed) {
+  filter: blur(16px);
+}

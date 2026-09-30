@@ -80,7 +80,25 @@
     }
   },
   "collections": {},
-  "interactions": {},
+  "interactions": {
+    "ix-blur-reveal": "i-74d70492",
+    "ix-reveal": "i-331fb235",
+    "ix-reveal-stagger": "i-502321bb",
+    "ix-card-hover": "i-f1a03ed6",
+    "ix-nav-pill": "i-47aaf02a",
+    "ix-nav-pill-rest": "i-df9f00d6",
+    "ix-nav-menu": "i-c2d05f66",
+    "ix-nav-menu-close": "i-5a4d5b1c",
+    "ix-marquee": "i-8212d109",
+    "ix-ticker": "i-2e282254",
+    "ix-two-ways-card": "i-acfbd8cc",
+    "ix-two-ways-card-late": "i-a7085c23",
+    "ix-hero-arc": "i-dda772fb",
+    "ix-how-carousel": "i-92770673",
+    "ix-how-carousel-phone": "i-d27f08a0",
+    "ix-testimonials": "i-1d31deaf",
+    "ix-testimonial-hover": "i-14706c57"
+  },
   "assets": {
     "/assets/home/cta-ring.svg": {
       "id": "6abbd67e76b5d041f5e39e5a",
