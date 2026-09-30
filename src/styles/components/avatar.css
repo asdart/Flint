@@ -10,3 +10,18 @@
   background-color: var(--color-stone-50);
   object-fit: cover;
 }
+
+/* Large variant: the 44px author photo in Article Hero (Figma 5674:4052), 40px on phone (5683:4468).
+   No margin: the author block stacks the photo above the name. */
+.fk-avatar.is-lg {
+  width: 44px;
+  height: 44px;
+  margin-right: 0px;
+}
+
+@media screen and (max-width: 479px) {
+  .fk-avatar.is-lg {
+    width: 40px;
+    height: 40px;
+  }
+}

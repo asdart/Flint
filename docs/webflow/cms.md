@@ -84,11 +84,27 @@ Body decisions:
   rich text images with a caption.
 - `titleLines` (forced line breaks in the legacy featured title) is dropped. Control wrapping
   with the heading's max width instead.
-- The inline newsletter and CTA blocks are not content. The template places `UI / Newsletter Form`
-  and a CTA after the body.
-- The table of contents is generated from the body's H2s. That needs a script, so it is exception
-  `x-article-toc` in `interactions.md`. It's an open decision (roadmap P-02); until then the
-  template has no TOC. FAQ questions are H3s, so they stay out of an H2-based TOC.
+- The inline newsletter and CTA blocks are not content. The template places `Section / Newsletter`
+  (Stacked variant) after the body.
+- The table of contents is generated from the body's H2s by exception `x-article-toc`
+  (`interactions.md`; roadmap P-02 closed as (a), 2026-09-29). It is desktop only, sticky, with a
+  scroll-spy, and the script hides it when a post has no H2. FAQ questions are H3s, so they stay
+  out of an H2-based TOC.
+
+Posts template page (built in the repo 2026-09-29, `src/pages/BlogPostPage.tsx`; the Webflow build
+waits on the CMS import):
+
+- **Body:** the Rich Text element bound to `body`, styled by the Designer nested styles on
+  `fk-article-body` (`classes.md` → Rich Text nested styles, D-20).
+- **Quick answer:** the `fk-article-quick-answer` block uses conditional visibility on `quick-answer`
+  (hidden when empty).
+- **Author role:** the role line under the author name uses conditional visibility on the Author's
+  `role` (hidden when empty).
+- **Main image:** `main-image` is shown at its natural ratio (no crop), 552px wide at most, and
+  hidden on phones (roadmap D-21).
+- **Related:** a Collection List on Posts (table below), and the whole section is hidden when the
+  list is empty (roadmap D-22, exception `x-related-empty`).
+- **Newsletter:** `Section / Newsletter` (Stacked) sits after the body, before Related.
 
 ## Template SEO and alt text
 
@@ -103,7 +119,7 @@ image, `avatar` is the author's name (S-16). The post template also carries `x-s
 | Where | Collection | Filter | Sort | Limit | Pagination |
 | --- | --- | --- | --- | --- | --- |
 | Home — `Section / Post Grid` (Home) | Posts | — | Publish date ↓ | 3 | — |
-| Blog post — `Section / Post Grid` (Related) | Posts | Category = current post's category, exclude current (roadmap D-02) | Publish date ↓ | 3 | — |
+| Blog post — Related Posts (D-22, not Post Grid) | Posts | Category = current post's category, exclude current (roadmap D-02); section hidden when empty (`x-related-empty`) | Publish date ↓ | 3 | — |
 | Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page (numbered links: roadmap P-15) |
 | Blog — featured post | Posts | Featured = on | — | 1 | — |
 | Blog category template — `Section / Post Index` | Posts | Category = current category | Publish date ↓ | 6 | Native |

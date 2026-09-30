@@ -4,6 +4,7 @@ import Nav from "../components/global/Nav";
 import Button from "../components/ui/Button";
 import Dropdown from "../components/ui/Dropdown";
 import InputField from "../components/ui/InputField";
+import Newsletter from "../sections/Newsletter";
 import chevronDown from "../assets/icons/chevron-down.svg";
 import { useInteractions } from "../ix/useInteractions";
 
@@ -188,6 +189,43 @@ export default function StyleGuidePage() {
             </div>
           </div>
         </section>
+
+        <section className="fk-section">
+          <div className="fk-panel fk-bg-surface">
+            <div className="fk-container">
+              <div className="fk-flex fk-flex-col fk-gap-8 fk-max-w-article fk-mx-auto">
+                <h2 className="fk-heading-md">Article</h2>
+                <p className="fk-text-md fk-color-subtle">fk-article-quick-answer</p>
+                <div className="fk-article-quick-answer">
+                  <p className="fk-article-quick-answer-label">Quick Answer</p>
+                  <p className="fk-text-md fk-color-subtle">
+                    Most EB-3 nurses receive their visa number within a year of filing, depending on the priority date.
+                  </p>
+                </div>
+                <p className="fk-text-md fk-color-subtle">fk-article-body (Rich Text nested styles)</p>
+                <div className="fk-article-body w-richtext">
+                  <h2>What happens after you file</h2>
+                  <p>
+                    Your petition is reviewed, then your case moves to the <a href="#article">National Visa Center</a>.
+                    Keep every document you receive.
+                  </p>
+                  <ul>
+                    <li>Confirm your priority date</li>
+                    <li>Prepare your civil documents</li>
+                    <li>Schedule your interview</li>
+                  </ul>
+                  <ol>
+                    <li>File the petition</li>
+                    <li>Wait for the visa number</li>
+                  </ol>
+                  <blockquote>The process is long, but each step has a clear next action.</blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <Newsletter variant="stacked" />
 
         <section className="fk-section">
           <div className="fk-panel fk-bg-brand">

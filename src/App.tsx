@@ -1,13 +1,15 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import LegacyHomePage from "./pages/legacy/HomePage";
 import FacilitiesPage from "./pages/legacy/FacilitiesPage";
 import FacilityPartnersPage from "./pages/legacy/FacilityPartnersPage";
 import BlogPage from "./pages/BlogPage";
-import BlogPostPage from "./pages/legacy/BlogPostPage";
+import LegacyBlogPostPage from "./pages/legacy/BlogPostPage";
 import AboutPage from "./pages/legacy/AboutPage";
 import StyleGuidePage from "./pages/StyleGuidePage";
+
+const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 
 function ScrollToTop() {
   const { pathname, search } = useLocation();
@@ -30,7 +32,15 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog-categories/:slug" element={<BlogPage />} />
-          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route
+            path="/blog/:slug"
+            element={
+              <Suspense fallback={null}>
+                <BlogPostPage />
+              </Suspense>
+            }
+          />
+          <Route path="/legacy/blog/:slug" element={<LegacyBlogPostPage />} />
           <Route path="/style-guide" element={<StyleGuidePage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

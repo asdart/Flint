@@ -1,4 +1,5 @@
 import { useLayoutEffect } from "react";
+import { articleToc } from "./articleToc";
 import { blurReveal } from "./blurReveal";
 import { cardHover } from "./cardHover";
 import { dropdown } from "./dropdown";
@@ -135,6 +136,7 @@ export function useInteractions() {
       heroArc(),
       howCarousel(),
       testimonials(),
+      articleToc(),
     ];
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);

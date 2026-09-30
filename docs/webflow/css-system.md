@@ -98,6 +98,20 @@ Testimonial, Stat) stay on utilities (decided 2026-09-28: only Post Card for now
 Only geometry nothing else can express: hero arc, how-it-works carousel, testimonials slots, logo
 marquee track/fades, partners-map ticker, two-ways collage, CTA art, nav, card visuals.
 
+### Rich Text nested styles (2026-09-29, D-20)
+
+Elements inside a Rich Text element (`fk-article-body`) are styled by Designer **nested styles**, not
+by classes or utilities: `.fk-article-body <tag>` rules in `src/styles/components/article-body.css`
+mirror them, are seeded by hand once in the Designer and are never pushed by the scripts. It is the
+one exception to one selector per rule (`classes.md` → Rich Text nested styles).
+
+### Preview-only html/body clip (2026-09-29)
+
+`src/styles/webflow-base.css` sets `overflow-x: clip` on `html` and `body`. The legacy
+`src/index.css` sets `overflow-x: hidden` there, which makes body a scroll container that never
+scrolls and breaks `position: sticky` (the article TOC). Webflow's site has no such rule, so it is
+preview only, never pushed. Drop it together with the legacy `src/index.css`.
+
 ## Rules (contract 1.6)
 
 1. A utility never sets a property the element's main class sets: combos (0,2,0) beat single

@@ -21,6 +21,10 @@
   padding-bottom: var(--space-4);
 }
 
+.fk-section.is-padded-bottom-lg {
+  padding-bottom: var(--space-20);
+}
+
 .fk-section.is-open {
   padding: var(--space-32) var(--space-16);
 }
@@ -56,6 +60,10 @@
 
 .fk-panel.is-tight-bottom {
   padding-bottom: var(--space-12);
+}
+
+.fk-panel.is-tight {
+  padding: var(--space-4);
 }
 
 .fk-panel.is-snug {
@@ -153,6 +161,10 @@
 
   .fk-section.is-padded-bottom {
     padding-bottom: var(--space-2);
+  }
+
+  .fk-section.is-padded-bottom-lg {
+    padding-bottom: 0;
   }
 
   .fk-section.is-open {
