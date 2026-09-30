@@ -81,7 +81,7 @@ export default function PostIndex({ category }: PostIndexProps) {
                   ) : (
                     <EmptyState
                       title="No articles yet"
-                      body="Our first guides on green card sponsorship, licensing and relocation are coming soon. Subscribe below to get them first."
+                      body="Our first guides on green card sponsorship, licensing and relocation are coming soon."
                       button={{ label: "Subscribe", link: "#newsletter" }}
                     />
                   )
