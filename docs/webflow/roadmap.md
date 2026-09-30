@@ -44,8 +44,8 @@ next phase on production.
 
 The order the user agreed on 2026-09-30. Page pre-plans read from the final Figma frames are in [`plans/`](plans/) (D-33).
 
-1. **Close out Home and the Blog:** the [Blog sync carry-over](#blog-sync-carry-over) Designer checklist, the staging checks, then the track P exit criteria
-2. **Repo cleanup:** roadmap slimmed (decisions in `archive/decisions.md`), stray scratch file removed, merged `blog-post-page` branch deleted
+1. ~~**Close out Home and the Blog:**~~ **done 2026-09-30** (user closed it; the Designer checklist, newsletter submit and staging were confirmed by the user): the [Blog sync carry-over](#blog-sync-carry-over) Designer checklist, the staging checks, then the track P exit criteria
+2. ~~**Repo cleanup:**~~ **done 2026-09-30** (PR #1 merged into `webflow`): roadmap slimmed (decisions in `archive/decisions.md`), stray scratch file removed, merged `blog-post-page` branch deleted
 3. **Shared carousel (D-37):** build `x-carousel`, swap it onto Home (How It Works, Testimonials), and check swipe and backward navigation on staging
 4. **Candidates** ([plan](plans/candidates.md)): Hero (ring of 12 avatars, orbit from the legacy `ProximityOrbit`), Stats Band Default, Role Grid (reuse), How It Works (5 rows, `x-illustrations`), Testimonials with arrows, FAQ, arc-carousel CTA (D-34)
 5. **Facility partners** ([plan](plans/facility-partners.md)): Hero, Logo Marquee (reuse), Stats Band Default (reuse), Media Split ×3 with `x-illustrations`, Feature Grid Benefits, Testimonials (text cards), Apply Form (Webflow inbox, P-05)
