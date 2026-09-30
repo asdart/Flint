@@ -96,8 +96,8 @@ function navMenu(): Cleanup {
   const setOpen = (open: boolean) => {
     menu.classList.toggle("is-menu-open", open);
     // Both, as the interactions do: iOS Safari and Preview scroll through html, so body alone isn't a lock.
-    document.documentElement.style.overflow = open ? "hidden" : "";
-    document.body.style.overflow = open ? "hidden" : "";
+    document.documentElement.classList.toggle("fk-nav-lock", open);
+    document.body.classList.toggle("fk-nav-lock", open);
   };
 
   const onClick = (event: MouseEvent) => {

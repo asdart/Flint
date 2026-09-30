@@ -45,6 +45,14 @@
     box-shadow 220ms ease-out 324ms;
 }
 
+/* Scroll lock on html and body while the menu is open (ix-nav-menu / -close add and remove it).
+   A class, not an interaction `overflow` style Set: GSAP writes `transform: translate3d(0, 0, 0)`
+   on any element it styles, and a transform on body makes it the containing block of the fixed
+   menu, which then sits at the top of the page instead of the viewport. */
+.fk-nav-lock {
+  overflow: hidden;
+}
+
 .fk-nav-logo {
   position: relative;
   display: flex;
