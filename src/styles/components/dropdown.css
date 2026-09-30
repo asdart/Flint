@@ -2,8 +2,11 @@
    input field (`fk-input-field is-select`, input-field.css) and Webflow supplies open/close and the
    `w--open` state. The list holds plain links (`w--current` marks the current one). */
 
+/* margin: 0 cancels Webflow's own `.w-dropdown { margin-left/right: auto }`, which would center the
+   dropdown inside a flex row (the repo preview's webflow-base.css doesn't carry that rule). */
 .fk-dropdown {
   width: 262px;
+  margin: 0;
 }
 
 .fk-dropdown-list {

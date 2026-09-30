@@ -20,7 +20,8 @@ type NewsletterProps = {
  * - Default: a full-width snug panel with a row (title left, 400px form right; stacks at Tablet).
  * - Stacked: a 720px (article width) centered panel with 16px padding and a centered column (title
  *   above the 400px form), used right after an article body. Its section adds 80px bottom padding
- *   (Tablet and up) to space the next panel. On phones it is the same full-width card as Default.
+ *   (Tablet and up) to space the next panel. On phones it is a full-width card too, but keeps its
+ *   16px panel padding and centered column.
  */
 export default function Newsletter({
   variant = "default",

@@ -4,8 +4,9 @@ import Nav from "../components/global/Nav";
 import Button from "../components/ui/Button";
 import Dropdown from "../components/ui/Dropdown";
 import InputField from "../components/ui/InputField";
+import PostCard from "../components/ui/PostCard";
+import { latestPosts } from "../content";
 import Newsletter from "../sections/Newsletter";
-import chevronDown from "../assets/icons/chevron-down.svg";
 import { useInteractions } from "../ix/useInteractions";
 
 // Draft page "Style Guide" at /style-guide — roadmap phase 2. Visual QA of every registered
@@ -123,29 +124,33 @@ export default function StyleGuidePage() {
               <div className="fk-flex fk-flex-col fk-gap-6">
                 <h2 className="fk-heading-md">Input field</h2>
                 <p className="fk-text-md fk-color-subtle">
-                  UI / Input Field: medium and large, with an icon, with a phone prefix, disabled, and the Action variation with a
-                  submit Button (stacks on phones). Hover and focus a field to see the states.
+                  UI / Input Field: the newsletter email field (Action layout) with its submit Button, inside a form. Hover and focus it
+                  to see the states. The other sizes and layouts exist only in the repo until a second form needs them (roadmap D-24).
                 </p>
-                <div className="fk-flex fk-flex-col fk-gap-4 fk-max-w-content-sm">
-                  <InputField label="Medium" name="Medium" placeholder="e.g. Maria" />
-                  <InputField label="Large" name="Large" placeholder="e.g. Maria" size="large" />
-                  <InputField label="With icon" name="Icon" placeholder="e.g. Maria" icon={chevronDown} />
-                  <InputField
-                    label="Phone number"
-                    name="Phone"
-                    type="tel"
-                    placeholder="e.g. Maria"
-                    prefix={
-                      <>
-                        <img className="fk-flag" src="/assets/flags/us.svg" alt="" width={20} height={20} />
-                        <img className="fk-input-field-icon" src={chevronDown} alt="" width={20} height={20} />
-                      </>
-                    }
-                  />
-                  <InputField label="Disabled" name="Disabled" placeholder="e.g. Maria" disabled />
-                  <InputField variant="action" label="Email address" name="Email" type="email" placeholder="Email address">
-                    <Button submit label="Subscribe" className="fk-w-full-mobile" />
-                  </InputField>
+                <div className="w-form">
+                  <form name="wf-form-Style-guide" data-name="Style guide" method="get" aria-label="Input field samples">
+                    <div className="fk-flex fk-flex-col fk-gap-4 fk-max-w-content-sm">
+                      <InputField variant="action" label="Email address" name="Email" type="email" placeholder="Email address" required>
+                        <Button submit label="Subscribe" className="fk-w-full-mobile" />
+                      </InputField>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="fk-section">
+          <div className="fk-panel fk-bg-surface">
+            <div className="fk-container">
+              <div className="fk-flex fk-flex-col fk-gap-6">
+                <h2 className="fk-heading-md">Post card</h2>
+                <p className="fk-text-md fk-color-subtle">UI / Post Card: image, title, excerpt, author and read time, all bound to a Post per instance.</p>
+                <div className="fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-4">
+                  {latestPosts(1).map((post) => (
+                    <PostCard key={post.slug} post={post} />
+                  ))}
                 </div>
               </div>
             </div>
@@ -225,6 +230,7 @@ export default function StyleGuidePage() {
           </div>
         </section>
 
+        <Newsletter />
         <Newsletter variant="stacked" />
 
         <section className="fk-section">

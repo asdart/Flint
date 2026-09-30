@@ -15,7 +15,8 @@
   },
   "pages": {
     "/": "6ab9ba4ceffb3329202448f2",
-    "/style-guide": "6abbf07b612d4c02ed5bebf4"
+    "/style-guide": "6abbf07b612d4c02ed5bebf4",
+    "/blog": "6abc95f3d5879b11ae14b088"
   },
   "components": {
     "UI / Button": {
@@ -76,6 +77,59 @@
       "id": "81e772c9-b314-2383-f182-9e6b409a82fc",
       "props": {
         "Body": "fa78bc91-fbbe-5cd6-3e54-0337fbd2a098"
+      }
+    },
+    "UI / Dropdown": {
+      "id": "d65ee1fa-7a35-366a-4fc0-5d772a2776ad",
+      "props": {
+        "Variant": "2f9203a1-8fb5-8381-2249-aaee2a56a1eb",
+        "Label": "1ed2b917-ebdf-b581-1d42-a79f6cc2fdab",
+        "Menu Label": "7616727e-b05c-2346-365c-84ede8442c5f"
+      },
+      "slots": {
+        "Options": "e3bf7f8a-36ce-457b-ad30-164eae4543e4"
+      },
+      "variants": {
+        "Medium": "base",
+        "Large": "6e4fecdf-3495-1155-b126-ec90157af977",
+        "Selected": "e059f8b9-30ea-477f-57b1-8339499a6b5a",
+        "Large Selected": "b2166013-6e6c-e6f4-5f43-e237adf29416"
+      }
+    },
+    "UI / Post Card": {
+      "id": "f16b4d3c-357d-08f2-12b5-ee8c4c807020",
+      "props": {
+        "Image": "a2f3de4a-7781-e26a-eb3b-5996bd60bfe6",
+        "Title": "34b09d67-5907-d0bc-7593-6c93eda0908a",
+        "Excerpt": "f6dcb55e-f275-9758-bc34-843f29244901",
+        "Avatar": "0a16c3e2-ea12-15d2-61cd-71db4117e86e",
+        "Author": "08a9446c-68e8-d1b4-cca1-096db272ec32",
+        "Read Time": "c81b3980-b76d-c8e1-0627-2d779cf22c8a",
+        "Link": "46b3e21e-fe69-2aea-00a7-e3f998f72b57"
+      }
+    },
+    "UI / Input Field": {
+      "id": "e7a87f07-0d64-7333-a929-de8fbcc186fc",
+      "props": {
+        "Label": "b8686228-893e-bbcb-1e81-51c5785b32e4",
+        "Show Icon": "338a8593-e146-ba46-cdc9-4c2336470d1b",
+        "Icon": "283f5acf-ade7-7ceb-c8e2-a7218ad8128f",
+        "Button Label": "af1dd1fa-3baa-61a4-b111-ccccc6323142"
+      },
+      "slots": {}
+    },
+    "Section / Newsletter": {
+      "id": "b6ee1b60-c51f-1591-fb74-21a33171caec",
+      "props": {
+        "Variant": "30c2d06e-bd86-f915-cf3f-c22c4858f906",
+        "Title": "6f9174df-ed7c-419e-ebcb-e04ef0b70b44",
+        "Button Label": "03d9a0c3-a15b-603b-bb9f-65fac798b049",
+        "Success Message": "ef7c927f-f604-92c6-e500-18e0f2b5c839",
+        "Error Message": "1469cdd7-c317-4d8f-f760-527a8ad906ab"
+      },
+      "variants": {
+        "Default": "base",
+        "Stacked": "86bf4414-d1ca-f81e-2dc5-f5494d9765a2"
       }
     }
   },
@@ -524,6 +578,22 @@
     "src/assets/icons/x-mark.svg": {
       "id": "6abbec1295c6eccb4fdecc9c",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec1295c6eccb4fdecc9c_x-mark.svg"
+    },
+    "/assets/blog/hero-art.webp": {
+      "id": "6abc8bc713d2130b4ef86a98",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc8bc713d2130b4ef86a98_hero-art.webp"
+    },
+    "src/assets/icons/chevron-down.svg": {
+      "id": "6abc8bc8bb3a67906c34d4bf",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc8bc8bb3a67906c34d4bf_chevron-down.svg"
+    },
+    "src/assets/icons/arrow-left.svg": {
+      "id": "6abc8bc88fba5bbb302cd54d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc8bc88fba5bbb302cd54d_arrow-left.svg"
+    },
+    "src/assets/icons/arrow-right.svg": {
+      "id": "6abc8bc88fba5bbb302cd57e",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc8bc88fba5bbb302cd57e_arrow-right.svg"
     }
   },
   "variableCollections": {
@@ -594,6 +664,34 @@
     "width-container-md": "variable-64912cfd-2974-3dfb-fe49-8021bc26f227",
     "width-content": "variable-d7261268-3544-0a6c-c094-dd0f31885343",
     "width-content-sm": "variable-582548b9-7a05-9ca6-e01f-33fc66081aae",
-    "width-nav-pill": "variable-a86919ed-e333-2b2a-7c49-1c4ffd39b775"
+    "width-nav-pill": "variable-a86919ed-e333-2b2a-7c49-1c4ffd39b775",
+    "width-article": "variable-5c5f78f5-b579-9031-854c-fbaf016bcf7c"
+  },
+  "pageElements": {
+    "/ Post Grid (Home)": {
+      "section": "65721f28-9acf-b64a-b0f0-71b6d18e3637",
+      "buttonInstance": "18100e56-2cc3-8bbf-2e11-3f9ddb7a17de",
+      "collectionWrapper": "4802fd99-4f56-b19f-a2bb-e4ce38e666de",
+      "collectionList": "4802fd99-4f56-b19f-a2bb-e4ce38e666df",
+      "collectionItem": "4802fd99-4f56-b19f-a2bb-e4ce38e666e0",
+      "postCardInstance": "8d37a029-e9a9-9037-3473-0fe3175fd9bd"
+    },
+    "/blog": {
+      "fkPage": "63732199-7797-a509-955e-af3bd8a7d748",
+      "main": "63732199-7797-a509-955e-af3bd8a7d747",
+      "nav": "de3b6b14-88c2-077c-11f6-9c527e992fd3",
+      "footer": "8a763c27-58a4-2925-d777-357b712aaf14",
+      "blogHeroSection": "facca257-9845-e812-4eb0-0bb92211d551",
+      "featuredWrapper": "02ff78a9-bbf8-ffde-37ca-9b9d9eaa7e90",
+      "featuredItem": "02ff78a9-bbf8-ffde-37ca-9b9d9eaa7e92",
+      "featuredLink": "f38cdce6-bebc-4b8b-656d-43fcefe8bc04",
+      "newsletterInstance": "2a6032ec-5661-8313-526b-4d0b2222fc79",
+      "postIndexSection": "bce71260-a339-380c-c949-d8f1288672a5",
+      "dropdownInstance": "ab695027-5803-9893-6184-ee32dff70876",
+      "postsWrapper": "c0fd93a2-7900-f11b-6985-eea7b7160c5b",
+      "postsItem": "c0fd93a2-7900-f11b-6985-eea7b7160c5d",
+      "postCardInstance": "39fbc318-e15b-3426-97c6-dddafd60960c",
+      "pagination": "01d88026-0908-174c-d940-e395dab05e4e"
+    }
   }
 }

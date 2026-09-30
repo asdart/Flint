@@ -118,10 +118,10 @@ image, `avatar` is the author's name (S-16). The post template also carries `x-s
 
 | Where | Collection | Filter | Sort | Limit | Pagination |
 | --- | --- | --- | --- | --- | --- |
-| Home — `Section / Post Grid` (Home) | Posts | — | Publish date ↓ | 3 | — |
+| Home — `Section / Post Grid` (Home) | Posts | — | Publish date ↓ | 3 | — (on Webflow 2026-09-30, ids in `webflow-ids.json` → `pageElements`) |
 | Blog post — Related Posts (D-22, not Post Grid) | Posts | Category = current post's category, exclude current (roadmap D-02); section hidden when empty (`x-related-empty`) | Publish date ↓ | 3 | — |
-| Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page (numbered links: roadmap P-15) |
-| Blog — featured post | Posts | Featured = on | — | 1 | — |
+| Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page (numbered links: roadmap P-15). On Webflow 2026-09-30: `pagination` = `{ "itemsPerPage": 6 }` (`limit` stays the default 100) |
+| Blog — featured post | Posts | Featured = on | Publish date ↓ | 1 | — (on Webflow 2026-09-30: `filters` = `[{ "fieldSlug": "featured", "operator": "isOn" }]`) |
 | Blog category template — `Section / Post Index` | Posts | Category = current category | Publish date ↓ | 6 | Native |
 | Category links in the Post Index's Dropdown (`fk-dropdown`) | Categories | — | Name ↑ | all | — |
 
