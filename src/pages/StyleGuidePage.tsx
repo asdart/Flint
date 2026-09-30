@@ -6,6 +6,7 @@ import Dropdown from "../components/ui/Dropdown";
 import InputField from "../components/ui/InputField";
 import PostCard from "../components/ui/PostCard";
 import { latestPosts } from "../content";
+import ArticleNewsletter from "../sections/ArticleNewsletter";
 import Newsletter from "../sections/Newsletter";
 import { useInteractions } from "../ix/useInteractions";
 
@@ -105,12 +106,11 @@ export default function StyleGuidePage() {
             <div className="fk-container">
               <div className="fk-flex fk-flex-col fk-gap-6">
                 <h2 className="fk-heading-md">Dropdown</h2>
-                <p className="fk-text-md fk-color-subtle">UI / Dropdown: placeholder look, options slot (the first link is the current one)</p>
+                <p className="fk-text-md fk-color-subtle">UI / Dropdown: placeholder look, options slot (plain links, as on the blog: the current option is left out of the list, D-28)</p>
                 <div className="fk-flex fk-items-start">
-                  <Dropdown>
-                    <a href="#all" className="fk-dropdown-link w-dropdown-link w--current">All</a>
-                    <a href="#careers" className="fk-dropdown-link w-dropdown-link">Careers</a>
-                    <a href="#licensing" className="fk-dropdown-link w-dropdown-link">Licensing</a>
+                  <Dropdown label="All categories" menuLabel="Filter by category">
+                    <a href="#careers" className="fk-dropdown-link">Careers</a>
+                    <a href="#licensing" className="fk-dropdown-link">Licensing</a>
                   </Dropdown>
                 </div>
               </div>
@@ -231,7 +231,7 @@ export default function StyleGuidePage() {
         </section>
 
         <Newsletter />
-        <Newsletter variant="stacked" />
+        <ArticleNewsletter />
 
         <section className="fk-section">
           <div className="fk-panel fk-bg-brand">

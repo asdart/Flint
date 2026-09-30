@@ -15,15 +15,20 @@ type PostIndexProps = {
 /**
  * Section / Post Index. Page markup: the feed is a Collection List (Posts, Publish date ↓, 6 per
  * page, filtered to the current category on a category template page) with native pagination, and
- * the category select is `UI / Dropdown` holding links to the category pages, so nothing here
- * needs a script. The wrapper, list and `role="listitem"` divs mirror Webflow's
+ * the category select is `UI / Dropdown` whose slot holds a Collection List of Categories (sorted by
+ * name, current one excluded) plus, on a category page, a static "All categories" link (D-28), so
+ * nothing here needs a script. The wrapper, list and `role="listitem"` divs mirror Webflow's
  * Collection List Wrapper, Collection List and Collection Item.
  */
 export default function PostIndex({ category }: PostIndexProps) {
   const [params] = useSearchParams();
   const current = category ? categoryBySlug(category) : undefined;
   const { posts, page, totalPages } = postPage(category, Number(params.get("page")) || 1);
-  const basePath = current ? `/blog-categories/${current.slug}` : "/blog";
+  // Collection List "Categories": sorted by name, the current category filtered out ("not current").
+  const categoryOptions = [...categories]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .filter((item) => item.slug !== current?.slug);
+  const basePath = current ? `/categories/${current.slug}` : "/blog";
   const pageHref = (n: number) => (n === 1 ? basePath : `${basePath}?page=${n}`);
 
   return (
@@ -39,19 +44,23 @@ export default function PostIndex({ category }: PostIndexProps) {
                 <div className="fk-blur-reveal">
                   <h2 className="fk-heading-lg">All posts</h2>
                 </div>
-                <Dropdown label={current ? current.name : "All"} selected={Boolean(current)} menuLabel="Categories">
-                  <SmartLink href="/blog" className={cx("fk-dropdown-link w-dropdown-link", !current && "w--current")}>
-                    All
-                  </SmartLink>
-                  {categories.map((item) => (
-                    <SmartLink
-                      key={item.slug}
-                      href={`/blog-categories/${item.slug}`}
-                      className={cx("fk-dropdown-link w-dropdown-link", current?.slug === item.slug && "w--current")}
-                    >
-                      {item.name}
+                <Dropdown label={current ? current.name : "All categories"} selected={Boolean(current)} menuLabel="Filter by category">
+                  {current ? (
+                    <SmartLink href="/blog" className="fk-dropdown-link">
+                      All categories
                     </SmartLink>
-                  ))}
+                  ) : null}
+                  <div>
+                    <div role="list">
+                      {categoryOptions.map((item) => (
+                        <div key={item.slug} role="listitem">
+                          <SmartLink href={`/categories/${item.slug}`} className="fk-dropdown-link">
+                            {item.name}
+                          </SmartLink>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </Dropdown>
               </div>
               <div>

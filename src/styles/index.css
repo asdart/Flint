@@ -21,7 +21,7 @@
 @import "./components/featured-post.css";
 @import "./components/breadcrumb.css";
 @import "./components/article.css";
-@import "./components/article-body.css";
+@import "./exceptions/x-article-body.css";
 @import "./components/dropdown.css";
 @import "./components/pagination.css";
 @import "./components/input-field.css";

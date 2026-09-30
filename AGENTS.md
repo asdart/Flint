@@ -4,9 +4,10 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.8 (2026-09-29). 1.8 adds Rich Text nested styles (roadmap D-20,
-  [`classes.md`](docs/webflow/classes.md)): the `.fk-article-body <tag>` descendant rules are Designer
-  nested styles, seeded by hand once, the one exception to one selector per rule. 1.7 adds the mixed section model (rule 6, §3, §4, roadmap
+- **Contract version:** 1.9 (2026-09-30). 1.9: the Rich Text descendant rules (`.fk-article-body <tag>`) are the custom-code
+  exception `x-article-body` (roadmap D-25, `src/styles/exceptions/x-article-body.css`, installed in the Posts template head),
+  replacing 1.8's Designer nested styles (D-20 amended). 1.8 added Rich Text descendant rules (roadmap D-20,
+  [`classes.md`](docs/webflow/classes.md)), the one exception to one selector per rule. 1.7 adds the mixed section model (rule 6, §3, §4, roadmap
   D-17): only sections used, or planned, on more than one page become `Section /` components; the
   others are plain page markup until a second page needs them. 1.6 adds the utilities layer (rules 3 and 4,
   [`css-system.md`](docs/webflow/css-system.md)): generated, token-valued utility classes stacked
@@ -146,7 +147,7 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
 | `:hover`, `:active`, `:focus-visible` in CSS | Hover / Pressed / Focused (keyboard) states |
 | `/assets/…` paths | Uploaded assets; hosted URLs and ids in `docs/webflow/webflow-ids.json` |
 | `src/assets/icons/*.svg` imported into a component | Uploaded asset in an Image element (`fk-icon`, or a block's own `-icon` class), empty alt inside a labelled control. Upload with `scripts/webflow-upload.mjs` |
-| `src/styles/components/article-body.css` `.fk-article-body <tag>` rules | Designer nested styles on the Rich Text class, seeded once by hand (the MCP can't create them); never pushed by scripts |
+| `src/styles/exceptions/x-article-body.css` `.fk-article-body <tag>` rules | Site-exception custom code (`x-article-body`, D-25): a minified `<style>` in the Posts template head with `var(--token)` renamed `var(--_flint---token)`; never pushed as classes |
 | `src/styles/exceptions/*.css` | Site custom code for a registered exception (`interactions.md`), never pushed as classes |
 | `src/components/global/*.tsx` | Components in group `Global` |
 | `src/components/ui/*.tsx` | Components in group `UI` |

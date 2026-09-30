@@ -11,12 +11,12 @@ type DropdownProps = {
   menuLabel?: string;
   /** Medium is 40px, large 48px (the input field sizes). */
   size?: "medium" | "large";
-  /** Slot: the `fk-dropdown-link w-dropdown-link` links (a Collection List or static links). */
+  /** Slot: the `fk-dropdown-link` links (a Collection List or static links). */
   children: ReactNode;
 };
 
 /**
- * UI / Dropdown. Webflow's native Dropdown element (`w-dropdown*` classes next to the `fk-*` ones; the toggle is an
+ * UI / Dropdown. Webflow's native Dropdown element (`w-dropdown*` classes on the wrapper, toggle and list next to the `fk-*` ones; the links are plain `fk-dropdown-link`; the toggle is an
  * input field, `fk-input-field is-select`;
  * Webflow does open/close, the preview's src/ix/dropdown.ts stands in for it). The options are a
  * slot because a component can't hold a bound Collection List.
@@ -35,7 +35,7 @@ export default function Dropdown({ label = "All", selected = false, menuLabel = 
         <img className="fk-input-field-icon" src={chevronDown} alt="" width={20} height={20} />
       </div>
       <nav className="fk-dropdown-list w-dropdown-list" aria-label={menuLabel}>
-        {children}
+        <div>{children}</div>
       </nav>
     </div>
   );

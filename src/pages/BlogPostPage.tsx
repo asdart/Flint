@@ -5,7 +5,7 @@ import { postBySlug, type PostWithRefs } from "../content";
 import { useInteractions } from "../ix/useInteractions";
 import ArticleBody from "../sections/ArticleBody";
 import ArticleHero from "../sections/ArticleHero";
-import Newsletter from "../sections/Newsletter";
+import ArticleNewsletter from "../sections/ArticleNewsletter";
 import RelatedPosts from "../sections/RelatedPosts";
 
 // The Posts CMS template page at /blog/{slug}. The current item is resolved here and handed to the
@@ -28,7 +28,7 @@ function PostTemplate({ post }: { post: PostWithRefs }) {
       <main>
         <ArticleHero post={post} />
         <ArticleBody post={post} />
-        <Newsletter variant="stacked" />
+        <ArticleNewsletter />
         <RelatedPosts post={post} />
       </main>
       <Footer />

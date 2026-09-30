@@ -6,7 +6,7 @@ import BlogHero from "../sections/BlogHero";
 import Newsletter from "../sections/Newsletter";
 import PostIndex from "../sections/PostIndex";
 
-// Blog at /blog, and the Blog category template at /blog-categories/:slug (same sections, the feed
+// Blog at /blog, and the Blog category template at /categories/:slug (same sections, the feed
 // filtered to the category).
 export default function BlogPage() {
   const { slug } = useParams();

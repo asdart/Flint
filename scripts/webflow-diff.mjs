@@ -19,7 +19,12 @@ if (!dumpPath || files.length === 0) {
   process.exit(1);
 }
 
-const dump = JSON.parse(readFileSync(dumpPath, "utf8"));
+let dump = JSON.parse(readFileSync(dumpPath, "utf8"));
+// The MCP client saves large results as a JSON array of { type: "text", text: "<json>" } blocks: pick the
+// block that holds the get_styles result ({ label, action, result: [...] }).
+if (Array.isArray(dump) && dump.length && typeof dump[0]?.text === "string") {
+  dump = dump.map((block) => { try { return JSON.parse(block.text); } catch { return null; } }).find((j) => Array.isArray(j?.result)) ?? dump;
+}
 const styles = dump.result ?? dump;
 const ids = JSON.parse(readFileSync(new URL("../docs/webflow/webflow-ids.json", import.meta.url), "utf8"));
 const variableNames = Object.fromEntries(Object.entries(ids.variables).map(([name, id]) => [id, name]));

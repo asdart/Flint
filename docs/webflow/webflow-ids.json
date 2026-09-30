@@ -1,5 +1,5 @@
 {
-  "$comment": "Ids of everything created on the production Webflow site by MCP syncs (see sync-log.md). Site and site instruction recorded in roadmap step P.1 (2026-09-29); the rest is filled as track P.2 runs. Update by id or name; never re-create an entry listed here. Shapes: site {id, homePageId}; pages {\"/path\": id}; components {\"Group / Name\": {id, props: {Prop: id}, variants?: {Variant name: id}}} (props include the auto-created `Variant` prop when the component has variants; the base variant id is `base`; the Webflow component itself is named without its group, e.g. name `Button`, group `UI`); collections {name: {id, fields?, items?}}; interactions {name: id}; assets {repo path (/assets/… or src/assets/…): {id, url}}; variableCollections {name: id}; variables {token name: id}. The test site's ids are archived in archive/test-site/webflow-ids.json.",
+  "$comment": "Ids of everything created on the production Webflow site by MCP syncs (see sync-log.md). Site and site instruction recorded in roadmap step P.1 (2026-09-29); the rest is filled as track P.2 runs. Update by id or name; never re-create an entry listed here. Shapes: site {id, homePageId}; pages {\"/path\": id}; components {\"Group / Name\": {id, props: {Prop: id}, variants?: {Variant name: id}}} (props include the auto-created `Variant` prop when the component has variants; the base variant id is `base`; the Webflow component itself is named without its group, e.g. name `Button`, group `UI`); collections {name: {id, fields?, items?}}; interactions {name: id}; scripts {registered script id: {displayName, version, appliedTo, hostedLocation}}; customCode {place: what it holds}; assets {repo path (/assets/… or src/assets/…): {id, url}}; variableCollections {name: id}; variables {token name: id}. The test site's ids are archived in archive/test-site/webflow-ids.json.",
   "site": {
     "id": "6ab9ba4aeffb3329202448ee",
     "homePageId": "6ab9ba4ceffb3329202448f2"
@@ -16,7 +16,9 @@
   "pages": {
     "/": "6ab9ba4ceffb3329202448f2",
     "/style-guide": "6abbf07b612d4c02ed5bebf4",
-    "/blog": "6abc95f3d5879b11ae14b088"
+    "/blog": "6abc95f3d5879b11ae14b088",
+    "Categories Template (/categories/{slug}, slug detail_categories)": "6abc6c8adc4bd2e2066e91ea",
+    "Posts Template (/blog/{slug}, slug detail_blog)": "6abc6c9673c0a3345b7a94bd"
   },
   "components": {
     "UI / Button": {
@@ -48,6 +50,11 @@
     "Global / Nav": {
       "id": "d411a8cc-2529-1e3e-b6aa-237ec7231143",
       "props": {}
+    },
+    "Global / Featured post": {
+      "id": "4a57770e-f0a2-856c-9c05-60c32305f6cf",
+      "props": {},
+      "note": "Built by the user in the Designer 2026-09-30 (Collection List inside, no props, no variants). Repo: src/components/global/FeaturedPost.tsx. 2 instances: /blog and the Categories template."
     },
     "Global / Footer": {
       "id": "4920c00b-a26a-32ea-3bf1-c7b8ccef1a41",
@@ -128,15 +135,20 @@
         "Error Message": "1469cdd7-c317-4d8f-f760-527a8ad906ab"
       },
       "variants": {
-        "Default": "base",
-        "Stacked": "86bf4414-d1ca-f81e-2dc5-f5494d9765a2"
+        "Default": "base"
+      },
+      "removedVariants": {
+        "Stacked": {
+          "id": "86bf4414-d1ca-f81e-2dc5-f5494d9765a2",
+          "note": "Removed: deleted in the Designer 2026-09-30 (D-27). The id is dead, kept only as a record; the component description was retitled through the MCP on 2026-09-30 (blog follow-ups 3)."
+        }
       }
     }
   },
   "collections": {
     "Categories": {
       "id": "6abc6c89dc4bd2e2066e91e4",
-      "slug": "blog-categories",
+      "slug": "categories",
       "fields": {
         "name": "94195af35f4861a93177b016e305fba2",
         "slug": "29b6e1d54aa51cfa5d7f3ff1a986a07b"
@@ -189,6 +201,21 @@
     "ix-how-carousel-phone": "i-d27f08a0",
     "ix-testimonials": "i-1d31deaf",
     "ix-testimonial-hover": "i-14706c57"
+  },
+  "scripts": {
+    "xarticletoc": {
+      "id": "xarticletoc",
+      "displayName": "xArticleToc",
+      "version": "1.0.0",
+      "appliedTo": "Posts template 6abc6c9673c0a3345b7a94bd, footer",
+      "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6abcaefd329408191a9ae7c4%2Fxarticletoc-1.0.0.js",
+      "source": "docs/webflow/custom-code/post-template-footer.html (script body)"
+    }
+  },
+  "customCode": {
+    "siteHead": "<style> x-button-gradient, x-text-rendering, x-blur-reveal; source docs/webflow/custom-code/site-head.html",
+    "postsTemplateHead": "<style> x-related-empty + x-article-body on Posts template 6abc6c9673c0a3345b7a94bd (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/post-template-head-style.html",
+    "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)"
   },
   "assets": {
     "/assets/blog/posts/can-healthcare-workers-on-tps-daca-or-asylum-get-eb-3-green-card-sponsorship.webp": {
@@ -692,6 +719,50 @@
       "postsItem": "c0fd93a2-7900-f11b-6985-eea7b7160c5d",
       "postCardInstance": "39fbc318-e15b-3426-97c6-dddafd60960c",
       "pagination": "01d88026-0908-174c-d940-e395dab05e4e"
+    },
+    "/categories (Categories template)": {
+      "pageId": "6abc6c8adc4bd2e2066e91ea",
+      "body": "6abc6c8adc4bd2e2066e91f2",
+      "fkPage": "2d59368e-04e4-c971-2d50-fc7e2ed5f668",
+      "main": "2d59368e-04e4-c971-2d50-fc7e2ed5f667",
+      "nav": "f69a2317-0a63-0621-3f97-e686eaef94c9",
+      "footer": "fb8a500f-cfa9-cb8f-a789-1043807b9bf9",
+      "blogHeroSection": "47eeda27-90b4-3d49-6591-f2a0359ee8c9",
+      "heroArtImage": "d3906d35-c5f4-83c2-d5e1-3a8b9f2ffdfd",
+      "featuredWrapper": "80273e65-a206-fc5c-e5a7-8a5413797097",
+      "featuredItem": "80273e65-a206-fc5c-e5a7-8a5413797099",
+      "featuredLink": "261fc84a-e561-a61d-a752-fafbd9f4ed66",
+      "newsletterInstance": "e2565d6b-a4f2-3905-eb7d-f7a6f23bd1a1",
+      "postIndexSection": "a2d6999a-21bf-bcaa-8caf-26ffe05e9039",
+      "dropdownInstance": "5ef49d47-355d-7105-8b2d-1a8474fb99cb",
+      "postsWrapper": "54cd20a7-ffa1-9f5f-9cec-1073823bec7d",
+      "postsItem": "54cd20a7-ffa1-9f5f-9cec-1073823bec7f",
+      "postCardInstance": "79cf1f92-0370-0928-e4d9-eb374fa37c79",
+      "pagination": "a03fc471-3577-4e32-4acb-545a09cbddd9"
+    },
+    "/blog/{slug} (Posts template)": {
+      "pageId": "6abc6c9673c0a3345b7a94bd",
+      "body": "6abc6c9673c0a3345b7a94c5",
+      "fkPage": "cbf0d7e0-5f8f-54b1-2cce-c346d8f8bca6",
+      "main": "cbf0d7e0-5f8f-54b1-2cce-c346d8f8bca5",
+      "nav": "6f1db419-60cc-8ca2-b279-db9de919c2f0",
+      "footer": "ff4c00d1-d3af-f889-d4f4-5925005f5f42",
+      "articleHeroSection": "64bdfc4a-1604-8008-9502-4b259d89e9e1",
+      "breadcrumbCategoryLink": "64bdfc4a-1604-8008-9502-4b259d89e9c1",
+      "h1": "64bdfc4a-1604-8008-9502-4b259d89e9ca",
+      "avatar": "17e475cc-ea43-9f6d-c42a-b259c540bd85",
+      "authorName": "64bdfc4a-1604-8008-9502-4b259d89e9d0",
+      "authorRole": "64bdfc4a-1604-8008-9502-4b259d89e9d2",
+      "mainImage": "353d7cf4-e642-a60a-df57-cd8e3a10acb9",
+      "articleBodySection": "59353026-5374-65f8-27fe-7274b1c702a6",
+      "quickAnswerBlock": "59353026-5374-65f8-27fe-7274b1c702a0",
+      "richText": "66344e62-119c-21ed-399c-10c0fa4a3168",
+      "leftoverArticleBodyBlock (pending removal, needs confirmation)": "59353026-5374-65f8-27fe-7274b1c702a3",
+      "newsletterInstance": "5eb74696-6698-fbbd-eb52-63ade3c09ca4",
+      "relatedSection": "113dcfbf-8f69-6872-5656-412207a95ed6",
+      "relatedWrapper": "a026207a-95af-0f4b-f81e-9f558e4568e6",
+      "relatedItem": "a026207a-95af-0f4b-f81e-9f558e4568e8",
+      "relatedPostCardInstance": "5b145adf-5e77-3b45-30db-0e674280d8a7"
     }
   }
 }

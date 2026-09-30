@@ -4,13 +4,14 @@
    at 1440 the TOC sits at x=80 and the text at x=360. ≤991 drops to one column and hides the TOC.
    `fk-article-toc-list` is filled by the x-article-toc exception with `fk-article-toc-link` anchors;
    `is-toc-active` is toggled by its scroll-spy, so no interaction targets a utility.
-   `fk-article-image` is Article Hero's photo: natural ratio, never cropped (D-21). */
+   `fk-article-image` is Article Hero's photo: the box reserves 1400 / 659 (the ratio of every post
+   image, so no layout shift), other ratios are cropped by `object-fit: cover`, never stretched (D-21). */
 
 .fk-article {
   display: grid;
   grid-template-columns: minmax(200px, 1fr) minmax(0, var(--width-article)) minmax(0, 1fr);
   column-gap: var(--space-10);
-  padding: var(--space-16) var(--space-16) var(--space-12);
+  padding: var(--space-12) var(--space-16);
 }
 
 .fk-article-toc {
@@ -118,6 +119,8 @@
   width: 100%;
   max-width: 552px;
   height: auto;
+  aspect-ratio: 1400 / 659;
+  object-fit: cover;
   border-radius: var(--radius-lg-plus);
 }
 

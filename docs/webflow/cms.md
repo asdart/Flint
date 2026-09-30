@@ -42,7 +42,10 @@ Licensing (NCLEX, boards) 1, Relocation 1.
 
 Every post is by **Flint Editorial Team** (`flint-editorial-team`, avatar: the Flint logo mark)
 for now (decision 2026-09-28). The current site's Author is plain text, and all 34 real posts use
-that name. The collection stays so real authors can be added later.
+that name. The collection stays so real authors can be added later. **No collection page (user,
+2026-09-30):** the Authors collection is kept only for the Posts reference; its template page has
+`shouldPublish: false` (excluded from publishing, `/authors/flint-editorial-team` is 404 on staging) and
+there is no authors index page. Nothing links to an author page.
 
 ## Posts
 
@@ -84,33 +87,33 @@ Body decisions:
   rich text images with a caption.
 - `titleLines` (forced line breaks in the legacy featured title) is dropped. Control wrapping
   with the heading's max width instead.
-- The inline newsletter and CTA blocks are not content. The template places `Section / Newsletter`
-  (Stacked variant) after the body.
+- The inline newsletter and CTA blocks are not content. The template places its own local newsletter section (`ArticleNewsletter`, D-27) after the body.
 - The table of contents is generated from the body's H2s by exception `x-article-toc`
   (`interactions.md`; roadmap P-02 closed as (a), 2026-09-29). It is desktop only, sticky, with a
   scroll-spy, and the script hides it when a post has no H2. FAQ questions are H3s, so they stay
   out of an H2-based TOC.
 
 Posts template page (built in the repo 2026-09-29, `src/pages/BlogPostPage.tsx`; the Webflow build
-waits on the CMS import):
+was done on 2026-09-30, see the last bullet):
 
-- **Body:** the Rich Text element bound to `body`, styled by the Designer nested styles on
-  `fk-article-body` (`classes.md` → Rich Text nested styles, D-20).
+- **Body:** the Rich Text element bound to `body`, styled by the custom-code exception `x-article-body`
+  on `fk-article-body` (`classes.md` → Rich Text nested styles, D-25, amends D-20).
 - **Quick answer:** the `fk-article-quick-answer` block uses conditional visibility on `quick-answer`
   (hidden when empty).
 - **Author role:** the role line under the author name uses conditional visibility on the Author's
   `role` (hidden when empty).
-- **Main image:** `main-image` is shown at its natural ratio (no crop), 552px wide at most, and
+- **Main image:** `main-image` is shown 552px wide at most in a `1400 / 659` box (`aspect-ratio`, reserves the space; another ratio is cropped with `object-fit: cover`), and
   hidden on phones (roadmap D-21).
 - **Related:** a Collection List on Posts (table below), and the whole section is hidden when the
   list is empty (roadmap D-22, exception `x-related-empty`).
-- **Newsletter:** `Section / Newsletter` (Stacked) sits after the body, before Related.
+- **Newsletter:** a local section (page markup, `fk-panel is-article`, roadmap D-27) sits after the body, before Related. It is not a `Section / Newsletter` instance: the Stacked variant was removed.
+- **On Webflow (2026-09-30, Blog sync Stage 6):** bound through the MCP: `h1` ← Title, hero and phone dates and their `datetime` ← Publish date, read time (DOM spans) ← Read time, breadcrumb category text ← `category:::name`, avatar `assetId` ← `author:::avatar` with `altText` ← `author:::name`, author name and role, main image, quick answer text ← Quick answer, the Rich Text ← Body (`richText` key). Links `collectionPage` with `to` = the template page slug (`detail_blog`, `detail_categories`, from `list_pages`) are accepted and stored (`{ mode: "collectionPage", to: { pageSlug } }`) on Link elements: applied to the breadcrumb category link and the featured card links on `/blog` and the category template; whether they resolve to the current item is to check in the Designer. **Not possible through the MCP:** visibility bound to a text field (quick answer, role: "Incompatible binding"; visibility takes a boolean field), and a `UI / Post Card` Link prop bound to a page (modes url/email/phone only).
 
 ## Template SEO and alt text
 
 Template page settings bind to fields (`seo.md` S-02): Posts → SEO title `name`, meta description
-`excerpt`, OG image `main-image`; Authors and Categories templates are noindex (S-04) unless they
-get their own copy. Image alt text is required on every CMS image: `main-image` describes the
+`excerpt`, OG image `main-image`; the Authors template is not published (no page at all) and the
+Categories template has its own title and description, both without an OG image until P-17 is done. Image alt text is required on every CMS image: `main-image` describes the
 image, `avatar` is the author's name (S-16). The post template also carries `x-schema-post`
 (`BlogPosting` + `BreadcrumbList`, `interactions.md`).
 
@@ -119,20 +122,22 @@ image, `avatar` is the author's name (S-16). The post template also carries `x-s
 | Where | Collection | Filter | Sort | Limit | Pagination |
 | --- | --- | --- | --- | --- | --- |
 | Home — `Section / Post Grid` (Home) | Posts | — | Publish date ↓ | 3 | — (on Webflow 2026-09-30, ids in `webflow-ids.json` → `pageElements`) |
-| Blog post — Related Posts (D-22, not Post Grid) | Posts | Category = current post's category, exclude current (roadmap D-02); section hidden when empty (`x-related-empty`) | Publish date ↓ | 3 | — |
-| Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page (numbered links: roadmap P-15). On Webflow 2026-09-30: `pagination` = `{ "itemsPerPage": 6 }` (`limit` stays the default 100) |
+| Blog post — Related Posts (D-22, not Post Grid) | Posts | **No category filter for now (D-26, user 2026-09-30; was: Category = current post's category, D-02)**, the current post excluded; section hidden when empty (`x-related-empty`) | Publish date ↓ | 3 | — (**on Webflow 2026-09-30:** source, sort, limit set; the filters are **Designer-only**: `filters` accepts `category` `equals` only with a static string, a bound value fails with "does not support bound filter values in the Designer", `slug` isn't a filterable field, and the list has no "exclude current item" setting. Set "Category equals Current Post's Category" and exclude the current item in the Designer). **Designer pass 2026-09-30, read from staging (the MCP still reads `filters: []`, Designer-bound filters are invisible to it):** the current post is excluded, but the 3 cards are careers / immigration / institutional posts for an immigration post, so **no category filter is active** (question for the user: intended, or set "Category equals Current Post's Category") |
+| Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page (numbered links: roadmap P-19; P-15 closed, no native numbered links). On Webflow 2026-09-30: `pagination` = `{ "itemsPerPage": 6 }` (`limit` stays the default 100) |
 | Blog — featured post | Posts | Featured = on | Publish date ↓ | 1 | — (on Webflow 2026-09-30: `filters` = `[{ "fieldSlug": "featured", "operator": "isOn" }]`) |
-| Blog category template — `Section / Post Index` | Posts | Category = current category | Publish date ↓ | 6 | Native |
-| Category links in the Post Index's Dropdown (`fk-dropdown`) | Categories | — | Name ↑ | all | — |
+| Blog category template — `Section / Post Index` | Posts | Category = current category | Publish date ↓ | 6 | Native (**on Webflow 2026-09-30:** source, sort, pagination set; the filter is Designer-only, same limit as above: for the itemRef field `category` the valid operators are `equals`, `doesNotEqual`, `isSet`, `isNotSet`, and `equals` won't take a binding through the MCP). **Designer pass 2026-09-30: works on staging** (`/categories/{slug}` list counts match the content: licensing 1, relocation 1, institutional 4, careers and immigration paged 6 + Next); the MCP reads the list's `filters` as `[]`. The category page's *featured* list now reads `filters` = `featured isOn` plus a stray `name equals ""` (added in the Designer; the featured card still renders `how-flint-works` on every category page, so it has no visible effect today, but an empty `equals` filter is fragile: ask the user to remove it) |
+| Category links in the Post Index's Dropdown (`fk-dropdown`) | Categories | **Not current** (on a category template; none on `/blog`) | Name ↑ | all | — (D-28: `/blog` lists all five; a category page shows a static "All categories" link then the other four) |
+
+**Categories collection slug is `categories` (changed in the Designer 2026-09-30, was `blog-categories`):** the template page is `detail_categories`, published at `/categories/{slug}` (the old `/blog-categories/{slug}` is 404 on staging); the repo route, links and registries follow.
 
 Category filtering uses Category template pages and plain links inside Webflow's native Dropdown (the
 design's category select, `classes.md` → `fk-dropdown`), which replaces the legacy client-side `Select` +
 filter in `AllPosts.tsx`. No script needed. The preview serves the same URLs: `/blog`,
-`/blog-categories/{slug}` and `?page=n`, from `src/content/index.ts` (`postPage`, `featuredPost`).
+`/categories/{slug}` and `?page=n`, from `src/content/index.ts` (`postPage`, `featuredPost`).
 
 ## Import from the current site
 
-Done in the repo on 2026-09-28. The three collections and their fields exist on production since 2026-09-29 (ids in `webflow-ids.json`; Excerpt's max length 160 and Read time's minimum 1 are still to set in the Designer); items were imported manually from CSV on 2026-09-29 (5 categories, 1 author, 34 posts of which 6 are drafts; alt text set through the MCP), nothing is published.
+Done in the repo on 2026-09-28. The three collections and their fields exist on production since 2026-09-29 (ids in `webflow-ids.json`; Excerpt's max length 160 and Read time's minimum 1 were set in the Designer by the user on 2026-09-30 and read back through the MCP the same day: `excerpt` `maxLength` 160, `read-time` `minValue` 1, `allowNegative` false); items were imported manually from CSV on 2026-09-29 (5 categories, 1 author, 34 posts of which 6 are drafts; alt text set through the MCP), nothing is published.
 
 - **Posts:** 40 in the export. 6 placeholders ("This is a test blog" and 5 template posts with
   invented authors) were dropped; 34 real posts are in the seed. 6 are drafts: the 4 drafts on the

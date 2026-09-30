@@ -134,7 +134,7 @@ gap in `fk-logo-marquee`. `space-19` is the gap between the heading and the tick
 | `width-container-md` | `960px` | Stats and narrow grids |
 | `width-content` | `580px` | Wide text blocks |
 | `width-content-sm` | `480px` | Section headers, text columns. Other copy widths (521) are local values in their block |
-| `width-article` | `720px` | Article column on the Posts template (`fk-article-content`), the Stacked Newsletter panel and the utility `fk-max-w-article` |
+| `width-article` | `720px` | Article column on the Posts template (`fk-article-content`), the article newsletter panel (`fk-panel is-article`) and the utility `fk-max-w-article` |
 | `width-nav-pill` | `664px` | Max width of the scrolled nav pill |
 
 ## Shadows (class-level constants)

@@ -11,9 +11,12 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
 import { createServer } from "vite";
 
-const files = process.argv.slice(2);
+// `--post=<slug>` passes that post from src/content as the `post` prop (Article Hero, Article Body,
+// Related Posts, the Posts template's current item).
+const postSlug = (process.argv.find((a) => a.startsWith("--post=")) ?? "").slice("--post=".length);
+const files = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 if (files.length === 0) {
-  console.error("Usage: node scripts/webflow-markup.mjs <src path…>");
+  console.error("Usage: node scripts/webflow-markup.mjs [--post=<slug>] <src path…>");
   process.exit(1);
 }
 
@@ -33,7 +36,8 @@ try {
   const out = {};
   for (const file of files) {
     const { default: Component } = await server.ssrLoadModule(`/${file}`);
-    const html = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(Component)));
+    const props = postSlug ? { post: (await server.ssrLoadModule("/src/content/index.ts")).postBySlug(postSlug) } : {};
+    const html = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(Component, props)));
     // React 19 hoists <link rel="preload"> tags for images; they aren't page elements.
     // Imported icons (src/assets/icons/*.svg) are keyed without the leading slash, like their repo path.
     out[file] = html.replace(/<link rel="preload"[^>]*\/>/g, "").replace(/src="(\/(?:src\/)?assets\/[^"]+)"/g, (_, path) => {

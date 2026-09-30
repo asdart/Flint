@@ -100,9 +100,9 @@ marquee track/fades, partners-map ticker, two-ways collage, CTA art, nav, card v
 
 ### Rich Text nested styles (2026-09-29, D-20)
 
-Elements inside a Rich Text element (`fk-article-body`) are styled by Designer **nested styles**, not
-by classes or utilities: `.fk-article-body <tag>` rules in `src/styles/components/article-body.css`
-mirror them, are seeded by hand once in the Designer and are never pushed by the scripts. It is the
+Elements inside a Rich Text element (`fk-article-body`) are styled by the custom-code exception `x-article-body` (D-25, amends D-20), not
+by classes or utilities: `.fk-article-body <tag>` rules in `src/styles/exceptions/x-article-body.css`
+are pasted as minified head code on the Posts template (tokens renamed `--_flint---*`) and are never pushed by the scripts. It is the
 one exception to one selector per rule (`classes.md` → Rich Text nested styles).
 
 ### Preview-only html/body clip (2026-09-29)

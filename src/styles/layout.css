@@ -66,6 +66,16 @@
   padding: var(--space-4);
 }
 
+/* Article-width panel (720px, centered, `space-7` top and bottom; the side gutter is the container's).
+   The local newsletter section of the post page (D-27). Built in the Designer 2026-09-30. */
+.fk-panel.is-article {
+  max-width: var(--width-article);
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: var(--space-7);
+  padding-bottom: var(--space-7);
+}
+
 .fk-panel.is-snug {
   padding-block: var(--space-10);
 }

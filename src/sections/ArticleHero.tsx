@@ -31,7 +31,7 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
                   <span className="fk-breadcrumb-separator" aria-hidden>
                     /
                   </span>
-                  <SmartLink href={`/blog-categories/${categoryItem.slug}`} className="fk-breadcrumb-link">
+                  <SmartLink href={`/categories/${categoryItem.slug}`} className="fk-breadcrumb-link">
                     {categoryItem.name}
                   </SmartLink>
                 </nav>

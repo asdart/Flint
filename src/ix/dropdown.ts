@@ -32,7 +32,7 @@ export function dropdown(): Cleanup {
     const toggleEl = target.closest(".w-dropdown-toggle");
     if (toggleEl) toggle(toggleEl);
     else closeAll(target.closest(".w-dropdown"));
-    if (target.closest(".w-dropdown-link")) closeAll();
+    if (target.closest(".fk-dropdown-link")) closeAll();
   };
 
   const onKeyDown = (event: KeyboardEvent) => {

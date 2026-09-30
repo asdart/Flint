@@ -31,7 +31,7 @@ export default function App() {
           <Route path="/facility-partners" element={<FacilityPartnersPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog-categories/:slug" element={<BlogPage />} />
+          <Route path="/categories/:slug" element={<BlogPage />} />
           <Route
             path="/blog/:slug"
             element={
