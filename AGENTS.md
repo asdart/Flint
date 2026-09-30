@@ -32,7 +32,7 @@ registries define the inventory. If they disagree, fix the registry, not the rul
 
 | Document | Defines |
 | --- | --- |
-| [`roadmap.md`](docs/webflow/roadmap.md) | Phases, the production track, decisions taken and decisions still open |
+| [`roadmap.md`](docs/webflow/roadmap.md) | Phases, the production track, decisions still open and a one-line index of decisions taken (full text in [`archive/decisions.md`](docs/webflow/archive/decisions.md)) |
 | [`tokens.md`](docs/webflow/tokens.md) | Variables: colors, fonts, sizes, radii, spacing, shadows, motion |
 | [`classes.md`](docs/webflow/classes.md) | Naming system, tag styles, class registry |
 | [`components.md`](docs/webflow/components.md) | Components, sections, pages and their composition |
