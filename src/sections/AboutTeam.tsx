@@ -14,7 +14,7 @@ const FOUNDERS = [
 ] as const;
 
 /**
- * Team on About (Figma 5805:4114, phone 5974:7579). Page-level markup (D-17, user decision 2026-10-02: not a component). The header
+ * Team on About (Figma 5805:4114, phone 5974:7579). Page-level markup (D-17, user decision 2026-10-01: not a component). The header
  * copy is Figma's, which repeats the Investors header (known content issue, user decision: keep it). A card's photo
  * and its "Read more" both open that founder's modal (exception x-modal): the photo link is
  * out of the tab order and hidden from assistive tech so each card has one tab stop, "Read more about <name>".

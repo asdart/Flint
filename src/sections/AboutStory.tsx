@@ -4,7 +4,11 @@ const STORY = [
 ];
 
 /**
- * Our Story on About (Figma 5805:3995 pattern). Page-level markup (D-17, user decision 2026-10-02). Same layout as the Mission on a Brand Light panel.
+<<<<<<< HEAD
+ * Our Story on About (Figma 5805:3995 pattern). Page-level markup (D-17, user decision 2026-10-01). Same layout as the Mission on a Brand Light panel.
+=======
+ * Our Story on About (Figma 5805:3995 pattern). Page-level markup (D-17, user decision 2026-10-01). Same layout as the Mission on a Brand Light panel; `is-padded-bottom` adds the 16px band gap under it because the Residency section after it has no panel.
+>>>>>>> 4cc4d59 (Review the roadmap against the repo (2026-10-01))
  */
 export default function AboutStory() {
   return (

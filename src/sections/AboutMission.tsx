@@ -5,7 +5,7 @@ const MISSION = [
 ];
 
 /**
- * Mission on About (Figma 5805:3995). Page-level markup (D-17, user decision 2026-10-02: Text Panel is not a component). A centred 521px text column on a Tertiary panel: eyebrow, title and three paragraphs; the title and paragraphs use the blur reveal, each child in its own wrapper.
+ * Mission on About (Figma 5805:3995). Page-level markup (D-17, user decision 2026-10-01: Text Panel is not a component). A centred 521px text column on a Tertiary panel: eyebrow, title and three paragraphs; the title and paragraphs use the blur reveal, each child in its own wrapper.
  */
 export default function AboutMission() {
   return (

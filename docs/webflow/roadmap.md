@@ -25,13 +25,13 @@ component, page and item is rebuilt from `src/` and the registries with the reci
 | Phase | Goal | Webflow target | Status |
 | --- | --- | --- | --- |
 | 0–2 | **Test stage**: contract, foundations, MVP 1 (vertical slice) and MVP 2 (homepage at 1:1 parity) | Test site (archived) | ☑ closed 2026-09-25 (D-08) |
-| P | **Production site**: access, then populate from scratch with everything built so far | Production | ◐ in progress (P.1 setup started 2026-09-29) |
-| 3 | Global and UI components | Production | ◐ Home components built in the repo |
-| 4 | Sections | Production | ◐ Home sections built in the repo |
-| 5 | Static pages | Production | ☐ |
-| 6 | Blog and CMS | Production | ☐ |
-| 7 | Motion and illustrations | Production | ☐ |
-| 8 | Custom-code exceptions | Production | ☐ |
+| P | **Production site**: access, then populate from scratch with everything built so far | Production | ☑ closed 2026-09-30 for Home and the Blog (Next steps 1); its open sub-items carry into phases 5–9 |
+| 3 | Global and UI components | Production | ◐ all built in the repo except the Apply Form's fields; Webflow has Home and Blog's |
+| 4 | Sections | Production | ◐ all built in the repo except Facility partners' Testimonials (text cards) and Apply Form; Webflow has Home and Blog's |
+| 5 | Static pages | Production | ◐ Home on Webflow; Candidates and About built in the repo; Facility partners built in the repo minus two sections |
+| 6 | Blog and CMS | Production | ◐ built on Webflow 2026-09-30; schema (P-14) and the staging checks open |
+| 7 | Motion and illustrations | Production | ◐ illustrations ported in the repo (D-36); P-07 and the remaining interactions open |
+| 8 | Custom-code exceptions | Production | ◐ `x-article-toc` and `x-carousel` (Home) live; the page scripts install with each page's sync |
 | 9 | QA and launch prep | Production | ☐ |
 | 10 | Launch and cleanup | Production | ☐ |
 
@@ -40,17 +40,28 @@ next phase on production.
 
 ---
 
-## Next steps (agreed 2026-09-30)
+## Next steps (agreed 2026-09-30, reviewed 2026-10-01)
 
 The order the user agreed on 2026-09-30. Page pre-plans read from the final Figma frames are in [`plans/`](plans/) (D-33).
 
+**Review 2026-10-01:** every page is built in the repo except two Facility partners sections (Testimonials with text cards, Apply Form), which the user will tackle later; they stay in step 5. The order from here:
+
+1. **Facility partners, the two missing sections** (step 5, later, needs the user's answers to the plan's questions)
+2. **Decisions that now block the Webflow sync:** P-07 (Stats Band now on Candidates, Facility partners and About, so needed before their sync, not phase 7), P-12 (needed by phase 5, which has started), `x-nav-dark` and `x-video-reduced` (proposed), the success / warning tokens for the Apply Form
+3. **Bring Home on Webflow up to the repo** (step 6a and Phase 8): the drift refactor's Pricing and Nav menu changes, the Pricing and Post Index reveals, the Testimonials arrows; then the deletions of retired classes with the user's confirmation
+4. **Webflow sync, one page at a time:** Candidates (step 4), About (step 6), then Facility partners (step 5): new tokens and classes, images with alt and the Designer width / height (rule 15), the page scripts (`x-illustrations`, `x-modal`, `x-facility-illustrations`), page settings and schema, the Nav links switched to page links
+5. **Delete the legacy pages** for each synced page (user confirmation, phase 5)
+6. **QA and launch** (step 7 below)
+
+The numbered steps below keep their original numbers and hold each step's details.
+
 1. ~~**Close out Home and the Blog:**~~ **done 2026-09-30** (user closed it; the Designer checklist, newsletter submit and staging were confirmed by the user): the [Blog sync carry-over](#blog-sync-carry-over) Designer checklist, the staging checks, then the track P exit criteria
 2. ~~**Repo cleanup:**~~ **done 2026-09-30** (PR #1 merged into `webflow`): roadmap slimmed (decisions in `archive/decisions.md`), stray scratch file removed, merged `blog-post-page` branch deleted
-3. **Shared carousel (D-37)** ◐ **built in the repo 2026-10-01:** `src/ix/xCarousel.ts` and the generated `docs/webflow/custom-code/x-carousel.html`, Home markup moved onto it, old IX3 preview modules removed, tested in Chromium (desktop and touch emulation). **Left:** put the `data-x-*` attributes and the footer code on Home in Webflow, delete `ix-how-carousel(-phone)`, `ix-testimonials` and `ix-testimonial-hover` (needs the user's confirmation, rule 12), publish, and check swipe and backward navigation on staging
-4. **Candidates** ([plan](plans/candidates.md)): Hero (ring of 12 avatars, orbit from the legacy `ProximityOrbit`), Stats Band Default, Role Grid (reuse), How It Works (5 rows, `x-illustrations`), Testimonials as on Home (user decision 2026-10-01), FAQ, arc-carousel CTA (D-34) ◐ **Built in the repo 2026-10-01** (`src/pages/CandidatesPage.tsx`, `/candidates`; legacy at `/legacy/candidates`): all seven sections as static final frames, `ix-faq-toggle` and `x-carousel` (Home's Testimonials, unchanged) working in the preview. `x-illustrations` (hero orbit and the four animated art panels) **built and tested in the repo 2026-10-01**, 7.8 KB (Candidates only since the 2026-10-02 split), `docs/webflow/custom-code/x-illustrations.html`. **Left:** Webflow build and sync, from the post-refactor classes (step 6a) (new tokens `color-ink-80` / `color-black-20`, the hero portraits (Home's, already uploaded) and the How It Works assets to upload, page settings and `FAQPage` JSON-LD, Nav Candidates link to a page link), the user's confirmations listed in `components.md` (Pages → Candidates) and the report of this step
-5. **Facility partners** ([plan](plans/facility-partners.md)): Hero, Logo Marquee (reuse), Stats Band Default (reuse), Media Split ×3 with `x-facility-illustrations`, Feature Grid Benefits, Testimonials (text cards), Apply Form (Webflow inbox, P-05) ◐ **Phase A built in the repo 2026-10-01** (`src/pages/FacilityPartnersPage.tsx`, `/facility-partners`; legacy at `/legacy/facility-partners`): Nav Dark, video Hero (page-level, button link TBD), Logo Marquee, Stats Band Spread (was "Default untitled"; explicit variant since 2026-10-01), Facility Value Prop (3 illustrated rows as static frames with `x-illustrations` hooks), Feature Grid Benefits, Footer (default copy, same as Home). **Phase B built 2026-10-02:** the three illustrations animate through the dedicated script `x-facility-illustrations` (`network`, `savings`, `retention`; one script per page for pagespeed, user approval 2026-10-02; tested in the repo, install pending) and the Figma fidelity pass is done (network spokes, hero text wrap). **Left:** Testimonials and Apply Form (not in this phase), the hero button target, decisions on `x-nav-dark` and `x-video-reduced` (proposed), the new success / warning tokens, then the Webflow sync from the post-refactor classes (step 6a)
+3. ~~**Shared carousel (D-37)**~~ **done 2026-10-01 for Home:** `src/ix/xCarousel.ts` and the generated `docs/webflow/custom-code/x-carousel.html`, Home markup moved onto it, old IX3 preview modules removed, tested in Chromium (desktop and touch emulation). On Webflow (`sync-log.md`, 2026-10-01): `data-x-*` attributes on How It Works and Testimonials, `x-carousel.html` in the Home footer code, the four IX3 carousel interactions deleted with the user's go-ahead, published and tested by the user (swipe, backward, autoplay). Candidates reuses it unchanged when that page is synced. **Since then** the repo's Testimonials changed (arrows, no autoplay, 8px gap) and Pricing gained reveals, so Home on Webflow is behind the repo: the re-sync items are in Phase 8 and step 6a
+4. **Candidates** ([plan](plans/candidates.md)): Hero (ring of 12 avatars, orbit from the legacy `ProximityOrbit`), Stats Band Default, Role Grid (reuse), How It Works (5 rows, `x-illustrations`), Testimonials as on Home (user decision 2026-10-01), FAQ, arc-carousel CTA (D-34) ◐ **Built in the repo 2026-10-01** (`src/pages/CandidatesPage.tsx`, `/candidates`; legacy at `/legacy/candidates`): all seven sections as static final frames, `ix-faq-toggle` and `x-carousel` (Home's Testimonials, unchanged) working in the preview. `x-illustrations` (hero orbit and the four animated art panels) **built and tested in the repo 2026-10-01**, 7.8 KB (Candidates only since the 2026-10-01 split), `docs/webflow/custom-code/x-illustrations.html`. **Left:** Webflow build and sync, from the post-refactor classes (step 6a) (new tokens `color-ink-80` / `color-black-20`, the hero portraits (Home's, already uploaded) and the How It Works assets to upload, page settings and `FAQPage` JSON-LD, Nav Candidates link to a page link), the user's confirmations listed in `components.md` (Pages → Candidates) and the report of this step
+5. **Facility partners** ([plan](plans/facility-partners.md)): Hero, Logo Marquee (reuse), Stats Band Default (reuse), Media Split ×3 with `x-facility-illustrations`, Feature Grid Benefits, Testimonials (text cards), Apply Form (Webflow inbox, P-05) ◐ **Phase A built in the repo 2026-10-01** (`src/pages/FacilityPartnersPage.tsx`, `/facility-partners`; legacy at `/legacy/facility-partners`): Nav Dark, video Hero (page-level, button link TBD), Logo Marquee, Stats Band Spread (was "Default untitled"; explicit variant since 2026-10-01), Facility Value Prop (3 illustrated rows as static frames with `x-illustrations` hooks), Feature Grid Benefits, Footer (default copy, same as Home). **Phase B built 2026-10-01:** the three illustrations animate through the dedicated script `x-facility-illustrations` (`network`, `savings`, `retention`; one script per page for pagespeed, user approval 2026-10-01; tested in the repo, install pending) and the Figma fidelity pass is done (network spokes, hero text wrap). **Left, repo (later, user 2026-10-01):** `Section / Testimonials` with a text-card variant (360px flat card: quote, photo, name, role; a slider, no title (Figma draws dots, Home now uses arrows); `x-carousel` or native slider to decide; 15 quotes and photos to gather) and `Section / Apply Form` (Input Field with a visible label, textarea, select, phone prefix, success / error messages; Webflow form inbox, P-05), the open questions in the [plan](plans/facility-partners.md). **Left, then:** the hero button target (`#apply` presumably), decisions on `x-nav-dark` and `x-video-reduced` (proposed), the new success / warning tokens, then the Webflow sync from the post-refactor classes (step 6a)
 6. **About** ([plan](plans/about.md)): Hero, Mission, Team, Story and Residency (all page-level markup, D-17 / D-40), Stats Band Large (reuse), Logo Grid, Split CTA ◐ **Built in the repo 2026-10-01** (`src/pages/AboutPage.tsx`, `/about`; legacy at `/legacy/about`): About Hero (one `h1`: photo strip above 991px, inline portrait pills from Tablet down), Mission and Story (page-level markup, `AboutMission.tsx` / `AboutStory.tsx`; the Text Panel component was retired, D-40; Mission is Tertiary and Story Brand Light, as Figma), Team (`AboutTeam.tsx`, page-level; three founder cards; photo and Read more open `UI / Modal` through `x-modal`, **same placeholder bio for all three**), Residency (`AboutResidency.tsx`, page-level, no Media Split component), Stats Band Large (phone: one column, existing text sizes), Logo Grid (4 / 2 × 2 / 1 columns), Split CTA (two cards, stacked below 992, inferred); Footer with Home's default copy; Nav About link current. Images are WebP (`public/assets/about/`). Built and measured at 1440, 991, 768 and 390 in Chromium (one `h1` at every width, no horizontal scroll, reduced motion shows everything, modals open, close and return focus). **Left:** Webflow build and sync (the new classes in `classes.md` as they stand after step 6a, the images below, `x-modal` for the founder modals (About page footer code, `x-modal-head.html` in its head; move to site-wide if another page uses it), page settings, Nav About link to a page link); the real bios of Anson and Neil; the user's confirmations in `components.md` (Pages → About); **Designer image width / height (rule 15), alt in brackets:** strip 1–7 (decorative, empty) 484×605, 568×568, 612×764, 592×740, 540×720, 522×696, 540×720; the three hero pills reuse strip 2, 6 and 4 (empty alt); team-kenton and team-anson 778×778, team-neil 778×972 (empty alt: the link names them); residency 1426×951 (Home's `two-ways-facility.webp`, already uploaded; "A nurse and residents in the bright lounge of a care home"); investors Y Combinator 185×90, Haystack 316×77, Audacious 412×216, Rhino Ventures 137×42 (alt = the name)
-6a. **Drift refactor (2026-10-01)** ◐ **Done in the repo, on branch `refactor/page-drift` (pushed, not merged), not synced to Webflow.** Candidates, Facility partners and About were aligned with Home and the contract: one section shell (`fk-section` > `fk-panel` > `fk-container` > `fk-panel-content`; `fk-section is-open` and `fk-container is-flush` retired), Home's header pattern, new shared classes `fk-split`, `fk-ring`, `fk-icon-badge`, `fk-steps-back`, `fk-container is-inset`, new utilities `fk-list-none`, `fk-bg-brand-foreground`, `fk-shadow-float`, `fk-shadow-chip`, the token `width-prose`, an explicit Stats Band `spread` variant, illustration CSS moved to utilities, the CTA Arc spacing like Home's (48px / 32px: an intended visible change), About's content column 1160px, hooks `is-modal-open` and `data-x-video="reduced"`, orbit `alt=""`. **Feedback round (2026-10-01):** `fk-split` stacks media first ≤991 everywhere (`is-media-first` retired; Home Pricing's DOM is now copy, diagram with `is-reverse`), CTA Split cards left-aligned ≤991, 3-stat bands 2 + 1 on tablet (`fk-stat is-default`), `fk-nav-menu` padding `space-4` / `space-2` ≤767. Registries updated 2026-10-01 (`classes.md` → Retired classes lists everything). **Left:** (1) **re-sync Home's Pricing** on production: create `fk-split`, `fk-split-copy`, `fk-icon-badge` (+ `is-sm`) and the utilities `fk-list-none`, `fk-bg-brand-foreground`, `fk-shadow-float` (and `fk-shadow-chip`), update `fk-pricing-bubble` (shadow removed), swap the Pricing markup classes (row, bubble shadow, bubble icons, checklist) and put the copy card before the diagram card with `fk-split is-reverse`, update `fk-nav-menu`'s padding (`space-4`, `space-2` ≤767; `Global / Nav`), read back with `webflow-diff.mjs`; (2) **Webflow deletions, only with the user's confirmation (rule 12), after the re-sync:** `fk-section is-open`, `fk-container is-flush`, `fk-pricing-checklist`, `fk-pricing-checklist-icon`, `fk-pricing-bubble-icon` and its `is-plain` combo, plus anything else `webflow-diff.mjs --unregistered` lists that the refactor retired; (3) the variable `width-prose` (521px); (4) then Candidates, Facility partners and About are built from the new classes (steps 4–6)
+6a. **Drift refactor (2026-10-01)** ◐ **Done in the repo, merged into `webflow` 2026-10-01 (branch `refactor/page-drift`), not synced to Webflow.** Candidates, Facility partners and About were aligned with Home and the contract: one section shell (`fk-section` > `fk-panel` > `fk-container` > `fk-panel-content`; `fk-section is-open` and `fk-container is-flush` retired), Home's header pattern, new shared classes `fk-split`, `fk-ring`, `fk-icon-badge`, `fk-steps-back`, `fk-container is-inset`, new utilities `fk-list-none`, `fk-bg-brand-foreground`, `fk-shadow-float`, `fk-shadow-chip`, the token `width-prose`, an explicit Stats Band `spread` variant, illustration CSS moved to utilities, the CTA Arc spacing like Home's (48px / 32px: an intended visible change), About's content column 1160px, hooks `is-modal-open` and `data-x-video="reduced"`, orbit `alt=""`. **Feedback round (2026-10-01):** `fk-split` stacks media first ≤991 everywhere (`is-media-first` retired; Home Pricing's DOM is now copy, diagram with `is-reverse`), CTA Split cards left-aligned ≤991, 3-stat bands 2 + 1 on tablet (`fk-stat is-default`), `fk-nav-menu` padding `space-4` / `space-2` ≤767. Registries updated 2026-10-01 (`classes.md` → Retired classes lists everything). **Left:** (1) **re-sync Home's Pricing** on production: create `fk-split`, `fk-split-copy`, `fk-icon-badge` (+ `is-sm`) and the utilities `fk-list-none`, `fk-bg-brand-foreground`, `fk-shadow-float` (and `fk-shadow-chip`), update `fk-pricing-bubble` (shadow removed), swap the Pricing markup classes (row, bubble shadow, bubble icons, checklist) and put the copy card before the diagram card with `fk-split is-reverse`, update `fk-nav-menu`'s padding (`space-4`, `space-2` ≤767; `Global / Nav`), read back with `webflow-diff.mjs`; (2) **Webflow deletions, only with the user's confirmation (rule 12), after the re-sync:** `fk-section is-open`, `fk-container is-flush`, `fk-pricing-checklist`, `fk-pricing-checklist-icon`, `fk-pricing-bubble-icon` and its `is-plain` combo, plus anything else `webflow-diff.mjs --unregistered` lists that the refactor retired; (3) the variable `width-prose` (521px); (4) then Candidates, Facility partners and About are built from the new classes (steps 4–6)
 7. **QA and launch** (phases 9–10), then merge `webflow` into `main` (D-39)
 
 ## Decisions
@@ -96,11 +107,11 @@ Short index. The full text, date and where each decision is applied are in [`arc
 | D-33 | The final Figma frames are the design source for Candidates, Facility partners and About; legacy is reference only; smaller breakpoints are inferred |
 | D-34 | P-01 closed as obsolete: no physics gallery; Candidates CTA is an arc carousel like the Home hero, About CTA is a two-card Split CTA |
 | D-35 | P-03 closed per the final design: `ModernFacility` → Feature Grid (Benefits), `WhyFacilities` dropped, Media Split ×3, no Facility Grid |
-| D-36 | P-04 closed: illustrations animate at launch, ported from legacy to Motion (`x-illustrations` on Candidates, `x-facility-illustrations` on Facility partners: one script per page, 2026-10-02), Candidates and Facility partners only |
+| D-36 | P-04 closed: illustrations animate at launch, ported from legacy to Motion (`x-illustrations` on Candidates, `x-facility-illustrations` on Facility partners: one script per page, 2026-10-01), Candidates and Facility partners only |
 | D-37 | Carousels move from IX3 to one shared Motion script (`x-carousel`) with back-and-forth springs, swipe, dots and arrows |
 | D-38 | P-08 closed: missing content doesn't block the build; the client updates the copy later |
 | D-39 | `webflow` is merged into `main` only when the whole migration is finished |
-| D-40 | About's Mission, Story, Team and Residency are page-level markup, not components (user decision 2026-10-02): `Section / Text Panel`, `Team Grid` and `Media Split` are retired as components (Facility partners won't use Media Split); the Footer keeps Home's copy; `x-modal` is About-only for now; no responsive background utility, no bigger stat text sizes |
+| D-40 | About's Mission, Story, Team and Residency are page-level markup, not components (user decision 2026-10-01): `Section / Text Panel`, `Team Grid` and `Media Split` are retired as components (Facility partners won't use Media Split); the Footer keeps Home's copy; `x-modal` is About-only for now; no responsive background utility, no bigger stat text sizes |
 
 ### Open
 
@@ -110,8 +121,8 @@ All must be closed before the phase noted in "Needed by".
 | --- | --- | --- | --- | --- |
 | P-05 | Where do form submissions go (Facility Apply form, newsletter)? _(proposed)_ | Webflow Forms with email notifications · Webflow Forms + webhook to a CRM/ESP · an external embed (would be an exception) | Phase 4 | **decided for now (user, 2026-09-30, D-29): integrations later; submissions stay in Webflow's form inbox.** Reopen when the ESP/CRM is chosen. The live submit is still untested (Turnstile is on, see `interactions.md` → Staging runtime check) |
 | P-06 | Which custom domain, and who manages DNS? | Client's domain; DNS access from the client | Phase 10 | open. The plan is Premium per D-09 and covers what the build needs |
-| P-07 | Is it acceptable that stat numbers animate as a whole instead of digit by digit? _(proposed)_ | (a) Yes, native `ix-count-in` · (b) no, add a digit script exception | Phase 7 | open |
-| P-12 | Which page is the "role page" in the PageSpeed check (`seo.md` S-15)? The roadmap has no role pages yet | Name the page, and add it to `components.md` → Pages if it's new | Phase 5 | open, to decide later (user, 2026-09-27) |
+| P-07 | Is it acceptable that stat numbers animate as a whole instead of digit by digit? _(proposed)_ | (a) Yes, native `ix-count-in` · (b) no, add a digit script exception | Before the Candidates sync (the Stats Band is on Candidates, Facility partners and About; review 2026-10-01) | open |
+| P-12 | Which page is the "role page" in the PageSpeed check (`seo.md` S-15)? The roadmap has no role pages yet | Name the page, and add it to `components.md` → Pages if it's new | Phase 5 (started 2026-10-01) | open, to decide later (user, 2026-09-27); due now that phase 5 has started |
 | P-13 | The post main images are text banners (about 2.1:1) and the card crops them to 1.4:1 (3.5:1 on mobile landscape), cutting off the headline | (a) New card-ready images from the client · (b) change the card image ratio to fit the banners · (c) accept the crop | Phase 6 | **accepted for now (user, 2026-09-30, D-29, option c):** the client will probably change the images; reopen then |
 | P-14 | Do post FAQs get `FAQPage` schema (`seo.md` S-08)? The FAQs are now rich text | (a) A plain-text field holding each post's FAQ JSON-LD, inserted by `x-schema-post` (pairs ready in `blog-embeds/faq-pairs.json`) · (b) no FAQ schema on posts | Phase 6 | open |
 | P-17 | No default social (Open Graph) image exists: `/blog`, the Categories template and Home have `openGraph.imageUrl: null`. `update_page_settings` accepts `openGraph.imageAssetId` (a site asset id), so the MCP can set it once an image exists. The Posts template binds the post's Main image (Designer) | Design a 1200×630 default social image, upload it (`create_asset`), then set it on Home, `/blog` and Categories | Before launch | open (user, 2026-09-30: later) |
@@ -166,6 +177,8 @@ the repo already holds, so no new design work happens here.
 ### P.2 Populate from scratch
 
 In this order. Record every id in `webflow-ids.json` and add one `sync-log.md` row per step.
+
+**Closed for Home and the Blog 2026-09-30 (Next steps 1, user).** The boxes left unticked below hold sub-items that carry on in the later phases (OG image P-17, schema, the staging checks, the other pages' assets); they are not blockers for the per-page syncs.
 
 - [x] Fonts: SN Pro 400/500/600 (600 = current page in `fk-pagination`), STIX Two Text 400, latin `.woff2`, `swap` (2026-09-29)
 - [x] Variable collection `Flint` with every token in `tokens.md`: 65 variables (30 color, 2 font family, 33 size), read back equal to `tokens.css` (2026-09-29)
@@ -247,15 +260,15 @@ Home Post Grid 898px at 1440 on staging (= the repo, the old "950 / 91px" mismat
       person in a real browser); the user or the future integration (P-05) does it once. Check the form appears in Webflow's inbox
 - [ ] **Dropdown:** native Webflow behaviour leaves the list open after Tab moves focus out of the last link (click, Escape and outside
       click all close it, verified); low, accept or add a `focusout` close only if the client asks (would be an exception)
-- [ ] **Pages still to build for the Nav:** Candidates, Facility partners and About links are URLs (`components.md`)
+- [ ] **Pages still to build for the Nav:** Candidates, Facility partners and About links are URLs (`components.md`). All three are built in the repo (2026-10-01); switch each link to a page link when its page is synced
 
 **Not replayed:** anything that isn't in the registries (the test stage's spike pages, `fk-lab-*`
 classes and throwaway interactions stay in the archive).
 
 ### Exit criteria
 
-- [ ] Production matches the repo for everything built so far: diff clean, Home reviewed in the Designer
-- [ ] From here on, phases 3–10 sync to production
+- [x] Production matches the repo for everything built so far: diff clean, Home reviewed in the Designer (user closed it 2026-09-30, Next steps 1)
+- [x] From here on, phases 3–10 sync to production
 
 ---
 
@@ -271,31 +284,31 @@ Runs alongside Phase 3, ahead of the rest of the homepage refactor. Details in
 
 ## Phase 3 — Global and UI components
 
-Built in the repo: `UI / Button` (4 variants), `UI / Testimonial Card`, Service Card and Carousel Dots markup (Section Header is inline markup, no helper).
+Built in the repo: `UI / Button` (4 variants), `UI / Testimonial Card`, `UI / Stat` (Large, Default), `UI / Modal`, `UI / Dropdown`, `UI / Input Field`, `UI / Post Card`, Service Card and Carousel Dots markup (Section Header is inline markup, no helper). Reviewed 2026-10-01.
 
-- [ ] `Global / Nav` Dark variant, and move the Nav out of all 6 legacy heroes
-- [ ] Footer props (CTA Title, CTA Body) defined on the Webflow component
-- [ ] `UI / Stat` Default; `UI / Post Card` Featured
-      and a component-with-props version
-- [ ] Remaining UI components: FAQ Item, Portrait, Illustration (Input Field and the newsletter form are built) (see `components.md`)
+- [x] `Global / Nav` Dark variant (repo 2026-10-01, Facility partners; Webflow with that page), and the Nav out of the heroes (every migrated page places it once, before `main`)
+- [x] Footer props (CTA Title, CTA Body) defined on the Webflow component (2026-09-29); every page uses the default copy (D-40)
+- [x] `UI / Stat` Default (repo 2026-10-01; Webflow with Candidates); `UI / Post Card` Featured is `Global / Featured post` (Blog, on Webflow 2026-09-30)
+- [x] Remaining UI components: FAQ Item and Portrait are page markup (one page each, D-17), Illustration is a static final frame animated by the page scripts (D-36) (see `components.md`)
+- [ ] Apply Form fields: Input Field with a visible label, textarea, select, phone prefix (with Facility partners' Apply Form, later)
 
 ## Phase 4 — Sections
 
-Needs P-03 and P-05 closed. Illustrations use static SVGs until phase 7.
-Built in the repo (Home variants): Hero, Logo Marquee, Two Ways, Partners Map, How It Works, Feature
-Grid (Cards), Testimonials (Slider), Post Grid (Home), CTA (Art). Also Stats Band (Large).
+P-03 closed (D-35); P-05 decided for now (Webflow form inbox). Illustrations are static final frames animated by the page scripts (D-36).
+Built in the repo: every section in `components.md` → Pages except the two below. Reviewed 2026-10-01; the Webflow side of each page is tracked in Phase 5.
 
-- [ ] Hero: Candidates, Facility Partners, About; and Article Hero (Blog Hero is built: page-level pattern, `components.md`)
-- [ ] How It Works: Candidates and Facilities variants
-- [ ] Feature Grid: Benefits variant, plus the result of P-03
-- [ ] Stats Band Default; Testimonials Single; FAQ; Facility Grid
-- [ ] Logo Grid (Media Split and Team Grid are page-level markup on About, D-40)
-- [ ] CTA Gallery (placeholder until P-01) and Simple; Apply Form (Newsletter is built in the repo)
-- [ ] Post Index, Article Body
+- [x] Hero: Candidates, Facility Partners, About (page markup, 2026-10-01); Article Hero and Blog Hero (on Webflow 2026-09-30)
+- [x] How It Works: Candidates (five illustrated rows, 2026-10-01). The Facilities variant is not needed: Facility Value Prop replaces it (D-35)
+- [x] Feature Grid: Benefits variant (2026-10-01, P-03 result per D-35)
+- [x] Stats Band Default; FAQ (2026-10-01). Testimonials Single is not needed (the design is a slider), Facility Grid is dropped (D-35)
+- [x] Logo Grid (2026-10-01; Media Split and Team Grid are page-level markup on About, D-40)
+- [x] CTA: arc carousel on Candidates and Split CTA on About (2026-10-01; CTA Gallery retired, D-34); Newsletter on Webflow 2026-09-30
+- [x] Post Index, Article Body (on Webflow 2026-09-30)
+- [ ] **Facility partners, later (user 2026-10-01):** `Section / Testimonials` text-card variant (slider with dots) and `Section / Apply Form` (see Next steps 5)
 
 ## Phase 5 — Static pages
 
-- [ ] Home, Candidates, Facility partners, About: composed as in `components.md` → Pages
+- [ ] Home, Candidates, Facility partners, About: composed as in `components.md` → Pages. **2026-10-01:** Home on Webflow; Candidates and About built in the repo, Webflow sync next; Facility partners built in the repo minus Testimonials and Apply Form
 - [ ] Page settings per `seo.md`: title, meta description, OG image (also used for the Twitter card, D-13), noindex
       where needed, clean slugs; `FAQPage` schema on pages with an FAQ block (S-01…S-05, S-08)
 - [ ] Delete each legacy section/page file once its replacement is migrated (with user confirmation)
@@ -314,17 +327,18 @@ Needs P-02 (closed 2026-09-29); P-13 and P-14 before the template.
 
 ## Phase 7 — Motion and illustrations
 
-Needs P-07 closed. P-04 closed (D-36): illustrations are ported to Motion (`x-illustrations`).
+Needs P-07 closed (now before the Candidates sync: the Stats Band is on three pages). P-04 closed (D-36): illustrations are ported to Motion (`x-illustrations`, `x-facility-illustrations`).
 
 - [ ] Remaining interactions in `interactions.md`: parallax, FAQ, and any still `legacy`
-- [ ] Illustrations ported to Motion per D-36 (`x-illustrations`), with static fallbacks for first paint and reduced motion
+- [x] Illustrations ported to Motion per D-36 (`x-illustrations`, `x-facility-illustrations`), with static fallbacks for first paint and reduced motion (repo, 2026-10-01; installs tracked in Phase 8)
 
 ## Phase 8 — Custom-code exceptions
 
-- [ ] `x-carousel` per D-37 (Home first, then Candidates and Facility partners). Repo side done 2026-10-01 (see Next steps 3); Webflow install, interaction removal and the staging check are open
-- [ ] Sync Pricing and Post Index reveal changes to Webflow (repo done 2026-10-02): (1) Home Pricing: copy card column gets `data-ix="blur-reveal"` with the `h3`, body and checklist wrapped in `fk-blur-reveal` (none / `is-delay-1` / `is-delay-2`); diagram card column gets `data-ix="reveal-stagger"` with `data-ix-item` on the avatar group and the three bubbles; (2) Post Index (`/blog` and the Categories template): drop `data-ix="blur-reveal"` from the header row and unwrap the `h2` from its `fk-blur-reveal` div. No new classes or interactions.
-- [ ] Sync Testimonials changes to Webflow (repo done 2026-10-02: 8px gap, no fade, arrows instead of dots, no autoplay; Webflow still has the old setup). Push: (1) new classes `fk-carousel-arrows`, `fk-carousel-arrow` (+ hover, focus-visible), `fk-carousel-arrow-icon` (`classes.md`); (2) `fk-testimonials-*` diff: track `fk-gap-6` → `fk-gap-2`, track `translateX(-3582.24px)` → `-3422.24px`, slide opacity 0.6 and `is-center` opacity 1 removed, `fk-testimonials-row` gains `gap: 42.72px` (the row drops `fk-gap-8` and `fk-w-full` and takes the class); (3) `Section / Testimonials` markup: dots → `fk-carousel-arrows` with two buttons (`data-x-prev` / `data-x-next`, aria-labels); (4) upload `chevron-left.svg` / `chevron-right.svg` (alt empty; **the user sets Image width / height 20 × 20 in the Designer**, rule 15, listed in the sync-log row); (5) `data-x-autoplay` removed from the panel and the footer script re-pasted if it changed; remove or retire `ix-testimonials` dot/autoplay parts per the `x-carousel` install plan
-- [ ] `x-illustrations` (Candidates) and `x-facility-illustrations` (Facility partners) per D-36
+- [ ] `x-carousel` per D-37 (Home first, then Candidates and Facility partners). **Home done 2026-10-01** (installed, the four IX3 carousel interactions deleted, published and tested by the user; Next steps 3); Candidates with its sync, Facility partners if its Testimonials use it
+- [ ] Sync Pricing and Post Index reveal changes to Webflow (repo done 2026-10-01): (1) Home Pricing: copy card column gets `data-ix="blur-reveal"` with the `h3`, body and checklist wrapped in `fk-blur-reveal` (none / `is-delay-1` / `is-delay-2`); diagram card column gets `data-ix="reveal-stagger"` with `data-ix-item` on the avatar group and the three bubbles; (2) Post Index (`/blog` and the Categories template): drop `data-ix="blur-reveal"` from the header row and unwrap the `h2` from its `fk-blur-reveal` div. No new classes or interactions.
+- [ ] Sync Testimonials changes to Webflow (repo done 2026-10-01: 8px gap, no fade, arrows instead of dots, no autoplay; Webflow still has the old setup). Push: (1) new classes `fk-carousel-arrows`, `fk-carousel-arrow` (+ hover, focus-visible), `fk-carousel-arrow-icon` (`classes.md`); (2) `fk-testimonials-*` diff: track `fk-gap-6` → `fk-gap-2`, track `translateX(-3582.24px)` → `-3422.24px`, slide opacity 0.6 and `is-center` opacity 1 removed, `fk-testimonials-row` gains `gap: 42.72px` (the row drops `fk-gap-8` and `fk-w-full` and takes the class); (3) `Section / Testimonials` markup: dots → `fk-carousel-arrows` with two buttons (`data-x-prev` / `data-x-next`, aria-labels); (4) upload `chevron-left.svg` / `chevron-right.svg` (alt empty; **the user sets Image width / height 20 × 20 in the Designer**, rule 15, listed in the sync-log row); (5) `data-x-autoplay` removed from the panel and the footer script re-pasted if it changed; remove or retire `ix-testimonials` dot/autoplay parts per the `x-carousel` install plan
+- [ ] `x-illustrations` (Candidates) and `x-facility-illustrations` (Facility partners) per D-36 (built and tested in the repo 2026-10-01; install with each page's sync)
+- [ ] `x-modal` (About founder modals; built in the repo 2026-10-01; install with About's sync)
 - ~~`x-gravity-gallery` per P-01~~ retired (D-34)
 - [x] `x-article-toc` per P-02 (approved, closed (a) 2026-09-29). **Installed on the Posts template 2026-09-30 (Blog sync Stage 7):** registered script `xarticletoc` 1.0.0 in the page footer. **Verified on staging 2026-09-30:** TOC builds from the 7 H2s and the scroll-spy moves `is-toc-active` (`interactions.md`)
 - [ ] Primary button hover checked in Preview against the repo (`x-button-gradient`, installed in P.2)
