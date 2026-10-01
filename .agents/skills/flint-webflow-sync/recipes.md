@@ -266,6 +266,7 @@ Payloads accepted by `create_interaction` (runtime verification in the archived 
   and `control: "resume"` with `eventMode: "leave"`. No `groupId` needed on a single timeline.
 - **Jump to a step:** `wf:click` with `config: { control: "play", jump: 5 }` (seconds).
 - **Width/height** are `wf:transform` properties: `width: ["7px", "57px"]` tweens natively.
+- **Class toggle scoped to the clicked item (`ix-faq-toggle`, 2026-10-01):** trigger `wf:click` on the question class; one timeline of Sets (`tt: 3`, `timing: { duration: 0, position: 0 }`), `properties: { "wf:class": { "class": { "operation": "toggleClass", "selectors": [<combo leaf id>] } } }`. The action target is the **base** class id (a combo target matches only elements that already carry it, so it could never open a closed one). Descendants of the trigger: `filterContext: { relationship: "within", filterBy: ["wf:trigger-only", ""], firstMatchOnly: false }`. A sibling of the trigger's parent (answer next to the `h3` that wraps the button): `{ relationship: "next-sibling-of", filterBy: ["wf:trigger-only-parent", ""] }`. Accepted and read back identical; runtime scoping is a staging check.
 - **Scope an action to one block:** target `wf:class` with
   `filterContext: { relationship: "within", filterBy: ["wf:class", [<block id>]], firstMatchOnly: false }`.
 - The host expands a combo leaf id into its chain (`[base, combo]`) on save; pass the leaf.
