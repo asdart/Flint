@@ -140,13 +140,14 @@ gap in `fk-logo-marquee`. `space-19` is the gap between the heading and the tick
 | `width-container` | `1200px` | Page container (`fk-container`), including the 20px gutter on each side |
 | `width-container-md` | `960px` | Stats and narrow grids |
 | `width-content` | `580px` | Wide text blocks |
-| `width-content-sm` | `480px` | Section headers, text columns. Other copy widths (521) are local values in their block |
+| `width-content-sm` | `480px` | Section headers, text columns |
 | `width-article` | `720px` | Article column on the Posts template (`fk-article-content`), the article newsletter panel (`fk-panel is-article`) and the utility `fk-max-w-article` |
+| `width-prose` | `521px` | **New 2026-10-01 (to sync as a variable).** The text column of About's Mission and Story (`fk-section-header is-prose`) (the modal content column is 521px too, 713 − 2 × 96, but is not bound to the token). Repo only, not on Webflow |
 | `width-nav-pill` | `664px` | Max width of the scrolled nav pill |
 
 ## Shadows (class-level constants)
 
-Webflow variables don't support shadows, so these values are only allowed inside the listed classes.
+Webflow variables don't support shadows, so these values are only allowed inside the listed classes. **The two floating-card shadows (Pricing bubble, Chip) are carried by the utilities `fk-shadow-float` and `fk-shadow-chip` (2026-10-01, `css-system.md`)**; block classes no longer hold a copy.
 
 | Name | Value | Used by |
 | --- | --- | --- |
@@ -156,9 +157,10 @@ Webflow variables don't support shadows, so these values are only allowed inside
 | Button inset (white) | `inset 0 -1px 2px 0 rgba(0,0,0,0.15)` | `fk-button is-secondary` |
 | Nav pill | `0 2px 2.5px rgba(0,0,0,0.03), 0 9px 4.5px rgba(0,0,0,0.03), 0 19px 6px rgba(0,0,0,0.01)` | `fk-nav is-pill` |
 | Field active | `0 0 0 2px rgba(68,56,109,0.1)` | `fk-field:focus` |
-| Pricing bubble | `0 57px 17px rgba(0,0,0,0.01), 0 25px 12.5px rgba(0,0,0,0.02), 0 6px 7px rgba(0,0,0,0.03)` | `fk-pricing-bubble`, `fk-steps-notice` (Figma's two 0-alpha layers dropped, they render nothing) |
-| Chip | `0 41px 12.5px rgba(0,0,0,0.02), 0 18px 9px rgba(0,0,0,0.03), 0 5px 5px rgba(0,0,0,0.03)` | `fk-chip` (Figma `5647:1797`; the two 0-alpha layers dropped) |
-| Call window | `0 37px 37px rgba(0,0,0,0.03), 0 9px 20px rgba(0,0,0,0.03)` | `fk-steps-window` (legacy `InterviewIllustration`) |
+| Pricing bubble | `0 57px 17px rgba(0,0,0,0.01), 0 25px 12.5px rgba(0,0,0,0.02), 0 6px 7px rgba(0,0,0,0.03)` | utility `fk-shadow-float`: `fk-pricing-bubble`, `fk-steps-notice` (Figma's two 0-alpha layers dropped, they render nothing). `fk-pricing-bubble`, `fk-steps-notice` and `fk-chip` no longer hold the value themselves |
+| Chip | `0 41px 12.5px rgba(0,0,0,0.02), 0 18px 9px rgba(0,0,0,0.03), 0 5px 5px rgba(0,0,0,0.03)` | utility `fk-shadow-chip`: `fk-chip` and the orbit tooltip (Figma `5647:1797`; the two 0-alpha layers dropped) |
+| Retention card | `0 14px 31px rgba(0,0,0,0.03), 0 56px 56px rgba(0,0,0,0.03)` | `fk-retention-card` (Facility partners retention art; a class-level value of its own, kept on purpose, not `fk-shadow-float`) |
+| Call window | `0 37px 37px rgba(0,0,0,0.03), 0 9px 20px rgba(0,0,0,0.03)` | `fk-steps-window` (legacy `InterviewIllustration`; kept on the class on purpose) |
 
 The primary gradient is also a class-level constant: `linear-gradient(349.52deg, color-accent-rose
 -32.33%, color-brand 39.71%, color-brand 65.25%, color-accent-blue 146.24%)` (`fk-button`, same

@@ -231,6 +231,23 @@ The contract is `AGENTS.md`; the order of operations and the capability table ar
 | An `aspect-ratio: 1` link or box holding a taller image grows past the ratio | `overflow: clip` doesn't make the box shrinkable (its automatic minimum height stays the content's); use `fk-overflow-hidden` on it. Found 2026-10-01 (About team cards, Neil's 778×972 portrait) |
 | One `h1` that is two designs (an inline-pill title on Tablet and down, a photo strip above) | Keep one element: inline `fk-portrait` spans that are `display: none` above 991px by their own class, the strip `fk-hidden-tablet`, and the phone's line structure from four `span`s inside an h1 that is `fk-flex-tablet fk-flex-col` (above 991 the spans flow inline). No duplicated heading text. Found 2026-10-01 (About hero) |
 | An exported Figma logo SVG that includes the tile's fill (`investor-04.svg`, the Rhino Ventures tile) | Render it without the background path with `sharp`, `trim()` the PNG to find the logo's box (offsets ÷ density × 72), and write a new SVG with that `viewBox`; a uniform tile grid needs the logo alone. Found 2026-10-01 |
+| A combo class a script toggles (the modal's `is-open`) also exists on another base class (`fk-testimonial-card-quote is-open`) | A combo is matched by name across every base class, so the two collide in Webflow. Toggled combos must be unique site-wide: the modal is `is-modal-open`, the FAQ `is-faq-open` (2026-10-01) |
+| A custom-code exception needs a hook attribute on elements | Use `data-x-*` (`data-x-modal`, `data-x-video="reduced"`), never `data-ix`, which is reserved for IX3 interactions (`data-ix="video-reduced"` was renamed 2026-10-01) |
+| A shadow (box-shadow) is needed on several blocks and Webflow variables can't hold it | Use the shadow utilities `fk-shadow-float` / `fk-shadow-chip`: class-level constants, the one utility group that isn't token-valued (`css-system.md`, `tokens.md` → Shadows). Never copy the value into a block class; a new shadow is a registered row in `tokens.md` first |
+| A new page needs a copy column beside a media element, a masked gradient ring, a round icon holder or a `ul` reset | Reuse `fk-split` (+ `-copy`, `-media`, `is-reverse` / `is-media-first`), `fk-ring` (placement combos), `fk-icon-badge` (+ `is-sm`) and `fk-list-none` before writing a block class. **`fk-split` keeps alignment and gap as utilities** in the markup (`fk-gap-24 fk-gap-10-tablet fk-items-center fk-justify-end`), because the three uses (How It Works rows, Residency, Pricing) differ, so the base never sets a property a utility sets |
+
+## Drift checklist (before building a new page, 2026-10-01)
+
+Candidates, Facility partners and About drifted from Home because each was built alone. Before pushing
+or building a page, check each point against Home's markup and `css-system.md`:
+
+1. **Shell:** `fk-section` > `fk-panel` (+ `fk-bg-*`, a rhythm combo only if the padding differs) > `fk-container` > `fk-panel-content`. No unpaneled `fk-section` variant, no `fk-container` without a gutter, rows never outside the container.
+2. **Header:** Home's pattern, `fk-section-header is-center is-narrow` with eyebrow, `h2` and body as separate `fk-blur-reveal` children. No nested header wrapper. Heroes wrap it in `fk-container` (`fk-container is-inset fk-relative` over video or orbit).
+3. **Reuse before a block class:** `fk-split`, `fk-ring`, `fk-icon-badge`, `fk-steps-back`, `fk-list-none`, the shadow utilities, the `fk-bg-*` / `fk-rounded-*` / `fk-absolute` / `fk-flex` utilities. A block class keeps only geometry, masks, what a script animates and what no utility covers.
+4. **No raw widths on `fk-section-header`:** check the existing combos (`is-narrow` 480, `is-tight` 448, `is-prose` `width-prose`, `is-wide` 660) and the width tokens first; a repeated value becomes a token.
+5. **Typography from classes:** `fk-text-lg` / `fk-text-md` on the element, not a size in a block class; one class sets the font size of an element.
+6. **Hooks and toggles:** `data-x-*` for custom code, a unique combo name for a toggled state.
+7. **Run `scripts/gen-utilities.mjs` after any utility change** and `webflow-diff.mjs` after a push.
 
 ## Page SEO checklist
 

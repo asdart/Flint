@@ -29,14 +29,15 @@ Tailwind-granular: no full padding/margin grid.
 
 | Group | Utilities |
 | --- | --- |
-| Display | `fk-flex`, `fk-block`, `fk-hidden` |
+| Display | `fk-flex`, `fk-block`, `fk-hidden`, `fk-list-none` (**added 2026-10-01**: the `ul` reset) |
 | Flex | `fk-flex-col`, `fk-wrap`, `fk-items-start` / `-center` / `-end` / `-stretch`, `fk-justify-center` / `-between` / `-end`, `fk-self-center`, `fk-grow`, `fk-shrink-0` |
 | Gap | `fk-gap-{n}` for the spacing tokens |
 | Spacing (small set) | `fk-mx-auto`, `fk-mt-auto`, a few `fk-pt-*` |
 | Sizing | `fk-w-full`, `fk-h-full`, `fk-min-h-0`, `fk-max-w-content` / `-content-sm` / `-container` |
 | Position / overflow | `fk-relative`, `fk-absolute`, `fk-inset-0`, `fk-overflow-clip`, `fk-object-cover` |
 | Radius | `fk-rounded-sm` / `-lg` / `-xl` / `-full` |
-| Colors | `fk-bg-{token}` (panel/surface colors), `fk-color-{token}` (text colors) |
+| Colors | `fk-bg-{token}` (panel/surface colors, incl. `brand-foreground` since 2026-10-01), `fk-color-{token}` (text colors) |
+| Effects | `fk-shadow-float`, `fk-shadow-chip` (**added 2026-10-01**, class-level constants, see below) |
 | Text | `fk-text-left`, `fk-text-center`, `fk-font-sans` / `-serif` / `-medium` |
 
 **As built (2026-09-27):** the generated list is the source (`docs/webflow/classes.md` →
@@ -45,6 +46,19 @@ Utilities). Differences from the table above: `fk-flex-row`, `fk-justify-start`,
 added; **`fk-font-sans` / `fk-font-serif` were dropped**, because every typography class sets
 `font-family` (a stacked utility would break rule 1), so `fk-heading-sm is-sans` stays a combo.
 `fk-font-medium` only goes on `fk-text-*` elements (headings set `font-weight: 400`).
+
+**Shadow utilities are the one non-token utility group (2026-10-01, drift refactor).** Webflow
+variables can't hold a box-shadow, so `fk-shadow-float` (the "Pricing bubble" shadow) and
+`fk-shadow-chip` (the "Chip" shadow) carry the value itself, as a class-level constant. They are
+registered in `tokens.md` → Shadows ("Used by" says which utilities carry which value) and are not
+responsive. A block class never repeats one of these values (`fk-pricing-bubble`, `fk-steps-notice`
+and `fk-chip` used to hold copies).
+
+**Illustration blocks use utilities too (2026-10-01).** `steps.css`, `network.css`, `retention.css`,
+`savings.css`, `orbit.css` and `video-hero.css` keep only geometry (top/left/width/height in canvas
+px), masks, the parts a script animates and what no utility covers; position, display, flex centring,
+radius, backgrounds, overflow and object-fit are utilities in the markup (the `two-ways.css` /
+`how-it-works.css` rule).
 
 ### Responsive utilities
 
@@ -150,9 +164,26 @@ current gap in the registry):
 - `fk-font-serif` — dropped by design: every typography class already sets `font-family`, so a
   stacked utility would break rule 1 (`fk-heading-sm is-sans` stays a combo instead)
 - `fk-h-auto` — Partners Map's `-heading` needs `height: auto` at ≤991 (only `fk-h-full` exists)
-- `fk-bg-brand-foreground` — Pricing's bubble icon background; conflicts with the icon's own
-  `is-plain` combo, whose whole job is to drop that background for the Flint logo asset, so a
-  utility here would need removing by the combo, which utilities aren't built to do
+- ~~`fk-bg-brand-foreground`~~ — **added 2026-10-01**: Pricing's bubble icon is now `fk-icon-badge fk-bg-brand-foreground`,
+  and the Flint logo bubble is a plain `fk-icon is-lg fk-rounded-full` with no background utility, so the old
+  `is-plain` combo (which existed to drop the background) is gone
+
+## Shared patterns with stacked utilities (2026-10-01, drift refactor)
+
+A pattern repeated by several blocks becomes one small class that sets only what no utility can, and
+leaves everything that differs per use to utilities in the markup:
+
+- **`fk-split`** (copy column + media, stacked ≤991): the row sets display and the stack; gap,
+  alignment and packing are utilities (`fk-gap-24 fk-gap-10-tablet fk-items-center fk-justify-end`)
+  because the three uses (How It Works rows, Residency, Pricing) differ. `fk-split-copy`,
+  `-media`, combos `is-reverse` / `is-media-first` / `is-wide` / `is-photo`. See `classes.md`.
+- **`fk-ring`** (the masked gradient ring): one class, placement combos per use.
+- **`fk-icon-badge`** (round icon holder, 40px, `is-sm` 28px): colour is a `fk-bg-*` utility.
+- **`fk-steps-back`** (the two stacked back cards), **`fk-container is-inset`** (≤767 hero text block).
+
+Before adding a block class to a new page, check these and the utilities. Don't put a raw width on
+`fk-section-header`: check the existing combos (`is-narrow`, `is-tight`, `is-prose`, `is-wide`) and the
+width tokens first; 521px became the token `width-prose` for that reason.
 
 ## Follow-ups
 
