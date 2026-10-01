@@ -1,9 +1,9 @@
 /* fk-modal-* — reusable modal (Figma `5985:2725`, panel `5985:2965`, close `5985:3223`). Behaviour is
-   exception x-modal (`src/ix/xModal.ts`), which toggles `is-open` on the root; the look and the fade
-   are these classes. x-modal puts `is-open` on the root and on the panel (a combo class never styles a
-   descendant in Webflow, so each part has its own `is-open` combo). Root = full-screen backdrop and dialog in one element, hidden at rest
+   exception x-modal (`src/ix/xModal.ts`), which toggles `is-modal-open` on the root; the look and the fade
+   are these classes. x-modal puts `is-modal-open` on the root and on the panel (a combo class never styles a
+   descendant in Webflow, so each part has its own `is-modal-open` combo). Root = full-screen backdrop and dialog in one element, hidden at rest
    (`visibility: hidden` + `opacity: 0`; the visibility change waits for the fade-out, so closing
-   animates and then drops out of the tab order and the accessibility tree). `is-open` is what the
+   animates and then drops out of the tab order and the accessibility tree). `is-modal-open` is what the
    Designer shows when you select the combo. Reduced motion: x-modal.css (a class can't hold the media
    query). The content column is the panel minus its padding: 713 - 2 × 96 = 521px. */
 
@@ -26,7 +26,7 @@
     visibility 0s linear 300ms;
 }
 
-.fk-modal.is-open {
+.fk-modal.is-modal-open {
   opacity: 1;
   visibility: visible;
   transition-delay: 0s;
@@ -56,7 +56,7 @@
   transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.fk-modal-panel.is-open {
+.fk-modal-panel.is-modal-open {
   transform: translateY(0);
 }
 

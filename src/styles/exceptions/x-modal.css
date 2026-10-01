@@ -3,7 +3,7 @@
    head code), never pushed as classes: a class can't hold a `prefers-reduced-motion` media
    query. Under reduced motion the modal opens and closes at once (no fade, no rise). The visibility
    delay goes too, so a closed modal is hidden immediately. `:root` + `[class]` beat the classes'
-   own `transition` (and the `is-open` combo's). */
+   own `transition` (and the `is-modal-open` combo's). */
 
 @media (prefers-reduced-motion: reduce) {
   :root .fk-modal[class],

@@ -1,0 +1,79 @@
+/* fk-ring — the gradient ring: the registered ring SVG (`cta-ring.svg`) as a mask over the gradient photo
+   (`cta-flower.webp`, `fk-ring-image` inside). Absolutely placed by a combo, and cropped by its panel.
+   Placement combos (one per element, each sets its own size and offsets):
+   - `is-panel-left` / `is-panel-right`: a square twice the panel's width, offset in % of the panel
+     (How It Works art panels: Candidates rows 2 and 3, Facility value prop row 2).
+   - `is-corner-top` / `is-corner-bottom`: a 458px square (281px ≤991) hanging off the top-right or
+     bottom-left corner of the panel (Stats Band, Default; Figma 5543:1009, 5549:1289; phone 5763:2747, 5763:2751).
+   `fk-ring-image is-rotated` turns the photo 90deg so the gradient runs the other way. */
+
+.fk-ring {
+  position: absolute;
+  mask-image: url("/assets/home/cta-ring.svg");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.fk-ring.is-panel-right {
+  top: -2.299%;
+  left: 10.862%;
+  width: 200%;
+  aspect-ratio: 1 / 1;
+}
+
+.fk-ring.is-panel-left {
+  top: -2.299%;
+  left: -123.793%;
+  width: 200%;
+  aspect-ratio: 1 / 1;
+}
+
+.fk-ring.is-corner-top {
+  top: -274px;
+  right: -299px;
+  width: 458px;
+  height: 458px;
+}
+
+.fk-ring.is-corner-bottom {
+  bottom: -250px;
+  left: -255px;
+  width: 458px;
+  height: 458px;
+}
+
+.fk-ring-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fk-ring-image.is-rotated {
+  transform: rotate(90deg);
+}
+
+/* Tablet: the three stats fill the panel, so the corner rings shrink to the phone size and sit further out. */
+@media screen and (max-width: 991px) {
+  .fk-ring.is-corner-top {
+    top: -178px;
+    right: -201px;
+    width: 281px;
+    height: 281px;
+  }
+
+  .fk-ring.is-corner-bottom {
+    bottom: -215px;
+    left: -200px;
+    width: 281px;
+    height: 281px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-ring.is-corner-bottom {
+    bottom: -197px;
+    left: -186px;
+  }
+}

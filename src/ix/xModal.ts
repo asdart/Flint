@@ -5,7 +5,7 @@
  *
  * Markup contract (the markup is plain elements, the look is classes, this only drives behaviour):
  *   [data-x-modal="<id>"]     the dialog root (`fk-modal`; also `id`, role="dialog", aria-modal,
- *                             aria-labelledby). The script toggles `is-open` on it
+ *                             aria-labelledby). The script toggles `is-modal-open` on it
  *   [data-x-modal-open="<id>"] any button or `<a href="#<id>">` that opens it. The script sets
  *                             aria-haspopup, aria-controls and aria-expanded on it
  *   [data-x-modal-close]      anything inside a modal that closes it. A click on the root itself
@@ -17,7 +17,7 @@
  * of the same modal). Not `inert`: the modal may sit inside a section, and inerting
  * the page would need the ancestors walked, so the trap and aria-modal do it. Markup rule: put the
  * modal where no ancestor has a transform (a reveal wrapper would become its containing block).
- * The fade and rise are CSS on `is-open`, toggled on the root and on its `fk-modal-panel` (a Webflow
+ * The fade and rise are CSS on `is-modal-open`, toggled on the root and on its `fk-modal-panel` (a Webflow
  * combo class styles only its own element, never a descendant, so each part carries the combo);
  * under reduced motion the exception's CSS
  * (x-modal.css) removes them.
@@ -39,8 +39,8 @@ export function xModal(): () => void {
   };
 
   const toggle = (root: HTMLElement, on: boolean) => {
-    root.classList.toggle("is-open", on);
-    root.querySelector(".fk-modal-panel")?.classList.toggle("is-open", on);
+    root.classList.toggle("is-modal-open", on);
+    root.querySelector(".fk-modal-panel")?.classList.toggle("is-modal-open", on);
   };
 
   const close = (restoreFocus = true) => {

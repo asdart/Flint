@@ -1,58 +1,33 @@
 /* fk-savings-* — Facility partners, "Reduced staffing costs" art (Figma 5594:26856, legacy CostSavingsIllustration).
-   Laid out in the 580×696 `fk-steps-canvas` on the shared gradient ring (`fk-steps-ring is-left`, as the
-   Candidates fees row): a 360×318 block at (110, 170) holding the chart card and the two cards stacked behind
-   it. Card children are placed in card px. The chart box (296×119) holds the fill image (`chart-fill.svg`, 98.56%
+   Laid out in the 580×696 `fk-steps-canvas` on the shared gradient ring (`fk-ring is-panel-left`, as the
+   Candidates fees row): a 360×318 block at (110, 172) holding the chart card (2px up, so it stays at y 170) and the two
+   `fk-steps-back` cards stacked behind it. Card children are placed in card px. The chart box (296×119) holds the fill image (`chart-fill.svg`, 98.56%
    of the box wide), the line image (`chart-stroke.svg`, the box plus its 1.5px stroke overhang, which
-   `x-illustrations` reveals left to right) and the two 8px dots; the dashed rule under it is a border. */
+   `x-illustrations` reveals left to right) and the two 8px dots; the dashed rule under it is a border. 
+   Position, display, flex centring, radius, backgrounds, overflow and object-fit are utilities in the markup (docs/webflow/css-system.md); this file keeps
+   geometry, masks and the properties no utility covers. */
 
 .fk-savings {
-  position: absolute;
-  top: 170px;
+  top: 172px;
   left: 110px;
   width: 360px;
   height: 318px;
 }
 
-/* The two cards behind: Figma 5594:26860 (white at 40%) and 5594:26861 (#fbfbfc, drawn as white). */
-.fk-savings-back {
-  position: absolute;
-  background-color: var(--color-white);
-}
-
-.fk-savings-back.is-n1 {
-  top: 146px;
-  left: 60px;
-  width: 240px;
-  height: 209px;
-  border-radius: var(--radius-xl);
-  opacity: 0.4;
-}
-
-.fk-savings-back.is-n2 {
-  top: 80px;
-  left: 32px;
-  width: 296px;
-  height: 257px;
-  border-radius: 28px;
-}
-
 .fk-savings-card {
-  position: absolute;
-  top: 0;
+  top: -2px;
   left: 0;
   width: 360px;
   height: 318px;
 }
 
 .fk-savings-title {
-  position: absolute;
   top: 32px;
   left: 32px;
   white-space: nowrap;
 }
 
 .fk-savings-chart {
-  position: absolute;
   top: 96px;
   left: 32px;
   width: 296px;
@@ -60,26 +35,21 @@
 }
 
 .fk-savings-fill {
-  position: absolute;
   top: 0;
   left: 0;
-  display: block;
   width: 291.75px;
   height: 119px;
 }
 
 .fk-savings-line {
-  position: absolute;
   top: -1.5px;
   left: -1.5px;
-  display: block;
   width: 299px;
   height: 122px;
   max-width: none;
 }
 
 .fk-savings-dot {
-  position: absolute;
   width: 8px;
   height: 8px;
 }
@@ -95,7 +65,6 @@
 }
 
 .fk-savings-rule {
-  position: absolute;
   top: 216px;
   left: 32px;
   width: 296px;
@@ -104,7 +73,6 @@
 }
 
 .fk-savings-saved {
-  position: absolute;
   top: 232px;
   left: 32px;
   white-space: nowrap;
@@ -120,28 +88,16 @@
 }
 
 .fk-savings-chip {
-  position: absolute;
   top: 258px;
   left: 262px;
-  display: flex;
-  align-items: center;
   gap: 3px;
   padding: var(--space-0-5) var(--space-1);
-  border-radius: var(--radius-full);
   background-color: var(--color-success-10);
   color: var(--color-success);
 }
 
-.fk-savings-chip-text {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 24px;
-}
-
 /* The up arrow is `arrow-down.svg` turned 180°, 11×15 centred in a 20px box. */
 .fk-savings-arrow {
-  display: block;
   width: 11px;
   height: 15px;
   margin: 0 4.5px;

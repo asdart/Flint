@@ -5,40 +5,26 @@
    centres it and clips it). Positions are the resting frame: items sit on a circle of radius 328
    (avatar centres), 30° apart, a1 at the top, clockwise. The orbit motion (`x-illustrations`) moves
    the items. The portraits are the Home hero's, one crop class per portrait (`is-c1`…`is-c10`, the
-   order of `CANDIDATES`): a head-and-shoulders window, in % of the avatar. */
+   order of `CANDIDATES`): a head-and-shoulders window, in % of the avatar. 
+   Position, display, flex centring, radius, backgrounds, overflow and object-fit are utilities in the markup (docs/webflow/css-system.md); this file keeps
+   geometry, masks and the properties no utility covers. */
 
 .fk-orbit {
-  position: relative;
-  flex: none;
   width: 736px;
   height: 736px;
 }
 
 .fk-orbit-item {
-  position: absolute;
   width: 10.87%;
   aspect-ratio: 1 / 1;
 }
 
 /* The round crop. It is the hover target (pointer cursor) and what `x-illustrations` scales to 1.15 on hover;
    the item itself stays unscaled so the tooltip beside it keeps its size. */
-.fk-orbit-avatar {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius-full);
-  background-color: var(--color-sand-100);
-  overflow: clip;
-  cursor: pointer;
-}
-
 .fk-orbit-image {
-  position: absolute;
   top: 0;
   left: 0;
-  display: block;
   max-width: none;
-  object-fit: cover;
   pointer-events: none;
 }
 

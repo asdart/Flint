@@ -6,6 +6,7 @@
 @import "./typography.css";
 @import "./components/reveal.css";
 @import "./components/icon.css";
+@import "./components/icon-badge.css";
 @import "./components/flag.css";
 @import "./components/avatar.css";
 @import "./components/carousel-dots.css";
@@ -48,7 +49,8 @@
 @import "./components/portrait.css";
 @import "./components/photo-strip.css";
 @import "./components/team.css";
-@import "./components/media-split.css";
+@import "./components/split.css";
+@import "./components/ring.css";
 @import "./components/logo-grid.css";
 @import "./components/modal.css";
 /* Generated utilities (scripts/gen-utilities.mjs): stacked after the main class. */

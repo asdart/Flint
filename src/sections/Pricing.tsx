@@ -15,7 +15,7 @@ function PricingBubble({ icon, name, detail, isLarger }: PricingBubbleProps) {
       className={cx(
         "fk-pricing-bubble",
         isLarger ? "is-larger" : "",
-        "fk-relative fk-flex fk-items-center fk-gap-3 fk-w-full fk-rounded-xl fk-bg-white",
+        "fk-relative fk-flex fk-items-center fk-gap-3 fk-w-full fk-rounded-xl fk-bg-white fk-shadow-float",
       )}
     >
       {icon}
@@ -50,7 +50,7 @@ export default function Pricing() {
               </div>
             </div>
 
-            <div className="fk-flex fk-gap-4 fk-w-full fk-flex-col-tablet">
+            <div className="fk-split fk-gap-4 fk-w-full">
               <div className="fk-pricing-card fk-flex fk-items-center fk-justify-center fk-w-full fk-rounded-2xl fk-bg-tertiary">
                 <div className="fk-flex fk-flex-col">
                   <div className="fk-flex fk-flex-col fk-items-center fk-justify-center fk-gap-2">
@@ -69,7 +69,7 @@ export default function Pricing() {
                     <div className="fk-pricing-line fk-absolute fk-h-full" aria-hidden="true" />
                     <PricingBubble
                       icon={
-                        <div className="fk-pricing-bubble-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full">
+                        <div className="fk-icon-badge fk-bg-brand-foreground">
                           <img className="fk-icon is-sm" src={facilityIcon} alt="" width={16} height={16} />
                         </div>
                       }
@@ -79,7 +79,7 @@ export default function Pricing() {
                     <PricingBubble
                       icon={
                         <img
-                          className="fk-pricing-bubble-icon is-plain fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full"
+                          className="fk-icon is-lg fk-rounded-full"
                           src="/assets/home/Flint-logo-brand-circle.svg"
                           alt=""
                           width={40}
@@ -92,7 +92,7 @@ export default function Pricing() {
                     />
                     <PricingBubble
                       icon={
-                        <div className="fk-pricing-bubble-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full">
+                        <div className="fk-icon-badge fk-bg-brand-foreground">
                           <img className="fk-icon is-sm" src={facilityIcon} alt="" width={16} height={16} />
                         </div>
                       }
@@ -112,15 +112,15 @@ export default function Pricing() {
                       long-term, they save time and money.
                     </p>
                   </div>
-                  <ul className="fk-pricing-checklist fk-flex fk-flex-col fk-gap-4">
+                  <ul className="fk-list-none fk-flex fk-flex-col fk-gap-4">
                     <li className="fk-flex fk-items-center fk-gap-3">
-                      <span className="fk-pricing-checklist-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full fk-bg-brand-light">
+                      <span className="fk-icon-badge is-sm fk-bg-brand-light">
                         <img className="fk-icon is-sm" src={checkmarkIcon} alt="" width={16} height={16} />
                       </span>
                       <p className="fk-text-md">No placement fees</p>
                     </li>
                     <li className="fk-flex fk-items-center fk-gap-3">
-                      <span className="fk-pricing-checklist-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-full fk-bg-brand-light">
+                      <span className="fk-icon-badge is-sm fk-bg-brand-light">
                         <img className="fk-icon is-sm" src={checkmarkIcon} alt="" width={16} height={16} />
                       </span>
                       <p className="fk-text-md">No paycheck deductions</p>

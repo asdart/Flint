@@ -1,0 +1,19 @@
+/* fk-icon-badge — a round holder for an icon: 40px, centred content, never shrinks. The colour is a
+   `fk-bg-*` utility in the markup. `is-sm` is the 28px checklist size (a 16px `fk-icon is-sm` inside). */
+
+.fk-icon-badge {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+}
+
+.fk-icon-badge.is-sm {
+  width: 28px;
+  height: 28px;
+  padding: var(--space-1-5);
+}

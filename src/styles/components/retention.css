@@ -3,22 +3,20 @@
    (289, 266) 140px down, the 40px handshake badge at (270, 316) and the facility card at (100, 376). Both
    cards are 381px wide with the shared card shadow. The connector is a 2×140 clip box holding the 140×2
    dashed line turned 90° and fixed to the top, so shrinking the box to 0 and growing it back draws it downward
-   (`x-illustrations`). The portraits are cropped to the face in px of the 32px circle, one class per person. */
+   (`x-illustrations`). The portraits are cropped to the face in px of the 32px circle, one class per person. 
+   Position, display, flex centring, radius, backgrounds, overflow and object-fit are utilities in the markup (docs/webflow/css-system.md); this file keeps
+   geometry, masks and the properties no utility covers. */
 
 .fk-retention-connector {
-  position: absolute;
   top: 266px;
   left: 289px;
   width: 2px;
   height: 140px;
-  overflow: clip;
 }
 
 .fk-retention-connector-image {
-  position: absolute;
   top: 69px;
   left: -69px;
-  display: block;
   width: 140px;
   height: 2px;
   max-width: none;
@@ -26,39 +24,27 @@
 }
 
 .fk-retention-badge {
-  position: absolute;
   top: 316px;
   left: 270px;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 40px;
   height: 40px;
 }
 
 .fk-retention-badge-icon {
-  display: block;
   width: 20px;
   height: 20px;
   object-fit: contain;
 }
 
 .fk-retention-card {
-  position: absolute;
   left: 100px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
   box-sizing: border-box;
   width: 381px;
   padding: var(--space-5);
-  border-radius: var(--radius-xl);
-  background-color: var(--color-white);
   box-shadow:
     0 14px 31px rgba(0, 0, 0, 0.03),
     0 56px 56px rgba(0, 0, 0, 0.03);
-  overflow: clip;
 }
 
 .fk-retention-card.is-hired {
@@ -71,11 +57,7 @@
 }
 
 .fk-retention-total {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
   padding: var(--space-0-5) var(--space-1-5);
-  border-radius: var(--radius-full);
   background-color: var(--color-warning-light);
   color: var(--color-warning);
 }
@@ -83,48 +65,24 @@
 .fk-retention-total-dot {
   width: 4px;
   height: 4px;
-  border-radius: var(--radius-full);
   background-color: var(--color-warning);
 }
 
-.fk-retention-person {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .fk-retention-avatars {
-  display: flex;
-  align-items: center;
   isolation: isolate;
 }
 
 .fk-retention-avatar {
-  position: relative;
   z-index: 2;
-  flex: none;
   box-sizing: border-box;
   width: 32px;
   height: 32px;
   margin-right: -8px;
   border: 1.5px solid var(--color-white);
-  border-radius: var(--radius-full);
-  overflow: clip;
-}
-
-.fk-retention-avatar.is-charlette {
-  background-color: var(--color-sand-100);
-}
-
-.fk-retention-avatar.is-eizle {
-  background-color: var(--color-brand-foreground);
 }
 
 .fk-retention-avatar-image {
-  position: absolute;
-  display: block;
   max-width: none;
-  object-fit: cover;
 }
 
 .fk-retention-avatar-image.is-charlette {
@@ -142,14 +100,11 @@
 }
 
 .fk-retention-divider {
-  display: block;
-  width: 100%;
   height: 1px;
 }
 
 /* The map strip across the top of the facility card, fading to white. */
 .fk-retention-map {
-  position: absolute;
   top: 0;
   right: 0;
   left: 0;
@@ -158,41 +113,22 @@
 }
 
 .fk-retention-map-image {
-  position: absolute;
   top: 0;
   left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
   max-width: none;
-  object-fit: cover;
 }
 
 .fk-retention-map-fade {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0), var(--color-white));
 }
 
 .fk-retention-thumb {
-  position: relative;
   width: 48px;
   height: 48px;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-brand-light);
-  overflow: clip;
 }
 
 .fk-retention-thumb-image {
-  position: absolute;
   top: 0;
   left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
   max-width: none;
-  object-fit: cover;
 }

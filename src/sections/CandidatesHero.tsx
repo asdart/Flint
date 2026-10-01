@@ -36,37 +36,39 @@ const SLOT_ROLES = [
 export default function CandidatesHero() {
   return (
     <section className="fk-section">
-      <div className="fk-panel fk-bg-brand-light is-orbit">
-        <div className="fk-orbit fk-flex fk-items-center fk-justify-center" data-x-illustration="orbit">
+      <div className="fk-panel fk-bg-brand-light is-orbit fk-flex fk-justify-center">
+        <div className="fk-orbit fk-relative fk-shrink-0 fk-flex fk-items-center fk-justify-center" data-x-illustration="orbit">
           {SLOTS.map((slot, index) => {
             const candidate = CANDIDATES[slot];
             const clara = index === 2;
             return (
-              <div className={`fk-orbit-item is-a${index + 1}`} aria-hidden="true" key={index}>
-                <div className="fk-orbit-avatar" data-x-part="avatar">
-                  <img className={`fk-orbit-image is-c${slot + 1}`} src={candidate.image} alt={candidate.name} width={candidate.size[0]} height={candidate.size[1]} />
+              <div className={`fk-orbit-item fk-absolute is-a${index + 1}`} aria-hidden="true" key={index}>
+                <div className="fk-relative fk-w-full fk-h-full fk-rounded-full fk-bg-sand-100 fk-overflow-clip" data-x-part="avatar">
+                  <img className={`fk-orbit-image fk-absolute fk-block fk-object-cover is-c${slot + 1}`} src={candidate.image} alt="" width={candidate.size[0]} height={candidate.size[1]} />
                 </div>
-                <div className="fk-chip is-tooltip" data-x-part="tooltip">
+                <div className="fk-chip is-tooltip fk-absolute fk-rounded-lg fk-bg-white fk-shadow-chip" data-x-part="tooltip">
                   <img className="fk-flag" src={clara ? "/assets/flags/ke.svg" : candidate.flag} alt="" width={20} height={20} />
                   <p className="fk-text-sm fk-font-medium fk-color-ink">{clara ? "Clara" : candidate.name}</p>
-                  <span className="fk-chip-divider" />
+                  <span className="fk-chip-divider fk-shrink-0 fk-self-center" />
                   <p className="fk-text-sm fk-font-medium fk-color-subtle">{SLOT_ROLES[index]}</p>
                 </div>
               </div>
             );
           })}
-          <div className="fk-section-header is-center is-tight fk-relative" data-ix="blur-reveal">
-            <div className="fk-blur-reveal">
-              <h1 className="fk-heading-xl">Find the right sponsored healthcare role for you</h1>
-            </div>
-            <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg fk-color-subtle-80">
-                Flint helps healthcare professionals on temporary status find sponsored healthcare jobs.
-              </p>
-            </div>
-            <div className="fk-blur-reveal is-delay-2">
-              <div className="fk-section-header-action">
-                <Button />
+          <div className="fk-container is-inset fk-relative">
+            <div className="fk-section-header is-center is-tight" data-ix="blur-reveal">
+              <div className="fk-blur-reveal">
+                <h1 className="fk-heading-xl">Find the right sponsored healthcare role for you</h1>
+              </div>
+              <div className="fk-blur-reveal is-delay-1">
+                <p className="fk-text-lg fk-color-subtle-80">
+                  Flint helps healthcare professionals on temporary status find sponsored healthcare jobs.
+                </p>
+              </div>
+              <div className="fk-blur-reveal is-delay-2">
+                <div className="fk-section-header-action">
+                  <Button />
+                </div>
               </div>
             </div>
           </div>

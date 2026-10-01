@@ -31,7 +31,7 @@ export default function Faq({
               </div>
             </div>
 
-            <div className="fk-faq-list fk-flex fk-flex-col fk-gap-4 fk-mx-auto" data-ix="reveal-stagger">
+            <div className="fk-faq-list fk-w-full fk-flex fk-flex-col fk-gap-4 fk-mx-auto" data-ix="reveal-stagger">
               {FAQS.map((faq, index) => {
                 const isOpen = index === open;
                 const state = isOpen && "is-faq-open";
@@ -39,20 +39,20 @@ export default function Faq({
                   <article className="fk-faq-item fk-bg-white fk-rounded-xl" data-ix-item key={faq.question}>
                     <h3 className="fk-text-md">
                       <button
-                        className="fk-faq-question"
+                        className="fk-faq-question fk-flex fk-items-center fk-justify-between fk-gap-4 fk-w-full fk-rounded-md"
                         type="button"
                         aria-expanded={isOpen}
                         aria-controls={`faq-answer-${index + 1}`}
                       >
-                        <span className={cx("fk-faq-question-text", state)}>{faq.question}</span>
-                        <span className={cx("fk-faq-icon", state)}>
+                        <span className={cx("fk-faq-question-text fk-min-w-0", state)}>{faq.question}</span>
+                        <span className={cx("fk-faq-icon fk-flex fk-shrink-0 fk-items-center fk-justify-center fk-rounded-lg", state)}>
                           <img className={cx("fk-faq-icon-plus", state)} src="/assets/plus.svg" alt="" width={14} height={14} />
                           <img className={cx("fk-faq-icon-minus", state)} src="/assets/minus.svg" alt="" width={14} height={14} />
                         </span>
                       </button>
                     </h3>
-                    <div className={cx("fk-faq-answer", state)} id={`faq-answer-${index + 1}`}>
-                      <div className="fk-faq-answer-content">
+                    <div className={cx("fk-faq-answer fk-grid", state)} id={`faq-answer-${index + 1}`}>
+                      <div className="fk-min-h-0 fk-overflow-hidden">
                         <p className="fk-text-md fk-color-ink fk-pt-4">{faq.answer}</p>
                       </div>
                     </div>

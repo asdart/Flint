@@ -2,26 +2,11 @@
    (`fk-panel is-video`) with a dark overlay and the centred header on top. The Nav is fixed above it and
    turns white (`fk-nav is-dark`, exception x-nav-dark). The video fills the panel (object-fit cover) with
    `hero.png` as its poster; the overlay is the three Figma layers stacked: a 60% black fade at the top
-   (to 0 at 18.6%), a black fade at the bottom (0 at 55.8% to 80%) and a flat 60% black (55% ≤767). */
-
-.fk-video-bg {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+   (to 0 at 18.6%), a black fade at the bottom (0 at 55.8% to 80%) and a flat 60% black (55% ≤767).
+   Position, display, flex centring, radius, backgrounds, overflow and object-fit are utilities in the markup (docs/webflow/css-system.md); this file keeps
+   geometry, masks and the properties no utility covers. */
 
 .fk-video-overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   background-image:
     linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 18.632%),
     linear-gradient(180deg, rgba(0, 0, 0, 0) 55.791%, rgba(0, 0, 0, 0.8) 100%),

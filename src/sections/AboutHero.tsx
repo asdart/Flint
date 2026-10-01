@@ -36,7 +36,7 @@ export default function AboutHero() {
 
   return (
     <section className="fk-section">
-      <div className="fk-panel is-intro">
+      <div className="fk-panel is-intro fk-flex-tablet fk-flex-col-tablet fk-justify-center-tablet">
         <div className="fk-container">
           <div className="fk-flex fk-flex-col fk-items-center fk-gap-12">
             <div className="fk-section-header is-center is-wide" data-ix="blur-reveal">

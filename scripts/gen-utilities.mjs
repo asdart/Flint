@@ -16,7 +16,7 @@ const has = (name) => tokenNames.includes(name);
 const SPACE = tokenNames.filter((name) => name.startsWith("space-")).map((name) => name.slice(6));
 
 // Colors: backgrounds for panels, cards and surfaces; text colors for copy.
-const BG = ["white", "brand", "brand-light", "secondary", "tertiary", "surface", "stone-50", "peach-100", "sand-100"];
+const BG = ["white", "brand", "brand-light", "brand-foreground", "secondary", "tertiary", "surface", "stone-50", "peach-100", "sand-100"];
 const TEXT = ["ink", "ink-60", "ink-80", "subtle", "subtle-80", "brand", "brand-80", "white", "white-80", "white-60", "stone-100", "stone-400"];
 const WIDTHS = ["container", "container-md", "content", "content-sm", "article"];
 const RADII = ["sm", "md", "lg", "xl", "2xl", "full"];
@@ -29,6 +29,12 @@ for (const name of [
 ]) {
   if (!has(name)) throw new Error(`Token --${name} is not in tokens.css`);
 }
+
+/** Class-level shadow constants (Webflow variables can't hold shadows): tokens.md → Shadows. Not responsive. */
+const SHADOWS = [
+  ["float", "0 57px 17px rgba(0, 0, 0, 0.01), 0 25px 12.5px rgba(0, 0, 0, 0.02), 0 6px 7px rgba(0, 0, 0, 0.03)"],
+  ["chip", "0 41px 12.5px rgba(0, 0, 0, 0.02), 0 18px 9px rgba(0, 0, 0, 0.03), 0 5px 5px rgba(0, 0, 0, 0.03)"],
+];
 
 /** Base utilities: [class name (without fk-), declarations, group]. */
 const BASE = [
@@ -71,6 +77,8 @@ const BASE = [
   ...RADII.map((r) => [`rounded-${r}`, { "border-radius": `var(--radius-${r})` }, "Radius"]),
   ...BG.map((c) => [`bg-${c}`, { "background-color": `var(--color-${c})` }, "Background"]),
   ...TEXT.map((c) => [`color-${c}`, { color: `var(--color-${c})` }, "Text color"]),
+  ["list-none", { margin: "0", padding: "0", "list-style": "none" }, "Display"],
+  ...SHADOWS.map(([name, value]) => [`shadow-${name}`, { "box-shadow": value }, "Effects"]),
   ["text-left", { "text-align": "left" }, "Text"],
   ["text-center", { "text-align": "center" }, "Text"],
   ["font-medium", { "font-weight": "500" }, "Text"],

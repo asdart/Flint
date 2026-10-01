@@ -23,56 +23,55 @@ const FOUNDERS = [
  */
 export default function AboutTeam() {
   return (
-    <section className="fk-section is-open">
-      <div className="fk-container is-flush">
-        <div className="fk-flex fk-flex-col fk-items-center fk-gap-16 fk-gap-12-mobile">
-          <div
-            className="fk-flex fk-flex-col fk-items-center fk-text-center fk-gap-6 fk-gap-4-mobile fk-w-full fk-max-w-content-sm"
-            data-ix="blur-reveal"
-          >
-            <div className="fk-blur-reveal">
-              <div className="fk-section-header is-center">
+    <section className="fk-section">
+      <div className="fk-panel is-relaxed">
+        <div className="fk-container">
+          <div className="fk-flex fk-flex-col fk-gap-16 fk-gap-12-mobile">
+            <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
+              <div className="fk-blur-reveal">
                 <p className="fk-eyebrow">What makes Flint different</p>
+              </div>
+              <div className="fk-blur-reveal is-delay-1">
                 <h2 className="fk-heading-xl">Backed by the best</h2>
               </div>
+              <div className="fk-blur-reveal is-delay-2">
+                <p className="fk-text-lg fk-color-brand-80">
+                  Investors who saw the same gap we did: a healthcare system in crisis, and a global workforce ready to
+                  fill it, if only someone built the bridge.
+                </p>
+              </div>
             </div>
-            <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg fk-color-brand-80">
-                Investors who saw the same gap we did: a healthcare system in crisis, and a global workforce ready to
-                fill it, if only someone built the bridge.
-              </p>
-            </div>
-          </div>
-          <div className="fk-grid fk-cols-3 fk-cols-1-mobile fk-gap-4 fk-gap-8-mobile fk-w-full" data-ix="reveal-stagger">
-            {FOUNDERS.map((founder) => (
-              <article key={founder.id} className="fk-flex fk-flex-col fk-gap-4" data-ix-item>
-                <a
-                  className="fk-team-photo fk-rounded-lg fk-overflow-hidden"
-                  href={`#bio-${founder.id}`}
-                  data-x-modal-open={`bio-${founder.id}`}
-                  tabIndex={-1}
-                  aria-hidden="true"
-                >
-                  <img
-                    className="fk-team-image"
-                    src={`/assets/about/${founder.image}.webp`}
-                    alt=""
-                    width={founder.size[0]}
-                    height={founder.size[1]}
-                    loading="lazy"
-                  />
-                </a>
-                <div className="fk-flex fk-flex-col fk-gap-4">
-                  <div className="fk-flex fk-flex-col fk-gap-1">
-                    <h3 className="fk-text-lg fk-font-medium fk-color-ink-80">{founder.name}</h3>
-                    <p className="fk-text-lg fk-color-subtle-80">{founder.role}</p>
-                  </div>
-                  <a className="fk-team-link" href={`#bio-${founder.id}`} data-x-modal-open={`bio-${founder.id}`}>
-                    Read more<span className="fk-sr-only"> about {founder.name}</span>
+            <div className="fk-grid fk-cols-3 fk-cols-1-mobile fk-gap-4 fk-gap-8-mobile fk-w-full" data-ix="reveal-stagger">
+              {FOUNDERS.map((founder) => (
+                <article key={founder.id} className="fk-flex fk-flex-col fk-gap-4" data-ix-item>
+                  <a
+                    className="fk-team-photo fk-rounded-lg fk-overflow-hidden"
+                    href={`#bio-${founder.id}`}
+                    data-x-modal-open={`bio-${founder.id}`}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  >
+                    <img
+                      className="fk-team-image"
+                      src={`/assets/about/${founder.image}.webp`}
+                      alt=""
+                      width={founder.size[0]}
+                      height={founder.size[1]}
+                      loading="lazy"
+                    />
                   </a>
-                </div>
-              </article>
-            ))}
+                  <div className="fk-flex fk-flex-col fk-gap-4">
+                    <div className="fk-flex fk-flex-col fk-gap-1">
+                      <h3 className="fk-text-lg fk-font-medium fk-color-ink-80">{founder.name}</h3>
+                      <p className="fk-text-lg fk-color-subtle-80">{founder.role}</p>
+                    </div>
+                    <a className="fk-team-link fk-text-lg" href={`#bio-${founder.id}`} data-x-modal-open={`bio-${founder.id}`}>
+                      Read more<span className="fk-sr-only"> about {founder.name}</span>
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </div>

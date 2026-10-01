@@ -14,43 +14,42 @@ const LOGOS = [
  */
 export default function LogoGrid() {
   return (
-    <section className="fk-section is-open">
-      <div className="fk-container is-flush">
-        <div className="fk-flex fk-flex-col fk-items-center fk-gap-12 fk-gap-8-mobile">
-          <div
-            className="fk-flex fk-flex-col fk-items-center fk-text-center fk-gap-6 fk-gap-4-mobile fk-w-full fk-max-w-content-sm"
-            data-ix="blur-reveal"
-          >
-            <div className="fk-blur-reveal">
-              <div className="fk-section-header is-center">
+    <section className="fk-section">
+      <div className="fk-panel is-relaxed">
+        <div className="fk-container">
+          <div className="fk-flex fk-flex-col fk-gap-12 fk-gap-8-mobile">
+            <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
+              <div className="fk-blur-reveal">
                 <p className="fk-eyebrow">What makes Flint different</p>
+              </div>
+              <div className="fk-blur-reveal is-delay-1">
                 <h2 className="fk-heading-xl">Backed by the best</h2>
               </div>
-            </div>
-            <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg fk-color-brand-80">
-                Investors who saw the same gap we did: a healthcare system in crisis, and a global workforce ready to
-                fill it, if only someone built the bridge.
-              </p>
-            </div>
-          </div>
-          <div className="fk-grid fk-cols-4 fk-cols-2-tablet fk-cols-1-mobile fk-gap-2 fk-w-full" data-ix="reveal-stagger">
-            {LOGOS.map((logo, index) => (
-              <div
-                key={logo.alt}
-                className="fk-logo-grid-tile fk-bg-tertiary fk-rounded-lg fk-flex fk-items-center fk-justify-center"
-                data-ix-item
-              >
-                <img
-                  className={`fk-logo-grid-image is-l${index + 1}`}
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={logo.width}
-                  height={logo.height}
-                  loading="lazy"
-                />
+              <div className="fk-blur-reveal is-delay-2">
+                <p className="fk-text-lg fk-color-brand-80">
+                  Investors who saw the same gap we did: a healthcare system in crisis, and a global workforce ready to
+                  fill it, if only someone built the bridge.
+                </p>
               </div>
-            ))}
+            </div>
+            <div className="fk-grid fk-cols-4 fk-cols-2-tablet fk-cols-1-mobile fk-gap-2 fk-w-full" data-ix="reveal-stagger">
+              {LOGOS.map((logo, index) => (
+                <div
+                  key={logo.alt}
+                  className="fk-logo-grid-tile fk-bg-tertiary fk-rounded-lg fk-flex fk-items-center fk-justify-center"
+                  data-ix-item
+                >
+                  <img
+                    className={`fk-logo-grid-image is-l${index + 1}`}
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={logo.width}
+                    height={logo.height}
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

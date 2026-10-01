@@ -294,6 +294,10 @@
   background-color: var(--color-brand-light);
 }
 
+.fk-bg-brand-foreground {
+  background-color: var(--color-brand-foreground);
+}
+
 .fk-bg-secondary {
   background-color: var(--color-secondary);
 }
@@ -364,6 +368,20 @@
 
 .fk-color-stone-400 {
   color: var(--color-stone-400);
+}
+
+.fk-list-none {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fk-shadow-float {
+  box-shadow: 0 57px 17px rgba(0, 0, 0, 0.01), 0 25px 12.5px rgba(0, 0, 0, 0.02), 0 6px 7px rgba(0, 0, 0, 0.03);
+}
+
+.fk-shadow-chip {
+  box-shadow: 0 41px 12.5px rgba(0, 0, 0, 0.02), 0 18px 9px rgba(0, 0, 0, 0.03), 0 5px 5px rgba(0, 0, 0, 0.03);
 }
 
 .fk-text-left {

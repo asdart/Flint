@@ -17,13 +17,11 @@
   object-position: top;
 }
 
-/* "Read more": 18/28 brand at 80%, the card's only text control. Hover and focus follow the breadcrumb link
+/* "Read more": brand at 80% (type is `fk-text-lg` in the markup), the card's only text control. Hover and focus follow the breadcrumb link
    (the repo's text-link pattern, Figma has no hover): ink, with the ring on keyboard focus. */
 .fk-team-link {
   align-self: flex-start;
   border-radius: var(--radius-sm);
-  font-size: 18px;
-  line-height: 28px;
   color: var(--color-brand-80);
   text-decoration: none;
   transition: color 300ms ease-out;
@@ -41,9 +39,3 @@
     0px 0px 0px 4px var(--color-brand-focus);
 }
 
-@media screen and (max-width: 767px) {
-  .fk-team-link {
-    font-size: 16px;
-    line-height: 24px;
-  }
-}

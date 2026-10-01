@@ -19,7 +19,7 @@ export default function CtaArc({
 }: CtaArcProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel fk-bg-tertiary is-flush-bottom fk-flex fk-flex-col fk-gap-12">
+      <div className="fk-panel fk-bg-tertiary is-flush-bottom">
         <div className="fk-container">
           <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
             <div className="fk-blur-reveal">

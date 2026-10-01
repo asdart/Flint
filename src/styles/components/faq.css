@@ -7,7 +7,6 @@
    the whole 24px-padded row. */
 
 .fk-faq-list {
-  width: 100%;
   max-width: 800px;
 }
 
@@ -16,15 +15,9 @@
 }
 
 .fk-faq-question {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  width: 100%;
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: var(--radius-md);
   background-color: transparent;
   color: inherit;
   text-align: left;
@@ -40,7 +33,6 @@
 
 .fk-faq-question-text {
   flex: 1 1 0;
-  min-width: 0;
   font-family: var(--font-sans);
   font-size: 20px;
   line-height: 28px;
@@ -53,15 +45,10 @@
 }
 
 .fk-faq-icon {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
   box-sizing: border-box;
   width: 32px;
   height: 32px;
   border: 1px solid var(--color-stone-100);
-  border-radius: var(--radius-lg);
   background-color: transparent;
   transition:
     background-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -94,7 +81,6 @@
 }
 
 .fk-faq-answer {
-  display: grid;
   grid-template-rows: 0fr;
   visibility: hidden;
   transition:
@@ -105,11 +91,6 @@
 .fk-faq-answer.is-faq-open {
   grid-template-rows: 1fr;
   visibility: visible;
-}
-
-.fk-faq-answer-content {
-  min-height: 0;
-  overflow: hidden;
 }
 
 @media screen and (max-width: 767px) {

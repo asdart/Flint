@@ -1,0 +1,78 @@
+/* fk-split — a copy column beside a media element, stacked on tablet and down. Used by the Candidates and Facility
+   How It Works rows (media: `fk-steps-art`), About's Residency (media: `fk-split-media is-photo`) and Home Pricing
+   (two cards). The row only sets display and direction; the gap, alignment and packing are utilities in the markup
+   (`fk-gap-24 fk-gap-10-tablet fk-items-center fk-justify-end`), because they differ per use.
+   - `is-reverse`: the media on the left, desktop only (the DOM order stays copy, media).
+   - `is-media-first`: the media above the copy on tablet and down (column-reverse).
+   `fk-split-copy`: 480px column (`width-content-sm`), full width up to 580px when stacked; `is-wide` allows 640px.
+   `fk-split-media is-photo`: Residency's 632px photo column, 40px lower than the copy. The photo heights
+   (`fk-split-image`) are Figma's, local to that block. */
+
+.fk-split {
+  display: flex;
+}
+
+.fk-split.is-reverse {
+  flex-direction: row-reverse;
+}
+
+.fk-split-copy {
+  display: flex;
+  flex: 0 1 var(--width-content-sm);
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fk-split-media {
+  min-width: 0;
+}
+
+.fk-split-media.is-photo {
+  flex: 0 1 632px;
+  padding-top: var(--space-10);
+}
+
+.fk-split-image {
+  height: 421px;
+}
+
+@media screen and (max-width: 991px) {
+  .fk-split {
+    flex-direction: column;
+  }
+
+  .fk-split.is-reverse {
+    flex-direction: column;
+  }
+
+  .fk-split.is-media-first {
+    flex-direction: column-reverse;
+  }
+
+  .fk-split-copy {
+    flex: none;
+    width: 100%;
+    max-width: 580px;
+    margin-inline: auto;
+  }
+
+  .fk-split-copy.is-wide {
+    max-width: 640px;
+  }
+
+  .fk-split-media.is-photo {
+    flex: none;
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .fk-split-image {
+    height: 360px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-split-image {
+    height: 204px;
+  }
+}

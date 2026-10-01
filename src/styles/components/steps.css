@@ -1,62 +1,30 @@
 /* fk-steps-* — Candidates How It Works (Figma 5543:978): five alternating text / art rows inside the
    shared white panel. The panel's header and the rows sit in `fk-panel-content` (gap `space-16`).
-   A row is a flex row packed toward its art (the copy is 480px, 96px from the art; the leftover 44px
-   is on the outside): DOM order is always copy then art, `is-reverse` puts the art on the left. The
-   art is a fixed 580×696 panel (ratio kept) holding a 580×696 canvas: the illustrations are laid
+   A row is `fk-split` (split.css; packed toward its art with `fk-justify-end`, the copy is 480px, 96px
+   from the art; the leftover 44px is on the outside): DOM order is always copy then art, `is-reverse` puts
+   the art on the left. The art is a fixed 580×696 panel (ratio kept) holding a 580×696 canvas: the illustrations are laid
    out in canvas pixels (Figma / legacy numbers) and the canvas is scaled to 0.85 ≤767 and 0.6 ≤479
    around its centre, so the pieces keep their relative positions. Rings and photos are placed in %
    of the panel instead. Every animated part of the legacy illustrations is its own element with its
    own class (`x-illustrations` moves them; this stylesheet is the final frame). Illustration colours
-   that aren't tokens live inside the SVG assets (check circle, end-call). */
-
-.fk-steps-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--space-24);
-  box-sizing: border-box;
-  width: 100%;
-  max-width: calc(var(--width-container) + var(--space-10));
-  margin-inline: auto;
-  padding-inline: var(--space-5);
-}
-
-.fk-steps-row.is-reverse {
-  flex-direction: row-reverse;
-}
-
-.fk-steps-copy {
-  display: flex;
-  flex: 0 1 480px;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-width: 0;
-}
+   that aren't tokens live inside the SVG assets (check circle, end-call). 
+   Position, display, flex centring, radius, backgrounds, overflow and object-fit are utilities in the markup (docs/webflow/css-system.md); this file keeps
+   geometry, masks and the properties no utility covers. */
 
 /* "1." hangs in a 48px gutter, 14px in from the copy edge, so a wrapped title stays aligned
    under its first word. */
-.fk-steps-title {
-  display: flex;
-}
-
 .fk-steps-number {
-  flex: none;
   width: 48px;
   padding-left: 14px;
   box-sizing: border-box;
 }
 
 .fk-steps-art {
-  position: relative;
-  flex: none;
   width: 580px;
   aspect-ratio: 580 / 696;
-  border-radius: var(--radius-2xl);
-  overflow: clip;
 }
 
 .fk-steps-canvas {
-  position: absolute;
   top: 50%;
   left: 50%;
   width: 580px;
@@ -64,39 +32,9 @@
   margin: -348px 0 0 -290px;
 }
 
-/* The gradient ring (stats ring art): a 2×-panel square masked by the registered ring SVG. */
-.fk-steps-ring {
-  position: absolute;
-  width: 200%;
-  aspect-ratio: 1 / 1;
-  mask-image: url("/assets/home/cta-ring.svg");
-  mask-size: 100% 100%;
-  mask-repeat: no-repeat;
-  pointer-events: none;
-}
-
-.fk-steps-ring.is-right {
-  top: -2.299%;
-  left: 10.862%;
-}
-
-.fk-steps-ring.is-left {
-  top: -2.299%;
-  left: -123.793%;
-}
-
-.fk-steps-ring-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: rotate(90deg);
-}
-
 /* ---- Row 1: applications sent ---- */
 
 .fk-steps-stack {
-  position: absolute;
   top: 272px;
   left: 117px;
   width: 346px;
@@ -104,7 +42,6 @@
 }
 
 .fk-steps-notice {
-  position: absolute;
   left: 0;
   display: flex;
   align-items: center;
@@ -113,12 +50,6 @@
   width: 346px;
   height: 72px;
   padding: 0 var(--space-4);
-  border-radius: var(--radius-xl);
-  background-color: var(--color-white);
-  box-shadow:
-    0 57px 17px rgba(0, 0, 0, 0.01),
-    0 25px 12.5px rgba(0, 0, 0, 0.02),
-    0 6px 7px rgba(0, 0, 0, 0.03);
   transform-origin: top center;
 }
 
@@ -143,26 +74,20 @@
 }
 
 .fk-steps-notice-avatar {
-  position: relative;
-  flex: none;
   width: 40px;
   height: 40px;
 }
 
 .fk-steps-notice-photo {
-  position: relative;
   width: 40px;
   height: 40px;
 }
 
 .fk-steps-notice-image {
-  position: absolute;
   top: 0;
   left: 0;
-  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   object-position: center 18%;
 }
 
@@ -179,33 +104,22 @@
 }
 
 .fk-steps-notice-flag {
-  position: absolute;
   right: 0;
   bottom: 0;
-  display: block;
   width: 12px;
   height: 12px;
 }
 
 .fk-steps-notice-text {
-  display: flex;
   flex: 1 1 0;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 0;
 }
 
 .fk-steps-notice-action {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
   width: 38px;
   height: 38px;
 }
 
 .fk-steps-notice-action-icon {
-  display: block;
   width: 14px;
   height: 15px;
 }
@@ -213,7 +127,6 @@
 /* ---- Row 2: video call ---- */
 
 .fk-steps-call {
-  position: absolute;
   top: 184px;
   left: 50px;
   width: 514px;
@@ -221,39 +134,30 @@
 }
 
 .fk-steps-window {
-  position: absolute;
   top: 0;
   right: 34px;
   bottom: 33px;
   left: 0;
   border: 1px solid var(--color-stone-50);
-  border-radius: var(--radius-lg);
   background-color: var(--color-white-80);
   box-shadow:
     0 37px 37px rgba(0, 0, 0, 0.03),
     0 9px 20px rgba(0, 0, 0, 0.03);
   backdrop-filter: blur(20px);
-  overflow: clip;
 }
 
 .fk-steps-call-photo {
-  position: absolute;
   top: 7px;
   left: 9px;
-  display: block;
   width: 462px;
   height: 280px;
-  border-radius: var(--radius-md);
-  object-fit: cover;
 }
 
 .fk-steps-call-name {
-  position: absolute;
   bottom: 45px;
   left: 21px;
   margin: 0;
   padding: var(--space-1) var(--space-2-5);
-  border-radius: var(--radius-full);
   background-color: var(--color-black-20);
   font-family: var(--font-sans);
   font-size: 10px;
@@ -261,31 +165,21 @@
 }
 
 .fk-steps-call-people {
-  position: absolute;
   bottom: 13px;
   left: 20px;
-  display: block;
   width: 16px;
   height: 16px;
 }
 
 .fk-steps-call-controls {
-  position: absolute;
   bottom: 9px;
   left: 50%;
-  display: flex;
-  align-items: center;
   gap: 9px;
   transform: translateX(-50%);
 }
 
 /* The control SVGs are stretched to their box (preserveAspectRatio none), so each combo is the icon's own
    size, centred in a 16px slot with margins (camera, microphone, three dots). */
-.fk-steps-call-control {
-  display: block;
-  flex: none;
-}
-
 .fk-steps-call-control.is-camera {
   width: 14.78px;
   height: 10.33px;
@@ -305,40 +199,35 @@
 }
 
 .fk-steps-call-end {
-  display: block;
   width: 24px;
   height: 24px;
 }
 
 .fk-steps-call-pip {
-  position: absolute;
   top: 247px;
   left: 384px;
-  display: block;
   box-sizing: border-box;
   width: 114px;
   height: 114px;
   border: 4px solid var(--color-white);
-  border-radius: var(--radius-md);
-  object-fit: cover;
 }
 
 /* ---- Row 3: fees checklist ---- */
 
 .fk-steps-fees {
-  position: absolute;
   top: 172px;
   left: 110px;
   width: 360px;
   height: 352px;
 }
 
-.fk-steps-fees-back {
-  position: absolute;
+/* The two cards stacked behind a card (Candidates fees art, Facility savings art): white (`fk-bg-white` in the
+   markup), n1 the smaller, fainter one. `is-opaque` is the savings art's second card (Figma 5594:26861, solid, 28px). */
+.fk-steps-back {
   border-radius: var(--radius-xl);
 }
 
-.fk-steps-fees-back.is-n1 {
+.fk-steps-back.is-n1 {
   top: 143px;
   left: 60px;
   width: 240px;
@@ -346,7 +235,7 @@
   opacity: 0.4;
 }
 
-.fk-steps-fees-back.is-n2 {
+.fk-steps-back.is-n2 {
   top: 79px;
   left: 32px;
   width: 296px;
@@ -354,31 +243,23 @@
   opacity: 0.6;
 }
 
+.fk-steps-back.is-opaque {
+  border-radius: 28px;
+  opacity: 1;
+}
+
 .fk-steps-fees-card {
-  position: absolute;
   margin: 0;
   list-style: none;
   top: 0;
   left: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
   box-sizing: border-box;
   width: 360px;
   height: 316px;
   padding: var(--space-8);
-  border-radius: var(--radius-2xl);
-}
-
-.fk-steps-fees-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
 }
 
 .fk-steps-fees-icon {
-  display: block;
-  flex: none;
   width: 32px;
   height: 32px;
 }
@@ -386,10 +267,8 @@
 /* ---- Row 4: case preparation orbit ---- */
 
 .fk-steps-orbit-ring {
-  position: absolute;
   top: 200px;
   left: 142px;
-  display: block;
   width: 296px;
   height: 296px;
 }
@@ -399,10 +278,6 @@
    style API takes no conic mask-image. So the class sets nothing here; the Designer canvas shows the full circle. */
 
 .fk-steps-orbit-node {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 72px;
   height: 72px;
 }
@@ -438,10 +313,8 @@
 }
 
 .fk-steps-orbit-node-ring {
-  position: absolute;
   top: 0;
   left: 0;
-  display: block;
   width: 72px;
   height: 72px;
 }
@@ -457,16 +330,11 @@
 }
 
 .fk-steps-orbit-node-face {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 64px;
   height: 64px;
 }
 
 .fk-steps-orbit-label {
-  position: absolute;
   top: 132px;
   left: 214px;
   width: 144px;
@@ -474,7 +342,6 @@
 }
 
 .fk-steps-orbit-avatar {
-  position: absolute;
   top: 305px;
   left: 243px;
   width: 86px;
@@ -482,46 +349,25 @@
 }
 
 .fk-steps-orbit-avatar-image {
-  position: absolute;
   top: -17.2%;
   left: -82.8%;
-  display: block;
   width: 268.6%;
   height: 336%;
   max-width: none;
-  object-fit: cover;
   transform: scaleX(-1);
 }
 
 /* ---- Row 5: photo ---- */
 
 .fk-steps-photo {
-  position: absolute;
   top: -12.787%;
   left: -2.069%;
-  display: block;
   width: 130.69%;
   height: 147.701%;
   max-width: none;
-  object-fit: cover;
 }
 
 @media screen and (max-width: 991px) {
-  .fk-steps-row {
-    flex-direction: column;
-    gap: var(--space-10);
-  }
-
-  .fk-steps-row.is-reverse {
-    flex-direction: column;
-  }
-
-  .fk-steps-copy {
-    flex: none;
-    width: 100%;
-    max-width: 580px;
-  }
-
   .fk-steps-art {
     width: 100%;
     max-width: 580px;

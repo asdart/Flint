@@ -17,22 +17,17 @@
   max-width: var(--width-content-sm);
 }
 
-/* The Candidates hero's 436px text block (Figma 5543:950): narrower than `is-narrow`. */
+/* The 448px text block of the Candidates, Facility partners and split-CTA headers (Figma 5543:950 and 5543:1171
+   are 436px, but the Facility text measures 437px in the browser, which would push "simplify" to a third line). */
 .fk-section-header.is-tight {
   width: 100%;
-  max-width: 436px;
-}
-
-/* The Facility partners hero's block (Figma 5543:1171 is 436px too, but its text measures 432px there and 437px
-   in the browser, which would push "simplify" to a third line): a few pixels of room, same on the phone. */
-.fk-section-header.is-tight.is-roomy {
   max-width: 448px;
 }
 
 /* The 521px text column of About's Mission and Story (Figma 5805:3995). */
 .fk-section-header.is-prose {
   width: 100%;
-  max-width: 521px;
+  max-width: var(--width-prose);
 }
 
 /* The About hero's title block (Figma 5993:3818, 640px; 660px here because the `fk-heading-lg` h1 is 0.2px/letter wider than Figma's −1px tracking and must still break after "for the"): 24px between the eyebrow and the h1. */
@@ -56,13 +51,4 @@
 .fk-section-header-action {
   display: flex;
   padding-top: var(--space-4);
-}
-
-/* The orbit stage is wider than the phone panel (it is cropped), so the text block follows the panel:
-   100vw minus the 8px section gutters and 24px side padding, as in Figma 5763:2676. */
-@media screen and (max-width: 767px) {
-  .fk-section-header.is-tight,
-  .fk-section-header.is-tight.is-roomy {
-    max-width: calc(100vw - var(--space-16));
-  }
 }

@@ -4,11 +4,11 @@ const STORY = [
 ];
 
 /**
- * Our Story on About (Figma 5805:3995 pattern). Page-level markup (D-17, user decision 2026-10-02). Same layout as the Mission on a Brand Light panel; `is-padded-bottom` adds the 16px band gap under it because the Residency section after it has no panel.
+ * Our Story on About (Figma 5805:3995 pattern). Page-level markup (D-17, user decision 2026-10-02). Same layout as the Mission on a Brand Light panel.
  */
 export default function AboutStory() {
   return (
-    <section className="fk-section is-padded-bottom">
+    <section className="fk-section">
       <div className="fk-panel is-radius-lg fk-bg-brand-light">
         <div className="fk-container">
           <div className="fk-section-header is-center is-prose" data-ix="blur-reveal">

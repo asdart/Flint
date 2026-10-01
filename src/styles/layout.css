@@ -25,10 +25,6 @@
   padding-bottom: var(--space-20);
 }
 
-.fk-section.is-open {
-  padding: var(--space-32) var(--space-16);
-}
-
 .fk-section.is-x-flush {
   padding-inline: 0;
 }
@@ -74,22 +70,17 @@
   padding-bottom: 0;
 }
 
-/* Section / Candidates Hero: a 1024px (828px ≤767) panel, ring stage centred under `space-32` of
+/* Section / Candidates Hero: a 1024px (828px ≤767) panel (`fk-flex fk-justify-center` in the markup), ring stage centred under `space-32` of
    top padding (101px ≤767, Figma 5763:2668); the stage is wider than the phone panel, which clips it. */
 .fk-panel.is-orbit {
-  display: flex;
-  justify-content: center;
   min-height: 1024px;
   padding-top: var(--space-32);
   padding-bottom: 0;
 }
 
-/* Section / Facility Partners Hero: an 848px (752px ≤767) video card, header centred, no padding (the video
+/* Section / Facility Partners Hero: an 848px (752px ≤767) video card (`fk-flex fk-items-center fk-justify-center` in the markup), header centred, no padding (the video
    and overlay are absolutely placed inside it; Figma 5543:1166, phone 5755:2546). */
 .fk-panel.is-video {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 848px;
   padding: 0 var(--space-5);
 }
@@ -162,12 +153,6 @@
   padding-inline: 0;
 }
 
-/* Full container width with no gutter: the section (`fk-section is-open`) supplies the side padding, as in
-   Figma's 70px-padded text sections (Team, Residency, Logo Grid). */
-.fk-container.is-flush {
-  padding-inline: 0;
-}
-
 .fk-divider {
   width: 100%;
   height: 1px;
@@ -189,10 +174,6 @@
 }
 
 @media screen and (max-width: 991px) {
-  .fk-section.is-open {
-    padding: var(--space-24) var(--space-10);
-  }
-
   .fk-panel {
     padding: var(--space-16) 0;
   }
@@ -218,9 +199,6 @@
   }
 
   .fk-panel.is-intro {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     min-height: 584px;
     padding-top: var(--space-16);
     padding-bottom: 0;
@@ -232,6 +210,15 @@
 }
 
 @media screen and (max-width: 767px) {
+  /* A container inside a hero panel that is narrower than the page container's gutters allow (Candidates and
+     Facility partners heroes): the text block follows the panel, 100vw minus the 8px section gutters and 24px
+     side padding (Figma 5763:2676). Also the Candidates orbit stage is wider than the phone panel, so the
+     container can't size from it. */
+  .fk-container.is-inset {
+    max-width: calc(100vw - var(--space-16));
+    padding-inline: 0;
+  }
+
   .fk-section {
     padding: var(--space-2) var(--space-2) 0;
   }
@@ -242,10 +229,6 @@
 
   .fk-section.is-padded-bottom-lg {
     padding-bottom: 0;
-  }
-
-  .fk-section.is-open {
-    padding: var(--space-16) var(--space-5);
   }
 
   .fk-panel.is-compact {

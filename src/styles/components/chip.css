@@ -5,17 +5,10 @@
    Figma line, drawn as a border. */
 
 .fk-chip {
-  position: absolute;
   display: flex;
   align-items: center;
   gap: var(--space-1-5);
   padding: var(--space-2);
-  border-radius: var(--radius-lg);
-  background-color: var(--color-white);
-  box-shadow:
-    0 41px 12.5px rgba(0, 0, 0, 0.02),
-    0 18px 9px rgba(0, 0, 0, 0.03),
-    0 5px 5px rgba(0, 0, 0, 0.03);
   white-space: nowrap;
 }
 
@@ -40,8 +33,6 @@
 }
 
 .fk-chip-divider {
-  flex: none;
-  align-self: center;
   width: 0;
   height: 17px;
   border-left: 1px solid var(--color-stone-100);

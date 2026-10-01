@@ -14,7 +14,7 @@ type ModalProps = {
 
 /**
  * UI / Modal. Plain elements; exception `x-modal` (src/ix/xModal.ts) opens and closes it and adds
- * `is-open` to the root. Place it where no ancestor has a transform, e.g. last child of `.fk-page`.
+ * `is-modal-open` to the root. Place it where no ancestor has a transform, e.g. last child of `.fk-page`.
  */
 export default function Modal({ id, labelledBy, closeLabel = "Close", children }: ModalProps) {
   return (

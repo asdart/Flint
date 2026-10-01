@@ -25,7 +25,7 @@ export default function FacilityPartnersPage() {
       <main>
         <FacilityPartnersHero />
         <LogoMarquee />
-        <StatsBand variant="default" stats={STATS} />
+        <StatsBand variant="spread" stats={STATS} />
         <FacilityValueProp />
         <FeatureGrid variant="benefits" />
       </main>
