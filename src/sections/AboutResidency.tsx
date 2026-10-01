@@ -4,13 +4,8 @@ const RESIDENCY = [
 ];
 
 /**
-<<<<<<< HEAD
  * Residency on About (Figma 5805:4021, phone 5974:8111). Page-level markup (D-17, user decision 2026-10-01: Media
  * Split is not a component, Facility partners won't use it). A white `fk-panel is-relaxed` band: a left-aligned
-=======
- * Residency on About (Figma 5805:4021, phone 5974:8111). Page-level markup (D-17, user decision 2026-10-01: Media
- * Split is not a component, Facility partners won't use it). An unpaneled `fk-section is-open` band: a left-aligned
->>>>>>> 4cc4d59 (Review the roadmap against the repo (2026-10-01))
  * copy column (eyebrow, h2, paragraphs) and a rounded photo that reveals on scroll. Tablet and down: one column,
  * photo on top, centred title. The photo is lazy-loaded (below the fold).
  */
