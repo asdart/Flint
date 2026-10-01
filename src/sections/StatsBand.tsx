@@ -30,7 +30,7 @@ export default function StatsBand({ title, stats, variant = "large" }: StatsBand
   }[variant];
   const row = {
     large: "fk-stats-band-grid fk-items-center fk-justify-between fk-gap-8-tablet fk-gap-12-mobile",
-    default: "fk-grid fk-cols-3 fk-cols-1-mobile fk-gap-16-mobile fk-max-w-container-md",
+    default: "fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-12-tablet fk-gap-16-mobile fk-max-w-container-md",
     spread: "fk-stats-band-spread fk-max-w-container-md fk-mx-auto",
   }[variant];
 

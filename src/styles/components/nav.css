@@ -128,7 +128,7 @@
      on a fixed element stretches to the whole page in the Designer canvas), the panel scrolls
      internally, and ix-nav-menu locks html and body. */
   height: 100dvh;
-  padding: var(--space-2);
+  padding: var(--space-4);
   background-color: var(--color-white);
   overflow: hidden;
   overscroll-behavior: contain;
@@ -227,6 +227,13 @@
 
   .fk-nav-menu.is-menu-open {
     display: flex;
+  }
+}
+
+/* The open menu's outer padding: `space-4` on tablet (base above; the menu only shows ≤991), `space-2` from Mobile landscape down. */
+@media screen and (max-width: 767px) {
+  .fk-nav-menu {
+    padding: var(--space-2);
   }
 }
 

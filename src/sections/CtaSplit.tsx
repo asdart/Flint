@@ -12,7 +12,7 @@ export default function CtaSplit() {
     <section className="fk-section">
       <div className="fk-grid fk-cols-2 fk-cols-1-tablet fk-gap-4 fk-gap-2-mobile" data-ix="reveal-stagger">
         <div
-          className="fk-panel is-split fk-bg-brand-light fk-flex fk-items-center fk-justify-center"
+          className="fk-panel is-split fk-bg-brand-light fk-flex fk-items-center fk-justify-center fk-justify-start-tablet"
           data-ix-item
         >
           <div className="fk-section-header is-tight">
@@ -29,7 +29,7 @@ export default function CtaSplit() {
             </div>
           </div>
         </div>
-        <div className="fk-panel is-split fk-bg-tertiary fk-flex fk-items-center fk-justify-center" data-ix-item>
+        <div className="fk-panel is-split fk-bg-tertiary fk-flex fk-items-center fk-justify-center fk-justify-start-tablet" data-ix-item>
           <div className="fk-section-header is-tight">
             <h2 className="fk-heading-xl">Create a lasting team for success.</h2>
             <p className="fk-text-lg fk-color-brand-80">

@@ -61,9 +61,26 @@
   justify-content: space-between;
 }
 
+/* Tablet: two columns, the third stat on its own row (`fk-stat is-default`, below). */
+@media screen and (max-width: 991px) {
+  .fk-stats-band-spread {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: normal;
+    gap: var(--space-12);
+  }
+}
+
 @media screen and (max-width: 767px) {
   .fk-stats-band-spread {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-16);
+  }
+}
+
+/* `fk-stat` is the UI / Stat root (no styles of its own). In the 3-stat bands (Default and Spread, `is-default`) the
+   tablet grid has two columns and the last stat spans both, so the band reads 2 + 1; one column ≤767 anyway. */
+@media screen and (max-width: 991px) {
+  .fk-stat.is-default:last-child {
+    grid-column: 1 / -1;
   }
 }

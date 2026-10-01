@@ -14,7 +14,7 @@ export default function AboutResidency() {
     <section className="fk-section">
       <div className="fk-panel is-relaxed">
         <div className="fk-container">
-          <div className="fk-split is-media-first fk-items-start fk-items-stretch-tablet fk-justify-between fk-gap-12 fk-gap-8-tablet">
+          <div className="fk-split fk-items-start fk-items-stretch-tablet fk-justify-between fk-gap-12 fk-gap-8-tablet">
             <div className="fk-split-copy is-wide fk-gap-6" data-ix="blur-reveal">
               <div className="fk-section-header fk-text-center-tablet">
                 <div className="fk-blur-reveal">

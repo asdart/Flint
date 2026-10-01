@@ -176,7 +176,7 @@ leaves everything that differs per use to utilities in the markup:
 - **`fk-split`** (copy column + media, stacked ≤991): the row sets display and the stack; gap,
   alignment and packing are utilities (`fk-gap-24 fk-gap-10-tablet fk-items-center fk-justify-end`)
   because the three uses (How It Works rows, Residency, Pricing) differ. `fk-split-copy`,
-  `-media`, combos `is-reverse` / `is-media-first` / `is-wide` / `is-photo`. See `classes.md`.
+  `-media`, combos `is-reverse` / `is-wide` / `is-photo` (media always on top ≤991). See `classes.md`.
 - **`fk-ring`** (the masked gradient ring): one class, placement combos per use.
 - **`fk-icon-badge`** (round icon holder, 40px, `is-sm` 28px): colour is a `fk-bg-*` utility.
 - **`fk-steps-back`** (the two stacked back cards), **`fk-container is-inset`** (≤767 hero text block).
