@@ -725,6 +725,134 @@
     "/assets/about/investor-rhino.svg": {
       "id": "6abecfa3c925d0757bea591e",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa3c925d0757bea591e_investor-rhino.svg"
+    },
+    "/assets/plus.svg": {
+      "id": "6abee1d51f386db5e277872f",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d51f386db5e277872f_plus.svg"
+    },
+    "/assets/minus.svg": {
+      "id": "6abee1d572a47e3be02e2cfb",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d572a47e3be02e2cfb_minus.svg"
+    },
+    "/assets/candidates/steps/send-yuki.webp": {
+      "id": "6abee1d536ebf56b06fa560e",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d536ebf56b06fa560e_send-yuki.webp"
+    },
+    "/assets/how-flint-works/send-flag-cn.svg": {
+      "id": "6abee1d52a13525d675c6318",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d52a13525d675c6318_send-flag-cn.svg"
+    },
+    "/assets/how-flint-works/ic-send.svg": {
+      "id": "6abee1d61b26f7d2f4e28b34",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d61b26f7d2f4e28b34_ic-send.svg"
+    },
+    "/assets/candidates/steps/send-amara.webp": {
+      "id": "6abee1d63646e0746d0a41cd",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d63646e0746d0a41cd_send-amara.webp"
+    },
+    "/assets/how-flint-works/send-flag-ph.svg": {
+      "id": "6abee1d69e4fc44604e6fb74",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d69e4fc44604e6fb74_send-flag-ph.svg"
+    },
+    "/assets/candidates/steps/send-raj.webp": {
+      "id": "6abee1d65fca661d071cdb46",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d65fca661d071cdb46_send-raj.webp"
+    },
+    "/assets/how-flint-works/send-flag-in.svg": {
+      "id": "6abee1d672a47e3be02e2da0",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d672a47e3be02e2da0_send-flag-in.svg"
+    },
+    "/assets/candidates/steps/send-kwame.webp": {
+      "id": "6abee1d681604143664f605d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d681604143664f605d_send-kwame.webp"
+    },
+    "/assets/how-flint-works/send-flag-ng.svg": {
+      "id": "6abee1d681604143664f6072",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d681604143664f6072_send-flag-ng.svg"
+    },
+    "/assets/candidates/steps/call-main.webp": {
+      "id": "6abee1d681604143664f6087",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d681604143664f6087_call-main.webp"
+    },
+    "/assets/how-flint-works/ic-people.svg": {
+      "id": "6abee1d7c442756577f650ff",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d7c442756577f650ff_ic-people.svg"
+    },
+    "/assets/how-flint-works/ic-participants.svg": {
+      "id": "6abee1d7c442756577f65114",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d7c442756577f65114_ic-participants.svg"
+    },
+    "/assets/how-flint-works/ic-video.svg": {
+      "id": "6abee1d72a13525d675c63cc",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d72a13525d675c63cc_ic-video.svg"
+    },
+    "/assets/how-flint-works/ic-mic.svg": {
+      "id": "6abee1d72a13525d675c63e1",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d72a13525d675c63e1_ic-mic.svg"
+    },
+    "/assets/candidates/steps/call-end.svg": {
+      "id": "6abee1d71f386db5e277889c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d71f386db5e277889c_call-end.svg"
+    },
+    "/assets/candidates/steps/call-pip.webp": {
+      "id": "6abee1d7bf2b163df785f325",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d7bf2b163df785f325_call-pip.webp"
+    },
+    "/assets/candidates/steps/check-circle.svg": {
+      "id": "6abee1d739b5bba928957943",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d739b5bba928957943_check-circle.svg"
+    },
+    "/assets/candidates/steps/orbit-ring.svg": {
+      "id": "6abee1d7c442756577f6517d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d7c442756577f6517d_orbit-ring.svg"
+    },
+    "/assets/candidates/steps/orbit-progress.svg": {
+      "id": "6abee1d7c442756577f65192",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d7c442756577f65192_orbit-progress.svg"
+    },
+    "/assets/candidates/steps/orbit-avatar.webp": {
+      "id": "6abee1d7c442756577f651a7",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d7c442756577f651a7_orbit-avatar.webp"
+    },
+    "/assets/candidates/steps/orbit-node-ring.svg": {
+      "id": "6abee1d8c442756577f651bc",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d8c442756577f651bc_orbit-node-ring.svg"
+    },
+    "/assets/candidates/steps/orbit-node-ring-active.svg": {
+      "id": "6abee1d8929345cc10cbc9fa",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d8929345cc10cbc9fa_orbit-node-ring-active.svg"
+    },
+    "/assets/how-flint-works/cp-doc.svg": {
+      "id": "6abee1d8b66ee76d9ddbc23a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d8b66ee76d9ddbc23a_cp-doc.svg"
+    },
+    "/assets/how-flint-works/cp-topright.svg": {
+      "id": "6abee1d801e2c0d202b3e624",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d801e2c0d202b3e624_cp-topright.svg"
+    },
+    "/assets/how-flint-works/cp-bottomright.svg": {
+      "id": "6abee1d801e2c0d202b3e656",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d801e2c0d202b3e656_cp-bottomright.svg"
+    },
+    "/assets/how-flint-works/cp-bottom.svg": {
+      "id": "6abee1d813cf7939eba089a4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d813cf7939eba089a4_cp-bottom.svg"
+    },
+    "/assets/how-flint-works/cp-bottomleft.svg": {
+      "id": "6abee1d913cf7939eba089b9",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d913cf7939eba089b9_cp-bottomleft.svg"
+    },
+    "/assets/how-flint-works/cp-topleft.svg": {
+      "id": "6abee1d913cf7939eba089ce",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d913cf7939eba089ce_cp-topleft.svg"
+    },
+    "/assets/candidates/steps/portrait.webp": {
+      "id": "6abee1d92a13525d675c64fd",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d92a13525d675c64fd_portrait.webp"
+    },
+    "/assets/flags/mx.svg": {
+      "id": "6abee1d9929345cc10cbca92",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d9929345cc10cbca92_mx.svg"
     }
   },
   "variableCollections": {
@@ -799,7 +927,8 @@
     "width-article": "variable-5c5f78f5-b579-9031-854c-fbaf016bcf7c",
     "width-prose": "variable-bb3c1738-b608-b9d3-8765-39622b7f9a3c",
     "color-ink-80": "variable-33ed6104-2af6-8f1f-d825-b67b67bb0753",
-    "color-backdrop": "variable-c62a5d85-f16b-b407-e4fe-62a1aeb72e42"
+    "color-backdrop": "variable-c62a5d85-f16b-b407-e4fe-62a1aeb72e42",
+    "color-black-20": "variable-f1e628cb-f72a-5373-87ee-cd0783b654e5"
   },
   "pageElements": {
     "/ Post Grid (Home)": {

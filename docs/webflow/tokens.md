@@ -69,7 +69,7 @@ step that's in use is its own token. Add a row before using a new one.
 | `color-subtle-80` | `rgba(97, 101, 106, 0.8)` | Stat labels |
 | `color-ink-60` | `rgba(15, 14, 23, 0.6)` | Muted supporting lines inside the Pricing message bubbles |
 | `color-ink-80` | `rgba(15, 14, 23, 0.8)` | **New 2026-10-01; on production 2026-10-01 (`variable-33ed6104-…`).** Stat labels in Stats Band Default (Figma `5543:1021`) |
-| `color-black-20` | `rgba(0, 0, 0, 0.2)` | **New 2026-10-01 (to sync as a variable).** The name tag on the video-call picture, How It Works row 2 (`fk-steps-call-name`) |
+| `color-black-20` | `rgba(0, 0, 0, 0.2)` | **New 2026-10-01. On Webflow 2026-10-01 (Candidates Stage A, `variable-f1e628cb-f72a-5373-87ee-cd0783b654e5`).** The name tag on the video-call picture, How It Works row 2 (`fk-steps-call-name`) |
 | `color-success` | `#04804e` | **New 2026-10-01 (to sync as a variable).** Text and arrow of the savings chip, Facility partners "Reduced staffing costs" art (`fk-savings-chip`) |
 | `color-success-10` | `rgba(5, 175, 107, 0.1)` | **New 2026-10-01 (to sync as a variable).** Background of that chip |
 | `color-warning` | `#d6783e` | **New 2026-10-01 (to sync as a variable).** The "2 total" chip's text and dot, Facility partners retention art (`fk-retention-total`) |
