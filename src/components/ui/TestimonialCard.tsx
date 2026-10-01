@@ -5,7 +5,7 @@ type TestimonialCardProps = {
   role: string;
 };
 
-/** UI / Testimonial Card. Hover motion is `ix-testimonial-hover`. */
+/** UI / Testimonial Card. Hover motion is `x-carousel`. */
 export default function TestimonialCard({ image, quote, name, role }: TestimonialCardProps) {
   return (
     <article className="fk-testimonial-card fk-relative fk-rounded-2xl fk-bg-white fk-overflow-clip">

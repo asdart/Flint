@@ -23,7 +23,7 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 /** Three copies in a row: the middle one is the real set, the outer two let the track slide in
- * either direction without running out of cards (`ix-testimonials`). */
+ * either direction without running out of cards (`x-carousel`, `data-x-copies="3"`). */
 const RING = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
 const CURRENT = TESTIMONIALS.length + 3;
 
@@ -32,14 +32,14 @@ type TestimonialsProps = {
   body?: string;
 };
 
-/** Section / Testimonials, Slider variant. Motion is `ix-testimonials`. */
+/** Section / Testimonials, Slider variant. Motion is `x-carousel` (spring). */
 export default function Testimonials({
   title = "What candidates are saying about Flint.",
   body = "Flint has helped hundreds of healthcare professionals find green card sponsored roles across the US.",
 }: TestimonialsProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel fk-bg-brand-light" data-ix="testimonials">
+      <div className="fk-panel fk-bg-brand-light" data-x-carousel="spring" data-x-autoplay="5000" data-x-copies="3" data-x-current="is-center">
         <div className="fk-panel-content">
           <div className="fk-container">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
@@ -52,15 +52,14 @@ export default function Testimonials({
             </div>
           </div>
 
-          <div className="fk-flex fk-flex-col fk-gap-8 fk-w-full">
-            <div className="fk-testimonials-track fk-flex fk-gap-6">
+          <div className="fk-flex fk-flex-col fk-gap-8 fk-w-full" data-x-viewport>
+            <div className="fk-testimonials-track fk-flex fk-gap-6" data-x-track>
               {RING.map((testimonial, index) => {
                 const isClone = index < TESTIMONIALS.length || index >= TESTIMONIALS.length * 2;
                 return (
                   <div
                     key={`${testimonial.image}-${index}`}
                     className={cx("fk-testimonials-slide", index === CURRENT && "is-center")}
-                    data-tm-slide={index + 1}
                     aria-hidden={isClone || undefined}
                   >
                     <TestimonialCard {...testimonial} />
@@ -69,7 +68,6 @@ export default function Testimonials({
               })}
             </div>
             <CarouselDots
-              id="tm"
               count={TESTIMONIALS.length}
               active={3}
               label={(index) => `Go to testimonial ${index + 1}`}

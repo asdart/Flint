@@ -46,7 +46,7 @@ The order the user agreed on 2026-09-30. Page pre-plans read from the final Figm
 
 1. ~~**Close out Home and the Blog:**~~ **done 2026-09-30** (user closed it; the Designer checklist, newsletter submit and staging were confirmed by the user): the [Blog sync carry-over](#blog-sync-carry-over) Designer checklist, the staging checks, then the track P exit criteria
 2. ~~**Repo cleanup:**~~ **done 2026-09-30** (PR #1 merged into `webflow`): roadmap slimmed (decisions in `archive/decisions.md`), stray scratch file removed, merged `blog-post-page` branch deleted
-3. **Shared carousel (D-37):** build `x-carousel`, swap it onto Home (How It Works, Testimonials), and check swipe and backward navigation on staging
+3. **Shared carousel (D-37)** ◐ **built in the repo 2026-10-01:** `src/ix/xCarousel.ts` and the generated `docs/webflow/custom-code/x-carousel.html`, Home markup moved onto it, old IX3 preview modules removed, tested in Chromium (desktop and touch emulation). **Left:** put the `data-x-*` attributes and the footer code on Home in Webflow, delete `ix-how-carousel(-phone)`, `ix-testimonials` and `ix-testimonial-hover` (needs the user's confirmation, rule 12), publish, and check swipe and backward navigation on staging
 4. **Candidates** ([plan](plans/candidates.md)): Hero (ring of 12 avatars, orbit from the legacy `ProximityOrbit`), Stats Band Default, Role Grid (reuse), How It Works (5 rows, `x-illustrations`), Testimonials with arrows, FAQ, arc-carousel CTA (D-34)
 5. **Facility partners** ([plan](plans/facility-partners.md)): Hero, Logo Marquee (reuse), Stats Band Default (reuse), Media Split ×3 with `x-illustrations`, Feature Grid Benefits, Testimonials (text cards), Apply Form (Webflow inbox, P-05)
 6. **About** ([plan](plans/about.md)): Hero, Text Panels (reuse), Team Grid, Media Split (reuse), Stats Band Large (reuse), Logo Grid, Split CTA
@@ -319,7 +319,7 @@ Needs P-07 closed. P-04 closed (D-36): illustrations are ported to Motion (`x-il
 
 ## Phase 8 — Custom-code exceptions
 
-- [ ] `x-carousel` per D-37 (Home first, then Candidates and Facility partners)
+- [ ] `x-carousel` per D-37 (Home first, then Candidates and Facility partners). Repo side done 2026-10-01 (see Next steps 3); Webflow install, interaction removal and the staging check are open
 - [ ] `x-illustrations` per D-36 (Candidates, Facility partners)
 - ~~`x-gravity-gallery` per P-01~~ retired (D-34)
 - [x] `x-article-toc` per P-02 (approved, closed (a) 2026-09-29). **Installed on the Posts template 2026-09-30 (Blog sync Stage 7):** registered script `xarticletoc` 1.0.0 in the page footer. **Verified on staging 2026-09-30:** TOC builds from the 7 H2s and the scroll-spy moves `is-toc-active` (`interactions.md`)

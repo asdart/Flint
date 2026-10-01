@@ -4,8 +4,8 @@
    background defaults to `color-tertiary`; `is-brand-light` (card 5) switches to
    `color-brand-light`. Carousel dimensions, the card model and every `-art` offset below are local
    to this block (see `classes.md` → `fk-how` and roadmap decision D-12). The generic shell (`fk-how` wrapper, pagination row) moved
-   to utilities in the markup; `fk-how` itself stays as an interaction target (howCarousel.ts
-   `.closest(".fk-how")`) with only its local padding left here. */
+   to utilities in the markup; `fk-how` itself stays as the `x-carousel` root (`data-x-carousel`)
+   with only its local padding left here. */
 
 .fk-how {
   padding: var(--space-24) 0;
@@ -21,7 +21,7 @@
 }
 
 /* Slides sit in normal flow: the track starts at the viewport's centre (minus half the current
-   slide) and ix-how-carousel slides it left one step at a time. The track is wider than the
+   slide) and x-carousel slides it left one step at a time. The track is wider than the
    viewport, which clips it. */
 .fk-how-track {
   display: flex;
@@ -32,7 +32,7 @@
   transform: translateX(0px);
 }
 
-/* The slide is the card's size (360×464, 398×512 when current, animated by ix-how-carousel) and
+/* The slide is the card's size (360×464, 398×512 when current, animated by x-carousel) and
    the card fills it, so its content lays out at the real width (a current card is wider, its text
    stays 20px). Phone keeps the legacy fit: a 360×464 card scaled down (see the ≤479 block). */
 .fk-how-slide {

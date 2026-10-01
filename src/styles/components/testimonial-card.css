@@ -2,7 +2,7 @@
    portrait canvas; shared flag sizing and system radius/spacing/colors stay tokenized. Generic
    display/position/overflow/radius/background/color declarations moved to utilities in markup
    (docs/webflow/css-system.md); block classes here keep only fixed sizes, offsets, masks and the
-   properties `ix-testimonial-hover` reads/animates (`-quote` height, `-scrim` opacity). */
+   properties `x-carousel` reads/animates on hover (`-quote` height, `-scrim` opacity). */
 
 .fk-testimonial-card {
   width: 396px;

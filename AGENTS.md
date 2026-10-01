@@ -201,7 +201,7 @@ src/
     ui/                   # Webflow group "UI": Button, PostCard…
   sections/               # one file per section; a reused section is Webflow group "Section" (named like the component), a single-page one is page-level markup (D-17)
   content/                # CMS seed data as JSON, shaped exactly like cms.md
-  ix/                     # local preview runtime for registered interactions (not shipped to Webflow)
+  ix/                     # local preview runtime for registered interactions (not shipped to Webflow), except xCarousel.ts: the source of the shipped x-carousel script (scripts/build-x-carousel.mjs)
   lib/                    # repo-only helpers with no Webflow equivalent (cx, SmartLink)
   pages/                  # composition only — no styling, no data
     legacy/               # pre-contract pages (Tailwind + Framer Motion), removed as each is migrated

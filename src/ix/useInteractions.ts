@@ -6,12 +6,11 @@ import { cardHover } from "./cardHover";
 import { dropdown } from "./dropdown";
 import { form } from "./form";
 import { heroArc } from "./heroArc";
-import { howCarousel } from "./howCarousel";
 import { marquee } from "./marquee";
 import { revealStagger } from "./revealStagger";
-import { testimonials } from "./testimonials";
 import { ticker } from "./ticker";
 import { twoWays } from "./twoWays";
+import { xCarousel } from "./xCarousel";
 
 /*
  * Local preview of the Webflow interactions in docs/webflow/interactions.md. One function per
@@ -135,8 +134,7 @@ export function useInteractions() {
       twoWays(),
       ticker(),
       heroArc(),
-      howCarousel(),
-      testimonials(),
+      xCarousel(),
       articleToc(),
       blogPagination(),
     ];

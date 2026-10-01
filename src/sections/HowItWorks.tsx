@@ -58,13 +58,13 @@ const STEPS = [
   },
 ] as const;
 
-/** Section / How It Works, variant Home. Each card layers a full-bleed `-bg` (photo, gradient or
+/** Section / How It Works, variant Home. Motion is `x-carousel` (tween). Each card layers a full-bleed `-bg` (photo, gradient or
  * pattern) under an optional floating `-art` illustration and a `-copy` block; see `classes.md` →
  * `fk-how` for the split and the per-card offsets. */
 export default function HowItWorks() {
   return (
     <section className="fk-section is-x-flush">
-      <div className="fk-how fk-flex fk-flex-col fk-gap-12 fk-overflow-clip">
+      <div className="fk-how fk-flex fk-flex-col fk-gap-12 fk-overflow-clip" data-x-carousel="tween" data-x-autoplay="5000">
         <div className="fk-container">
           <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
             <div className="fk-blur-reveal">
@@ -78,8 +78,8 @@ export default function HowItWorks() {
 
         <div className="fk-flex fk-flex-col fk-gap-12 fk-w-full">
           <div className="fk-w-full" data-ix="reveal">
-            <div className="fk-how-viewport" data-ix="how-carousel">
-              <div className="fk-how-track" data-how-track>
+            <div className="fk-how-viewport" data-x-viewport>
+              <div className="fk-how-track" data-x-track>
                 {STEPS.map((step, index) => {
                   const number = index + 1;
                   const [bgWidth, bgHeight] = step.bgSize;
@@ -87,7 +87,6 @@ export default function HowItWorks() {
                     <div
                       key={step.title}
                       className={cx("fk-how-slide", index === 0 && "is-active")}
-                      data-how-slide={number}
                     >
                       <article
                         className={cx(
@@ -95,7 +94,6 @@ export default function HowItWorks() {
                           index === 0 && "is-active",
                           step.variant === "brand-light" && "is-brand-light",
                         )}
-                        data-how-card={number}
                       >
                         <img
                           className={cx("fk-how-bg", (number === 3 || number === 5) && `is-card-${number}`)}
@@ -130,7 +128,7 @@ export default function HowItWorks() {
               </div>
             </div>
           </div>
-          <CarouselDots id="how" count={STEPS.length} label={(index) => `Go to step ${index + 1}`} />
+          <CarouselDots count={STEPS.length} label={(index) => `Go to step ${index + 1}`} />
         </div>
       </div>
     </section>

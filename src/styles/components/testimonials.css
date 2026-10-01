@@ -1,6 +1,6 @@
 /* fk-testimonials-* — Section / Testimonials, Slider variant, placed inside
-   fk-panel.is-brand-light[data-ix="testimonials"]. The slides are in normal flow inside one flex
-   track (`fk-flex fk-gap-6` utilities on the track); ix-testimonials slides the track and scales
+   fk-panel.is-brand-light[data-x-carousel="spring"]. The slides are in normal flow inside one flex
+   track (`fk-flex fk-gap-6` utilities on the track); x-carousel slides the track and scales
    the current card. Track offset and slide margins are local geometry copied from the legacy
    carousel. The row is a flex column (utilities) holding the track and, 24px below it, the
    pagination row, which is generic (flex, centered, container width) and lives entirely on

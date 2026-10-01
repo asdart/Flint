@@ -1,0 +1,479 @@
+/*
+ * Exception x-carousel (docs/webflow/interactions.md, roadmap D-37): the one shared carousel script.
+ * It is the single source of the shipped code: `node scripts/build-x-carousel.mjs` bundles this file
+ * with Motion loaded from the CDN into docs/webflow/custom-code/x-carousel.html, and the local
+ * preview runs the same module with Motion from npm.
+ *
+ * It keeps a current index, animates forward and backward with Motion, and takes the geometry from
+ * the CSS: a slide is "current" when it carries the current class, so the script toggles that class,
+ * reads the computed width, height, side margins, opacity and scale of every slide in both states,
+ * and animates between them. Breakpoints, sizes and gaps stay in the classes; only the track's
+ * translateX is computed (the current slide's centre goes to the viewport's centre).
+ *
+ * Markup contract (data attributes, all optional unless said):
+ *   [data-x-carousel="spring|tween"]  root (required). spring = 1.4s spring, bounce .22 (Testimonials);
+ *                                     tween = 0.7s ease-out (How It Works). Default tween
+ *     data-x-autoplay="5000"          ms per slide; absent = no autoplay
+ *     data-x-current="is-center"      class that marks the current slide (default is-active)
+ *     data-x-copies="3"               the set is repeated this many times in the track (a looping
+ *                                     row); the middle copy is the real one. Default 1
+ *   [data-x-viewport]                 clipping area that receives swipe and hover pause (default: the track's parent)
+ *   [data-x-track]                    required; its children are the slides, its first child's first child may be a card
+ *   [data-x-dot]                      one button per slide (per set, with copies); holds a bar > fill
+ *   [data-x-prev] / [data-x-next]     arrow buttons
+ * A slide's first child may carry the current class too (How It Works cards scale on phone).
+ * Testimonial cards (.fk-testimonial-card-quote / -scrim) open on hover while their slide is current.
+ */
+
+import { animate } from "motion";
+
+type Cleanup = () => void;
+type Playback = { stop: () => void; pause: () => void; play: () => void };
+
+type Frame = { width: number; height: number; left: number; right: number; opacity: number; scale: number; card: number };
+
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+const EASE_IN_OUT = [0.42, 0, 0.58, 1] as const;
+const SPRING = { type: "spring", duration: 1.4, bounce: 0.22 } as const;
+const TWEEN = { duration: 0.7, ease: EASE_OUT } as const;
+const OPACITY = { duration: 0.5, ease: EASE_OUT } as const;
+const BAR_MS = 0.45;
+const OPEN_MS = 0.45; // card hover plays under reduced motion too (D-30)
+const SWIPE_START = 6;
+const SWIPE_DISTANCE = 80;
+const SWIPE_VELOCITY = 500;
+const SWIPE_GAIN = 0.55;
+
+const mod = (value: number, divisor: number) => ((value % divisor) + divisor) % divisor;
+const px = (value: number) => `${value}px`;
+
+function scaleOf(element: Element) {
+  const transform = getComputedStyle(element).transform;
+  return transform === "none" ? 1 : new DOMMatrix(transform).a;
+}
+
+function translateXOf(element: Element) {
+  const transform = getComputedStyle(element).transform;
+  return transform === "none" ? 0 : new DOMMatrix(transform).m41;
+}
+
+function centreOf(element: Element) {
+  const rect = element.getBoundingClientRect();
+  return rect.left + rect.width / 2;
+}
+
+function setup(root: HTMLElement): Cleanup {
+  const track = root.querySelector<HTMLElement>("[data-x-track]");
+  const viewport = root.querySelector<HTMLElement>("[data-x-viewport]") ?? track?.parentElement;
+  if (!track || !viewport) return () => {};
+
+  const slides = Array.from(track.children) as HTMLElement[];
+  const dots = Array.from(root.querySelectorAll<HTMLElement>("[data-x-dot]"));
+  const bars = dots.map((dot) => dot.firstElementChild as HTMLElement | null);
+  const fills = bars.map((bar) => bar?.firstElementChild as HTMLElement | null);
+  const copies = Number(root.dataset.xCopies) || 1;
+  const count = slides.length / copies;
+  if (!slides.length || !Number.isInteger(count)) return () => {};
+
+  const currentClass = root.dataset.xCurrent || "is-active";
+  const spring = root.dataset.xCarousel === "spring";
+  const move = spring ? SPRING : TWEEN;
+  const autoplay = Number(root.dataset.xAutoplay) || 0;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const cards = slides.map((slide) => slide.firstElementChild as HTMLElement | null);
+  const cardFlag = (() => {
+    const first = slides.findIndex((slide) => slide.classList.contains(currentClass));
+    return !!cards[Math.max(first, 0)]?.classList.contains(currentClass);
+  })();
+
+  let current = Math.max(
+    slides.findIndex((slide) => slide.classList.contains(currentClass)),
+    0,
+  );
+  let playing: Playback[] = [];
+  let clock: ReturnType<typeof animate> | null = null;
+  let hovering = false;
+  let dragging = false;
+  let visible = true;
+  let disposed = false;
+
+  /* ---- geometry ---- */
+
+  const frames = (): Frame[] =>
+    slides.map((slide, index) => {
+      const style = getComputedStyle(slide);
+      return {
+        width: parseFloat(style.width),
+        height: parseFloat(style.height),
+        left: parseFloat(style.marginLeft),
+        right: parseFloat(style.marginRight),
+        opacity: Number(style.opacity),
+        scale: scaleOf(slide),
+        card: cards[index] ? scaleOf(cards[index]) : 1,
+      };
+    });
+
+  /** Back to what the CSS says, except the track: its CSS offset is the no-script resting place, so it is zeroed to measure. */
+  const clearInline = () => {
+    track.style.transform = "none";
+    slides.forEach((slide, index) => {
+      ["width", "height", "margin-left", "margin-right", "opacity", "transform"].forEach((property) =>
+        slide.style.removeProperty(property),
+      );
+      cards[index]?.style.removeProperty("transform");
+    });
+  };
+
+  const applyInline = (frame: Frame[]) =>
+    frame.forEach((f, index) => {
+      const style = slides[index].style;
+      style.width = px(f.width);
+      style.height = px(f.height);
+      style.marginLeft = px(f.left);
+      style.marginRight = px(f.right);
+      style.opacity = String(f.opacity);
+      style.transform = `scale(${f.scale})`;
+      if (cards[index]) cards[index]!.style.transform = `scale(${f.card})`;
+    });
+
+  const setCurrent = (index: number) => {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle(currentClass, i === index);
+      if (cardFlag) cards[i]?.classList.toggle(currentClass, i === index);
+    });
+  };
+
+  const markClones = () => {
+    if (copies === 1) return;
+    const real = Math.floor(current / count);
+    slides.forEach((slide, i) => slide.toggleAttribute("aria-hidden", Math.floor(i / count) !== real));
+  };
+
+  /** translateX that puts the centre of the slide at `index` under the viewport's centre (track at x = 0). */
+  const trackX = (index: number) => {
+    const view = viewport.getBoundingClientRect();
+    return view.left + view.width / 2 - centreOf(slides[index]);
+  };
+
+  const stopPlaying = () => {
+    playing.forEach((playback) => playback.stop());
+    playing = [];
+  };
+
+  /** Slots to keep on each side of the current slide so a move never shows an empty edge. */
+  const margin = () => {
+    const pitch = Math.abs(centreOf(slides[slides.length - 1]) - centreOf(slides[0])) / Math.max(slides.length - 1, 1);
+    return Math.ceil(viewport.getBoundingClientRect().width / 2 / Math.max(pitch, 1)) + 1;
+  };
+
+  /** The same picture, whole copies away: keeps `from` and `to` inside the repeated set. */
+  const shiftFor = (from: number, to: number) => {
+    if (copies === 1) return 0;
+    const low = margin();
+    const high = slides.length - 1 - low;
+    if (from >= low && from <= high && to >= low && to <= high) return 0;
+    for (let candidate = mod(from, count); candidate < slides.length; candidate += count) {
+      const target = candidate + (to - from);
+      if (candidate >= low && candidate <= high && target >= low && target <= high) return candidate - from;
+    }
+    return count * Math.floor(copies / 2) - Math.floor(from / count) * count;
+  };
+
+  /**
+   * Moves to the slide at ring index `to`. `instant` places it without animation (first paint, resize,
+   * reduced motion). The picture on screen is captured first, so a move that interrupts another one
+   * starts from where the slide is, not from where it was going.
+   */
+  const go = (to: number, instant = false) => {
+    let from = current;
+    let before = frames();
+    let startX = translateXOf(track);
+    const anchor = centreOf(slides[from]);
+    stopPlaying();
+    clearInline();
+
+    let shift = 0;
+    if (!instant) shift = shiftFor(from, to);
+    if (shift) {
+      const ring = slides.length;
+      before = before.map((_, index) => before[mod(index - shift, ring)]);
+      from += shift;
+      to += shift;
+    }
+
+    setCurrent(to);
+    current = to;
+    markClones();
+    const target = frames();
+    const targetX = trackX(to);
+
+    if (instant) {
+      track.style.transform = `translateX(${targetX}px)`;
+      return;
+    }
+
+    applyInline(before);
+    if (shift) startX = anchor - centreOf(slides[from]);
+    track.style.transform = `translateX(${startX}px)`;
+
+    const motion = reduced.matches ? { duration: 0 } : move;
+    const opacity = reduced.matches ? { duration: 0 } : OPACITY;
+    slides.forEach((slide, index) => {
+      const a = before[index];
+      const b = target[index];
+      const values: Record<string, string[]> = {};
+      if (a.width !== b.width) values.width = [px(a.width), px(b.width)];
+      if (a.height !== b.height) values.height = [px(a.height), px(b.height)];
+      if (a.left !== b.left) values.marginLeft = [px(a.left), px(b.left)];
+      if (a.right !== b.right) values.marginRight = [px(a.right), px(b.right)];
+      if (Object.keys(values).length) playing.push(animate(slide, values, motion));
+      if (a.scale !== b.scale) playing.push(animate(slide, { scale: [a.scale, b.scale] }, motion));
+      if (a.opacity !== b.opacity) playing.push(animate(slide, { opacity: [a.opacity, b.opacity] }, opacity));
+      const card = cards[index];
+      if (card && a.card !== b.card) playing.push(animate(card, { scale: [a.card, b.card] }, motion));
+    });
+    playing.push(animate(track, { x: [startX, targetX] }, motion));
+  };
+
+  /* ---- dots, clock, arrows ---- */
+
+  let shown = -1;
+
+  const morphDots = (active: number, instant: boolean) => {
+    dots.forEach((dot, index) => {
+      const bar = bars[index];
+      const on = index === active;
+      dot.toggleAttribute("aria-current", on);
+      if (on) dot.setAttribute("aria-current", "true");
+      if (!bar) return;
+      const width = parseFloat(getComputedStyle(bar).width);
+      bar.style.removeProperty("width");
+      bar.classList.toggle("is-active", on);
+      const next = parseFloat(getComputedStyle(bar).width);
+      if (instant || reduced.matches || width === next) return;
+      bar.style.width = px(width);
+      animate(bar, { width: [px(width), px(next)] }, { duration: BAR_MS, ease: EASE_OUT }).then(() =>
+        bar.style.removeProperty("width"),
+      );
+    });
+    shown = active;
+  };
+
+  const syncClock = () => {
+    const hold = hovering || dragging || !visible || document.hidden;
+    if (!clock) return;
+    if (hold) clock.pause();
+    else clock.play();
+  };
+
+  const startClock = () => {
+    clock?.stop();
+    clock = null;
+    fills.forEach((fill, index) => {
+      if (fill) fill.style.width = reduced.matches && index === shown ? "100%" : "";
+    });
+    const fill = fills[shown];
+    if (!autoplay || reduced.matches || !fill || disposed) return;
+    const own = animate(fill, { width: ["0%", "100%"] }, { duration: autoplay / 1000, ease: "linear" });
+    clock = own;
+    own.then(() => {
+      if (clock === own && !disposed) next();
+    });
+    syncClock();
+  };
+
+  const settle = (instant = false) => {
+    morphDots(mod(current, count), instant);
+    startClock();
+  };
+
+  /** Ring index of logical slide `index`, by the shorter way round. */
+  const nearest = (index: number) => {
+    const delta = mod(index - current, count);
+    return current + (delta > count / 2 ? delta - count : delta);
+  };
+
+  const closeCards = () => cardHovers.forEach((hover) => hover.close());
+
+  const goBy = (delta: number) => {
+    closeCards();
+    go(copies === 1 ? mod(current + delta, count) : current + delta);
+    settle();
+  };
+  const next = () => goBy(1);
+  const prev = () => goBy(-1);
+  const goTo = (index: number) => {
+    if (copies === 1 ? index === current : mod(index, count) === mod(current, count)) return;
+    closeCards();
+    go(copies === 1 ? index : nearest(index));
+    settle();
+  };
+
+  const clicks: Array<[Element, () => void]> = [];
+  const listen = (target: Element | Window | Document, type: string, handler: (event: any) => void, options?: AddEventListenerOptions) => {
+    target.addEventListener(type, handler, options);
+    clicks.push([target as Element, () => target.removeEventListener(type, handler, options)]);
+  };
+  dots.forEach((dot, index) => listen(dot, "click", () => goTo(index)));
+  root.querySelectorAll("[data-x-prev]").forEach((button) => listen(button, "click", prev));
+  root.querySelectorAll("[data-x-next]").forEach((button) => listen(button, "click", next));
+  listen(root, "keydown", (event: KeyboardEvent) => {
+    if (event.key === "ArrowLeft") prev();
+    else if (event.key === "ArrowRight") next();
+  });
+
+  /* ---- hover pause and card hover ---- */
+
+  listen(viewport, "pointerenter", (event: PointerEvent) => {
+    if (event.pointerType !== "mouse") return;
+    hovering = true;
+    syncClock();
+  });
+  listen(viewport, "pointerleave", () => {
+    hovering = false;
+    syncClock();
+  });
+  listen(document, "visibilitychange", syncClock);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      visible = entries[entries.length - 1].isIntersecting;
+      syncClock();
+    },
+    { threshold: 0.3 },
+  );
+  observer.observe(root);
+
+  const cardHovers = slides.map((slide, index) => {
+    const quote = slide.querySelector<HTMLElement>(".fk-testimonial-card-quote");
+    const scrim = slide.querySelector<HTMLElement>(".fk-testimonial-card-scrim");
+    let open = false;
+    const set = (value: boolean) => {
+      if (!quote || open === value) return;
+      open = value;
+      quote.classList.toggle("is-open", value);
+      animate(quote, { height: [px(parseFloat(getComputedStyle(quote).height)), value ? "160px" : "104px"] }, { duration: OPEN_MS, ease: EASE_OUT }).then(() => {
+        if (open === value) quote.style.height = value ? "160px" : "";
+      });
+      if (scrim) animate(scrim, { opacity: [Number(getComputedStyle(scrim).opacity), value ? 0.9 : 0.6] }, { duration: OPEN_MS, ease: EASE_OUT }).then(() => {
+        if (open === value && !value) scrim.style.opacity = "";
+      });
+    };
+    if (quote) {
+      listen(slide, "pointerenter", (event: PointerEvent) => {
+        if (event.pointerType === "mouse" && index === current && !dragging) set(true);
+      });
+      listen(slide, "pointerleave", () => set(false));
+    }
+    return { close: () => set(false) };
+  });
+
+  /* ---- swipe ---- */
+
+  viewport.style.touchAction = "pan-y";
+  let origin: { x: number; y: number; id: number; baseX: number } | null = null;
+  let samples: Array<{ x: number; t: number }> = [];
+  let swiped = false;
+
+  listen(viewport, "pointerdown", (event: PointerEvent) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    origin = { x: event.clientX, y: event.clientY, id: event.pointerId, baseX: 0 };
+    samples = [{ x: event.clientX, t: event.timeStamp }];
+    swiped = false;
+  });
+  listen(viewport, "pointermove", (event: PointerEvent) => {
+    if (!origin || event.pointerId !== origin.id) return;
+    const dx = event.clientX - origin.x;
+    if (!dragging) {
+      if (Math.abs(dx) < SWIPE_START || Math.abs(dx) < Math.abs(event.clientY - origin.y)) return;
+      dragging = true;
+      swiped = true;
+      closeCards();
+      stopPlaying();
+      origin.baseX = translateXOf(track);
+      origin.x = event.clientX;
+      viewport.setPointerCapture(event.pointerId);
+      syncClock();
+      return;
+    }
+    samples.push({ x: event.clientX, t: event.timeStamp });
+    samples = samples.filter((sample) => event.timeStamp - sample.t < 100);
+    track.style.transform = `translateX(${origin.baseX + (event.clientX - origin.x) * SWIPE_GAIN}px)`;
+  });
+  const release = (event: PointerEvent) => {
+    if (!origin || event.pointerId !== origin.id) return;
+    const wasDragging = dragging;
+    const start = origin;
+    origin = null;
+    if (!wasDragging) return;
+    dragging = false;
+    const dx = event.clientX - start.x;
+    const first = samples[0];
+    const last = samples[samples.length - 1];
+    const velocity = first && last && last.t > first.t ? ((last.x - first.x) / (last.t - first.t)) * 1000 : 0;
+    if (event.type !== "pointercancel" && (dx < -SWIPE_DISTANCE || velocity < -SWIPE_VELOCITY)) next();
+    else if (event.type !== "pointercancel" && (dx > SWIPE_DISTANCE || velocity > SWIPE_VELOCITY)) prev();
+    else {
+      const x = translateXOf(track);
+      playing.push(animate(track, { x: [x, start.baseX] }, reduced.matches ? { duration: 0 } : { duration: 0.45, ease: EASE_IN_OUT }));
+      syncClock();
+    }
+  };
+  listen(viewport, "pointerup", release);
+  listen(viewport, "pointercancel", release);
+  // A swipe that ends on a dot or an arrow must not also click it.
+  listen(viewport, "click", (event: Event) => {
+    if (!swiped) return;
+    swiped = false;
+    event.preventDefault();
+    event.stopPropagation();
+  }, { capture: true });
+
+  /* ---- start, resize, cleanup ---- */
+
+  const place = () => {
+    if (disposed) return;
+    stopPlaying();
+    go(current, true);
+    morphDots(mod(current, count), true);
+  };
+
+  go(current, true);
+  morphDots(mod(current, count), true);
+  startClock();
+
+  let frame = 0;
+  const resize = new ResizeObserver(() => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(place);
+  });
+  resize.observe(viewport);
+  listen(window, "load", place);
+  const onReduced = () => {
+    place();
+    startClock();
+  };
+  reduced.addEventListener("change", onReduced);
+  clicks.push([root, () => reduced.removeEventListener("change", onReduced)]);
+
+  return () => {
+    disposed = true;
+    cancelAnimationFrame(frame);
+    resize.disconnect();
+    observer.disconnect();
+    clicks.forEach(([, remove]) => remove());
+    clock?.stop();
+    stopPlaying();
+    clearInline();
+    track.style.removeProperty("transform");
+    viewport.style.removeProperty("touch-action");
+    fills.forEach((fill) => fill?.style.removeProperty("width"));
+    bars.forEach((bar) => bar?.style.removeProperty("width"));
+    slides.forEach((slide) => slide.removeAttribute("aria-hidden"));
+  };
+}
+
+export function xCarousel(): Cleanup {
+  const cleanups = Array.from(document.querySelectorAll<HTMLElement>("[data-x-carousel]")).map(setup);
+  return () => cleanups.forEach((cleanup) => cleanup());
+}
