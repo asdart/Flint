@@ -284,7 +284,7 @@ computes only the track's `translateX` (the current slide's centre goes to the v
 Behaviour: dots take the shorter way round in a looping row, a straight jump in a finite one (How It
 Works rewinds from the last slide to the first, as legacy). Swipe starts after 6px of mostly
 horizontal movement, the track follows at 0.55×, and a move of 80px or 500px/s turns the page
-(otherwise it springs back in 0.45s); `touch-action: pan-y` keeps vertical scrolling native, and a
+(otherwise it springs back in 0.45s); `touch-action: pan-y` keeps vertical scrolling native, `user-select: none` on the viewport stops a drag selecting text, and a
 swipe never also clicks the dot or arrow it ends on. Autoplay pauses while the mouse is over the
 viewport, while swiping, when the root is less than 30% visible and when the tab is hidden. Testimonial
 cards (`fk-testimonial-card-quote` / `-scrim`) open on hover **only while their slide is current**

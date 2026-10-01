@@ -3,10 +3,12 @@ type TestimonialCardProps = {
   quote: string;
   name: string;
   role: string;
+  /** Country flag SVG (prop Flag in Webflow). */
+  flag?: string;
 };
 
 /** UI / Testimonial Card. Hover motion is `x-carousel`. */
-export default function TestimonialCard({ image, quote, name, role }: TestimonialCardProps) {
+export default function TestimonialCard({ image, quote, name, role, flag = "/assets/country-flag.svg" }: TestimonialCardProps) {
   return (
     <article className="fk-testimonial-card fk-relative fk-rounded-2xl fk-bg-white fk-overflow-clip">
       <div className="fk-testimonial-card-media fk-absolute">
@@ -29,7 +31,7 @@ export default function TestimonialCard({ image, quote, name, role }: Testimonia
       <div className="fk-testimonial-card-flag fk-absolute">
         <img
           className="fk-flag is-lg"
-          src="/assets/country-flag.svg"
+          src={flag}
           alt=""
           width={32}
           height={32}

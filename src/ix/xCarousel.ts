@@ -267,7 +267,7 @@ function setup(root: HTMLElement): Cleanup {
   };
 
   const startClock = () => {
-    clock?.stop();
+    clock?.cancel();
     clock = null;
     fills.forEach((fill, index) => {
       if (fill) fill.style.width = reduced.matches && index === shown ? "100%" : "";
@@ -371,6 +371,7 @@ function setup(root: HTMLElement): Cleanup {
   /* ---- swipe ---- */
 
   viewport.style.touchAction = "pan-y";
+  viewport.style.userSelect = "none";
   let origin: { x: number; y: number; id: number; baseX: number } | null = null;
   let samples: Array<{ x: number; t: number }> = [];
   let swiped = false;
@@ -462,11 +463,12 @@ function setup(root: HTMLElement): Cleanup {
     resize.disconnect();
     observer.disconnect();
     clicks.forEach(([, remove]) => remove());
-    clock?.stop();
+    clock?.cancel();
     stopPlaying();
     clearInline();
     track.style.removeProperty("transform");
     viewport.style.removeProperty("touch-action");
+    viewport.style.removeProperty("user-select");
     fills.forEach((fill) => fill?.style.removeProperty("width"));
     bars.forEach((bar) => bar?.style.removeProperty("width"));
     slides.forEach((slide) => slide.removeAttribute("aria-hidden"));
