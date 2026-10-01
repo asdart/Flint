@@ -19,7 +19,8 @@
     "/blog": "6abc95f3d5879b11ae14b088",
     "Categories Template (/categories/{slug}, slug detail_categories)": "6abc6c8adc4bd2e2066e91ea",
     "Posts Template (/blog/{slug}, slug detail_blog)": "6abc6c9673c0a3345b7a94bd",
-    "/about (draft)": "6abed61fbb91160db13da902"
+    "/about (draft)": "6abed61fbb91160db13da902",
+    "/candidates (draft)": "6abee855a6b6c496e11ca61d"
   },
   "components": {
     "UI / Button": {
@@ -222,6 +223,7 @@
     "ix-two-ways-card-late": "i-a7085c23",
     "ix-hero-arc": "i-dda772fb",
     "ix-faq-toggle": "i-a76b882f",
+    "ix-count-in": "i-4631e2ba",
     "_deleted_2026-10-01 (replaced by x-carousel)": "i-92770673 ix-how-carousel, i-d27f08a0 ix-how-carousel-phone, i-1d31deaf ix-testimonials, i-14706c57 ix-testimonial-hover"
   },
   "scripts": {
@@ -1048,6 +1050,69 @@
         "d411a8cc-2529-1e3e-b6aa-237ec723114d",
         "d411a8cc-2529-1e3e-b6aa-237ec7231164"
       ]
+    },
+    "/candidates page (draft, 2026-10-01)": {
+      "page": "6abee855a6b6c496e11ca61d",
+      "body": "6abee855a6b6c496e11ca623",
+      "fk-page": "778e7537-fa97-8264-a3b3-f6e16c521ffe",
+      "main": "778e7537-fa97-8264-a3b3-f6e16c521ffd",
+      "Nav instance": "3a94537d-69b7-40ea-353b-d06117ef6335",
+      "Footer instance": "6a370ab7-a66c-c22e-0045-0b1cac053699",
+      "sections": {
+        "hero": "fe5e85ed-a15b-6e37-0d35-44ecca87c7f9",
+        "statsBand": "610a10ed-82bb-7db0-50eb-b1ddd5553222",
+        "howItWorks": "6e0829d2-b4f3-cdf5-614b-fe041fd187f7",
+        "roleGrid (Section / Role Grid instance)": "32552ce2-de4d-fa2f-5a42-9129226135ba",
+        "testimonials (Section / Testimonials instance)": "c2216730-4c20-4103-a710-80c7fc969f9b",
+        "faq": "8a47af77-9ee7-016a-d66c-12133cccb711",
+        "ctaArc": "4fbda8b6-eb31-1c4e-8c89-cc31750b6324"
+      },
+      "h1": "hero section, fk-heading-xl in .fk-blur-reveal",
+      "howItWorks panel content": "6e0829d2-b4f3-cdf5-614b-fe041fd187f4",
+      "howItWorks split rows": [
+        "886dd981-2027-e1be-88bb-c48fcd908616",
+        "c899cc69-a852-6d60-4ebc-8d5d892c88e0",
+        "3bcebb15-8214-5ac9-bf1a-bb61c64a84ed",
+        "2a8bb8fe-0125-32ef-7172-cb25d3aff977",
+        "440f8e51-e2a4-2c87-8cfb-1ee4f6bc440a"
+      ],
+      "statsRow": "610a10ed-82bb-7db0-50eb-b1ddd555321e",
+      "Stat instances (Default variant)": [
+        "8c3317fc-02f7-f1ad-7a95-9ea92ef0b030",
+        "50b1821b-09ea-3069-84be-4a580803d740",
+        "2a733a5d-174c-efd7-66bb-b05cad1bbd8f"
+      ],
+      "Button instances": {
+        "hero": "d1b8a93c-9ae9-df02-fa48-b65b56aa7657",
+        "ctaArc": "77bbde72-5026-6897-5e2f-39fcfa7b2ef9"
+      },
+      "faqList": "8a47af77-9ee7-016a-d66c-12133cccb70d",
+      "faq question buttons (DOM button, items 1-8)": [
+        "bb4f7c00-2907-b3e8-c1d3-590e957c4c54",
+        "ad229e82-30c7-6aa7-5de1-94b261907503",
+        "1f7f2d3c-de8f-f156-c97e-4ec5eec99397",
+        "a3187ffe-0656-f487-8dd7-bf5031e7c0a7",
+        "abf7c1c0-50b6-2cc5-e366-b419cc349db1",
+        "f75264c0-bc15-eff0-9491-eeeb3d88d459",
+        "ad34c114-ad19-1ee2-05e2-544ffce458be",
+        "66ec5fea-4f99-5c85-2fb1-f5fe81ef182d"
+      ],
+      "faq h3 (items 1-8)": [
+        "8a47af77-9ee7-016a-d66c-12133cccb707",
+        "5f575e0b-71ae-57bc-b400-e6b42fdec5a6",
+        "ab0e9b2f-b19a-9b9f-5bb9-bbaf76b21846",
+        "8ecbaa66-9629-a19c-9355-93bcf98e8b67",
+        "caf1d33e-684d-0bb6-3ab9-ac04dc0a6da2",
+        "3728c1d3-e691-5b7c-c06c-fb8a202f5ad6",
+        "356c7ad3-1400-d1ea-23da-d8415b0fd97f",
+        "4925ce90-89c1-f4a0-0a65-582cee9ef6db"
+      ],
+      "hidden leftover (user to delete)": "8a47af77-9ee7-016a-d66c-12133cccb706 (empty div 'LEFTOVER - delete me', inside the first FAQ h3, visibility off)",
+      "Nav Candidates links (now page links)": [
+        "d411a8cc-2529-1e3e-b6aa-237ec7231149",
+        "d411a8cc-2529-1e3e-b6aa-237ec7231160"
+      ],
+      "images": "134 static images linked by script (assetId + explicit altText); element ids in the sync-log row only by section, read them with query_elements"
     }
   }
 }
