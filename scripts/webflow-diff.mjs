@@ -30,7 +30,7 @@ const ids = JSON.parse(readFileSync(new URL("../docs/webflow/webflow-ids.json", 
 const variableNames = Object.fromEntries(Object.entries(ids.variables).map(([name, id]) => [id, name]));
 
 const actions = JSON.parse(
-  execFileSync("node", [new URL("./webflow-style-actions.mjs", import.meta.url).pathname, "--tags", ...files], {
+  execFileSync("node", [new URL("./webflow-style-actions.mjs", import.meta.url).pathname, "--tags", "--pending-tokens", ...files], {
     encoding: "utf8",
   }),
 );
@@ -56,28 +56,39 @@ const key = (selector, breakpoint, pseudo) => `${selector} @${breakpoint}:${pseu
 // Tag styles come back from Webflow with the bare tag as selector (`h1`), classes with a dot.
 const TAG_NAMES = new Set(["body", "h1", "h2", "h3", "h4", "p", "a", "blockquote", "img", "figure"]);
 const expected = new Map();
+// Tokens in tokens.css that aren't on Webflow yet (no id in webflow-ids.json): reported once each, and the
+// properties using them compare as `var(token)`, which no Webflow value matches.
+const pendingTokens = new Set();
 for (const { update_style: u } of actions) {
   const selector = TAG_NAMES.has(u.style_name) && !u.parent_style_names ? u.style_name : `.${[...(u.parent_style_names ?? []), u.style_name].join(".")}`;
   const k = key(selector, u.breakpoint_id, u.pseudo ?? "noPseudo");
   const props = expected.get(k) ?? {};
   for (const p of u.properties) {
-    props[p.property_name] = normalize(p.variable_as_value ? { id: p.variable_as_value } : p.property_value);
+    if (p.pending_token) pendingTokens.add(p.pending_token);
+    props[p.property_name] = p.pending_token
+      ? `var(${p.pending_token})`
+      : normalize(p.variable_as_value ? { id: p.variable_as_value } : p.property_value);
   }
   expected.set(k, props);
 }
 
+// Webflow keeps `overflow` as one property when x and y are equal; the repo push sends the longhands.
+const longhands = (props = {}) =>
+  "overflow" in props && !("overflow-x" in props) && !("overflow-y" in props)
+    ? { ...Object.fromEntries(Object.entries(props).filter(([n]) => n !== "overflow")), "overflow-x": props.overflow, "overflow-y": props.overflow }
+    : props;
 const actual = new Map();
 for (const style of styles) {
   const { base = {}, breakpoints = {} } = style.properties ?? {};
-  actual.set(key(style.selector, "main", "noPseudo"), base.properties ?? {});
+  actual.set(key(style.selector, "main", "noPseudo"), longhands(base.properties));
   for (const [pseudo, props] of Object.entries(base.pseudos ?? {})) {
-    if (pseudo !== "noPseudo") actual.set(key(style.selector, "main", pseudo), props);
+    if (pseudo !== "noPseudo") actual.set(key(style.selector, "main", pseudo), longhands(props));
   }
   for (const [breakpoint, data] of Object.entries(breakpoints)) {
     if (breakpoint === "main") continue;
-    actual.set(key(style.selector, breakpoint, "noPseudo"), data.properties ?? {});
+    actual.set(key(style.selector, breakpoint, "noPseudo"), longhands(data.properties));
     for (const [pseudo, props] of Object.entries(data.pseudos ?? {})) {
-      if (pseudo !== "noPseudo") actual.set(key(style.selector, breakpoint, pseudo), props);
+      if (pseudo !== "noPseudo") actual.set(key(style.selector, breakpoint, pseudo), longhands(props));
     }
   }
 }
@@ -113,15 +124,21 @@ for (const [k, props] of actual) {
   }
 }
 if (unregistered) {
-  // Webflow creates an empty style for every stack of two combos (`fk-panel is-a is-b`). Not drift.
+  // Webflow creates an empty style for every stack of two combos (`fk-panel is-a is-b`), sometimes holding only
+  // its own grid defaults (`grid-template-rows: auto` on a utility stack with `fk-grid`). Not drift.
+  const onlyDefaults = (props = {}) => Object.entries(props).every(([n, v]) => WEBFLOW_DEFAULTS[n] === normalize(v));
   const isEmpty = (style) =>
-    Object.keys(style.properties?.base?.properties ?? {}).length === 0 && !style.properties?.breakpoints;
+    onlyDefaults(style.properties?.base?.properties) &&
+    Object.entries(style.properties?.breakpoints ?? {}).every(([, data]) => onlyDefaults(data.properties) && !data.pseudos);
   for (const style of styles) {
+    // `._w-button`, `._w-input`: the combo Webflow adds when a class sits on its own Button or Input element.
+    if (/\._w-[a-z-]+/.test(style.selector)) continue;
     if (style.selector.startsWith(".") && !expectedSelectors.has(style.selector) && !isEmpty(style)) {
       lines.push(`NOT IN THESE FILES ${style.selector}`);
     }
   }
 }
 
+if (pendingTokens.size) lines.unshift(...[...pendingTokens].map((t) => `MISSING VARIABLE ${t} (in tokens.css, no id in webflow-ids.json)`));
 console.log(lines.length ? lines.join("\n") : "No differences.");
 process.exit(lines.length ? 1 : 0);

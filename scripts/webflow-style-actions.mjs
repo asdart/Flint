@@ -10,6 +10,9 @@
 // creates them. Without --tags, `:where()` rules are skipped as before.
 import { readFileSync } from "node:fs";
 
+// --pending-tokens: a `var(--token)` with no id in webflow-ids.json (a token in tokens.css not yet created on
+// Webflow) becomes `{ property_name, pending_token }` instead of an error. For webflow-diff.mjs only: those
+// actions can't be pushed, so a push run (without the flag) still stops on them.
 // --vars-only: emit only properties that reference a variable (re-linking raw var() values).
 // --create: the classes don't exist yet. Each class chain starts with a create_style action (holding
 // its desktop values); the other breakpoints and states follow as update_style actions. Rules on
@@ -17,7 +20,9 @@ import { readFileSync } from "node:fs";
 const varsOnly = process.argv.includes("--vars-only");
 const create = process.argv.includes("--create");
 const tags = process.argv.includes("--tags");
-const args = process.argv.slice(2).filter((arg) => arg !== "--vars-only" && arg !== "--create" && arg !== "--tags");
+const pendingTokens = process.argv.includes("--pending-tokens");
+const FLAGS = new Set(["--vars-only", "--create", "--tags", "--pending-tokens"]);
+const args = process.argv.slice(2).filter((arg) => !FLAGS.has(arg));
 const onlyIndex = args.indexOf("--only");
 const only = onlyIndex >= 0 ? new Set(args[onlyIndex + 1].split(",")) : null;
 const files = onlyIndex >= 0 ? args.filter((_, i) => i !== onlyIndex && i !== onlyIndex + 1) : args;
@@ -29,7 +34,11 @@ const tokens = Object.fromEntries(
   ),
 );
 const BREAKPOINTS = { "991px": "medium", "767px": "small", "479px": "tiny" };
-const PSEUDOS = ["hover", "active", "focus-visible", "focus-within", "focus", "placeholder", "before", "after"];
+// Structural states (`:last-child`…) are Webflow states too (Designer: First child, Last child, Nth child odd/even).
+const PSEUDOS = [
+  "hover", "active", "focus-visible", "focus-within", "focus", "placeholder", "before", "after",
+  "first-child", "last-child", "nth-child(odd)", "nth-child(even)",
+];
 
 function sides(value) {
   const parts = value.trim().split(/\s+(?![^(]*\))/);
@@ -110,6 +119,7 @@ function toProperty([name, value]) {
   const whole = value.match(/^var\(--([a-z0-9-]+)\)$/);
   if (whole) {
     const id = ids.variables[whole[1]];
+    if (!id && pendingTokens && tokens[whole[1]]) return { property_name: name, pending_token: whole[1] };
     if (!id) throw new Error(`Unknown token "${whole[1]}" (add it to webflow-ids.json)`);
     return { property_name: name, variable_as_value: id };
   }
@@ -141,7 +151,7 @@ function parseTagSelector(selector) {
 
 function parseSelector(selector) {
   const pseudo = PSEUDOS.find((p) => selector.endsWith(`:${p}`) || selector.endsWith(`::${p}`));
-  const bare = pseudo ? selector.replace(new RegExp(`::?${pseudo}$`), "") : selector;
+  const bare = pseudo ? selector.replace(new RegExp(`::?${pseudo.replace(/[()]/g, "\\$&")}$`), "") : selector;
   if (!/^(\.[a-z0-9-]+)+$/.test(bare)) throw new Error(`Unsupported selector "${selector}"`);
   const classes = bare.slice(1).split(".");
   return { classes, pseudo };
@@ -217,6 +227,19 @@ if (create) {
     if (tagActions.has(action)) continue;
     const key = chain(action);
     if (created.has(key)) continue;
+    // A combo whose base has no rule of its own (`fk-stat` › `is-default`): create the base, empty, first.
+    // create_style fails on a name that already exists, so read before pushing (rule 11) and drop it then.
+    const parents = action.update_style.parent_style_names ?? [];
+    parents.forEach((_, i) => {
+      const prefix = parents.slice(0, i + 1);
+      const prefixKey = prefix.join(".");
+      if (created.has(prefixKey) || actions.some((a) => !tagActions.has(a) && chain(a) === prefixKey)) return;
+      created.add(prefixKey);
+      createActions.push({
+        label: `create .${prefixKey} (empty, no rule in these files)`,
+        create_style: { name: prefix[i], ...(i > 0 ? { parent_style_names: prefix.slice(0, i) } : {}), properties: [] },
+      });
+    });
     created.add(key);
     const { style_name, parent_style_names } = action.update_style;
     const desktop = actions.find((a) => chain(a) === key && a.update_style.breakpoint_id === "main" && !a.update_style.pseudo);

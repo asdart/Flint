@@ -629,6 +629,14 @@
     "src/assets/icons/arrow-right.svg": {
       "id": "6abc8bc88fba5bbb302cd57e",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc8bc88fba5bbb302cd57e_arrow-right.svg"
+    },
+    "src/assets/icons/chevron-left.svg": {
+      "id": "6abebe68fc12dd8f1da43e90",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abebe68fc12dd8f1da43e90_chevron-left.svg"
+    },
+    "src/assets/icons/chevron-right.svg": {
+      "id": "6abebe69b0df9a14fbb80e9d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abebe69b0df9a14fbb80e9d_chevron-right.svg"
     }
   },
   "variableCollections": {
@@ -700,7 +708,8 @@
     "width-content": "variable-d7261268-3544-0a6c-c094-dd0f31885343",
     "width-content-sm": "variable-582548b9-7a05-9ca6-e01f-33fc66081aae",
     "width-nav-pill": "variable-a86919ed-e333-2b2a-7c49-1c4ffd39b775",
-    "width-article": "variable-5c5f78f5-b579-9031-854c-fbaf016bcf7c"
+    "width-article": "variable-5c5f78f5-b579-9031-854c-fbaf016bcf7c",
+    "width-prose": "variable-bb3c1738-b608-b9d3-8765-39622b7f9a3c"
   },
   "pageElements": {
     "/ Post Grid (Home)": {

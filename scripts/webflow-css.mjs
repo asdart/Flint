@@ -22,7 +22,7 @@ const css = files
   .replace(/[^{}]*:where\(\.fk-page\)[^{]*\{[^}]*\}/g, "")
   // The builder only accepts :hover, :focus and :active. Push other states with
   // webflow-style-actions.mjs after the classes exist.
-  .replace(/[^{}]*:(?:focus-visible|focus-within|placeholder|before|after)[^{]*\{[^}]*\}/g, "")
+  .replace(/[^{}]*:(?:focus-visible|focus-within|placeholder|before|after|first-child|last-child|nth-child\([a-z]+\))[^{]*\{[^}]*\}/g, "")
   .replace(/@media[^{]*\{\s*\}/g, "")
   .replace(/url\("(\/assets\/[^"]+)"\)/g, (match, path) => {
     if (!assets[path]) throw new Error(`Asset ${path} is not uploaded (add it to webflow-ids.json)`);
