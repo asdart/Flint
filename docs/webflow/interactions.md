@@ -304,13 +304,13 @@ computes only the track's `translateX` (the current slide's centre goes to the v
 | Hook | Where | Meaning |
 | --- | --- | --- |
 | `data-x-carousel="tween"` / `"spring"` | Root (How It Works: `fk-how`; Testimonials: the `fk-panel`) | tween = 0.7s `power4.out` (How It Works, as legacy); spring = 1.4s, bounce 0.22 for position, scale and margins, opacity 0.5s (Testimonials, as legacy) |
-| `data-x-autoplay="5000"` | Root | Milliseconds per slide; omit for none. The active dot's fill is the clock |
+| `data-x-autoplay="5000"` | Root | Milliseconds per slide; omit for none. The active dot's fill is the clock. How It Works only: Testimonials dropped it 2026-10-02 (user decision) |
 | `data-x-current="is-center"` | Root | The class that marks the current slide (default `is-active`). Its first child (the card) gets it too when the markup starts that way (How It Works cards scale on phone) |
 | `data-x-copies="3"` | Root | The set repeats in the track (a looping row): the middle copy is the real one. Before a move the script shifts by whole copies, so the target and the visible neighbours stay inside the track; the copies not holding the current slide get `aria-hidden` |
-| `data-x-viewport` | The clipping area (Testimonials: the column that holds track and dots) | Receives swipe and hover pause. Default: the track's parent |
+| `data-x-viewport` | The clipping area (Testimonials: the column that holds track and arrows) | Receives swipe and hover pause. Default: the track's parent |
 | `data-x-track` | Track | Its children are the slides |
 | `data-x-dot` | Each dot button, in slide order | First child = bar, its child = fill. The script sets `aria-current` and toggles `is-active` on the bar (width tweened 0.45s) |
-| `data-x-prev` / `data-x-next` | Arrow buttons | Anywhere in the root. Supported by the script, used by no page yet (Facility partners is the expected user). With no dots there is no autoplay clock (the active dot's fill is it), so a carousel with arrows only is arrow- and swipe-driven |
+| `data-x-prev` / `data-x-next` | Arrow buttons | Anywhere in the root. Used by Testimonials since 2026-10-02 (`fk-carousel-arrow` buttons, previous / next, no dots, no autoplay; Webflow still has the dots and autoplay setup until the sync in the roadmap). With no dots there is no autoplay clock (the active dot's fill is it), so a carousel with arrows only is arrow- and swipe-driven |
 
 Behaviour: dots take the shorter way round in a looping row, a straight jump in a finite one (How It
 Works rewinds from the last slide to the first, as legacy). Swipe starts after 6px of mostly

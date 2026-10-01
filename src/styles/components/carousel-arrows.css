@@ -1,0 +1,44 @@
+/* fk-carousel-arrows — previous / next buttons under the Testimonials carousel (Figma 5746:1195).
+   Two white circular native buttons with a grey chevron, centered, 12px apart. `x-carousel` wires
+   them through `data-x-prev` / `data-x-next` (on the button). The chevron is an SVG image
+   (`chevron-left.svg` / `chevron-right.svg`), 20px, empty alt inside the labelled button. */
+
+.fk-carousel-arrows {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.fk-carousel-arrow {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fk-carousel-arrow:hover {
+  background-color: var(--color-neutral-hover);
+}
+
+.fk-carousel-arrow:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-white),
+    0 0 0 4px var(--color-brand-focus);
+}
+
+.fk-carousel-arrow-icon {
+  display: block;
+  flex: none;
+  width: 20px;
+  height: 20px;
+}

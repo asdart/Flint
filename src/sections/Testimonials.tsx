@@ -1,5 +1,6 @@
 import TestimonialCard from "../components/ui/TestimonialCard";
-import CarouselDots from "../components/ui/CarouselDots";
+import chevronLeft from "../assets/icons/chevron-left.svg";
+import chevronRight from "../assets/icons/chevron-right.svg";
 import { cx } from "../lib/cx";
 
 type Testimonial = {
@@ -40,7 +41,7 @@ export default function Testimonials({
 }: TestimonialsProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel fk-bg-brand-light" data-x-carousel="spring" data-x-autoplay="5000" data-x-copies="3" data-x-current="is-center">
+      <div className="fk-panel fk-bg-brand-light" data-x-carousel="spring" data-x-copies="3" data-x-current="is-center">
         <div className="fk-panel-content">
           <div className="fk-container">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
@@ -53,8 +54,8 @@ export default function Testimonials({
             </div>
           </div>
 
-          <div className="fk-flex fk-flex-col fk-gap-8 fk-w-full" data-x-viewport>
-            <div className="fk-testimonials-track fk-flex fk-gap-6" data-x-track>
+          <div className="fk-testimonials-row fk-flex fk-flex-col" data-x-viewport>
+            <div className="fk-testimonials-track fk-flex fk-gap-2" data-x-track>
               {RING.map((testimonial, index) => {
                 const isClone = index < TESTIMONIALS.length || index >= TESTIMONIALS.length * 2;
                 return (
@@ -68,11 +69,14 @@ export default function Testimonials({
                 );
               })}
             </div>
-            <CarouselDots
-              count={TESTIMONIALS.length}
-              active={3}
-              label={(index) => `Go to testimonial ${index + 1}`}
-            />
+            <div className="fk-carousel-arrows">
+              <button type="button" className="fk-carousel-arrow" data-x-prev aria-label="Previous testimonial">
+                <img className="fk-carousel-arrow-icon" src={chevronLeft} alt="" width={20} height={20} />
+              </button>
+              <button type="button" className="fk-carousel-arrow" data-x-next aria-label="Next testimonial">
+                <img className="fk-carousel-arrow-icon" src={chevronRight} alt="" width={20} height={20} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
