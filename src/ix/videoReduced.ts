@@ -1,5 +1,5 @@
 /*
- * x-video-reduced (proposed exception, interactions.md): with `prefers-reduced-motion: reduce` a background
+ * x-video-reduced (approved exception D-43, interactions.md): with `prefers-reduced-motion: reduce` a background
  * video (`[data-x-video="reduced"]`) is paused on its poster and doesn't autoplay; when the preference is off
  * it plays again. Webflow's native Background Video has no reduced-motion handling of its own.
  */

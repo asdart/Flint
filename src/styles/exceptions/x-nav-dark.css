@@ -1,4 +1,4 @@
-/* Exception x-nav-dark (PROPOSED) — docs/webflow/interactions.md → Custom-code exceptions. The `Global / Nav` look
+/* Exception x-nav-dark (approved, D-42) — docs/webflow/interactions.md → Custom-code exceptions. The `Global / Nav` look
    over a dark hero (Facility partners, Figma 5543:1165): white wordmark, white links, a glass Apply button and a
    white menu icon, only while the bar is at rest. Scrolling adds `is-pill` (the white pill, ix-nav-pill), which
    puts everything back to the Light look. These are descendant rules on `.fk-nav.is-dark`, which Webflow's style

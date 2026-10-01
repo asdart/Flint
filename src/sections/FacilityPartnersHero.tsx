@@ -5,7 +5,7 @@ import Button from "../components/ui/Button";
  * partners has a video hero; a variant of Section / Hero can't swap the arc wheel for a video). A full-bleed video
  * card (`hero.mp4`, poster `hero.png`, as the legacy hero) under a dark overlay, with the centred header on top.
  * The Nav over it is `Global / Nav` Dark (`fk-nav is-dark`, exception x-nav-dark). With reduced motion the video is
- * paused on its poster (`data-x-video="reduced"`, exception x-video-reduced, proposed).
+ * paused on its poster (`data-x-video="reduced"`, exception x-video-reduced, approved D-43).
  * The button's destination is TBD (placeholder `#`).
  */
 export default function FacilityPartnersHero() {
