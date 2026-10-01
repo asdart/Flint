@@ -22,9 +22,28 @@
   }
 }
 
+.fk-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .fk-stat-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   font-family: var(--font-serif);
+  color: var(--color-brand);
+}
+
+/* Large: the `fk-heading-display is-xl` sizes (96 / 72 ≤991 / 40 ≤767). */
+.fk-stat-number {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 96px;
+  line-height: 96px;
+  letter-spacing: -1.44px;
 }
 
 .fk-stat-suffix {
@@ -36,11 +55,59 @@
 
 .fk-stat-label {
   margin: 0;
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 24px;
+  text-align: center;
+  color: var(--color-subtle-80);
+}
+
+/* Default: ink value at the `fk-heading-display` sizes (72 / 48 ≤767), brand suffix, `fk-text-lg` ink-80 label. */
+.fk-stat-value.is-default {
+  color: var(--color-ink);
+}
+
+.fk-stat-number.is-default {
+  font-size: 72px;
+  line-height: 80px;
+  letter-spacing: -1.08px;
+}
+
+.fk-stat-suffix.is-default {
+  color: var(--color-brand);
+}
+
+.fk-stat-label.is-default {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-ink-80);
+}
+
+@media screen and (max-width: 991px) {
+  .fk-stat-number {
+    font-size: 72px;
+    line-height: 80px;
+    letter-spacing: -0.8px;
+  }
+
+  .fk-stat-number.is-default {
+    letter-spacing: -1.08px;
+  }
 }
 
 @media screen and (max-width: 767px) {
+  .fk-stat-number {
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: -0.8px;
+  }
+
+  .fk-stat-number.is-default {
+    font-size: 48px;
+    line-height: 52px;
+    letter-spacing: -0.72px;
+  }
+
   .fk-stat-suffix {
     font-size: 20px;
     line-height: 28px;
@@ -50,6 +117,11 @@
   .fk-stat-label {
     font-size: 14px;
     line-height: 20px;
+  }
+
+  .fk-stat-label.is-default {
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 
@@ -77,7 +149,7 @@
   }
 }
 
-/* `fk-stat` is the UI / Stat root (no styles of its own). In the 3-stat bands (Default and Spread, `is-default`) the
+/* In the 3-stat bands (Default and Spread, `is-default`) the
    tablet grid has two columns and the last stat spans both, so the band reads 2 + 1; one column ≤767 anyway. */
 @media screen and (max-width: 991px) {
   .fk-stat.is-default:last-child {

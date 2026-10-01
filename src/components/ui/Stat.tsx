@@ -1,3 +1,5 @@
+import { cx } from "../../lib/cx";
+
 type StatProps = {
   value: string;
   suffix?: string;
@@ -6,28 +8,23 @@ type StatProps = {
   variant?: "large" | "default";
 };
 
-/** UI / Stat. `fk-stat-value` is the ix-count-in target. The root's `fk-stat` sets nothing on its own; the Default
- * variant's `is-default` makes the last stat of a 3-stat band span the row on tablet (2 + 1). */
+/**
+ * UI / Stat, a Webflow component (props Value, Suffix, Label; variants Large and Default). It keeps its own classes on
+ * every element (a shared component, AGENTS.md rule 3), so the Default variant is only the `is-default` combo on
+ * each of them: in Webflow those combos are variant style overrides on the same classes, which can't add or swap a
+ * class. `fk-stat-value` is the ix-count-in target. On the root, `is-default` also makes the last stat of a 3-stat
+ * band span the row on tablet (2 + 1).
+ */
 export default function Stat({ value, suffix, label, variant = "large" }: StatProps) {
-  if (variant === "default") {
-    return (
-      <div className="fk-stat is-default fk-flex fk-flex-col fk-items-center">
-        <p className="fk-stat-value fk-flex fk-items-center fk-justify-center fk-color-ink">
-          <span className="fk-heading-display">{value}</span>
-          {suffix ? <span className="fk-stat-suffix fk-color-brand">{suffix}</span> : null}
-        </p>
-        <p className="fk-text-lg fk-text-center fk-color-ink-80">{label}</p>
-      </div>
-    );
-  }
+  const variantClass = variant === "default" ? "is-default" : "";
 
   return (
-    <div className="fk-stat fk-flex fk-flex-col fk-items-center">
-      <p className="fk-stat-value fk-flex fk-items-center fk-justify-center fk-color-brand">
-        <span className="fk-heading-display is-xl">{value}</span>
-        {suffix ? <span className="fk-stat-suffix">{suffix}</span> : null}
+    <div className={cx("fk-stat", variantClass)}>
+      <p className={cx("fk-stat-value", variantClass)}>
+        <span className={cx("fk-stat-number", variantClass)}>{value}</span>
+        {suffix ? <span className={cx("fk-stat-suffix", variantClass)}>{suffix}</span> : null}
       </p>
-      <p className="fk-stat-label fk-text-center fk-color-subtle-80">{label}</p>
+      <p className={cx("fk-stat-label", variantClass)}>{label}</p>
     </div>
   );
 }

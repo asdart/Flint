@@ -18,7 +18,8 @@
     "/style-guide": "6abbf07b612d4c02ed5bebf4",
     "/blog": "6abc95f3d5879b11ae14b088",
     "Categories Template (/categories/{slug}, slug detail_categories)": "6abc6c8adc4bd2e2066e91ea",
-    "Posts Template (/blog/{slug}, slug detail_blog)": "6abc6c9673c0a3345b7a94bd"
+    "Posts Template (/blog/{slug}, slug detail_blog)": "6abc6c9673c0a3345b7a94bd",
+    "/about (draft)": "6abed61fbb91160db13da902"
   },
   "components": {
     "UI / Button": {
@@ -144,6 +145,28 @@
           "note": "Removed: deleted in the Designer 2026-09-30 (D-27). The id is dead, kept only as a record; the component description was retitled through the MCP on 2026-09-30 (blog follow-ups 3)."
         }
       }
+    },
+    "UI / Stat": {
+      "id": "a291b886-6d3d-e12e-3b14-23058b936333",
+      "props": {
+        "Variant": "d7b4e458-0bc7-a44d-d20e-12bf13cdc4e2",
+        "Value": "a7d8862e-d518-8dbc-1b8f-4e18cf1c68fa",
+        "Suffix": "442fee43-2198-6030-d88b-06223a870026",
+        "Label": "4585c867-8b86-007c-705a-f0407b5279d6"
+      },
+      "variants": {
+        "Large": "base",
+        "Default": "609e1958-fd2a-4a2e-149f-e68c5533542c"
+      },
+      "elements": {
+        "root": "a291b886-6d3d-e12e-3b14-23058b936333",
+        "value": "…334",
+        "number": "…335",
+        "suffix": "…337",
+        "label": "…338"
+      },
+      "instances": "style-guide 6abbf07b612d4c02ed5bebf4: Large 2024 Founded (transform result), Large 200+ Roles placed f58367b3-4fd1-d665-eee4-6ad146053f0e, Default 1000+ People relocated 48f2fcfb-3095-d1a6-ef41-051f36baeee4",
+      "note": "Default variant = style overrides on the base classes (D-44); fk-stat-number style id ba835153-4f4e-1a43-9db2-fec0dcd004ca; fk-stat is-default (from before D-44) is now unused; 2026-10-01 (user, Designer): conditional visibility added to the Suffix span (…337) and the Label p (…338), no new props or prop ids (read back: visibility {sourceType: conditional}); the condition itself (which prop, 'is set') isn't readable through the MCP"
     }
   },
   "collections": {
@@ -216,6 +239,14 @@
       "appliedTo": "/blog 6abc95f3d5879b11ae14b088 and Categories template 6abc6c8adc4bd2e2066e91ea, footer",
       "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6abd5efbd61d327d4f577f2a%2Fxblogpagination-1.0.0.js",
       "source": "docs/webflow/custom-code/blog-pagination.html (script body)"
+    },
+    "xmodal": {
+      "id": "xmodal",
+      "displayName": "xModal",
+      "version": "1.0.0",
+      "appliedTo": "/about 6abed61fbb91160db13da902, footer",
+      "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6abedbac239e30a8be33112a%2Fxmodal-1.0.0.js",
+      "source": "docs/webflow/custom-code/x-modal.html (script body)"
     }
   },
   "customCode": {
@@ -223,6 +254,7 @@
     "postsTemplateHead": "<style> x-related-empty + x-article-body on Posts template 6abc6c9673c0a3345b7a94bd (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/post-template-head-style.html",
     "blogPaginationHead": "<style> x-blog-pagination on /blog 6abc95f3d5879b11ae14b088 and Categories template 6abc6c8adc4bd2e2066e91ea (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/blog-pagination.html",
     "homeFooter": "<script type=module> x-carousel (Motion 13.4.6 from jsDelivr) as Home page footer freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-01, published and tested by the user 2026-10-01); source docs/webflow/custom-code/x-carousel.html (script block only). Testimonial Card prop Flag af54577d-2273-6579-d6e2-409db1057a4c (image asset id) set on the 21 instances in Testimonials",
+    "aboutHead": "<style> x-modal (reduced motion) as About page head freeform code 6abed61fbb91160db13da902 (installed 2026-10-01, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
     "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)"
   },
   "assets": {
@@ -637,6 +669,62 @@
     "src/assets/icons/chevron-right.svg": {
       "id": "6abebe69b0df9a14fbb80e9d",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abebe69b0df9a14fbb80e9d_chevron-right.svg"
+    },
+    "/assets/about/strip-1.webp": {
+      "id": "6abecfa11972a716469527a4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa11972a716469527a4_strip-1.webp"
+    },
+    "/assets/about/strip-2.webp": {
+      "id": "6abecfa16b9e7c6f101a4a95",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa16b9e7c6f101a4a95_strip-2.webp"
+    },
+    "/assets/about/strip-3.webp": {
+      "id": "6abecfa181c0d6e227efa8ef",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa181c0d6e227efa8ef_strip-3.webp"
+    },
+    "/assets/about/strip-4.webp": {
+      "id": "6abecfa2af1de644cf9ef2af",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa2af1de644cf9ef2af_strip-4.webp"
+    },
+    "/assets/about/strip-5.webp": {
+      "id": "6abecfa281c0d6e227efa918",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa281c0d6e227efa918_strip-5.webp"
+    },
+    "/assets/about/strip-6.webp": {
+      "id": "6abecfa21972a71646952815",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa21972a71646952815_strip-6.webp"
+    },
+    "/assets/about/strip-7.webp": {
+      "id": "6abecfa21972a71646952846",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa21972a71646952846_strip-7.webp"
+    },
+    "/assets/about/team-kenton.webp": {
+      "id": "6abecfa2c11b9de73aa532c9",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa2c11b9de73aa532c9_team-kenton.webp"
+    },
+    "/assets/about/team-anson.webp": {
+      "id": "6abecfa31972a71646952877",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa31972a71646952877_team-anson.webp"
+    },
+    "/assets/about/team-neil.webp": {
+      "id": "6abecfa3310d0b1ce5dacc59",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa3310d0b1ce5dacc59_team-neil.webp"
+    },
+    "/assets/about/investor-yc.svg": {
+      "id": "6abecfa3650ed175cc2e3885",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa3650ed175cc2e3885_investor-yc.svg"
+    },
+    "/assets/about/investor-haystack.webp": {
+      "id": "6abecfa31972a716469528bd",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa31972a716469528bd_investor-haystack.webp"
+    },
+    "/assets/about/investor-audacious.webp": {
+      "id": "6abecfa3c11b9de73aa5331b",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa3c11b9de73aa5331b_investor-audacious.webp"
+    },
+    "/assets/about/investor-rhino.svg": {
+      "id": "6abecfa3c925d0757bea591e",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abecfa3c925d0757bea591e_investor-rhino.svg"
     }
   },
   "variableCollections": {
@@ -709,7 +797,9 @@
     "width-content-sm": "variable-582548b9-7a05-9ca6-e01f-33fc66081aae",
     "width-nav-pill": "variable-a86919ed-e333-2b2a-7c49-1c4ffd39b775",
     "width-article": "variable-5c5f78f5-b579-9031-854c-fbaf016bcf7c",
-    "width-prose": "variable-bb3c1738-b608-b9d3-8765-39622b7f9a3c"
+    "width-prose": "variable-bb3c1738-b608-b9d3-8765-39622b7f9a3c",
+    "color-ink-80": "variable-33ed6104-2af6-8f1f-d825-b67b67bb0753",
+    "color-backdrop": "variable-c62a5d85-f16b-b407-e4fe-62a1aeb72e42"
   },
   "pageElements": {
     "/ Post Grid (Home)": {
@@ -784,6 +874,50 @@
       "relatedWrapper": "a026207a-95af-0f4b-f81e-9f558e4568e6",
       "relatedItem": "a026207a-95af-0f4b-f81e-9f558e4568e8",
       "relatedPostCardInstance": "5b145adf-5e77-3b45-30db-0e674280d8a7"
+    },
+    "/about page (draft, 2026-10-01)": {
+      "page": "6abed61fbb91160db13da902",
+      "body": "6abed61fbb91160db13da908",
+      "fk-page": "1c61c8bb-b12e-1565-14d9-0b32fa8cc45e",
+      "main": "1c61c8bb-b12e-1565-14d9-0b32fa8cc45d",
+      "Nav instance": "dbb7c505-4f6b-5e30-c328-5b2a4c1c8dc7",
+      "Footer instance": "5f4e8599-d3b6-6718-8808-e8e1857fc2b7",
+      "sections": {
+        "hero": "55e95299-8fc5-aa03-72a9-697afd3f421f",
+        "mission": "a6a56cd6-535c-d6ba-878d-b32755da724c",
+        "team": "2561fb41-ca4d-3b62-02e1-71683c25f665",
+        "story": "fb61a303-a5d3-0766-6b46-513b58dba3ba",
+        "residency": "72d6f9f3-3c32-5553-5cf2-5bf8f9a68c24",
+        "statsBand": "b795a158-0b5d-a3fe-de05-8c989f4ceecb",
+        "logoGrid": "644f153f-1feb-4973-f343-9e3dbad99993",
+        "ctaSplit": "60b707ba-d9f2-d1ee-6e42-801c9c845df3"
+      },
+      "h1": "55e95299-8fc5-aa03-72a9-697afd3f420a",
+      "statsRow": "b795a158-0b5d-a3fe-de05-8c989f4ceec7",
+      "Stat instances": [
+        "dca68f2b-f65a-2c78-42a9-2668fe0332af",
+        "da949b93-66d0-df5f-977f-08ce59d3cf7b",
+        "efc9b783-8229-3cc5-6a0e-80cf5be575b0",
+        "2d768d57-2739-c8b6-789d-c3c45da11b25"
+      ],
+      "Button instances (CTA)": [
+        "1590487e-1239-af68-b4f0-11ae87c9c303",
+        "094a73ee-4d32-d877-83bf-8f775f57c894"
+      ],
+      "modals (last children of fk-page)": {
+        "bio-kenton": "a831f9c2-6fe7-4d30-3e78-6706c6714e37",
+        "bio-anson": "8591a915-24e4-2acf-9296-90316fac4b7d",
+        "bio-neil": "fe25c109-c9c4-2997-8c7e-b29f8e4bd44e"
+      },
+      "modal close buttons": [
+        "af3c467f-4d3f-8728-4350-05b9bf9d55f2",
+        "6fb521a9-76c3-1a1c-578e-2e7aa0b866c7",
+        "031f87f7-bf01-9c87-9f18-bb43bc77e0ce"
+      ],
+      "Nav About links (now page links)": [
+        "d411a8cc-2529-1e3e-b6aa-237ec723114d",
+        "d411a8cc-2529-1e3e-b6aa-237ec7231164"
+      ]
     }
   }
 }

@@ -68,7 +68,7 @@ step that's in use is its own token. Add a row before using a new one.
 | `color-brand-80` | `rgba(68, 56, 109, 0.8)` | Long-form body text |
 | `color-subtle-80` | `rgba(97, 101, 106, 0.8)` | Stat labels |
 | `color-ink-60` | `rgba(15, 14, 23, 0.6)` | Muted supporting lines inside the Pricing message bubbles |
-| `color-ink-80` | `rgba(15, 14, 23, 0.8)` | **New 2026-10-01 (to sync as a variable).** Stat labels in Stats Band Default (Figma `5543:1021`) |
+| `color-ink-80` | `rgba(15, 14, 23, 0.8)` | **New 2026-10-01; on production 2026-10-01 (`variable-33ed6104-…`).** Stat labels in Stats Band Default (Figma `5543:1021`) |
 | `color-black-20` | `rgba(0, 0, 0, 0.2)` | **New 2026-10-01 (to sync as a variable).** The name tag on the video-call picture, How It Works row 2 (`fk-steps-call-name`) |
 | `color-success` | `#04804e` | **New 2026-10-01 (to sync as a variable).** Text and arrow of the savings chip, Facility partners "Reduced staffing costs" art (`fk-savings-chip`) |
 | `color-success-10` | `rgba(5, 175, 107, 0.1)` | **New 2026-10-01 (to sync as a variable).** Background of that chip |
@@ -76,7 +76,7 @@ step that's in use is its own token. Add a row before using a new one.
 | `color-warning-light` | `#fdf5f0` | **New 2026-10-01 (to sync as a variable).** Background of that chip |
 | `color-brand-10` | `rgba(68, 56, 109, 0.1)` | Focus ring around a focused input field (`fk-input-field:focus-within`), with a `color-brand` border |
 | `color-scrim` | `rgba(0, 0, 0, 0.8)` | Bottom of the gradient over the featured post image on mobile (`fk-featured-post-scrim`), fading to `transparent` |
-| `color-backdrop` | `rgba(21, 27, 51, 0.6)` | **New 2026-10-01 (to sync as a variable).** The modal's backdrop (`fk-modal`; Figma `5985:2964`: `#151b33` at 60%) |
+| `color-backdrop` | `rgba(21, 27, 51, 0.6)` | **New 2026-10-01; on production 2026-10-01 (`variable-c62a5d85-…`).** The modal's backdrop (`fk-modal`; Figma `5985:2964`: `#151b33` at 60%) |
 
 Snapped legacy values: the post card excerpt (`rgba(38,37,30,0.6)`) → `color-subtle`, the post
 card meta (`rgba(38,37,30,0.5)`) → `color-stone-400`, the avatar background `#e6e5e0` → `color-stone-50`.
