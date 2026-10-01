@@ -29,6 +29,19 @@
   max-width: 448px;
 }
 
+/* The 521px text column of About's Mission and Story (Figma 5805:3995). */
+.fk-section-header.is-prose {
+  width: 100%;
+  max-width: 521px;
+}
+
+/* The About hero's title block (Figma 5993:3818, 640px; 660px here because the `fk-heading-lg` h1 is 0.2px/letter wider than Figma's −1px tracking and must still break after "for the"): 24px between the eyebrow and the h1. */
+.fk-section-header.is-wide {
+  width: 100%;
+  max-width: 660px;
+  gap: var(--space-6);
+}
+
 /* Long-form body stays left-aligned, also in the centered variant. */
 .fk-section-header-body {
   display: flex;

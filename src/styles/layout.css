@@ -94,6 +94,22 @@
   padding: 0 var(--space-5);
 }
 
+/* Section / About Hero panel (Figma 5993:3803 desktop, 5974:7521 phone). Desktop: the eyebrow sits 128px from the
+   page top, so 112px under the section's own 16px, and the photo strip ends 64px above the next section; the panel
+   has no fill (the strip carries the colour). Tablet and down (the phone design): a 584px panel (still no
+   fill, white like desktop) with its content centred under 64px of top padding. 112px and 584px are local. */
+.fk-panel.is-intro {
+  padding-top: 112px;
+  padding-bottom: var(--space-16);
+}
+
+/* One of the two cards of the split CTA (Figma 5805:4143, 5985:2564): 560px tall, 24px side padding (the 436px text
+   block `fk-section-header is-tight` is centred in it by utilities). Back to the height of its content on tablet. */
+.fk-panel.is-split {
+  min-height: 560px;
+  padding-inline: var(--space-6);
+}
+
 .fk-panel.is-tight {
   padding: var(--space-4);
 }
@@ -146,6 +162,12 @@
   padding-inline: 0;
 }
 
+/* Full container width with no gutter: the section (`fk-section is-open`) supplies the side padding, as in
+   Figma's 70px-padded text sections (Team, Residency, Logo Grid). */
+.fk-container.is-flush {
+  padding-inline: 0;
+}
+
 .fk-divider {
   width: 100%;
   height: 1px;
@@ -193,6 +215,19 @@
 
   .fk-panel-content {
     gap: var(--space-10);
+  }
+
+  .fk-panel.is-intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 584px;
+    padding-top: var(--space-16);
+    padding-bottom: 0;
+  }
+
+  .fk-panel.is-split {
+    min-height: 0;
   }
 }
 

@@ -57,11 +57,11 @@ export default function StatsBand({ title, stats, variant = "large" }: StatsBand
   return (
     <section className="fk-section">
       <div className="fk-panel fk-bg-brand-light">
-        <div className="fk-flex fk-flex-col fk-items-center fk-gap-12 fk-gap-10-mobile fk-w-full fk-max-w-container fk-mx-auto">
+        <div className="fk-container fk-flex fk-flex-col fk-items-center fk-gap-12 fk-gap-16-mobile">
           <h2 className="fk-heading-md is-center" data-ix="reveal">
             {title}
           </h2>
-          <div className="fk-stats-band-grid fk-items-center fk-justify-between fk-w-full fk-gap-8-tablet">
+          <div className="fk-stats-band-grid fk-items-center fk-justify-between fk-w-full fk-gap-8-tablet fk-gap-12-mobile">
             {stats.map((stat) => (
               <Stat key={stat.label} {...stat} />
             ))}

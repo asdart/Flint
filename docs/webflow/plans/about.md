@@ -34,7 +34,7 @@ Hidden layers in the frame (`hidden="true"`, ignore, do not build): "Group 195" 
 | 6 | Impact stats | `Section / Stats Band` + `UI / Stat` | migrated (Large) | Large variant: title + 4 stats, suffix "+" on two of them. Figma panel is grey (#f6f6f8-ish) not the brand-light panel the registry describes ("brand-light panel") — verify colour (Q4). "stat props to do": values, suffix, label need to be editable here |
 | 7 | Investors | `Section / Logo Grid` | legacy | Needs building. Four tiles, tile background peach; the Rhino tile has no visible card in legacy but does in Figma (inferred uniform tiles) |
 | 8 | CTA | **NOT `Section / CTA` (Gallery)**. NEW: "Dual CTA" | NEW | See section below |
-| 9 | Footer | `Global / Footer` | migrated | Its CTA defaults title "Find the right green card / sponsored role for you." and body "It's free to apply and takes under a minute." **differ** from About's Figma copy ("It's time to find your green card sponsor." / "Apply now, it is free.") — set via CTA Title / CTA Body props. Figma footer link list (Institutional / Resources / Social / Legal, Brand, Careers) should be compared with the built Footer (not diffed here) |
+| 9 | Footer | `Global / Footer` | migrated | Its CTA defaults title "Find the right green card / sponsored role for you." and body "It's free to apply and takes under a minute." are kept (user decision 2026-10-02). Figma footer link list (Institutional / Resources / Social / Legal, Brand, Careers) should be compared with the built Footer (not diffed here) |
 
 ### The CTA, exactly
 Figma shows **no gallery, no physics, no avatar pile** on `/about`. The bottom CTA is two equal static cards (`5805:4143` left, `5985:2564` right), each with H2 + body + one button, sitting in one 1440x576 row with 16px margins. Both cards contain leftover layers named "Mask group / image 14 / Background / Ellipse 3 / image 10" (ring texture + room photo, same as the Home Art CTA) but in the rendered screenshot they are NOT visible (flat grey and peach fills only; likely clipped off-card or fully transparent — inferred, confirm with the designer). No avatars appear anywhere on the frame. So:
@@ -78,7 +78,6 @@ Upload to Webflow with alt text: hero strip (decorative or "Flint nurses"), team
 - Team: "Read more" link added to each member; header copy still duplicated from Investors (known issue).
 - CTA: legacy used the generic home `Cta` ("Your green card pathway starts here."); final is two audience CTAs.
 - Story uses Tertiary panel, Mission uses Brand-Light (legacy similar; confirm).
-- Footer CTA copy differs from the Footer component defaults.
 - No "values"/Believes section (hidden in Figma; do not build).
 
 **Vs the components.md Pages-table row** `Hero (About), Text Panel (Tertiary), Stats Band (Large), Media Split, Logo Grid, Text Panel (Brand Light), Team Grid, CTA (Gallery)`:
@@ -99,7 +98,7 @@ Proposed checklist (repo first per AGENTS.md, then mirror to Webflow):
 - [ ] 7. Logo Grid (4 tiles).
 - [ ] 8. Team Grid + team card (with Read more link; destination unknown).
 - [ ] 9. Split CTA (2 panels, 2 Primary Buttons).
-- [ ] 10. Footer CTA props for About copy; Nav About link -> page link; page settings, SEO, OG per seo.md.
+- [ ] 10. Nav About link -> page link; page settings, SEO, OG per seo.md.
 - [ ] 11. Reveal interactions (blur-reveal, stagger) in data attributes; verify at tablet/phone.
 - [ ] 12. Update components.md Pages row, CTA row, roadmap P-01.
 
@@ -117,3 +116,11 @@ Open questions for designer/owner:
 ## Breakpoint notes (all inferred, no non-desktop frames)
 - Desktop: content max 1200, 120px side padding on sections, panels have 16px page margin; text panels 521px column, headers 480px.
 - Tablet/phone: stack Team (3 -> 2 -> 1 col), Logo Grid (4 -> 2 cols like legacy), Stats (4 -> 2x2), Media Split (image below text), Split CTA (2 -> 1). Hero photo strip likely crops or scales.
+
+## Update 2026-10-01 (built in the repo)
+
+The page is built (`roadmap.md` step 6, `components.md` → Pages → About). Where this pre-plan changed: Mission is **Tertiary** and Story **Brand Light** (Figma `5805:3993` / `5805:4067`; section 2 above guessed right, the later brief had them swapped); the stats panel is `color-brand-light`, as the registry said (Q4 answered); the hero is page-level markup and one `h1` serves the strip (above 991px) and the pill title (Tablet and down, the phone frame `5974:7519` that now exists, Q8); Team "Read more" and the photo open a modal (Q3); Q1, Q2, Q6 and Q7 are answered in the brief; the CTA is built as page markup, `Section / CTA` (Split). The portraits 1, 5 and 7 of the strip are the unused `public/assets/candidates/cta/05, 09, 01.png` exports (the earlier guess that `hero-01…07` match was wrong: only four of them do), and the Residency photo of Figma's desktop frame is still missing.
+
+## Update 2026-10-02 (user review)
+
+Mission, Story, Team and Residency are page-level markup (`AboutMission`, `AboutStory`, `AboutTeam`, `AboutResidency`), not `Section / Text Panel`, `Team Grid` or `Media Split` components (D-17, D-40); Facility partners won't use Media Split, so there is no Image Left variant. The Footer keeps Home's default CTA copy (the About-specific copy in section 9 and the open question about it are dropped). `x-modal` is About-only for now. The hero panel is white at every width (no grey fill on Tablet and down), and the shared stat and display text sizes are unchanged.

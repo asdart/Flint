@@ -1,0 +1,73 @@
+/* fk-photo-strip — the About hero's strip of seven cut-out portraits (Figma 5993:3822): a 1200×248 box (radius,
+   fill and clipping are utilities) whose portraits overlap and are cut off by its bottom edge. Every number is a
+   Figma canvas value as a percentage of the strip (left, width, height and bottom), so the strip scales with
+   the container. `is-p1`…`is-p7` run left to right; their z-order is Figma's (the right-most portraits lowest,
+   then 1, 2, 3 and 4 on top). Hidden on tablet and down with `fk-hidden-tablet` (the title's pills replace it). The two portraits Figma mirrors are
+   mirrored in their files. */
+
+.fk-photo-strip {
+  aspect-ratio: 1200 / 248;
+}
+
+.fk-photo-strip-image {
+  position: absolute;
+  display: block;
+  max-width: none;
+  object-fit: cover;
+}
+
+.fk-photo-strip-image.is-p1 {
+  z-index: 4;
+  left: -2.75%;
+  bottom: -41.935%;
+  width: 20.167%;
+  height: 121.774%;
+}
+
+.fk-photo-strip-image.is-p2 {
+  z-index: 5;
+  left: 10%;
+  bottom: -33.871%;
+  width: 18.917%;
+  height: 114.516%;
+}
+
+.fk-photo-strip-image.is-p3 {
+  z-index: 6;
+  left: 21.667%;
+  bottom: -62.097%;
+  width: 25.5%;
+  height: 154.032%;
+}
+
+.fk-photo-strip-image.is-p4 {
+  z-index: 7;
+  left: 37.5%;
+  bottom: -54.839%;
+  width: 24.667%;
+  height: 149.194%;
+}
+
+.fk-photo-strip-image.is-p5 {
+  z-index: 3;
+  left: 53.75%;
+  bottom: -47.984%;
+  width: 23%;
+  height: 139.113%;
+}
+
+.fk-photo-strip-image.is-p6 {
+  z-index: 2;
+  left: 69.5%;
+  bottom: -39.516%;
+  width: 21.75%;
+  height: 131.452%;
+}
+
+.fk-photo-strip-image.is-p7 {
+  z-index: 1;
+  left: 81.917%;
+  bottom: -52.823%;
+  width: 23.917%;
+  height: 144.758%;
+}

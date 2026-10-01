@@ -1,0 +1,28 @@
+/* fk-logo-grid-* — Section / Logo Grid (Figma 5805:4037, phone 5974:8130): uniform 191px tiles (fill and radius are
+   utilities) holding one logo, centred. The logo's width is a percentage of the tile, from Figma's insets, so it
+   scales with the tile on every layout: `is-l1` … `is-l4` are the four logos in order. */
+
+.fk-logo-grid-tile {
+  height: 191px;
+}
+
+.fk-logo-grid-image {
+  display: block;
+  height: auto;
+}
+
+.fk-logo-grid-image.is-l1 {
+  width: 63.06%;
+}
+
+.fk-logo-grid-image.is-l2 {
+  width: 54.01%;
+}
+
+.fk-logo-grid-image.is-l3 {
+  width: 70.43%;
+}
+
+.fk-logo-grid-image.is-l4 {
+  width: 46.83%;
+}

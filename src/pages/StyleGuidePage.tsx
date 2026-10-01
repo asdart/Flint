@@ -4,6 +4,7 @@ import Nav from "../components/global/Nav";
 import Button from "../components/ui/Button";
 import Dropdown from "../components/ui/Dropdown";
 import InputField from "../components/ui/InputField";
+import Modal from "../components/ui/Modal";
 import PostCard from "../components/ui/PostCard";
 import { latestPosts } from "../content";
 import ArticleNewsletter from "../sections/ArticleNewsletter";
@@ -112,6 +113,22 @@ export default function StyleGuidePage() {
                     <a href="#careers" className="fk-dropdown-link">Careers</a>
                     <a href="#licensing" className="fk-dropdown-link">Licensing</a>
                   </Dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="fk-section">
+          <div className="fk-panel fk-bg-surface">
+            <div className="fk-container">
+              <div className="fk-flex fk-flex-col fk-gap-6">
+                <h2 className="fk-heading-md">Modal</h2>
+                <p className="fk-text-md fk-color-subtle">UI / Modal + exception x-modal: any element with data-x-modal-open="id" opens the dialog with data-x-modal="id". Esc, the backdrop and the close button close it; focus is trapped and returned to the trigger</p>
+                <div className="fk-flex fk-items-start">
+                  <a href="#sample-modal" className="fk-button" data-x-modal-open="sample-modal">
+                    <span>Open modal</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -247,6 +264,20 @@ export default function StyleGuidePage() {
         </section>
       </main>
       <Footer />
+      <Modal id="sample-modal" labelledBy="sample-modal-title">
+        <div className="fk-flex fk-flex-col fk-gap-1">
+          <p id="sample-modal-title" className="fk-text-lg fk-font-medium fk-color-ink-80">Modal title</p>
+          <p className="fk-text-lg fk-color-subtle-80">Optional subtitle</p>
+        </div>
+        <div className="fk-flex fk-flex-col fk-gap-4">
+          <p className="fk-text-lg fk-color-brand-80">
+            The body copy goes here. The panel is 713px wide with 96px of padding, so the text column is 521px, and the content scrolls inside the panel when it is taller than the screen.
+          </p>
+          <p className="fk-text-lg fk-color-brand-80">
+            A second paragraph shows the spacing between paragraphs. Press Esc, click the backdrop or use the close button to dismiss it.
+          </p>
+        </div>
+      </Modal>
     </div>
   );
 }

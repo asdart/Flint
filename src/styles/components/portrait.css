@@ -1,0 +1,50 @@
+/* fk-portrait — the rounded photo pills inside the About hero title on tablet and down (Figma 5974:8038,
+   8043, 8047). Hidden on desktop (the photo strip replaces them there). A 64×38 pill; the photo is a head
+   crop of a 73×92 box that overhangs the pill (local numbers). */
+
+.fk-portrait {
+  position: relative;
+  display: none;
+  width: 64px;
+  height: 38px;
+  overflow: clip;
+  border-radius: var(--radius-full);
+  vertical-align: middle;
+}
+
+.fk-portrait.is-brand {
+  background-color: var(--color-brand-foreground);
+}
+
+.fk-portrait.is-peach {
+  background-color: var(--color-peach-100);
+}
+
+.fk-portrait.is-sand {
+  background-color: var(--color-sand-100);
+}
+
+.fk-portrait-image {
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  display: block;
+  width: 73px;
+  height: 92px;
+  max-width: none;
+  object-fit: cover;
+}
+
+/* The square source (the teal-scrubs portrait) is drawn at 125% of the box, shifted as in Figma. */
+.fk-portrait-image.is-crop {
+  top: -7px;
+  left: -14px;
+  width: 91px;
+  height: 92px;
+}
+
+@media screen and (max-width: 991px) {
+  .fk-portrait {
+    display: inline-block;
+  }
+}

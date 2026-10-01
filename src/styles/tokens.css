@@ -29,6 +29,7 @@
   --color-black-20: rgba(0, 0, 0, 0.2);
   --color-scrim: rgba(0, 0, 0, 0.8);
   --color-brand-10: rgba(68, 56, 109, 0.1);
+  --color-backdrop: rgba(21, 27, 51, 0.6);
 
   /* Colors — accent */
   --color-brand-focus: #b8adde;

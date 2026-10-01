@@ -15,6 +15,13 @@
   }
 }
 
+/* Phone (Figma 5974:8160): the four stats stack in one column (48px apart, `fk-gap-12-mobile` in the markup). */
+@media screen and (max-width: 767px) {
+  .fk-stats-band-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .fk-stat-value {
   margin: 0;
   font-family: var(--font-serif);

@@ -1,0 +1,120 @@
+/* fk-modal-* — reusable modal (Figma `5985:2725`, panel `5985:2965`, close `5985:3223`). Behaviour is
+   exception x-modal (`src/ix/xModal.ts`), which toggles `is-open` on the root; the look and the fade
+   are these classes. x-modal puts `is-open` on the root and on the panel (a combo class never styles a
+   descendant in Webflow, so each part has its own `is-open` combo). Root = full-screen backdrop and dialog in one element, hidden at rest
+   (`visibility: hidden` + `opacity: 0`; the visibility change waits for the fade-out, so closing
+   animates and then drops out of the tab order and the accessibility tree). `is-open` is what the
+   Designer shows when you select the combo. Reduced motion: x-modal.css (a class can't hold the media
+   query). The content column is the panel minus its padding: 713 - 2 × 96 = 521px. */
+
+.fk-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background-color: var(--color-backdrop);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 300ms;
+}
+
+.fk-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.fk-modal:focus {
+  outline: none;
+}
+
+/* Scroll lock on html and body while a modal is open (x-modal adds and removes it, and pads the body
+   by the scrollbar's width so the page doesn't shift). */
+.fk-modal-lock {
+  overflow: hidden;
+}
+
+.fk-modal-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 713px;
+  max-height: 100%;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-white);
+  overflow: clip;
+  transform: translateY(var(--space-4));
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fk-modal-panel.is-open {
+  transform: translateY(0);
+}
+
+/* The content scrolls, not the panel, so the close button stays put. */
+.fk-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-height: 0;
+  padding: var(--space-24);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.fk-modal-close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--color-stone-50);
+  cursor: pointer;
+  transition: background-color 150ms ease-out;
+}
+
+.fk-modal-close:hover {
+  background-color: var(--color-stone-100);
+}
+
+.fk-modal-close:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-white),
+    0 0 0 4px var(--color-brand-focus);
+}
+
+.fk-modal-close-icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+@media screen and (max-width: 767px) {
+  .fk-modal-content {
+    padding: var(--space-14) var(--space-8) var(--space-8);
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .fk-modal-content {
+    padding: var(--space-14) var(--space-6) var(--space-6);
+  }
+}

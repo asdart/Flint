@@ -15,6 +15,7 @@ import { videoReduced } from "./videoReduced";
 import { xCarousel } from "./xCarousel";
 import { xFacilityIllustrations } from "./xFacilityIllustrations";
 import { xIllustrations } from "./xIllustrations";
+import { xModal } from "./xModal";
 
 /*
  * Local preview of the Webflow interactions in docs/webflow/interactions.md. One function per
@@ -145,6 +146,7 @@ export function useInteractions() {
       faqToggle(),
       articleToc(),
       blogPagination(),
+      xModal(),
     ];
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);

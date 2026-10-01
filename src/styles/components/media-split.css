@@ -1,0 +1,59 @@
+/* fk-media-split — the Residency section of About (Figma 5805:4022, phone 5974:8111; page-level markup, no
+   component): a text column (480px) and a photo (632px, 40px lower) side by side, copy first in the DOM.
+   Tablet and down: one column with the photo on top (the phone design). The photo heights are Figma's (421px; 204px on the phone), local to this block. */
+
+.fk-media-split {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+.fk-media-split-copy {
+  flex: 0 1 480px;
+  min-width: 0;
+}
+
+.fk-media-split-media {
+  flex: 0 1 632px;
+  min-width: 0;
+  padding-top: var(--space-10);
+}
+
+.fk-media-split-image {
+  display: block;
+  width: 100%;
+  height: 421px;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 991px) {
+  .fk-media-split {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: var(--space-8);
+  }
+
+  .fk-media-split-copy {
+    flex: none;
+    width: 100%;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .fk-media-split-media {
+    flex: none;
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .fk-media-split-image {
+    height: 360px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-media-split-image {
+    height: 204px;
+  }
+}

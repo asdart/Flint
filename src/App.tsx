@@ -8,7 +8,8 @@ import FacilityPartnersPage from "./pages/FacilityPartnersPage";
 import LegacyFacilityPartnersPage from "./pages/legacy/FacilityPartnersPage";
 import BlogPage from "./pages/BlogPage";
 import LegacyBlogPostPage from "./pages/legacy/BlogPostPage";
-import AboutPage from "./pages/legacy/AboutPage";
+import AboutPage from "./pages/AboutPage";
+import LegacyAboutPage from "./pages/legacy/AboutPage";
 import StyleGuidePage from "./pages/StyleGuidePage";
 
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/facility-partners" element={<FacilityPartnersPage />} />
           <Route path="/legacy/facility-partners" element={<LegacyFacilityPartnersPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/legacy/about" element={<LegacyAboutPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/categories/:slug" element={<BlogPage />} />
           <Route

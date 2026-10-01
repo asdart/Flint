@@ -76,6 +76,7 @@ step that's in use is its own token. Add a row before using a new one.
 | `color-warning-light` | `#fdf5f0` | **New 2026-10-01 (to sync as a variable).** Background of that chip |
 | `color-brand-10` | `rgba(68, 56, 109, 0.1)` | Focus ring around a focused input field (`fk-input-field:focus-within`), with a `color-brand` border |
 | `color-scrim` | `rgba(0, 0, 0, 0.8)` | Bottom of the gradient over the featured post image on mobile (`fk-featured-post-scrim`), fading to `transparent` |
+| `color-backdrop` | `rgba(21, 27, 51, 0.6)` | **New 2026-10-01 (to sync as a variable).** The modal's backdrop (`fk-modal`; Figma `5985:2964`: `#151b33` at 60%) |
 
 Snapped legacy values: the post card excerpt (`rgba(38,37,30,0.6)`) → `color-subtle`, the post
 card meta (`rgba(38,37,30,0.5)`) → `color-stone-400`, the avatar background `#e6e5e0` → `color-stone-50`.
