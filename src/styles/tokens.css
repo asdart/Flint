@@ -37,6 +37,10 @@
   --color-peach-100: #fee0db;
   --color-peach-200: #e1c0af;
   --color-sand-100: #f1e0d8;
+  --color-success: #04804e;
+  --color-success-10: rgba(5, 175, 107, 0.1);
+  --color-warning: #d6783e;
+  --color-warning-light: #fdf5f0;
 
   /* Fonts */
   --font-sans: "SN Pro", ui-sans-serif, system-ui, sans-serif;

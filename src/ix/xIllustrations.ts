@@ -17,79 +17,10 @@
  * of the resting frame. `portrait` has no motion.
  */
 
-import { animate, inView } from "motion";
+import { animate } from "motion";
+import { clear, entrance, EASE_OUT, parts, runIllustrations, type Cleanup, type Ease, type From, type Illustration, type Playback, type Player } from "./illustrationCore";
 
-type Cleanup = () => void;
-type Playback = ReturnType<typeof animate>;
-type Ease = readonly [number, number, number, number] | "linear" | "easeInOut";
-
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const LOAD = 0.35;
-
-const parts = (root: Element, name: string) => Array.from(root.querySelectorAll<HTMLElement>(`[data-x-part="${name}"]`));
-const clear = (element: HTMLElement, ...properties: string[]) => properties.forEach((property) => element.style.removeProperty(property));
-
-/** One illustration's running animations, so the whole set can pause, resume and stop together. */
-function player() {
-  const running = new Set<Playback>();
-  let paused = false;
-  const track = (playback: Playback) => {
-    running.add(playback);
-    if (paused) playback.pause();
-    playback.then(() => running.delete(playback));
-    return playback;
-  };
-  return {
-    track,
-    animate: (...args: Parameters<typeof animate>) => track(animate(...args)),
-    /** A timed number 0 → 1 (eased), or just a wait when there is no `update`. */
-    tween: (seconds: number, update?: (value: number) => void, ease: Ease = "linear") =>
-      track(animate(0, 1, { duration: seconds, ease, onUpdate: update })),
-    pause: () => {
-      paused = true;
-      running.forEach((playback) => playback.pause());
-    },
-    resume: () => {
-      paused = false;
-      running.forEach((playback) => playback.play());
-    },
-    stop: () => {
-      running.forEach((playback) => playback.stop());
-      running.clear();
-    },
-  };
-}
-type Player = ReturnType<typeof player>;
-
-type Illustration = {
-  /** Starts on mount instead of when the panel scrolls into view (the hero is above the fold). */
-  immediate?: boolean;
-  /** Plays (or, for a loop, starts) the illustration. */
-  start: () => void;
-  /** Loops only: pause / resume while off screen or hidden. */
-  loop?: { pause: () => void; resume: () => void };
-  dispose: () => void;
-};
-
-/* ---- shared: a piece that rises / scales in from its resting frame ---- */
-
-type From = { y?: number; x?: number; scale?: number };
-
-/** Hides `element` in its start state (relative to the resting frame in the CSS) and returns its player. */
-function entrance(element: HTMLElement, from: From, delay: number, duration: number, p: Player) {
-  const style = getComputedStyle(element);
-  const opacity = Number(style.opacity);
-  const scale = style.transform === "none" ? 1 : new DOMMatrix(style.transform).a;
-  const transform = (x: number, y: number, factor: number) => `translate(${x}px, ${y}px) scale(${scale * factor})`;
-  const start = transform(from.x ?? 0, from.y ?? 0, from.scale ?? 1);
-  element.style.opacity = "0";
-  element.style.transform = start;
-  return () =>
-    p
-      .animate(element, { opacity: [0, opacity], transform: [start, transform(0, 0, 1)] }, { duration, delay, ease: EASE_OUT })
-      /* Motion writes the final values as inline style after it finishes; hand the frame back to the CSS. */
-      .then(() => setTimeout(() => clear(element, "opacity", "transform"), 50));
-}
 
 /* ---- Row 1: applications sent (SendApplicationIllustration) ---- */
 
@@ -484,84 +415,6 @@ function orbit(root: HTMLElement, p: Player): Illustration {
   };
 }
 
-const MAKERS: Record<string, (root: HTMLElement, p: Player) => Illustration> = {
-  orbit,
-  send,
-  interview,
-  fees,
-  "case-prep": casePrep,
-};
+const MAKERS = { orbit, send, interview, fees, "case-prep": casePrep };
 
-function setup(root: HTMLElement): Cleanup {
-  const make = MAKERS[root.dataset.xIllustration ?? ""];
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  if (!make || reduced.matches) return () => {};
-
-  const p = player();
-  const illustration = make(root, p);
-  /* Hands the first paint over to the script: x-illustrations.css hides the orbit pieces until this is set. */
-  root.dataset.xReady = "";
-  const stops: Cleanup[] = [];
-  let started = false;
-  let visible = true;
-  let onScreen = false;
-
-  const apply = () => {
-    if (!started || !illustration.loop) return;
-    if (visible && onScreen) illustration.loop.resume();
-    else illustration.loop.pause();
-  };
-
-  if (illustration.immediate) {
-    started = true;
-    illustration.start();
-  }
-
-  const stopView = inView(
-    root,
-    () => {
-      onScreen = true;
-      if (!started) {
-        started = true;
-        illustration.start();
-      }
-      if (illustration.loop) {
-        apply();
-        return () => {
-          onScreen = false;
-          apply();
-        };
-      }
-      stopView();
-    },
-    { amount: illustration.loop ? 0.1 : 0.35 },
-  );
-  stops.push(stopView);
-
-  const onVisibility = () => {
-    visible = document.visibilityState === "visible";
-    apply();
-  };
-  document.addEventListener("visibilitychange", onVisibility);
-  stops.push(() => document.removeEventListener("visibilitychange", onVisibility));
-
-  const dispose = () => {
-    stops.forEach((stop) => stop());
-    p.stop();
-    illustration.dispose();
-    delete root.dataset.xReady;
-  };
-  /* Switching reduced motion on mid-visit leaves the static frame. */
-  const onReduced = () => {
-    if (reduced.matches) dispose();
-  };
-  reduced.addEventListener("change", onReduced);
-  stops.push(() => reduced.removeEventListener("change", onReduced));
-
-  return dispose;
-}
-
-export function xIllustrations(): Cleanup {
-  const cleanups = Array.from(document.querySelectorAll<HTMLElement>("[data-x-illustration]")).map(setup);
-  return () => cleanups.forEach((cleanup) => cleanup());
-}
+export const xIllustrations = (): Cleanup => runIllustrations(MAKERS);

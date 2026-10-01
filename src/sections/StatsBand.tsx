@@ -1,7 +1,8 @@
 import Stat from "../components/ui/Stat";
 
 type StatsBandProps = {
-  title: React.ReactNode;
+  /** Optional in Default: without a title the band is the untitled form (brand-light panel, no rings; Facility partners). */
+  title?: React.ReactNode;
   stats: Array<{ value: string; suffix?: string; label: string }>;
   /** Large: brand-light panel, `fk-heading-md` title. Default: tertiary panel, two gradient rings, a one-line sans title. */
   variant?: "large" | "default";
@@ -10,6 +11,22 @@ type StatsBandProps = {
 /** Section / Stats Band. Large (brand-light, 4 stats) and Default (tertiary, 3 stats, rings). In Webflow
  * the rings are children of the component that the Large variant hides. */
 export default function StatsBand({ title, stats, variant = "large" }: StatsBandProps) {
+  if (variant === "default" && !title) {
+    return (
+      <section className="fk-section">
+        <div className="fk-panel fk-bg-brand-light is-relaxed">
+          <div className="fk-container">
+            <div className="fk-stats-band-spread fk-w-full fk-max-w-container-md fk-mx-auto">
+              {stats.map((stat) => (
+                <Stat key={stat.label} variant="default" {...stat} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (variant === "default") {
     return (
       <section className="fk-section">

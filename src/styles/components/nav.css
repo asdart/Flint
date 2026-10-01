@@ -61,6 +61,11 @@
   height: 24px;
 }
 
+/* The white wordmark of the Dark look: hidden by default, shown (and the brand one hidden) by exception x-nav-dark. */
+.fk-nav-logo-white {
+  display: none;
+}
+
 .fk-nav-links {
   position: absolute;
   left: 50%;

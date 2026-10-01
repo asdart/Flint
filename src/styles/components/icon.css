@@ -14,6 +14,11 @@
   height: 40px;
 }
 
+.fk-icon.is-md {
+  width: 32px;
+  height: 32px;
+}
+
 .fk-icon.is-sm {
   width: 16px;
   height: 16px;

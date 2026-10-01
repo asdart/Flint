@@ -1,0 +1,53 @@
+import Button from "../components/ui/Button";
+
+/**
+ * Section / Facility Partners Hero (Figma 5543:1165, phone 5755:2546). Page-level markup (D-17: only Facility
+ * partners has a video hero; a variant of Section / Hero can't swap the arc wheel for a video). A full-bleed video
+ * card (`hero.mp4`, poster `hero.png`, as the legacy hero) under a dark overlay, with the centred header on top.
+ * The Nav over it is `Global / Nav` Dark (`fk-nav is-dark`, exception x-nav-dark). With reduced motion the video is
+ * paused on its poster (`data-ix="video-reduced"`, exception x-video-reduced, proposed).
+ * The button's destination is TBD (placeholder `#`).
+ */
+export default function FacilityPartnersHero() {
+  return (
+    <section className="fk-section is-padded-bottom">
+      <div className="fk-panel is-video">
+        <video
+          className="fk-video-bg"
+          src="/assets/facility/hero.mp4"
+          poster="/assets/facility/hero.png"
+          width={1536}
+          height={672}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+          data-ix="video-reduced"
+        />
+        <div className="fk-video-overlay" aria-hidden="true" />
+        <div className="fk-section-header is-center is-tight is-roomy fk-relative" data-ix="blur-reveal">
+          <div className="fk-blur-reveal">
+            <h1 className="fk-heading-xl fk-color-white">
+              Find Top
+              <br />
+              Healthcare Talent
+            </h1>
+          </div>
+          <div className="fk-blur-reveal is-delay-1">
+            <p className="fk-text-lg fk-color-white-60">
+              Connect with 100,000+ vetted candidates. We simplify staffing for hospitals, clinics, and care facilities.
+            </p>
+          </div>
+          <div className="fk-blur-reveal is-delay-2">
+            <div className="fk-section-header-action">
+              <Button variant="secondary" link="#" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,45 @@
+/* Exception x-nav-dark (PROPOSED) — docs/webflow/interactions.md → Custom-code exceptions. The `Global / Nav` look
+   over a dark hero (Facility partners, Figma 5543:1165): white wordmark, white links, a glass Apply button and a
+   white menu icon, only while the bar is at rest. Scrolling adds `is-pill` (the white pill, ix-nav-pill), which
+   puts everything back to the Light look. These are descendant rules on `.fk-nav.is-dark`, which Webflow's style
+   API can't store (one selector per rule), hence custom CSS. `is-dark` itself is a registered combo on `fk-nav`.
+   The Designer canvas shows the Light look (custom code doesn't run there). */
+
+.fk-nav.is-dark:not(.is-pill) .fk-nav-logo-white {
+  display: block;
+}
+
+.fk-nav.is-dark:not(.is-pill) .fk-nav-logo-brand {
+  display: none;
+}
+
+.fk-nav.is-dark:not(.is-pill) .fk-nav-link {
+  color: var(--color-white-60);
+}
+
+.fk-nav.is-dark:not(.is-pill) .fk-nav-link:hover {
+  color: var(--color-white);
+}
+
+.fk-nav.is-dark:not(.is-pill) .fk-nav-link.w--current {
+  color: var(--color-white);
+}
+
+.fk-nav.is-dark:not(.is-pill) .fk-nav-toggle .fk-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* The glass button: 16% white with a 20% white border and a blur (Figma 5754:2216). */
+.fk-nav.is-dark:not(.is-pill) .fk-nav-actions .fk-button {
+  border-color: var(--color-white-20);
+  background-color: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.25);
+  color: var(--color-white);
+}
+
+.fk-nav.is-dark:not(.is-pill) .fk-nav-actions .fk-button:hover {
+  border-color: var(--color-white-60);
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.25);
+}

@@ -5,6 +5,8 @@ type ServiceCardProps = {
   body: string;
   /** `is-subtle` sets the body text to `color-subtle` instead of the default `color-brand`. */
   variant?: "default" | "subtle";
+  /** `md` is the 32px icon of the Benefits cards (`fk-icon is-md`); the default is the 40px `is-lg`. */
+  iconSize?: "lg" | "md";
 };
 
 /**
@@ -12,10 +14,18 @@ type ServiceCardProps = {
  * component but plain divs and classes written into each section (decided 2026-09-29). The Subtle
  * look is the `is-subtle` combo on the text. Hover motion is `ix-card-hover`.
  */
-export default function ServiceCard({ icon, title, body, variant = "default" }: ServiceCardProps) {
+export default function ServiceCard({ icon, title, body, variant = "default", iconSize = "lg" }: ServiceCardProps) {
   return (
     <article className="fk-card fk-flex fk-flex-col fk-items-start fk-justify-between fk-w-full fk-h-full fk-overflow-clip">
-      {icon ? <img className="fk-icon is-lg" src={icon} alt="" width={40} height={40} /> : null}
+      {icon ? (
+        <img
+          className={iconSize === "md" ? "fk-icon is-md" : "fk-icon is-lg"}
+          src={icon}
+          alt=""
+          width={iconSize === "md" ? 32 : 40}
+          height={iconSize === "md" ? 32 : 40}
+        />
+      ) : null}
       <div className="fk-flex fk-flex-col fk-gap-2 fk-w-full" data-ix="blur-reveal">
         <div className="fk-blur-reveal">
           <h3 className="fk-card-title fk-text-md fk-font-medium">{title}</h3>

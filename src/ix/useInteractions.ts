@@ -11,7 +11,9 @@ import { marquee } from "./marquee";
 import { revealStagger } from "./revealStagger";
 import { ticker } from "./ticker";
 import { twoWays } from "./twoWays";
+import { videoReduced } from "./videoReduced";
 import { xCarousel } from "./xCarousel";
+import { xFacilityIllustrations } from "./xFacilityIllustrations";
 import { xIllustrations } from "./xIllustrations";
 
 /*
@@ -138,6 +140,8 @@ export function useInteractions() {
       heroArc(),
       xCarousel(),
       xIllustrations(),
+      xFacilityIllustrations(),
+      videoReduced(),
       faqToggle(),
       articleToc(),
       blogPagination(),

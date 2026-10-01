@@ -13,17 +13,23 @@ const LINKS = [
   { label: "Blog", href: "/blog" },
 ] as const;
 
+type NavProps = {
+  /** Light (default) or Dark: white text and wordmark over a dark hero until the bar scrolls into its pill (`is-dark`, exception x-nav-dark). */
+  variant?: "light" | "dark";
+};
+
 /**
- * Global / Nav (Light). Scroll and menu behavior come from ix-nav-pill and ix-nav-menu
+ * Global / Nav (Light, Dark). Scroll and menu behavior come from ix-nav-pill and ix-nav-menu
  * (src/ix), not React state, so the markup matches the Webflow build.
  */
-export default function Nav() {
+export default function Nav({ variant = "light" }: NavProps) {
   const { pathname } = useLocation();
 
   return (
-    <nav className="fk-nav" aria-label="Main">
+    <nav className={cx("fk-nav", variant === "dark" && "is-dark")} aria-label="Main">
       <SmartLink href="/" className="fk-nav-logo">
-        <img src="/assets/flint-logo-brand.svg" alt="Flint" width={49} height={24} />
+        <img className="fk-nav-logo-brand" src="/assets/flint-logo-brand.svg" alt="Flint" width={49} height={24} />
+        <img className="fk-nav-logo-white" src="/assets/flint-logo-white.svg" alt="" width={49} height={24} />
       </SmartLink>
 
       <div className="fk-nav-links">

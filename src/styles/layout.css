@@ -84,6 +84,16 @@
   padding-bottom: 0;
 }
 
+/* Section / Facility Partners Hero: an 848px (752px ≤767) video card, header centred, no padding (the video
+   and overlay are absolutely placed inside it; Figma 5543:1166, phone 5755:2546). */
+.fk-panel.is-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 848px;
+  padding: 0 var(--space-5);
+}
+
 .fk-panel.is-tight {
   padding: var(--space-4);
 }
@@ -214,5 +224,10 @@
   .fk-panel.is-orbit {
     min-height: 828px;
     padding-top: 101px;
+  }
+
+  .fk-panel.is-video {
+    min-height: 752px;
+    padding-block: var(--space-24) var(--space-16);
   }
 }

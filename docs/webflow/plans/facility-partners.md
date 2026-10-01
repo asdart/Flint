@@ -32,7 +32,7 @@ Page order: Hero, Clients, stats, "Why facilities trust Flint" (3 illustrated ro
 | 5b hidden cards | **`WhyFacilities`**, registry row "To classify (P-03)" | `legacy` | Dropped: hidden in the final frame. Its three titles survive only as the three rows of section 4. | none |
 | 6 Testimonials | `Section / Testimonials` + `UI / Testimonial Card` | `migrated` (Slider, a component) | The Pages row says "Testimonials (Single)". The design shows a **multi-card slider with dots**, not a single testimonial, so **Single is not needed**. But the card design differs from Home's card (Home: photo-led card with flag, hover-to-open, center-weighted 3-up carousel). Figma here is a flat 360 x 536 white card: quote, small photo, name, role. So either a new card variant of `UI / Testimonial Card` ("Text"), or a new variant of the section. `ix-testimonials` moves the track by 340.8px per step with center scaling and would not match the flat 368px step; needs tuning or a new variant. No section title (Home has one). | Card width 360 (~1 column visible on phone, inferred). |
 | 7 Apply form | `Section / Apply Form` | `legacy` | `to do`. Uses `UI / Input Field` (Medium 40px, `migrated`; label shown **above** the field here, but the component's Label is visually hidden and the design shows only a placeholder, so this needs a visible-label option) and native Form Select for the roles, a textarea (the Input Field covers only input types) and the Primary `UI / Button` full-width. The phone field needs the country prefix (markup only today, see the Input Field row). Panel = ring background (legacy file already masks `apply-ring-mask.svg` with `how-bg-purple.png`). | Card 710 max; padding 40 to 24 on phones; name rows (2 columns) stack below ~640px (inferred from legacy). |
-| 8 Footer | `Global / Footer` | `migrated` | **Copy differs:** registry default is "Find the right green card / sponsored role for you." and "It's free to apply and takes under a minute."; Figma here has "It's time to find your / green card sponsor." and "Apply now, it is free." Both props (CTA Title / CTA Body) are already overridable. Link columns in Figma match a 4-column grid; the registry footer has 4 titles + 15 links (same count). | already responsive |
+| 8 Footer | `Global / Footer` | `migrated` | **Copy differs:** registry default is "Find the right green card / sponsored role for you." and "It's free to apply and takes under a minute."; Figma here has "It's time to find your / green card sponsor." and "Apply now, it is free." **User decision 2026-10-02: the page uses the default Footer (same copy as Home); the Figma copy is not used.** Link columns in Figma match a 4-column grid; the registry footer has 4 titles + 15 links (same count). | already responsive |
 
 **What the design implies for P-03.** `ModernFacility` survives and is a plain 3-card grid with a centered title and sub: make it the **`Benefits` variant of `Section / Feature Grid`** (option (a)), which the roadmap already lists as Feature Grid's next variant (Candidates uses `Benefits` too). `WhyFacilities` does **not** survive: its hidden frame `5543:1279` is marked hidden and the same three messages appear as the illustrated rows (section 4). So close P-03 as: ModernFacility = Feature Grid variant; WhyFacilities = deleted (no section needed), with the illustrated rows handled as Media Split / How It Works (Facilities). Suggest noting the Feature Grid Benefits cards here are white on a tertiary panel while Home's cards are on a secondary panel; panel color is a utility/background choice.
 
@@ -85,7 +85,7 @@ Probably **missing**: the testimonial photos (15 different 52px portraits; only 
 - Stats and Clients: same copy and values (200+, 23, 100,000; "Partnering with the top facilities").
 - Hero: same heading and body copy as legacy. The layout is a photo card with the Nav inside (legacy had a video/image hero: `hero.mp4`).
 - Form: same fields and copy as legacy; Figma shows visible labels above the fields (legacy label is 14px; Figma 12px subtle) and "Submit form".
-- Footer CTA copy differs from the registry default (see 2-8).
+- Footer CTA copy in Figma differs from the registry default; the page keeps the default (user decision 2026-10-02).
 - The "Why facilities" subtitle is legacy copy about "common questions ... Green Card pathway" which reads like leftover FAQ text (inferred); the frame is also called "faq-section".
 
 **Versus the current Pages-table row** ("Hero (Facility Partners), Logo Marquee, Stats Band, How It Works (Facilities), `ModernFacility` (to classify), Facility Grid, `WhyFacilities` (to classify), Testimonials (Single), Apply Form"):
@@ -95,15 +95,16 @@ Proposed replacement row: Hero (Facility Partners), Logo Marquee, Stats Band (De
 ## 7. Proposed build order
 
 - [ ] Close P-03 in `roadmap.md`: ModernFacility becomes Feature Grid `Benefits`; WhyFacilities deleted; update the components.md row and the Pages row.
-- [ ] Feature Grid `Benefits` variant (shared with Candidates): 3 cards, 3 icons (files exist). Check the placeholder card titles first (open question 1).
-- [ ] Stats Band `Default` (3 stats, no title) + `UI / Stat` Default.
-- [ ] Hero (Facility Partners): confirm component vs. page markup; Secondary-look "Apply now" button; hero image.
-- [ ] Logo Marquee: reuse the component on the page (no work beyond placing it).
-- [ ] Media Split (Image Left / Image Right) and the three static illustrations (SVG/PNG from existing how-it-works and avatar files). Animations later (P-04).
+- [x] Feature Grid `Benefits` variant: 3 cards, 3 icons, legacy titles (user decision), built in the repo 2026-10-01.
+- [x] Stats Band `Default` untitled (3 stats, brand-light, no rings, spread row) + `UI / Stat` Default, built 2026-10-01.
+- [x] Hero (Facility Partners): page-level markup with the legacy video, Nav Dark, Secondary "Apply now" (link TBD), built 2026-10-01.
+- [x] Logo Marquee: placed as is, 2026-10-01.
+- [x] The three illustrated rows as page-level `FacilityValueProp` on the Candidates `fk-steps` rows (not a Media Split) with static final frames and `x-facility-illustrations` hooks, 2026-10-01. **Motion done 2026-10-02 (phase B):** `network`, `savings`, `retention` in their own script `x-facility-illustrations` (Motion, ported 1:1 from the legacy Framer components; separate from Candidates' `x-illustrations` for pagespeed), built and tested in the repo; install on Webflow pending.
 - [ ] Testimonials: decide native Slider vs. `ix-testimonials` variant; card variant "Text"; gather 15 photos and copy.
 - [ ] Apply Form: visible-label Input Field option, textarea, select / multi-select, phone prefix, success and error messages; Webflow form inbox (P-05).
+- [x] Page composed in the repo (`FacilityPartnersPage.tsx`, default Footer, proposed page settings in `components.md`), 2026-10-01; Testimonials and Apply Form not built yet.
 - [ ] Compose the page in Webflow; link Nav "Facility partners" (both bar and menu) as a page link, update `w--current` check.
-- [ ] Footer copy props (title/body) for this page; page settings (title, meta description, OG): none exist for this page in the repo, propose them.
+- [x] Footer: the default copy, same as Home (user decision 2026-10-02; no overrides). [ ] Page settings (title, meta description, OG): none exist for this page in the repo, propose them.
 - [ ] Tablet and mobile pass once the designer supplies frames; then remove the legacy files with user confirmation.
 
 ### Open questions for the designer / owner
@@ -115,5 +116,5 @@ Proposed replacement row: Hero (Facility Partners), Logo Marquee, Stats Band (De
 5. Hero image or video? Hero CTA "Apply now" target: scroll to the form (`#apply`) presumably.
 6. Form: which fields are required, what are the Facility type options (dropdown?), and is "Select all that apply" a real multi-select? Phone country picker needed (Webflow has none)? Where do submissions go long term (P-05) and what is the success message?
 7. Tablet and mobile frames for this page (none in the file).
-8. Footer CTA copy: is "It's time to find your green card sponsor." specific to this page (it reads like a candidates message on a facility page) or the new site-wide default? Also "LinkeDin" typo in the footer link label.
+8. (Closed 2026-10-02: default Footer copy, same as Home.) Footer CTA copy: is "It's time to find your green card sponsor." specific to this page (it reads like a candidates message on a facility page) or the new site-wide default? Also "LinkeDin" typo in the footer link label.
 9. Hero H1 "Find Top Healthcare Talent" is unchanged from legacy; confirm the Nav order/labels (Figma shows a "Services" link that the registry Nav does not have: Home, Candidates, Facility partners, About, Blog).

@@ -1,0 +1,232 @@
+/* fk-network-* — Facility partners, "A stable team of familiar faces" art (Figma 5594:26794, legacy
+   NetworkIllustration). A 388px square at (96, 154) of the 580×696 `fk-steps-canvas`, hub centre (194, 194): the
+   dashed hub ring, an `-orbit` layer (the 8 spokes and the 8 nodes, which `x-illustrations` turns a full circle
+   every 48s) and the 108px hub on top. Node `is-a1`…`is-a8` run clockwise from the top (avatar centres on a
+   radius of 148); each node is the 92px dashed ring around a 72px avatar, whose `-face` counter-rotates so the
+   portraits stay upright. A spoke is a zero-size box on the hub centre turned by n × 45°, holding the 2×37 dashed
+   line from radius 64 to 101. The portraits are the legacy ones (`/assets/network/portrait-01…08.png`), one crop
+   class per slot (`-portrait is-a1`…`is-a8`: a head-and-shoulders window in px of the 72px avatar). The dashed
+   strokes and their colour (`stone-100`, as Figma: the legacy `#F1E0D8` is nearly invisible) live in the three SVG files `facility/network-*.svg`. */
+
+.fk-network {
+  position: absolute;
+  top: 154px;
+  left: 96px;
+  width: 388px;
+  height: 388px;
+}
+
+.fk-network-hub-ring {
+  position: absolute;
+  top: 130px;
+  left: 130px;
+  display: block;
+  width: 128px;
+  height: 128px;
+}
+
+.fk-network-orbit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.fk-network-spoke {
+  position: absolute;
+  top: 194px;
+  left: 194px;
+  width: 0;
+  height: 0;
+}
+
+.fk-network-spoke-image {
+  position: absolute;
+  top: -101px;
+  left: -1px;
+  display: block;
+  width: 2px;
+  height: 37px;
+  max-width: none; /* the base img rule's 100% of the zero-width spoke would collapse it */
+}
+
+.fk-network-spoke.is-a2 {
+  transform: rotate(45deg);
+}
+
+.fk-network-spoke.is-a3 {
+  transform: rotate(90deg);
+}
+
+.fk-network-spoke.is-a4 {
+  transform: rotate(135deg);
+}
+
+.fk-network-spoke.is-a5 {
+  transform: rotate(180deg);
+}
+
+.fk-network-spoke.is-a6 {
+  transform: rotate(225deg);
+}
+
+.fk-network-spoke.is-a7 {
+  transform: rotate(270deg);
+}
+
+.fk-network-spoke.is-a8 {
+  transform: rotate(315deg);
+}
+
+.fk-network-node {
+  position: absolute;
+  width: 92px;
+  height: 92px;
+}
+
+.fk-network-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 92px;
+  height: 92px;
+}
+
+/* The 72px round crop, centred in its node. Radius and background are utilities in the markup. */
+.fk-network-avatar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 72px;
+  height: 72px;
+}
+
+.fk-network-face {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.fk-network-portrait {
+  position: absolute;
+  display: block;
+  max-width: none;
+  object-fit: cover;
+}
+
+.fk-network-node.is-a1 {
+  top: 0;
+  left: 148px;
+}
+
+.fk-network-node.is-a2 {
+  top: 43.35px;
+  left: 252.65px;
+}
+
+.fk-network-node.is-a3 {
+  top: 148px;
+  left: 296px;
+}
+
+.fk-network-node.is-a4 {
+  top: 252.65px;
+  left: 252.65px;
+}
+
+.fk-network-node.is-a5 {
+  top: 296px;
+  left: 148px;
+}
+
+.fk-network-node.is-a6 {
+  top: 252.65px;
+  left: 43.35px;
+}
+
+.fk-network-node.is-a7 {
+  top: 148px;
+  left: 0;
+}
+
+.fk-network-node.is-a8 {
+  top: 43.35px;
+  left: 43.35px;
+}
+
+.fk-network-portrait.is-a1 {
+  top: -14px;
+  left: -39px;
+  width: 150px;
+  height: 187px;
+}
+
+.fk-network-portrait.is-a2 {
+  top: -14px;
+  left: -39px;
+  width: 150px;
+  height: 187px;
+}
+
+.fk-network-portrait.is-a3 {
+  top: 0;
+  left: -42px;
+  width: 157px;
+  height: 195px;
+}
+
+.fk-network-portrait.is-a4 {
+  top: -5.65px;
+  left: -20.65px;
+  width: 115px;
+  height: 115px;
+}
+
+.fk-network-portrait.is-a5 {
+  top: -6px;
+  left: -39px;
+  width: 150px;
+  height: 187px;
+}
+
+.fk-network-portrait.is-a6 {
+  top: -11.65px;
+  left: -29.35px;
+  width: 134px;
+  height: 167px;
+}
+
+.fk-network-portrait.is-a7 {
+  top: -5px;
+  left: -39px;
+  width: 150px;
+  height: 187px;
+}
+
+.fk-network-portrait.is-a8 {
+  top: -7.35px;
+  left: -59.35px;
+  width: 185px;
+  height: 231px;
+}
+
+.fk-network-hub {
+  position: absolute;
+  top: 140px;
+  left: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 108px;
+}
+
+.fk-network-hub-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+}

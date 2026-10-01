@@ -46,6 +46,21 @@
   }
 }
 
+/* Section / Stats Band, Default without a title (Facility partners, Figma 5612:2153): three 227px stats spread to
+   both ends of a 960px row (space-between, not equal columns), one column with a 64px gap ≤767. */
+.fk-stats-band-spread {
+  display: grid;
+  grid-template-columns: repeat(3, 227px);
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 767px) {
+  .fk-stats-band-spread {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-16);
+  }
+}
+
 /* Section / Stats Band, Default: two gradient rings cropped by the panel (Figma 5543:1009 and
    5549:1289; phone 5763:2747 and 5763:2751): 458px rings (281px ≤767) hanging off the top-right and
    bottom-left corners. The ring is the registered ring SVG as a mask over the gradient photo. */

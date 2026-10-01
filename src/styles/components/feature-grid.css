@@ -5,8 +5,17 @@
   grid-auto-rows: 244px;
 }
 
+/* Benefits: 296px cards (Figma 5543:1217), icon at the top and text at the bottom. */
+.fk-feature-grid-cards.is-tall {
+  grid-auto-rows: 296px;
+}
+
 @media screen and (max-width: 991px) {
   .fk-feature-grid-cards {
+    grid-auto-rows: auto;
+  }
+
+  .fk-feature-grid-cards.is-tall {
     grid-auto-rows: auto;
   }
 

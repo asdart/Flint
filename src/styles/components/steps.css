@@ -538,4 +538,18 @@
   .fk-steps-canvas {
     transform: scale(0.6);
   }
+
+  /* Facility partners: these three arts are centred in the canvas and fill more of the phone panel in Figma
+     (5778:889 network 296 of 350, 5778:930 chart card 302 of 350), so they scale up from the 0.6 default. */
+  .fk-steps-canvas.is-network {
+    transform: scale(0.73);
+  }
+
+  .fk-steps-canvas.is-savings {
+    transform: scale(0.8);
+  }
+
+  .fk-steps-canvas.is-retention {
+    transform: scale(0.74);
+  }
 }
