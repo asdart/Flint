@@ -4,6 +4,7 @@ import { blogPagination } from "./blogPagination";
 import { blurReveal } from "./blurReveal";
 import { cardHover } from "./cardHover";
 import { dropdown } from "./dropdown";
+import { faqToggle } from "./faqToggle";
 import { form } from "./form";
 import { heroArc } from "./heroArc";
 import { marquee } from "./marquee";
@@ -11,6 +12,7 @@ import { revealStagger } from "./revealStagger";
 import { ticker } from "./ticker";
 import { twoWays } from "./twoWays";
 import { xCarousel } from "./xCarousel";
+import { xIllustrations } from "./xIllustrations";
 
 /*
  * Local preview of the Webflow interactions in docs/webflow/interactions.md. One function per
@@ -135,6 +137,8 @@ export function useInteractions() {
       ticker(),
       heroArc(),
       xCarousel(),
+      xIllustrations(),
+      faqToggle(),
       articleToc(),
       blogPagination(),
     ];

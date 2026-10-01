@@ -29,7 +29,7 @@ profile URLs come with P-08. Every block is validated with Google's Rich Results
 | --- | --- | --- | --- |
 | S-06 | `Organization` and `WebSite` on every page, with `sameAs` links to the social profiles | Site-wide head code, exception `x-schema-site` (`interactions.md`): one static JSON-LD block | ☐ |
 | S-07 | `BlogPosting` on blog posts | Post template head code with CMS fields inserted (headline, image, dates, author, publisher), exception `x-schema-post` | ☐ |
-| S-08 | `FAQPage` wherever there's an FAQ block | Native per page: `update_page_settings` → `jsonLdSchema`, generated from the same questions and answers the FAQ block shows. When the FAQ copy changes, the schema is updated in the same sync | ☐ |
+| S-08 | `FAQPage` wherever there's an FAQ block | Native per page: `update_page_settings` → `jsonLdSchema`, generated from the same questions and answers the FAQ block shows. When the FAQ copy changes, the schema is updated in the same sync. **Repo (2026-10-01):** `src/content/faqs.ts` is the one list; `sections/Faq.tsx` renders the accordion and the JSON-LD from it (`faqSchema()`), so the Candidates page setting is generated, not retyped | ☐ |
 | S-09 | `BreadcrumbList` on the blog | Blog index: native `jsonLdSchema`. Post template: inside `x-schema-post` (Home › Blog › Category › Post) | ☐ |
 
 ## Speed

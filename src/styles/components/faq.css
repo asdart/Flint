@@ -1,0 +1,124 @@
+/* fk-faq-* — FAQ accordion (Figma 5543:1072): 800px list of white rows, each a question button with
+   a 32px round plus / minus control and an answer that opens under it. State is one class,
+   `is-faq-open`, set on every part that changes (`ix-faq-toggle` adds / removes it on the
+   question's item parts), never read from a parent: closed = plus icon, ink question, answer
+   collapsed (grid row 0fr, hidden from the accessibility tree and the tab order); open = minus in a
+   filled brand circle, subtle question, answer shown. Item padding and the question's hit area are
+   the whole 24px-padded row. */
+
+.fk-faq-list {
+  width: 100%;
+  max-width: 800px;
+}
+
+.fk-faq-item {
+  padding: var(--space-6);
+}
+
+.fk-faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fk-faq-question:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-white),
+    0 0 0 4px var(--color-brand-focus);
+}
+
+.fk-faq-question-text {
+  flex: 1 1 0;
+  min-width: 0;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.fk-faq-question-text.is-faq-open {
+  color: var(--color-subtle);
+}
+
+.fk-faq-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-stone-100);
+  border-radius: var(--radius-lg);
+  background-color: transparent;
+  transition:
+    background-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fk-faq-icon.is-faq-open {
+  border-color: var(--color-brand);
+  background-color: var(--color-brand);
+}
+
+.fk-faq-icon-plus {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.fk-faq-icon-plus.is-faq-open {
+  display: none;
+}
+
+.fk-faq-icon-minus {
+  display: none;
+  width: 14px;
+  height: 14px;
+}
+
+.fk-faq-icon-minus.is-faq-open {
+  display: block;
+}
+
+.fk-faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 300ms;
+}
+
+.fk-faq-answer.is-faq-open {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+.fk-faq-answer-content {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 767px) {
+  .fk-faq-item {
+    padding: var(--space-5);
+  }
+
+  .fk-faq-question-text {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

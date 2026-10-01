@@ -17,6 +17,8 @@
 @import "./components/nav.css";
 @import "./components/footer.css";
 @import "./components/hero.css";
+@import "./components/chip.css";
+@import "./components/orbit.css";
 @import "./components/blog-hero.css";
 @import "./components/featured-post.css";
 @import "./components/breadcrumb.css";
@@ -35,6 +37,8 @@
 @import "./components/webinar.css";
 @import "./components/testimonial-card.css";
 @import "./components/testimonials.css";
+@import "./components/steps.css";
+@import "./components/faq.css";
 @import "./components/feature-grid.css";
 @import "./components/cta.css";
 /* Generated utilities (scripts/gen-utilities.mjs): stacked after the main class. */
@@ -44,3 +48,4 @@
 @import "./exceptions/x-text-rendering.css";
 @import "./exceptions/x-blur-reveal.css";
 @import "./exceptions/x-related-empty.css";
+@import "./exceptions/x-illustrations.css";

@@ -62,6 +62,28 @@
   padding-bottom: var(--space-12);
 }
 
+/* Padding-block `space-16` at every breakpoint. Stats Band Default */
+.fk-panel.is-cozy {
+  padding-block: var(--space-16);
+}
+
+/* Padding-top `space-24`, no bottom padding, at every breakpoint. A panel that ends on art cropped by its
+   bottom edge (the arc CTA) */
+.fk-panel.is-flush-bottom {
+  padding-top: var(--space-24);
+  padding-bottom: 0;
+}
+
+/* Section / Candidates Hero: a 1024px (828px ≤767) panel, ring stage centred under `space-32` of
+   top padding (101px ≤767, Figma 5763:2668); the stage is wider than the phone panel, which clips it. */
+.fk-panel.is-orbit {
+  display: flex;
+  justify-content: center;
+  min-height: 1024px;
+  padding-top: var(--space-32);
+  padding-bottom: 0;
+}
+
 .fk-panel.is-tight {
   padding: var(--space-4);
 }
@@ -187,5 +209,10 @@
 
   .fk-panel.is-relaxed {
     padding-block: var(--space-16);
+  }
+
+  .fk-panel.is-orbit {
+    min-height: 828px;
+    padding-top: 101px;
   }
 }

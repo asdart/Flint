@@ -45,3 +45,63 @@
     line-height: 20px;
   }
 }
+
+/* Section / Stats Band, Default: two gradient rings cropped by the panel (Figma 5543:1009 and
+   5549:1289; phone 5763:2747 and 5763:2751): 458px rings (281px ≤767) hanging off the top-right and
+   bottom-left corners. The ring is the registered ring SVG as a mask over the gradient photo. */
+
+.fk-stats-band-ring {
+  position: absolute;
+  width: 458px;
+  height: 458px;
+  mask-image: url("/assets/home/cta-ring.svg");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.fk-stats-band-ring.is-top {
+  top: -274px;
+  right: -299px;
+}
+
+.fk-stats-band-ring.is-bottom {
+  bottom: -250px;
+  left: -255px;
+}
+
+.fk-stats-band-ring-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fk-stats-band-ring-image.is-rotated {
+  transform: rotate(90deg);
+}
+
+/* Tablet: the three stats fill the panel, so the rings shrink to the phone size and sit further out. */
+@media screen and (max-width: 991px) {
+  .fk-stats-band-ring {
+    width: 281px;
+    height: 281px;
+  }
+
+  .fk-stats-band-ring.is-top {
+    top: -178px;
+    right: -201px;
+  }
+
+  .fk-stats-band-ring.is-bottom {
+    bottom: -215px;
+    left: -200px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .fk-stats-band-ring.is-bottom {
+    bottom: -197px;
+    left: -186px;
+  }
+}

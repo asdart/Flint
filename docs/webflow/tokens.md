@@ -68,6 +68,8 @@ step that's in use is its own token. Add a row before using a new one.
 | `color-brand-80` | `rgba(68, 56, 109, 0.8)` | Long-form body text |
 | `color-subtle-80` | `rgba(97, 101, 106, 0.8)` | Stat labels |
 | `color-ink-60` | `rgba(15, 14, 23, 0.6)` | Muted supporting lines inside the Pricing message bubbles |
+| `color-ink-80` | `rgba(15, 14, 23, 0.8)` | **New 2026-10-01 (to sync as a variable).** Stat labels in Stats Band Default (Figma `5543:1021`) |
+| `color-black-20` | `rgba(0, 0, 0, 0.2)` | **New 2026-10-01 (to sync as a variable).** The name tag on the video-call picture, How It Works row 2 (`fk-steps-call-name`) |
 | `color-brand-10` | `rgba(68, 56, 109, 0.1)` | Focus ring around a focused input field (`fk-input-field:focus-within`), with a `color-brand` border |
 | `color-scrim` | `rgba(0, 0, 0, 0.8)` | Bottom of the gradient over the featured post image on mobile (`fk-featured-post-scrim`), fading to `transparent` |
 
@@ -96,7 +98,7 @@ The type scale is defined as classes and tag styles in [`classes.md`](classes.md
 | `radius-lg` | `16px` | — |
 | `radius-lg-plus` | `20px` | Service cards (`fk-card`), decided 2026-09-25 (H-5). Other 20px radii in legacy use it too when migrated, no snapping |
 | `radius-xl` | `24px` | 26, 28 (the default panel/button radius) |
-| `radius-2xl` | `32px` | 40 |
+| `radius-2xl` | `32px` | 40 (How It Works art panels on Candidates are 40px in Figma `5594:26923`, snapped to 32 as in legacy; add a `radius-3xl` if the client wants the 40) |
 | `radius-full` | `999px` | `rounded-full`, 99, 200, 50% on square elements |
 
 ## Spacing (size variables)
@@ -149,7 +151,9 @@ Webflow variables don't support shadows, so these values are only allowed inside
 | Button inset (white) | `inset 0 -1px 2px 0 rgba(0,0,0,0.15)` | `fk-button is-secondary` |
 | Nav pill | `0 2px 2.5px rgba(0,0,0,0.03), 0 9px 4.5px rgba(0,0,0,0.03), 0 19px 6px rgba(0,0,0,0.01)` | `fk-nav is-pill` |
 | Field active | `0 0 0 2px rgba(68,56,109,0.1)` | `fk-field:focus` |
-| Pricing bubble | `0 57px 17px rgba(0,0,0,0.01), 0 25px 12.5px rgba(0,0,0,0.02), 0 6px 7px rgba(0,0,0,0.03)` | `fk-pricing-bubble` (Figma's two 0-alpha layers dropped, they render nothing) |
+| Pricing bubble | `0 57px 17px rgba(0,0,0,0.01), 0 25px 12.5px rgba(0,0,0,0.02), 0 6px 7px rgba(0,0,0,0.03)` | `fk-pricing-bubble`, `fk-steps-notice` (Figma's two 0-alpha layers dropped, they render nothing) |
+| Chip | `0 41px 12.5px rgba(0,0,0,0.02), 0 18px 9px rgba(0,0,0,0.03), 0 5px 5px rgba(0,0,0,0.03)` | `fk-chip` (Figma `5647:1797`; the two 0-alpha layers dropped) |
+| Call window | `0 37px 37px rgba(0,0,0,0.03), 0 9px 20px rgba(0,0,0,0.03)` | `fk-steps-window` (legacy `InterviewIllustration`) |
 
 The primary gradient is also a class-level constant: `linear-gradient(349.52deg, color-accent-rose
 -32.33%, color-brand 39.71%, color-brand 65.25%, color-accent-blue 146.24%)` (`fk-button`, same

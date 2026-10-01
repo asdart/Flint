@@ -1,0 +1,48 @@
+/* fk-chip — a white person pill: flag, name, a hairline, role (Figma 5918:1109 "Fabiana" on the
+   last How It Works row; the hero's Clara pill is the hover tooltip of orbit slot 3). It is positioned by its
+   combo, so the same pill sits above an orbit avatar or in a photo. Text inside is `fk-text-sm`
+   (`-name` in ink, `-role` in subtle, both medium); the hairline is a 1px stone-100 rule, as the
+   Figma line, drawn as a border. */
+
+.fk-chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-white);
+  box-shadow:
+    0 41px 12.5px rgba(0, 0, 0, 0.02),
+    0 18px 9px rgba(0, 0, 0, 0.03),
+    0 5px 5px rgba(0, 0, 0, 0.03);
+  white-space: nowrap;
+}
+
+/* Bottom-left of a photo panel, 24px in. */
+.fk-chip.is-portrait {
+  bottom: var(--space-6);
+  left: var(--space-6);
+}
+
+/* Hover tooltip of an orbit avatar: the same pill, centred above its item (12px gap), hidden at rest.
+   `x-illustrations` fades it in while the avatar is hovered (opacity 0 to 1, up 6px, scale .96 to 1, 0.18s) and sets
+   the item's z-index. The rest state is also the first paint, so the tooltips never show without the script. */
+.fk-chip.is-tooltip {
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  width: max-content;
+  margin: 0 auto var(--space-3);
+  opacity: 0;
+  transform: translateY(6px) scale(0.96);
+  pointer-events: none;
+}
+
+.fk-chip-divider {
+  flex: none;
+  align-self: center;
+  width: 0;
+  height: 17px;
+  border-left: 1px solid var(--color-stone-100);
+}

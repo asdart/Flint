@@ -1,0 +1,180 @@
+/* fk-orbit — Section / Candidates Hero (Figma 5543:916, phone 5763:2667): a ring of 12 round avatars
+   around the centred header. The stage is a square (736px, 680px ≤767) and every item and crop
+   is placed in % of it, so the ring scales with the stage and the
+   phone is the same ring cropped by the panel (the stage is wider than the panel there; the panel
+   centres it and clips it). Positions are the resting frame: items sit on a circle of radius 328
+   (avatar centres), 30° apart, a1 at the top, clockwise. The orbit motion (`x-illustrations`) moves
+   the items. The portraits are the Home hero's, one crop class per portrait (`is-c1`…`is-c10`, the
+   order of `CANDIDATES`): a head-and-shoulders window, in % of the avatar. */
+
+.fk-orbit {
+  position: relative;
+  flex: none;
+  width: 736px;
+  height: 736px;
+}
+
+.fk-orbit-item {
+  position: absolute;
+  width: 10.87%;
+  aspect-ratio: 1 / 1;
+}
+
+/* The round crop. It is the hover target (pointer cursor) and what `x-illustrations` scales to 1.15 on hover;
+   the item itself stays unscaled so the tooltip beside it keeps its size. */
+.fk-orbit-avatar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background-color: var(--color-sand-100);
+  overflow: clip;
+  cursor: pointer;
+}
+
+.fk-orbit-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.fk-orbit-item.is-a1 {
+  top: 0%;
+  left: 44.565%;
+}
+
+.fk-orbit-item.is-a2 {
+  top: 5.97%;
+  left: 66.848%;
+}
+
+.fk-orbit-item.is-a3 {
+  top: 22.283%;
+  left: 83.16%;
+}
+
+.fk-orbit-item.is-a4 {
+  top: 44.565%;
+  left: 89.13%;
+}
+
+.fk-orbit-item.is-a5 {
+  top: 66.848%;
+  left: 83.16%;
+}
+
+.fk-orbit-item.is-a6 {
+  top: 83.16%;
+  left: 66.848%;
+}
+
+.fk-orbit-item.is-a7 {
+  top: 89.13%;
+  left: 44.565%;
+}
+
+.fk-orbit-item.is-a8 {
+  top: 83.16%;
+  left: 22.283%;
+}
+
+.fk-orbit-item.is-a9 {
+  top: 66.848%;
+  left: 5.97%;
+}
+
+.fk-orbit-item.is-a10 {
+  top: 44.565%;
+  left: 0%;
+}
+
+.fk-orbit-item.is-a11 {
+  top: 22.283%;
+  left: 5.97%;
+}
+
+.fk-orbit-item.is-a12 {
+  top: 5.97%;
+  left: 22.283%;
+}
+
+.fk-orbit-image.is-c1 {
+  top: 2.500%;
+  left: -75.000%;
+  width: 250.000%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c2 {
+  top: -22.500%;
+  left: -50.059%;
+  width: 200.117%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c3 {
+  top: -22.500%;
+  left: -44.124%;
+  width: 192.090%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c4 {
+  top: -15.000%;
+  left: -75.000%;
+  width: 250.000%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c5 {
+  top: -12.500%;
+  left: -50.098%;
+  width: 200.195%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c6 {
+  top: -15.000%;
+  left: -50.048%;
+  width: 200.097%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c7 {
+  top: -27.500%;
+  left: -45.590%;
+  width: 187.431%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c8 {
+  top: 0.000%;
+  left: -72.500%;
+  width: 250.000%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c9 {
+  top: -7.500%;
+  left: -43.725%;
+  width: 187.450%;
+  height: 250.000%;
+}
+
+.fk-orbit-image.is-c10 {
+  top: 10.000%;
+  left: -75.000%;
+  width: 250.000%;
+  height: 250.000%;
+}
+
+@media screen and (max-width: 767px) {
+  .fk-orbit {
+    width: 680px;
+    height: 680px;
+  }
+}

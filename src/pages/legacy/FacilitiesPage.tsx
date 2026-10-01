@@ -3,7 +3,7 @@ import Stats from "../../sections/Stats";
 import HowFlintWorks from "../../sections/facilities/HowFlintWorks";
 import Benefits from "../../sections/Benefits";
 import Testimonials from "../../sections/legacy/Testimonials";
-import Faq from "../../sections/Faq";
+import Faq from "../../sections/legacy/Faq";
 import FacilityCta from "../../sections/facilities/FacilityCta";
 import Footer from "../../sections/Footer";
 import { useStaggerReveal } from "../../hooks/useStaggerReveal";

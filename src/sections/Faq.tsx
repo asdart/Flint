@@ -1,104 +1,69 @@
-import { useState } from "react";
-import BlurReveal from "../components/BlurReveal";
+import { FAQS, faqSchema } from "../content/faqs";
+import { cx } from "../lib/cx";
 
-const FAQS = [
-  {
-    question: "What costs does Flint cover?",
-    answer:
-      "Flint covers immigration filing fees, lawyer fees, licensing support, and relocation assistance. You\u2019re responsible only for normal living expenses once working.",
-  },
-  {
-    question: "Where are the job locations?",
-    answer:
-      "We partner with healthcare facilities in 23 states across the country. During your interviews you can discuss locations and choose the facility that fits you best.",
-  },
-  {
-    question: "How long is the commitment?",
-    answer:
-      "Most placements ask for a 3-5 year commitment while your Green Card processes, giving you stable employment throughout the process.",
-  },
-  {
-    question: "What if I am on a temporary or pending status?",
-    answer:
-      "Flint is designed for healthcare professionals on temporary status. We help you move from temporary or pending status to permanent residency through employer sponsorship.",
-  },
-  {
-    question: "What if I do not have work authorization?",
-    answer:
-      "Reach out to us anyway \u2014 our team can review your situation and let you know what pathways may be available to you.",
-  },
-  {
-    question: "Do you help with relocation and housing?",
-    answer:
-      "Yes. We provide relocation assistance and a moving bonus, and our team can help you get settled in your new city.",
-  },
-  {
-    question: "What about my family?",
-    answer:
-      "Your spouse and children can be included in your Green Card application, so your family can build a permanent future with you.",
-  },
-  {
-    question: "Is this real? Is Flint a scam?",
-    answer:
-      "Flint is a real program working with licensed immigration attorneys and accredited healthcare facilities. We\u2019re happy to connect you with candidates we\u2019ve already placed.",
-  },
-];
+type FaqProps = {
+  title?: string;
+  body?: string;
+  /** Index of the item that starts open (the Figma design shows the first one open). */
+  open?: number;
+};
 
-export default function Faq() {
-  const [open, setOpen] = useState(0);
-
+/** Section / FAQ. Page-level markup (D-17: only Candidates has an FAQ so far), not a component. Motion
+ * is `ix-faq-toggle`: a click on a question toggles `is-faq-open` on the parts of its item (no parent
+ * state reaches a child). The preview also renders the page's `FAQPage` JSON-LD from the same
+ * questions; on Webflow it is the page's JSON-LD setting (`seo.md` S-08). */
+export default function Faq({
+  title = "Frequently asked questions",
+  body = "Get answers to common questions about our Green Card pathway, candidate vetting, and healthcare placement process.",
+  open = 0,
+}: FaqProps) {
   return (
-    <section className="w-full px-4 pb-4">
-      <div className="flex w-full flex-col items-center gap-10 overflow-clip rounded-[24px] bg-brand-light px-5 py-12 md:gap-16 md:px-10 md:py-16 lg:px-20 lg:py-24">
-        <BlurReveal className="flex max-w-[480px] flex-col items-center gap-4 text-center">
-          <h2 className="font-serif text-[32px] leading-10 tracking-[-0.64px] text-ink md:text-[48px] md:leading-[52px] md:tracking-[-0.96px]">
-            Frequently asked questions
-          </h2>
-          <p className="text-[16px] leading-6 text-subtle md:text-[18px] md:leading-7">
-            Get answers to common questions about our Green Card pathway, candidate vetting, and healthcare placement
-            process.
-          </p>
-        </BlurReveal>
-        <div className="flex w-full max-w-[800px] flex-col gap-4">
-          {FAQS.map((faq, i) => {
-            const isOpen = open === i;
-            return (
-              <div key={faq.question} data-reveal className="flex w-full flex-col rounded-[24px] bg-white p-6">
-                <button
-                  type="button"
-                  onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="flex w-full cursor-pointer items-center justify-between gap-4 text-left"
-                  aria-expanded={isOpen}
-                >
-                  <span
-                    className={`min-w-0 flex-1 text-[16px] font-medium leading-6 md:text-[20px] md:leading-7 ${
-                      isOpen ? "text-subtle" : "text-ink"
-                    }`}
-                  >
-                    {faq.question}
-                  </span>
-                  <span
-                    className={`flex size-8 shrink-0 items-center justify-center rounded-[16px] transition-colors ${
-                      isOpen ? "bg-brand" : "border border-stone-100"
-                    }`}
-                  >
-                    <img src={isOpen ? "/assets/minus.svg" : "/assets/plus.svg"} alt="" className="size-3.5" />
-                  </span>
-                </button>
-                <div
-                  className={`grid transition-[grid-template-rows] duration-300 ${
-                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <p className="pt-4 text-[16px] leading-6 text-ink">{faq.answer}</p>
-                  </div>
-                </div>
+    <section className="fk-section">
+      <div className="fk-panel fk-bg-brand-light">
+        <div className="fk-container">
+          <div className="fk-panel-content">
+            <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
+              <div className="fk-blur-reveal">
+                <h2 className="fk-heading-xl">{title}</h2>
               </div>
-            );
-          })}
+              <div className="fk-blur-reveal is-delay-1">
+                <p className="fk-text-lg fk-color-subtle">{body}</p>
+              </div>
+            </div>
+
+            <div className="fk-faq-list fk-flex fk-flex-col fk-gap-4 fk-mx-auto" data-ix="reveal-stagger">
+              {FAQS.map((faq, index) => {
+                const isOpen = index === open;
+                const state = isOpen && "is-faq-open";
+                return (
+                  <article className="fk-faq-item fk-bg-white fk-rounded-xl" data-ix-item key={faq.question}>
+                    <h3 className="fk-text-md">
+                      <button
+                        className="fk-faq-question"
+                        type="button"
+                        aria-expanded={isOpen}
+                        aria-controls={`faq-answer-${index + 1}`}
+                      >
+                        <span className={cx("fk-faq-question-text", state)}>{faq.question}</span>
+                        <span className={cx("fk-faq-icon", state)}>
+                          <img className={cx("fk-faq-icon-plus", state)} src="/assets/plus.svg" alt="" width={14} height={14} />
+                          <img className={cx("fk-faq-icon-minus", state)} src="/assets/minus.svg" alt="" width={14} height={14} />
+                        </span>
+                      </button>
+                    </h3>
+                    <div className={cx("fk-faq-answer", state)} id={`faq-answer-${index + 1}`}>
+                      <div className="fk-faq-answer-content">
+                        <p className="fk-text-md fk-color-ink fk-pt-4">{faq.answer}</p>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(FAQS)) }} />
     </section>
   );
 }

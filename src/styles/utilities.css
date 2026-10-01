@@ -326,6 +326,10 @@
   color: var(--color-ink-60);
 }
 
+.fk-color-ink-80 {
+  color: var(--color-ink-80);
+}
+
 .fk-color-subtle {
   color: var(--color-subtle);
 }

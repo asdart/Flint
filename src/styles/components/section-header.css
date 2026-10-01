@@ -17,6 +17,12 @@
   max-width: var(--width-content-sm);
 }
 
+/* The Candidates hero's 436px text block (Figma 5543:950): narrower than `is-narrow`. */
+.fk-section-header.is-tight {
+  width: 100%;
+  max-width: 436px;
+}
+
 /* Long-form body stays left-aligned, also in the centered variant. */
 .fk-section-header-body {
   display: flex;
@@ -31,4 +37,12 @@
 .fk-section-header-action {
   display: flex;
   padding-top: var(--space-4);
+}
+
+/* The orbit stage is wider than the phone panel (it is cropped), so the text block follows the panel:
+   100vw minus the 8px section gutters and 24px side padding, as in Figma 5763:2676. */
+@media screen and (max-width: 767px) {
+  .fk-section-header.is-tight {
+    max-width: calc(100vw - var(--space-16));
+  }
 }

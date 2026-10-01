@@ -44,7 +44,7 @@ Figma carries no prototype/animation data (`get_motion_context` recursive: empty
 
 | Element | What the design shows | Existing `ix-*` that could cover it | Needs |
 | - | - | - | - |
-| Hero avatar ring | 12 avatars on a circle (radius 328 around the centre of a 736 circle), chip pinned to one avatar. Legacy `ProximityOrbit` orbited continuously, slowed on hover (speedDown x6), staggered enter, tooltips per person | `ix-hero-arc` (rotation 0 -> 110 on `.fk-hero-wheel`, 30s, infinite, hover pause) rotates a wheel; a circle needs **360 degrees plus counter-rotation of each avatar** (so faces stay upright) | New interaction `ix-hero-orbit` (or reuse with 360deg + per-avatar counter-rotate), chip follows one avatar or is pinned (static in Figma). Hover tooltip would be CSS hover on the avatar (no IX). |
+| Hero avatar ring | 12 avatars on a circle (radius 328 around the centre of a 736 circle), chip pinned to one avatar. Legacy `ProximityOrbit` orbited continuously, slowed on hover (speedDown x6), staggered enter, tooltips per person | `ix-hero-arc` (rotation 0 -> 110 on `.fk-hero-wheel`, 30s, infinite, hover pause) rotates a wheel; a circle needs **360 degrees plus counter-rotation of each avatar** (so faces stay upright) | New interaction `ix-hero-orbit` (or reuse with 360deg + per-avatar counter-rotate), no always-visible chip: the Figma "Clara" pill is slot 3's hover tooltip only (decided 2026-10-02). Hover tooltip would be CSS hover on the avatar (no IX). |
 | Hero enter | Legacy staggered enter | `ix-reveal-stagger` / `ix-blur-reveal` | None new. |
 | Stats | Numbers | `ix-count-in` (legacy, not built on any page yet) | Build `ix-count-in` or skip. Ring arcs: `ix-parallax` (legacy) in the repo; optional. |
 | How it works art | Static compositions; legacy had animated `InterviewIllustration`/`SendIllustration`/ orbit diagrams (`*Illustration.tsx` with `useInView`) | `ix-illustration-play` (legacy): Lottie / scroll-into-view once | Decide: static images (recommended, like Home's cards art `-bg`/`-art` layers) or Lottie; `interactions.md` Illustrations section covers the workflow. The "Applications sent" stack, the orbit diagram and the checklist are the animation candidates *(inferred)*. |
@@ -62,7 +62,7 @@ Existing under `public/assets/` (checked by `ls`):
 
 | Needed | Seems to exist? |
 | - | - |
-| 12 hero avatars | `candidates/orbit-01..12.png` yes (matches 12 nodes; **verify they are the same faces** as the Figma crop, *(inferred: legacy list names Maria, Diego... Figma chip says "Clara, CNA, North Dakota" so identities differ; crops may need re-export)*. |
+| 12 hero avatars | **Decided 2026-10-01: the Home hero's ten portraits (`home/candidate-01..10.webp`) in 12 slots with two repeats.** Earlier note: `candidates/orbit-01..12.png` yes (matches 12 nodes; **verify they are the same faces** as the Figma crop, *(inferred: legacy list names Maria, Diego... Figma chip says "Clara, CNA, North Dakota" so identities differ; crops may need re-export)*. |
 | Flags (Kenya, Nigeria, Mexico, Haiti, Philippines...) | `flags/` has ke, ng, mx, ht, ph, in, us and others. Haiti `ht.svg` yes. Note Figma "Chrismene" flag is red/blue (Haiti or Philippines; unclear). |
 | Stat ring arcs | `stats-mask-1.svg`, `stats-mask-2.svg`, `stats-bg.png` (legacy Stats), possibly also in `home/` (`cta-ring.svg`). Figma uses `Ellipse 3` + `image 10` (Stats Band Large uses the same; reuse). |
 | How it works row 1 (Applications sent stack, Kwame Asante) | `how-flint-works/send-kwame.png`, `send-amara.png`, `send-raj.png`, `send-flag-*.svg`, `ic-send.svg` yes (legacy SendIllustration); Home also has `how-card-*.webp`. |
@@ -82,7 +82,7 @@ Note: Webflow uploads of these still follow the project's asset step (`webflow-i
 
 **Design vs legacy `FacilitiesPage.tsx`** (Hero > Stats > HowFlintWorks > Benefits > Testimonials > Faq > FacilityCta > Footer):
 - Same section order, **but** Benefits is now the **Role Grid** (11 role cards) instead of 3 icon cards ("Ready to relocate", "Commitment", "Permanent residency").
-- Hero: ring of 12 static portraits + one chip vs legacy continuous orbit with per-person tooltips and h-svh height; Nav overlaid (legacy `SiteNav layout="overlay"`) is now `Global / Nav` inside the panel. The hero panel is grey (secondary) rather than `bg-brand-light`.
+- Hero: ring of 12 portraits, tooltip on hover only (no static chip, 2026-10-02), vs legacy continuous orbit with per-person tooltips and h-svh height; Nav overlaid (legacy `SiteNav layout="overlay"`) is now `Global / Nav` inside the panel. The hero panel is grey (secondary) rather than `bg-brand-light`.
 - Stats: 3 stats (1000+ People relocated, 28 States with Facility Partners, 500,000+ Patients Served) and a title "Thousands of candidates placed. Millions of lives changed." vs legacy 3 stats "200+ Roles placed, 23 States, 100,000 Patients Served". Numbers changed.
 - How it works: "How Flint works" 5-row vertical stack with two numbered headings "Apply in under one minute." replacing "Send application" (legacy first title) and the legacy `InterviewIllustration`. Legacy steps: Send application, Interview directly with Facilities, Save thousands on immigration fees, Work while your green card processes, Find permanent stability in the US (same 5; first one renamed).
 - Testimonials: arrows instead of pagination bars, "Brandon Terry / Minesota" only (no role), cream panel; legacy had the old framer-motion slider with a `CarouselPagination` bar.
@@ -103,7 +103,7 @@ Note: Webflow uploads of these still follow the project's asset step (`webflow-i
 
 - [ ] Confirm open questions below (at least Q1, Q2, Q3, Q7) before building art.
 - [ ] Fix the Pages-table row for Candidates in `components.md` (Role Grid, CTA variant, Stats variant, arrows) - repo doc only after owner agreement.
-- [ ] `Section / Hero` Candidates: circle of 12 avatars + one chip (static markup; then orbit interaction).
+- [ ] `Section / Hero` Candidates: circle of 12 avatars (static markup; then orbit interaction).
 - [ ] `Section / Stats Band` tertiary/3-stat variant + `UI / Stat` Default; optionally `ix-count-in`.
 - [ ] `Section / Role Grid` instance with Candidates copy (reuse migrated component; fix the 3 wrong descriptions). No new work besides copy.
 - [ ] How It Works stack: 5 rows (page markup), art per row: export missing assets (row 4 icons, row 5 photo), bullets with `ic-check.svg`.
@@ -117,7 +117,7 @@ Note: Webflow uploads of these still follow the project's asset step (`webflow-i
 ## 7. Open questions for the designer/owner
 
 1. **Mobile and tablet frames**: none found. Are they coming? Until then responsive behaviour (ring of 12 avatars on phone, stacked rows, fanned tiles) is a guess.
-2. Hero: does the ring rotate? Does the chip follow the avatars, hover on each, or stay pinned to Clara? Legacy orbited and showed a tooltip per person.
+2. Hero: does the ring rotate? Resolved 2026-10-02: no static chip, a tooltip per avatar on hover only (slot 3 is Clara). Legacy orbited and showed a tooltip per person.
 3. Is the Hero a variant of the Home `Section / Hero` (registry says variants can't change structure) or its own page-level pattern (as Blog Hero)?
 4. Stats: confirm the numbers (1000+ / 28 / 500,000+ vs legacy 200+ / 23 / 100,000) and that the title is a single centred line styled as a subtitle (the Title layer is hidden in Figma).
 5. How It Works: steps 4 and 5 are unnumbered, 1-3 numbered; is that intended? Bullets still say "Bullet" / "Bullet": provide the copy. Are the five art cards static or animated (legacy had animated illustrations; `ix-illustration-play` is legacy)?

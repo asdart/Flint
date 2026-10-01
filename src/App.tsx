@@ -2,7 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 import { lazy, Suspense, useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import LegacyHomePage from "./pages/legacy/HomePage";
-import FacilitiesPage from "./pages/legacy/FacilitiesPage";
+import CandidatesPage from "./pages/CandidatesPage";
+import LegacyCandidatesPage from "./pages/legacy/FacilitiesPage";
 import FacilityPartnersPage from "./pages/legacy/FacilityPartnersPage";
 import BlogPage from "./pages/BlogPage";
 import LegacyBlogPostPage from "./pages/legacy/BlogPostPage";
@@ -27,7 +28,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/legacy" element={<LegacyHomePage />} />
-          <Route path="/candidates" element={<FacilitiesPage />} />
+          <Route path="/candidates" element={<CandidatesPage />} />
+          <Route path="/legacy/candidates" element={<LegacyCandidatesPage />} />
           <Route path="/facility-partners" element={<FacilityPartnersPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/blog" element={<BlogPage />} />
