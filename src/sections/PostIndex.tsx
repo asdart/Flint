@@ -37,11 +37,8 @@ export default function PostIndex({ category }: PostIndexProps) {
             <div className="fk-flex fk-flex-col fk-gap-8">
               <div
                 className="fk-flex fk-items-center fk-justify-between fk-gap-4 fk-flex-col-mobile fk-items-stretch-mobile"
-                data-ix="blur-reveal"
               >
-                <div className="fk-blur-reveal">
-                  <h2 className="fk-heading-lg">All posts</h2>
-                </div>
+                <h2 className="fk-heading-lg">All posts</h2>
                 <Dropdown label={current ? current.name : "All categories"} selected={Boolean(current)} menuLabel="Filter by category">
                   {current ? (
                     <SmartLink href="/blog" className="fk-dropdown-link">
