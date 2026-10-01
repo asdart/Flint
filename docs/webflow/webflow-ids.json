@@ -222,7 +222,7 @@
     "siteHead": "<style> x-button-gradient, x-text-rendering, x-blur-reveal; source docs/webflow/custom-code/site-head.html",
     "postsTemplateHead": "<style> x-related-empty + x-article-body on Posts template 6abc6c9673c0a3345b7a94bd (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/post-template-head-style.html",
     "blogPaginationHead": "<style> x-blog-pagination on /blog 6abc95f3d5879b11ae14b088 and Categories template 6abc6c8adc4bd2e2066e91ea (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/blog-pagination.html",
-    "homeFooter": "<script type=module> x-carousel (Motion 13.4.6 from jsDelivr) as Home page footer freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-01, needs a publish); source docs/webflow/custom-code/x-carousel.html (script block only). Testimonial Card prop Flag af54577d-2273-6579-d6e2-409db1057a4c (image asset id) set on the 21 instances in Testimonials",
+    "homeFooter": "<script type=module> x-carousel (Motion 13.4.6 from jsDelivr) as Home page footer freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-01, published and tested by the user 2026-10-01); source docs/webflow/custom-code/x-carousel.html (script block only). Testimonial Card prop Flag af54577d-2273-6579-d6e2-409db1057a4c (image asset id) set on the 21 instances in Testimonials",
     "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)"
   },
   "assets": {
