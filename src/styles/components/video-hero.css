@@ -6,6 +6,15 @@
    Position, display, flex centring, radius, backgrounds, overflow and object-fit are utilities in the markup (docs/webflow/css-system.md); this file keeps
    geometry, masks and the properties no utility covers. */
 
+/* The media layer (the repo's <video>, Webflow's Background Video wrapper). `z-index: 0` makes it a stacking
+   context: Webflow's own `.w-background-video > video` rule sets `z-index: -100`, which without one escapes to
+   the page's root stacking context and paints the video under the white `.fk-page` background (the hero showed
+   only the overlay, 2026-10-02). In the repo it changes nothing visible; the overlay and header come later in
+   the DOM and still paint above it. */
+.fk-video-media {
+  z-index: 0;
+}
+
 .fk-video-overlay {
   background-image:
     linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 18.632%),

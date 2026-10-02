@@ -5,7 +5,8 @@ import Button from "../components/ui/Button";
  * partners has a video hero; a variant of Section / Hero can't swap the arc wheel for a video). A full-bleed video
  * card (`hero.mp4`, poster `hero.png`, as the legacy hero) under a dark overlay, with the centred header on top.
  * The Nav over it is `Global / Nav` Dark (`fk-nav is-dark`, exception x-nav-dark). With reduced motion the video is
- * paused on its poster (`data-x-video="reduced"`, exception x-video-reduced, approved D-43).
+ * paused on its poster: on Webflow by webflow.js itself (native Background Video), in the repo preview by
+ * `src/ix/videoReduced.ts` (`data-x-video="reduced"`; x-video-reduced retired on Webflow 2026-10-02, D-43 amended).
  * The button's destination is TBD (placeholder `#`).
  */
 export default function FacilityPartnersHero() {
@@ -13,7 +14,7 @@ export default function FacilityPartnersHero() {
     <section className="fk-section is-padded-bottom">
       <div className="fk-panel is-video fk-flex fk-items-center fk-justify-center">
         <video
-          className="fk-absolute fk-inset-0 fk-block fk-w-full fk-h-full fk-object-cover"
+          className="fk-video-media fk-absolute fk-inset-0 fk-block fk-w-full fk-h-full fk-object-cover"
           src="/assets/facility/hero.mp4"
           poster="/assets/facility/hero.png"
           width={1536}

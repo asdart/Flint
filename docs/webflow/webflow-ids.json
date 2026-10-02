@@ -263,7 +263,8 @@
     "blogPaginationHead": "<style> x-blog-pagination on /blog 6abc95f3d5879b11ae14b088 and Categories template 6abc6c8adc4bd2e2066e91ea (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/blog-pagination.html",
     "homeFooter": "<script type=module> x-carousel (Motion 13.4.6 from jsDelivr) as Home page footer freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-01, published and tested by the user 2026-10-01); source docs/webflow/custom-code/x-carousel.html (script block only). Testimonial Card prop Flag af54577d-2273-6579-d6e2-409db1057a4c (image asset id) set on the 21 instances in Testimonials",
     "aboutHead": "<style> x-modal (reduced motion) as About page head freeform code 6abed61fbb91160db13da902 (installed 2026-10-01, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
-    "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)"
+    "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)",
+    "facilityPartners": "Page 6abfecbb675c8491534c950c: head <style> x-nav-dark (source docs/webflow/custom-code/x-nav-dark-head.html, style only); footer <script type=module> x-facility-illustrations only (source docs/webflow/custom-code/x-facility-illustrations.html, script block only, 5,869 characters). x-video-reduced removed from the footer 2026-10-02 (user-approved retirement: webflow.js pauses videos under reduced motion itself); needs a publish"
   },
   "assets": {
     "/assets/blog/posts/can-healthcare-workers-on-tps-daca-or-asylum-get-eb-3-green-card-sponsorship.webp": {
@@ -1266,7 +1267,19 @@
         "856210ce-e333-114f-bf85-ec97d3823b35",
         "ca374252-1243-a1c6-261d-e6139dce92f9"
       ],
-      "Nav definition: white wordmark image (fk-nav-logo-white)": "0e007e53-16a1-0442-f50a-0c1509d4bb75"
+      "Nav definition: white wordmark image (fk-nav-logo-white)": "0e007e53-16a1-0442-f50a-0c1509d4bb75",
+      "heroBackgroundVideo (BackgroundVideoWrapper, user-placed 2026-10-02)": {
+        "element": "f456468f-5e72-9a1a-0312-d169478feca9",
+        "asset": "6abff1e4985abe3ac57183a6",
+        "classes": "fk-video-media fk-absolute fk-inset-0 fk-w-full fk-h-full (fk-video-media added 2026-10-02: z-index 0, stacking-context fix)",
+        "styles (2026-10-02)": {
+          "fk-video-media": "e5930a92-b270-57dc-eab6-75027fb9733d",
+          ".fk-video-media.fk-absolute": "26744123-8983-89da-3d32-3af98de8a537",
+          ".fk-video-media.fk-absolute.fk-inset-0": "adc09858-3d46-8061-96a9-250b0f8ad890",
+          ".fk-video-media.fk-absolute.fk-inset-0.fk-w-full": "1da905bf-9283-68c3-08bd-2718285a371f",
+          ".fk-video-media.fk-absolute.fk-inset-0.fk-w-full.fk-h-full": "eaeeef8f-38c1-4ad6-5337-17d4c27a75cd"
+        }
+      }
     }
   }
 }
