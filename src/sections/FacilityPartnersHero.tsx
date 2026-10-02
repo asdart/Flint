@@ -44,7 +44,7 @@ export default function FacilityPartnersHero() {
             </div>
             <div className="fk-blur-reveal is-delay-2">
               <div className="fk-section-header-action">
-                <Button variant="secondary" link="#" />
+                <Button variant="secondary" link="#apply" />
               </div>
             </div>
           </div>

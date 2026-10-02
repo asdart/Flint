@@ -70,10 +70,10 @@ step that's in use is its own token. Add a row before using a new one.
 | `color-ink-60` | `rgba(15, 14, 23, 0.6)` | Muted supporting lines inside the Pricing message bubbles |
 | `color-ink-80` | `rgba(15, 14, 23, 0.8)` | **New 2026-10-01; on production 2026-10-01 (`variable-33ed6104-…`).** Stat labels in Stats Band Default (Figma `5543:1021`) |
 | `color-black-20` | `rgba(0, 0, 0, 0.2)` | **New 2026-10-01. On Webflow 2026-10-01 (Candidates Stage A, `variable-f1e628cb-f72a-5373-87ee-cd0783b654e5`).** The name tag on the video-call picture, How It Works row 2 (`fk-steps-call-name`) |
-| `color-success` | `#04804e` | **New 2026-10-01 (to sync as a variable).** Text and arrow of the savings chip, Facility partners "Reduced staffing costs" art (`fk-savings-chip`) |
-| `color-success-10` | `rgba(5, 175, 107, 0.1)` | **New 2026-10-01 (to sync as a variable).** Background of that chip |
-| `color-warning` | `#d6783e` | **New 2026-10-01 (to sync as a variable).** The "2 total" chip's text and dot, Facility partners retention art (`fk-retention-total`) |
-| `color-warning-light` | `#fdf5f0` | **New 2026-10-01 (to sync as a variable).** Background of that chip |
+| `color-success` | `#04804e` | **New 2026-10-01. On Webflow 2026-10-02 (Facility partners Stage A, `variable-ef12200e-80e3-22b6-c254-36906ee111ed`).** Text and arrow of the savings chip, Facility partners "Reduced staffing costs" art (`fk-savings-chip`) |
+| `color-success-10` | `rgba(5, 175, 107, 0.1)` | **New 2026-10-01. On Webflow 2026-10-02 (Facility partners Stage A, `variable-5f932cb2-26ff-1105-8812-ac134086ff4e`).** Background of that chip |
+| `color-warning` | `#d6783e` | **New 2026-10-01. On Webflow 2026-10-02 (Facility partners Stage A, `variable-86683ccf-8c95-3a23-464d-fe93f0d58828`).** The "2 total" chip's text and dot, Facility partners retention art (`fk-retention-total`) |
+| `color-warning-light` | `#fdf5f0` | **New 2026-10-01. On Webflow 2026-10-02 (Facility partners Stage A, `variable-4ac6c6c9-3381-55b3-18b9-3205c12633cc`).** Background of that chip |
 | `color-brand-10` | `rgba(68, 56, 109, 0.1)` | Focus ring around a focused input field (`fk-input-field:focus-within`), with a `color-brand` border |
 | `color-scrim` | `rgba(0, 0, 0, 0.8)` | Bottom of the gradient over the featured post image on mobile (`fk-featured-post-scrim`), fading to `transparent` |
 | `color-backdrop` | `rgba(21, 27, 51, 0.6)` | **New 2026-10-01; on production 2026-10-01 (`variable-c62a5d85-…`).** The modal's backdrop (`fk-modal`; Figma `5985:2964`: `#151b33` at 60%) |

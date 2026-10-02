@@ -2,7 +2,7 @@
 // Renders repo sections or components to static HTML for data_whtml_builder, so markup is never
 // scraped from the preview (no runtime state, no data-cursor-ref). Asset paths are swapped for the
 // hosted URLs in docs/webflow/webflow-ids.json → assets; a missing asset is an error.
-// Usage: node scripts/webflow-markup.mjs <src path…>   e.g. src/sections/Hero.tsx
+// Usage: node scripts/webflow-markup.mjs [--post=<slug>] [--keep-asset=<path,…>] <src path…>   e.g. src/sections/Hero.tsx
 // Prints JSON { "<path>": "<html>" }. Component instances (Button…) still render: empty their
 // slots before inserting, as in recipes.md → Build a page from the repo markup.
 import { readFileSync } from "node:fs";
@@ -14,6 +14,10 @@ import { createServer } from "vite";
 // `--post=<slug>` passes that post from src/content as the `post` prop (Article Hero, Article Body,
 // Related Posts, the Posts template's current item).
 const postSlug = (process.argv.find((a) => a.startsWith("--post=")) ?? "").slice("--post=".length);
+// `--keep-asset=/assets/facility/hero.mp4,…` leaves those paths as they are instead of failing: assets that
+// are never uploaded on purpose (the Facility partners hero video, which the user places as a native
+// Background Video in the Designer).
+const keepAssets = (process.argv.find((a) => a.startsWith("--keep-asset=")) ?? "").slice("--keep-asset=".length).split(",").filter(Boolean);
 const files = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 if (files.length === 0) {
   console.error("Usage: node scripts/webflow-markup.mjs [--post=<slug>] <src path…>");
@@ -42,6 +46,7 @@ try {
     // Imported icons (src/assets/icons/*.svg) are keyed without the leading slash, like their repo path.
     out[file] = html.replace(/<link rel="preload"[^>]*\/>/g, "").replace(/src="(\/(?:src\/)?assets\/[^"]+)"/g, (_, path) => {
       const asset = ids.assets[path.startsWith("/src/") ? path.slice(1) : path];
+      if (!asset && keepAssets.includes(path)) return `src="${path}"`;
       if (!asset) throw new Error(`No hosted asset for ${path} in webflow-ids.json`);
       return `src="${asset.url}"`;
     });

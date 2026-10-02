@@ -97,7 +97,7 @@ Proposed replacement row: Hero (Facility Partners), Logo Marquee, Stats Band (De
 - [ ] Close P-03 in `roadmap.md`: ModernFacility becomes Feature Grid `Benefits`; WhyFacilities deleted; update the components.md row and the Pages row.
 - [x] Feature Grid `Benefits` variant: 3 cards, 3 icons, legacy titles (user decision), built in the repo 2026-10-01.
 - [x] Stats Band `Spread` (was "Default untitled", 3 stats, brand-light, no rings, spread row) + `UI / Stat` Default, built 2026-10-01.
-- [x] Hero (Facility Partners): page-level markup with the legacy video, Nav Dark, Secondary "Apply now" (link TBD), built 2026-10-01.
+- [x] Hero (Facility Partners): page-level markup with the legacy video, Nav Dark, Secondary "Apply now" (link `#apply`, decided 2026-10-02), built 2026-10-01.
 - [x] Logo Marquee: placed as is, 2026-10-01.
 - [x] The three illustrated rows as page-level `FacilityValueProp` on the Candidates `fk-steps` rows (not a Media Split) with static final frames and `x-facility-illustrations` hooks, 2026-10-01. **Motion done 2026-10-01 (phase B):** `network`, `savings`, `retention` in their own script `x-facility-illustrations` (Motion, ported 1:1 from the legacy Framer components; separate from Candidates' `x-illustrations` for pagespeed), built and tested in the repo; install on Webflow pending.
 - [ ] Testimonials: decide native Slider vs. `ix-testimonials` variant; card variant "Text"; gather 15 photos and copy.
