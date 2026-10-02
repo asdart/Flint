@@ -8,7 +8,8 @@
  * the CSS: a slide is "current" when it carries the current class, so the script toggles that class,
  * reads the computed width, height, side margins, opacity and scale of every slide in both states,
  * and animates between them. Breakpoints, sizes and gaps stay in the classes; only the track's
- * translateX is computed (the current slide's centre goes to the viewport's centre).
+ * translateX is computed (the current slide's centre goes to the viewport's centre, or its left edge
+ * to the viewport's left edge with data-x-align="start").
  *
  * Markup contract (data attributes, all optional unless said):
  *   [data-x-carousel="spring|tween"]  root (required). spring = 1.4s spring, bounce .22 (Testimonials);
@@ -17,6 +18,9 @@
  *     data-x-current="is-center"      class that marks the current slide (default is-active)
  *     data-x-copies="3"               the set is repeated this many times in the track (a looping
  *                                     row); the middle copy is the real one. Default 1
+ *     data-x-align="start"            the current slide's left edge sits at the viewport's left edge
+ *                                     (a left-aligned row whose cards run off the right: Facility
+ *                                     partners; the viewport clips on the left). Default: centre
  *   [data-x-viewport]                 clipping area that receives swipe and hover pause (default: the track's parent)
  *   [data-x-track]                    required; its children are the slides, its first child's first child may be a card
  *   [data-x-dot]                      one button per slide (per set, with copies); holds a bar > fill
@@ -79,6 +83,7 @@ function setup(root: HTMLElement): Cleanup {
   const spring = root.dataset.xCarousel === "spring";
   const move = spring ? SPRING : TWEEN;
   const autoplay = Number(root.dataset.xAutoplay) || 0;
+  const start = root.dataset.xAlign === "start";
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   const cards = slides.map((slide) => slide.firstElementChild as HTMLElement | null);
   const cardFlag = (() => {
@@ -149,9 +154,10 @@ function setup(root: HTMLElement): Cleanup {
     slides.forEach((slide, i) => slide.toggleAttribute("aria-hidden", Math.floor(i / count) !== real));
   };
 
-  /** translateX that puts the centre of the slide at `index` under the viewport's centre (track at x = 0). */
+  /** translateX that puts the slide at `index` where the alignment says (track at x = 0): centre under the viewport's centre, or left edge on the viewport's left edge. */
   const trackX = (index: number) => {
     const view = viewport.getBoundingClientRect();
+    if (start) return view.left - slides[index].getBoundingClientRect().left;
     return view.left + view.width / 2 - centreOf(slides[index]);
   };
 
@@ -160,17 +166,28 @@ function setup(root: HTMLElement): Cleanup {
     playing = [];
   };
 
-  /** Slots to keep on each side of the current slide so a move never shows an empty edge. */
-  const margin = () => {
+  /**
+   * Slots to keep on each side of the current slide so a move never shows an empty edge. Centred: half
+   * the viewport each way. Start-aligned: one slot plus a spare to the left (the clipped edge), and as
+   * many to the right as are visible, which is up to the window's edge since the cards run off the viewport.
+   */
+  const margins = () => {
     const pitch = Math.abs(centreOf(slides[slides.length - 1]) - centreOf(slides[0])) / Math.max(slides.length - 1, 1);
-    return Math.ceil(viewport.getBoundingClientRect().width / 2 / Math.max(pitch, 1)) + 1;
+    const view = viewport.getBoundingClientRect();
+    if (start) {
+      const reach = Math.min(view.width, window.innerWidth - view.left);
+      return { before: 2, after: Math.ceil(reach / Math.max(pitch, 1)) + 1 };
+    }
+    const both = Math.ceil(view.width / 2 / Math.max(pitch, 1)) + 1;
+    return { before: both, after: both };
   };
 
   /** The same picture, whole copies away: keeps `from` and `to` inside the repeated set. */
   const shiftFor = (from: number, to: number) => {
     if (copies === 1) return 0;
-    const low = margin();
-    const high = slides.length - 1 - low;
+    const { before, after } = margins();
+    const low = before;
+    const high = slides.length - 1 - after;
     if (from >= low && from <= high && to >= low && to <= high) return 0;
     for (let candidate = mod(from, count); candidate < slides.length; candidate += count) {
       const target = candidate + (to - from);

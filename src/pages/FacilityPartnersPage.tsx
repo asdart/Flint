@@ -2,6 +2,7 @@ import Footer from "../components/global/Footer";
 import Nav from "../components/global/Nav";
 import { useInteractions } from "../ix/useInteractions";
 import FacilityPartnersHero from "../sections/FacilityPartnersHero";
+import FacilityTestimonials from "../sections/FacilityTestimonials";
 import FacilityValueProp from "../sections/FacilityValueProp";
 import FeatureGrid from "../sections/FeatureGrid";
 import LogoMarquee from "../sections/LogoMarquee";
@@ -13,7 +14,7 @@ const STATS = [
   { value: "100,000", label: "Vetted candidates" },
 ];
 
-// Facility partners page at /facility-partners (Figma 5543:1164). Testimonials and the Apply form are not built
+// Facility partners page at /facility-partners (Figma 5543:1164). The Apply form is not built
 // yet (phase A: sections up to the footer). The pre-contract version lives at /legacy/facility-partners
 // (src/pages/legacy/FacilityPartnersPage.tsx).
 export default function FacilityPartnersPage() {
@@ -28,6 +29,7 @@ export default function FacilityPartnersPage() {
         <StatsBand variant="spread" stats={STATS} />
         <FacilityValueProp />
         <FeatureGrid variant="benefits" />
+        <FacilityTestimonials />
       </main>
       <Footer />
     </div>

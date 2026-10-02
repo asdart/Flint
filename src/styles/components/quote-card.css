@@ -1,0 +1,75 @@
+/* fk-quote-card — UI / Quote Card (Figma 5899:3624), the text card of the Facility partners slider.
+   A shared component, so its look lives in these classes, not in utilities. The card is a flex column:
+   the quote at the top, the person block pinned to the bottom (space-between). 360 × 536 is the
+   card's own size (used by this card only). Tablet keeps it; phone (≤479, inferred: only desktop is drawn)
+   is the viewport width minus 56px (the 8px section gutters and the 20px container gutters, each side, plus
+   the 8px slide gap peeking) with the height following the quote, 440px at least. */
+
+.fk-quote-card {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 360px;
+  height: 536px;
+  padding: var(--space-8);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-white);
+  overflow: clip;
+}
+
+.fk-quote-card-text {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+  color: var(--color-ink);
+}
+
+.fk-quote-card-person {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* The 52px square photo, cropped from the 1024 × 1333 portrait. */
+.fk-quote-card-photo {
+  display: block;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.fk-quote-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.fk-quote-card-name {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+.fk-quote-card-role {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--color-subtle);
+}
+
+@media screen and (max-width: 479px) {
+  .fk-quote-card {
+    width: calc(100vw - var(--space-14));
+    height: auto;
+    min-height: 440px;
+  }
+}

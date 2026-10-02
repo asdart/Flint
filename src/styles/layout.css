@@ -137,6 +137,12 @@
   padding-inline: var(--space-5);
 }
 
+/* A container whose content box is the full container width (the gutters sit outside it): the
+   Facility partners slider starts its cards at the 1200px column's left edge, as in Figma. */
+.fk-container.is-bleed {
+  max-width: calc(var(--width-container) + 2 * var(--space-5));
+}
+
 /* Narrow content blocks sit inside a page container, so they don't add the gutter again. */
 .fk-container.is-md {
   max-width: var(--width-container-md);
