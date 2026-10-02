@@ -28,7 +28,7 @@ component, page and item is rebuilt from `src/` and the registries with the reci
 | P | **Production site**: access, then populate from scratch with everything built so far | Production | ☑ closed 2026-09-30 for Home and the Blog (Next steps 1); its open sub-items carry into phases 5–9 |
 | 3 | Global and UI components | Production | ◐ all built in the repo except the Apply Form's fields; Webflow has Home and Blog's |
 | 4 | Sections | Production | ◐ all built in the repo except Facility partners' Testimonials (text cards) and Apply Form; Webflow has Home and Blog's |
-| 5 | Static pages | Production | ◐ Home on Webflow; Candidates and About built in the repo; Facility partners built in the repo minus two sections |
+| 5 | Static pages | Production | ◐ Home on Webflow; Candidates and About built in the repo; Facility partners built in the repo minus two sections, **its draft page built on Webflow 2026-10-02 (sync Stage C: Nav Dark variant, Nav page links, Hero without the video, Logo Marquee, Stats Band, Value Prop, Feature Grid; Stage D next, the video is the user's Designer step)** |
 | 6 | Blog and CMS | Production | ◐ built on Webflow 2026-09-30; schema (P-14) and the staging checks open |
 | 7 | Motion and illustrations | Production | ◐ illustrations ported in the repo (D-36); P-07 closed (D-41); the remaining interactions open |
 | 8 | Custom-code exceptions | Production | ◐ `x-article-toc` and `x-carousel` (Home) live; the page scripts install with each page's sync |

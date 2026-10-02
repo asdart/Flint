@@ -20,7 +20,8 @@
     "Categories Template (/categories/{slug}, slug detail_categories)": "6abc6c8adc4bd2e2066e91ea",
     "Posts Template (/blog/{slug}, slug detail_blog)": "6abc6c9673c0a3345b7a94bd",
     "/about (draft)": "6abed61fbb91160db13da902",
-    "/candidates (draft)": "6abee855a6b6c496e11ca61d"
+    "/candidates (draft)": "6abee855a6b6c496e11ca61d",
+    "/facility-partners (draft)": "6abfecbb675c8491534c950c"
   },
   "components": {
     "UI / Button": {
@@ -51,7 +52,11 @@
     },
     "Global / Nav": {
       "id": "d411a8cc-2529-1e3e-b6aa-237ec7231143",
-      "props": {}
+      "props": {},
+      "variants": {
+        "Light": "base",
+        "Dark": "664f035a-61cf-0d26-ca17-3cfd801d6fa8"
+      }
     },
     "Global / Featured post": {
       "id": "4a57770e-f0a2-856c-9c05-60c32305f6cf",
@@ -1224,6 +1229,39 @@
         "d411a8cc-2529-1e3e-b6aa-237ec7231160"
       ],
       "images": "134 static images linked by script (assetId + explicit altText); element ids in the sync-log row only by section, read them with query_elements"
+    },
+    "/facility-partners page (draft, 2026-10-02)": {
+      "page": "6abfecbb675c8491534c950c",
+      "body": "6abfecbb675c8491534c9515",
+      "fk-page": "f5902b54-ff20-0a63-a978-2ccd575c24ee",
+      "main": "f5902b54-ff20-0a63-a978-2ccd575c24ed",
+      "Nav instance (Dark variant)": "edde4b97-de4e-4dcf-7404-57db9c7bcf05",
+      "Footer instance": "1a9dca5e-6104-5e59-8188-7ff233cf93d1",
+      "sections": {
+        "hero": "64957f11-e974-bbea-453e-3261007f91f3",
+        "logoMarquee (Section / Logo Marquee instance)": "a698b5a2-72f9-5117-1a80-50bebc4fe472",
+        "statsBand": "76e24a8c-f291-199d-0bcf-e4d612acafbc",
+        "facilityValueProp": "ff62d869-0b11-9c88-997a-dbc943722cce",
+        "featureGridBenefits": "94f9368a-2d87-450f-ed28-9d0ed19464d7"
+      },
+      "h1": "hero section, fk-heading-xl in .fk-blur-reveal (64957f11-e974-bbea-453e-3261007f91e9)",
+      "hero header action (Button slot)": "64957f11-e974-bbea-453e-3261007f91ee",
+      "Button instances": {
+        "hero": "ddd0801c-641d-b743-0f92-47dcfab6e1fc"
+      },
+      "statsRow": "76e24a8c-f291-199d-0bcf-e4d612acafb8",
+      "Stat instances (Default variant)": [
+        "152c3f52-1e92-9c5d-eb75-f8e374cf0883",
+        "0b0f166b-0329-e35a-11ce-125166434f1a",
+        "c63f6f01-6444-23fa-3e25-426c1f097d4c"
+      ],
+      "valueProp panel content": "ff62d869-0b11-9c88-997a-dbc943722ccb",
+      "valueProp rows (network, savings, retention)": [
+        "158239c2-7b0d-a64f-9751-7a7001a025de",
+        "856210ce-e333-114f-bf85-ec97d3823b35",
+        "ca374252-1243-a1c6-261d-e6139dce92f9"
+      ],
+      "Nav definition: white wordmark image (fk-nav-logo-white)": "0e007e53-16a1-0442-f50a-0c1509d4bb75"
     }
   }
 }
