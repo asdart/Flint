@@ -969,6 +969,11 @@
     "/assets/how-it-works/retention-facility.webp": {
       "id": "6abfe9f95190bb276143c494",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abfe9f95190bb276143c494_retention-facility.webp"
+    },
+    "/assets/facility/hero.mp4": {
+      "id": "6abff1e4985abe3ac57183a6",
+      "url": "https://s3.amazonaws.com/webflow-prod-assets/6ab9ba4aeffb3329202448ee/6abff1e4985abe3ac57183a6_hero.mp4",
+      "note": "Uploaded by the user through the Background Video element (2026-10-02); not an Image asset"
     }
   },
   "variableCollections": {
