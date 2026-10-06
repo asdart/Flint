@@ -1,3 +1,4 @@
+import Modal from "../components/ui/Modal";
 import Button from "../components/ui/Button";
 
 type WebinarProps = {
@@ -20,7 +21,7 @@ export default function Webinar({
   ),
   body = "Join our free Q&A webinar",
   buttonLabel = "Reserve seat",
-  buttonLink = "#reserve-seat",
+  buttonLink = "#webinar-registration",
 }: WebinarProps) {
   return (
     <section className="fk-section">
@@ -71,5 +72,28 @@ export default function Webinar({
         </div>
       </div>
     </section>
+  );
+}
+
+/** The registration modal (UI / Modal, `size="compact"`, Figma node 5985:3080): opened by the Reserve seat link
+ * (`#webinar-registration`, exception x-modal). `fk-modal-embed` stands for Webflow's Embed element holding the
+ * Livestorm iframe (exception x-webinar-embed). Render it last in `.fk-page`, after the Footer: revealed
+ * sections are transformed and would become a fixed element's containing block. */
+export function WebinarModal() {
+  return (
+    <Modal id="webinar-registration" labelledBy="webinar-registration-title" size="compact">
+      <p id="webinar-registration-title" className="fk-heading-md is-center">
+        Join our free Q&amp;A webinar
+      </p>
+      <div className="fk-modal-embed">
+        <iframe
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          src="https://app.livestorm.co/p/ee1df681-411c-4d3f-8900-e3dfd08246eb/form"
+          title="Finding Green Card Sponsored Healthcare Roles with Flint | Q&A Session"
+        ></iframe>
+      </div>
+    </Modal>
   );
 }

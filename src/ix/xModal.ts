@@ -8,6 +8,8 @@
  *                             aria-labelledby). The script toggles `is-modal-open` on it
  *   [data-x-modal-open="<id>"] any button or `<a href="#<id>">` that opens it. The script sets
  *                             aria-haspopup, aria-controls and aria-expanded on it
+ *   a[href="#<id>"]           also an opener, with no attribute, when `#<id>` is a [data-x-modal] (a Webflow
+ *                             Button instance sets its link but can't take a custom attribute)
  *   [data-x-modal-close]      anything inside a modal that closes it. A click on the root itself
  *                             (the backdrop, outside the panel) closes too
  *
@@ -25,6 +27,9 @@
 
 const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 const OPEN = "[data-x-modal-open]";
+const LINK = 'a[href^="#"]';
+const idOf = (el: HTMLElement) => el.dataset.xModalOpen ?? el.getAttribute("href")?.slice(1) ?? "";
+const modalOf = (id: string) => document.querySelector<HTMLElement>(`[data-x-modal="${id}"]`);
 
 export function xModal(): () => void {
   const html = document.documentElement;
@@ -54,9 +59,10 @@ export function xModal(): () => void {
 
   const onClick = (event: MouseEvent) => {
     const target = event.target as Element;
-    const opener = target.closest<HTMLElement>(OPEN);
+    const link = target.closest<HTMLElement>(LINK);
+    const opener = target.closest<HTMLElement>(OPEN) || (link && modalOf(idOf(link)) ? link : null);
     if (opener) {
-      const next = document.querySelector<HTMLElement>(`[data-x-modal="${opener.dataset.xModalOpen}"]`);
+      const next = modalOf(idOf(opener));
       if (!next) return;
       event.preventDefault();
       if (modal) return;
@@ -65,7 +71,7 @@ export function xModal(): () => void {
       // photo next to its "Read more") hands that over to a keyboard-reachable trigger of the same modal.
       trigger =
         opener.tabIndex < 0
-          ? Array.from(document.querySelectorAll<HTMLElement>(`[data-x-modal-open="${opener.dataset.xModalOpen}"]`)).find((el) => el.tabIndex >= 0) || opener
+          ? Array.from(document.querySelectorAll<HTMLElement>(`${OPEN},${LINK}`)).filter((el) => idOf(el) === idOf(opener)).find((el) => el.tabIndex >= 0) || opener
           : opener;
       lock(true);
       toggle(next, true);
@@ -92,9 +98,10 @@ export function xModal(): () => void {
     }
   };
 
-  document.querySelectorAll<HTMLElement>(OPEN).forEach((element) => {
+  document.querySelectorAll<HTMLElement>(`${OPEN},${LINK}`).forEach((element) => {
+    if (!element.dataset.xModalOpen && !modalOf(idOf(element))) return;
     element.setAttribute("aria-haspopup", "dialog");
-    element.setAttribute("aria-controls", element.dataset.xModalOpen || "");
+    element.setAttribute("aria-controls", idOf(element));
     element.setAttribute("aria-expanded", "false");
   });
   document.addEventListener("click", onClick);

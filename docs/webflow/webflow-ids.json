@@ -271,9 +271,11 @@
     "xmodal": {
       "id": "xmodal",
       "displayName": "xModal",
-      "version": "1.0.0",
-      "appliedTo": "/about 6abed61fbb91160db13da902, footer",
-      "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6abedbac239e30a8be33112a%2Fxmodal-1.0.0.js",
+      "version": "1.1.0",
+      "appliedTo": "/ Home 6ab9ba4ceffb3329202448f2, footer (1.1.0, 2026-10-06); /about 6abed61fbb91160db13da902, footer stays on 1.0.0 on purpose (page-level by user decision 2026-10-06)",
+      "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6ac5577f75f9ec74452850d7%2Fxmodal-1.1.0.js",
+      "hostedLocation1_0_0": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6abedbac239e30a8be33112a%2Fxmodal-1.0.0.js",
+      "note": "Registering the same displayName with a new version reuses the id (new hosted file per version). 1787 characters, byte-identical to the script body of docs/webflow/custom-code/x-modal.html",
       "source": "docs/webflow/custom-code/x-modal.html (script body)"
     }
   },
@@ -282,6 +284,7 @@
     "postsTemplateHead": "<style> x-related-empty + x-article-body on Posts template 6abc6c9673c0a3345b7a94bd (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/post-template-head-style.html",
     "blogPaginationHead": "<style> x-blog-pagination on /blog 6abc95f3d5879b11ae14b088 and Categories template 6abc6c8adc4bd2e2066e91ea (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/blog-pagination.html",
     "homeFooter": "<script type=module> x-carousel (Motion 13.4.6 from jsDelivr) as Home page footer freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-01, published and tested by the user 2026-10-01); source docs/webflow/custom-code/x-carousel.html (script block only). Testimonial Card prop Flag af54577d-2273-6579-d6e2-409db1057a4c (image asset id) set on the 21 instances in Testimonials",
+    "homeHead": "<style> x-modal (reduced motion) as Home page head freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-06, was empty, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
     "aboutHead": "<style> x-modal (reduced motion) as About page head freeform code 6abed61fbb91160db13da902 (installed 2026-10-01, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
     "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)",
     "facilityPartners": "Page 6abfecbb675c8491534c950c: head <style> x-nav-dark (source docs/webflow/custom-code/x-nav-dark-head.html, style only); footer: two <script type=module> blocks, x-facility-illustrations (source x-facility-illustrations.html, script block only) then x-carousel (source x-carousel.html, script block only, 7,742 characters with the tags; installed 2026-10-05, replaced 2026-10-06 with the middle-copy start, read back). x-video-reduced removed from the footer 2026-10-02 (user-approved retirement: webflow.js pauses videos under reduced motion itself); needs a publish"
@@ -1324,6 +1327,17 @@
         ],
         "note": "Instances 1, 6, 11 keep the component defaults (card 1); the other 12 override Quote, Name, Role and, where the portrait differs from the default, Image. Component Image element f3524dda-09b6-c248-a1b5-f3d1fd53d199 (assetId bound to Image, altText bound to Name)."
       }
+    },
+    "/ webinar modal (Home, 2026-10-06)": {
+      "modal (last child of fk-page, after Footer)": "e4f31c84-74e9-e7b1-eb73-15e427fcbfc1",
+      "panel (fk-modal-panel is-compact)": "35758c1f-dd42-bd39-17e9-73377fd7984a",
+      "close button": "9253766f-df8f-e6f2-0637-6d05c923f629",
+      "close icon (Image, x-mark.svg, alt empty)": "642ac83c-3b1f-9f3b-aaf2-330ffd9abd44",
+      "content (fk-modal-content is-compact)": "aa296122-1215-1aad-0bd5-367919e80c6a",
+      "title (p#webinar-registration-title)": "e9d99cb8-e4a3-5ba7-dbae-1899a83dbf3e",
+      "HTML Embed (fk-modal-embed, Livestorm iframe)": "5003661b-0559-6cfd-d1c0-c8f44c4ef378",
+      "Reserve seat Button instance (link #webinar-registration)": "99142133-7c90-5b82-51bb-a01c216fce6f",
+      "deleted 2026-10-06 (user approved)": "f3bd56cd-d70e-c68a-285f-e617b75bd42e (empty fk-modal div from a failed builder call)"
     },
     "/privacy-policy page (draft, 2026-10-06)": {
       "page": "6ac53f98c016f2675f9a7d45",

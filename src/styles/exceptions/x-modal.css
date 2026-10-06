@@ -1,6 +1,5 @@
 /* Exception x-modal (CSS part) — docs/webflow/interactions.md → Custom-code exceptions.
-   Page custom CSS (About page head code only for now; if another page starts using it, move it to site-wide
-   head code), never pushed as classes: a class can't hold a `prefers-reduced-motion` media
+   Page head custom CSS (About and Home; a third page moves it to the site head), never pushed as classes: a class can't hold a `prefers-reduced-motion` media
    query. Under reduced motion the modal opens and closes at once (no fade, no rise). The visibility
    delay goes too, so a closed modal is hidden immediately. `:root` + `[class]` beat the classes'
    own `transition` (and the `is-modal-open` combo's). */

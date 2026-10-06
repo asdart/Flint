@@ -12,7 +12,7 @@ import Pricing from "../sections/Pricing";
 import RoleGrid from "../sections/RoleGrid";
 import Testimonials from "../sections/Testimonials";
 import TwoWays from "../sections/TwoWays";
-import Webinar from "../sections/Webinar";
+import Webinar, { WebinarModal } from "../sections/Webinar";
 
 // Home page at / — the homepage built from contract sections (roadmap phase 2b).
 export default function HomePage() {
@@ -36,6 +36,7 @@ export default function HomePage() {
         <Cta />
       </main>
       <Footer />
+      <WebinarModal />
     </div>
   );
 }

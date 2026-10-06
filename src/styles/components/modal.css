@@ -71,6 +71,26 @@
   overscroll-behavior: contain;
 }
 
+/* UI / Modal size compact (Figma `5985:3080`): a 600px card with 40px padding. Each part has its own combo. */
+.fk-modal-panel.is-compact {
+  max-width: 600px;
+}
+
+.fk-modal-content.is-compact {
+  padding: var(--space-10);
+}
+
+/* The Livestorm iframe's box (Webflow Embed element, exception x-webinar-embed). The iframe is height 100%,
+   so this height is its height (`flex: none`: the content column must not shrink it). Local raw values, measured from the
+   live form: 480px fits the two-field-per-row layout (about 450px), 700px the narrow layout Livestorm switches to
+   below about 480px of iframe width (a viewport of 479px or less). */
+.fk-modal-embed {
+  display: block;
+  flex: none;
+  width: 100%;
+  height: 480px;
+}
+
 .fk-modal-close {
   position: absolute;
   top: var(--space-4);
@@ -111,10 +131,22 @@
   .fk-modal-content {
     padding: var(--space-14) var(--space-8) var(--space-8);
   }
+
+  .fk-modal-content.is-compact {
+    padding: var(--space-14) var(--space-6) var(--space-6);
+  }
 }
 
 @media screen and (max-width: 479px) {
   .fk-modal-content {
     padding: var(--space-14) var(--space-6) var(--space-6);
+  }
+
+  .fk-modal-content.is-compact {
+    padding: var(--space-14) var(--space-4) var(--space-4);
+  }
+
+  .fk-modal-embed {
+    height: 700px;
   }
 }
