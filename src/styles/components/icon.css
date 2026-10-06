@@ -23,8 +23,3 @@
   width: 16px;
   height: 16px;
 }
-
-/* Added by interactions (ix-card-hover): the icon turns white. */
-.fk-icon.is-inverse {
-  filter: brightness(0) invert(1);
-}

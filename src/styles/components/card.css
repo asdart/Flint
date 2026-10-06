@@ -1,22 +1,32 @@
-/* fk-card — docs/webflow/classes.md → Component classes. Hover colors are ix-card-hover, which
-   tweens `.fk-card` background, `.fk-card-title` / `.fk-card-text` color (and text opacity) and
-   `.fk-icon`: those properties, and the classes themselves, stay put — layout and typography that
-   the hover doesn't touch moved to utilities/typography classes in the markup. */
+/* fk-card — docs/webflow/classes.md → Component classes. The hover is CSS (decision D-46): the card's
+   background is its own Hover state; the title, text and icon change through the descendant rules of
+   exception x-card-hover (src/styles/exceptions/x-card-hover.css). The transitions live here, on the
+   classes, so both directions ease the same way. Layout and typography the hover doesn't touch are
+   utilities/typography classes in the markup. */
 
 .fk-card {
   padding: var(--space-6);
   border-radius: var(--radius-lg-plus);
   background-color: var(--color-white);
+  transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fk-card:hover {
+  background-color: var(--color-brand);
 }
 
 .fk-card-title {
   color: var(--color-ink);
   opacity: 0.8;
+  transition: color 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fk-card-text {
   color: var(--color-brand);
   opacity: 0.8;
+  transition:
+    color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fk-card-text.is-subtle {

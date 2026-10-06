@@ -228,7 +228,6 @@
     "ix-blur-reveal": "i-74d70492",
     "ix-reveal": "i-331fb235",
     "ix-reveal-stagger": "i-502321bb",
-    "ix-card-hover": "i-f1a03ed6",
     "ix-nav-pill": "i-47aaf02a",
     "ix-nav-pill-rest": "i-df9f00d6",
     "ix-nav-menu": "i-c2d05f66",
@@ -240,6 +239,7 @@
     "ix-hero-arc": "i-dda772fb",
     "ix-faq-toggle": "i-a76b882f",
     "ix-count-in": "i-4631e2ba",
+    "_deleted_2026-10-06 (D-46, replaced by x-card-hover)": "i-f1a03ed6 ix-card-hover; combo style 6e9dffcd-0304-8bd0-5b50-a7ee074023c9 .fk-icon.is-inverse (deleted 2026-10-06, unused; the `.fk-how-copy.is-inverse` combo stays)",
     "_deleted_2026-10-01 (replaced by x-carousel)": "i-92770673 ix-how-carousel, i-d27f08a0 ix-how-carousel-phone, i-1d31deaf ix-testimonials, i-14706c57 ix-testimonial-hover"
   },
   "scripts": {

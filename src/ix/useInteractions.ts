@@ -2,7 +2,6 @@ import { useLayoutEffect } from "react";
 import { articleToc } from "./articleToc";
 import { blogPagination } from "./blogPagination";
 import { blurReveal } from "./blurReveal";
-import { cardHover } from "./cardHover";
 import { dropdown } from "./dropdown";
 import { faqToggle } from "./faqToggle";
 import { form } from "./form";
@@ -135,7 +134,6 @@ export function useInteractions() {
       blurReveal(),
       revealStagger(),
       marquee(),
-      cardHover(),
       twoWays(),
       ticker(),
       heroArc(),

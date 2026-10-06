@@ -12,7 +12,8 @@ type ServiceCardProps = {
 /**
  * Service card markup (fk-card). Repo-side helper only, like CarouselDots: in Webflow this is not a
  * component but plain divs and classes written into each section (decided 2026-09-29). The Subtle
- * look is the `is-subtle` combo on the text. Hover motion is `ix-card-hover`.
+ * look is the `is-subtle` combo on the text. The hover is CSS: `fk-card`'s Hover state plus the
+ * `x-card-hover` exception (D-46).
  */
 export default function ServiceCard({ icon, title, body, variant = "default", iconSize = "lg" }: ServiceCardProps) {
   return (

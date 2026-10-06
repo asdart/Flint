@@ -1,0 +1,20 @@
+/* Exception x-card-hover — docs/webflow/interactions.md → Custom-code exceptions (decision D-46).
+   Site custom CSS, never pushed as classes. A Webflow class state only styles the hovered element,
+   and the style API can't create descendant selectors, so "card hovered → title, text and icon
+   change" lives here. The card's own background is the native Hover state of `fk-card` and the
+   transitions are on the classes (card.css, icon.css). Replaces the IX3 interaction ix-card-hover,
+   whose split enter / leave timelines could get stuck on a quick in-and-out. Reduced motion plays
+   the same transition: a hover is user-initiated (D-30). */
+
+.fk-card:hover .fk-card-title {
+  color: var(--color-white);
+}
+
+.fk-card:hover .fk-card-text {
+  color: var(--color-white);
+  opacity: 0.6;
+}
+
+.fk-card:hover .fk-icon {
+  filter: brightness(0) invert(1);
+}
