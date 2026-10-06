@@ -48,8 +48,8 @@ const RING = [...QUOTES, ...QUOTES, ...QUOTES];
 /**
  * Section / Facility Testimonials (Figma 5543:1321 > 5543:1322): a left-aligned row of Quote Cards on a brand-light
  * panel, one dot per card. Page-level markup (D-17, one page uses it). No visible title, so the section has an
- * aria-label. Motion is `x-carousel` (tween, autoplay 5s, `data-x-align="start"`): the viewport starts at the
- * container's left edge and the cards run off the panel's right edge (`classes.md` → `fk-quotes`).
+ * aria-label. Motion is `x-carousel` (tween, autoplay 5s, `data-x-align="start"`): the track starts at the
+ * container's left edge and the cards run off the panel's right edge.
  */
 export default function FacilityTestimonials() {
   return (
@@ -57,14 +57,12 @@ export default function FacilityTestimonials() {
       <div className="fk-panel fk-bg-brand-light" data-x-carousel="tween" data-x-autoplay="5000" data-x-copies="3" data-x-align="start">
         <div className="fk-panel-content">
           <div className="fk-container is-bleed">
-            <div className="fk-quotes-viewport" data-x-viewport>
-              <div className="fk-flex fk-gap-2" data-x-track>
-                {RING.map((quote, index) => (
-                  <div key={`${quote.name}-${index}`} className="fk-flex fk-shrink-0" aria-hidden={index >= QUOTES.length || undefined}>
-                    <QuoteCard {...quote} />
-                  </div>
-                ))}
-              </div>
+            <div className="fk-flex fk-gap-2" data-x-track>
+              {RING.map((quote, index) => (
+                <div key={`${quote.name}-${index}`} className="fk-flex fk-shrink-0" aria-hidden={index >= QUOTES.length || undefined}>
+                  <QuoteCard {...quote} />
+                </div>
+              ))}
             </div>
           </div>
           <CarouselDots count={QUOTES.length} label={(index) => `Show testimonial ${index + 1}`} />
