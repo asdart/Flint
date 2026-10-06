@@ -24,7 +24,7 @@ const NOTICES: Notice[] = [
   {
     name: "Yuki Tanaka",
     avatar: "/assets/home/how-avatar-jonathan.png",
-    flag: "/assets/how-flint-works/send-flag-cn.svg",
+    flag: "/assets/flags/cn.svg",
     avatarBg: "#f1e0d8",
     objectPosition: "center 8%",
     scale: 0.75,
@@ -34,7 +34,7 @@ const NOTICES: Notice[] = [
   {
     name: "Amara Okafor",
     avatar: "/assets/how-flint-works/send-amara.png",
-    flag: "/assets/how-flint-works/send-flag-ph.svg",
+    flag: "/assets/flags/ph.svg",
     avatarBg: "#f1e0d8",
     objectPosition: "center 18%",
     scale: 0.833,
@@ -44,7 +44,7 @@ const NOTICES: Notice[] = [
   {
     name: "Raj Patel",
     avatar: "/assets/how-flint-works/send-raj.png",
-    flag: "/assets/how-flint-works/send-flag-in.svg",
+    flag: "/assets/flags/in.svg",
     avatarBg: "#fee0db",
     objectPosition: "center 18%",
     scale: 0.917,
@@ -54,7 +54,7 @@ const NOTICES: Notice[] = [
   {
     name: "Kwame Asante",
     avatar: "/assets/how-flint-works/send-kwame.png",
-    flag: "/assets/how-flint-works/send-flag-ng.svg",
+    flag: "/assets/flags/ng.svg",
     avatarBg: "#fee0db",
     crop: { top: 3, left: -17, width: 74, height: 74 },
     scale: 1,

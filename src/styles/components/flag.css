@@ -11,3 +11,11 @@
   width: 32px;
   height: 32px;
 }
+
+/* `is-ring` draws the white ring (1px, inset, as the retired send-flag-* images had it) on a flag that
+   sits over a photo, so one flag file serves every size. */
+.fk-flag.is-ring {
+  border-radius: 50%;
+  outline: 1px solid var(--color-white);
+  outline-offset: -1px;
+}

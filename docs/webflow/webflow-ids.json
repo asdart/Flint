@@ -399,6 +399,14 @@
       "id": "6abbebd510f8c54b2ab12917",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd510f8c54b2ab12917_country-flag.svg"
     },
+    "/assets/flags/cn.svg": {
+      "id": "6ac461ef1aa08d2a5a264eaf",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac461ef1aa08d2a5a264eaf_cn.svg"
+    },
+    "/assets/flags/in.svg": {
+      "id": "6ac461ef0d3a9de974edc643",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac461ef0d3a9de974edc643_in.svg"
+    },
     "/assets/flags/et.svg": {
       "id": "6abbebd730aee66eee7557ab",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd730aee66eee7557ab_et.svg"
@@ -747,10 +755,6 @@
       "id": "6abee1d536ebf56b06fa560e",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d536ebf56b06fa560e_send-yuki.webp"
     },
-    "/assets/how-flint-works/send-flag-cn.svg": {
-      "id": "6abee1d52a13525d675c6318",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d52a13525d675c6318_send-flag-cn.svg"
-    },
     "/assets/how-flint-works/ic-send.svg": {
       "id": "6abee1d61b26f7d2f4e28b34",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d61b26f7d2f4e28b34_ic-send.svg"
@@ -759,25 +763,13 @@
       "id": "6abee1d63646e0746d0a41cd",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d63646e0746d0a41cd_send-amara.webp"
     },
-    "/assets/how-flint-works/send-flag-ph.svg": {
-      "id": "6abee1d69e4fc44604e6fb74",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d69e4fc44604e6fb74_send-flag-ph.svg"
-    },
     "/assets/candidates/steps/send-raj.webp": {
       "id": "6abee1d65fca661d071cdb46",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d65fca661d071cdb46_send-raj.webp"
     },
-    "/assets/how-flint-works/send-flag-in.svg": {
-      "id": "6abee1d672a47e3be02e2da0",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d672a47e3be02e2da0_send-flag-in.svg"
-    },
     "/assets/candidates/steps/send-kwame.webp": {
       "id": "6abee1d681604143664f605d",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d681604143664f605d_send-kwame.webp"
-    },
-    "/assets/how-flint-works/send-flag-ng.svg": {
-      "id": "6abee1d681604143664f6072",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d681604143664f6072_send-flag-ng.svg"
     },
     "/assets/candidates/steps/call-main.webp": {
       "id": "6abee1d681604143664f6087",

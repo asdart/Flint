@@ -6,7 +6,7 @@ const NOTICES = [
     name: "Yuki Tanaka",
     image: "/assets/candidates/steps/send-yuki.webp",
     size: [240, 320],
-    flag: "/assets/how-flint-works/send-flag-cn.svg",
+    flag: "/assets/flags/cn.svg",
     bg: "fk-bg-sand-100",
     crop: "is-top",
     position: "is-n1",
@@ -15,7 +15,7 @@ const NOTICES = [
     name: "Amara Okafor",
     image: "/assets/candidates/steps/send-amara.webp",
     size: [200, 200],
-    flag: "/assets/how-flint-works/send-flag-ph.svg",
+    flag: "/assets/flags/ph.svg",
     bg: "fk-bg-sand-100",
     crop: "",
     position: "is-n2",
@@ -24,7 +24,7 @@ const NOTICES = [
     name: "Raj Patel",
     image: "/assets/candidates/steps/send-raj.webp",
     size: [200, 200],
-    flag: "/assets/how-flint-works/send-flag-in.svg",
+    flag: "/assets/flags/in.svg",
     bg: "fk-bg-peach-100",
     crop: "",
     position: "is-n3",
@@ -33,7 +33,7 @@ const NOTICES = [
     name: "Kwame Asante",
     image: "/assets/candidates/steps/send-kwame.webp",
     size: [240, 300],
-    flag: "/assets/how-flint-works/send-flag-ng.svg",
+    flag: "/assets/flags/ng.svg",
     bg: "fk-bg-peach-100",
     crop: "is-face",
     position: "is-n4",
@@ -142,7 +142,7 @@ export default function CandidatesHowItWorks() {
                               loading="lazy"
                             />
                           </div>
-                          <img className="fk-steps-notice-flag fk-absolute fk-block" src={notice.flag} alt="" width={12} height={12} loading="lazy" />
+                          <img className="fk-flag is-ring fk-steps-notice-flag fk-absolute" src={notice.flag} alt="" width={12} height={12} loading="lazy" />
                         </div>
                         <div className="fk-steps-notice-text fk-flex fk-flex-col fk-justify-center fk-min-w-0">
                           <p className="fk-text-sm fk-color-ink">{notice.name}</p>
