@@ -8,13 +8,14 @@ build.
 > code a 1:1 map of the Webflow site: tokens, class naming, components, CMS, interactions, and how
 > changes are pushed with the Webflow MCP.
 
-## Stack (current, legacy)
+## Stack
 
 - [Vite](https://vite.dev) + React 19 + TypeScript + React Router
-- [Tailwind CSS v4](https://tailwindcss.com) (tokens in `src/index.css`) — being replaced by the
-  class system in `docs/webflow/classes.md`
-- [Framer Motion](https://motion.dev) — being replaced by Webflow Interactions (`docs/webflow/interactions.md`)
-- [Matter.js](https://brm.io/matter-js/) — physics avatar gallery in the CTA (a listed custom-code exception)
+- Plain CSS in `src/styles/`, mirroring the Webflow variables, tag styles and classes
+  (`docs/webflow/tokens.md`, `classes.md`)
+- Interactions: a local preview runtime in `src/ix/` for the Webflow Interactions
+  (`docs/webflow/interactions.md`); [Motion](https://motion.dev) only inside the custom-code scripts
+  built by `scripts/build-x-*.mjs`
 - Fonts: SN Pro (body) and STIX Two Text (headings) via Fontsource
 
 ## Getting started
@@ -41,26 +42,19 @@ node scripts/webflow-style-actions.mjs src/styles/layout.css --only fk-panel  # 
 | Route | Page |
 | --- | --- |
 | `/` | Home (`src/pages/HomePage.tsx`, on the contract) |
-| `/legacy` | Legacy home (`src/pages/legacy/HomePage.tsx`, until it is retired) |
 | `/candidates` | Candidates |
 | `/facility-partners` | Facility partners |
 | `/about` | About |
 | `/blog` | Blog index |
+| `/categories/:slug` | Blog category |
 | `/blog/:slug` | Blog post |
 | `/style-guide` | Style guide (QA page, not in the nav) |
 
 ## Structure
 
-Current:
-
-- `src/pages/` — page composition (`legacy/` holds the pre-contract pages until they are migrated)
-- `src/sections/` — page sections (`blog/`, `facilities/`, `facility-partners/` subfolders)
-- `src/components/` — shared pieces, illustrations, nav
-- `src/sections/blog/posts.ts`, `featuredArticle.ts` — hardcoded blog content (future CMS seed)
-- `public/assets/` — images and icons exported from Figma
-
-The target structure (`styles/`, `components/global|ui/`, `sections/`, `content/`, `ix/`) is
-defined in [`AGENTS.md` §6](AGENTS.md#6-target-repository-structure).
+`src/styles/`, `components/global|ui/`, `sections/`, `content/` (CMS seed), `ix/`, `lib/` and
+`pages/`, as defined in [`AGENTS.md` §6](AGENTS.md#6-target-repository-structure). Images and icons
+exported from Figma are in `public/assets/`.
 
 ## Webflow migration docs
 

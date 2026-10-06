@@ -1,4 +1,4 @@
-/* Contract styles, imported after the legacy src/index.css. Order mirrors the Webflow layers. */
+/* Contract styles. Order mirrors the Webflow layers. */
 @import "./tokens.css";
 @import "./base.css";
 @import "./webflow-base.css";

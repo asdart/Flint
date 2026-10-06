@@ -17,9 +17,9 @@ const STATS = [
   { value: "100,000", suffix: "+", label: "Vetted candidates" },
 ];
 
-// About page at /about (Figma 5805:3949, plan docs/webflow/plans/about.md). The pre-contract version lives at
-// /legacy/about (src/pages/legacy/AboutPage.tsx). The founders' modals are rendered after the footer: a modal is
-// position: fixed and must not sit inside a section that animates a transform.
+// About page at /about (Figma 5805:3949, plan docs/webflow/plans/about.md).
+// The founders' modals are rendered after the footer: a modal is position: fixed and must not sit
+// inside a section that animates a transform.
 export default function AboutPage() {
   useInteractions();
 

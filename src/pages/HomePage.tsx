@@ -14,8 +14,7 @@ import Testimonials from "../sections/Testimonials";
 import TwoWays from "../sections/TwoWays";
 import Webinar from "../sections/Webinar";
 
-// Home page at / — the homepage built from contract sections (roadmap phase 2b). The pre-contract
-// version lives at /legacy (src/pages/legacy/HomePage.tsx).
+// Home page at / — the homepage built from contract sections (roadmap phase 2b).
 export default function HomePage() {
   useInteractions();
 

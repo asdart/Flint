@@ -14,9 +14,8 @@ const STATS = [
   { value: "100,000", label: "Vetted candidates" },
 ];
 
-// Facility partners page at /facility-partners (Figma 5543:1164). The Apply form is not built
-// yet (phase A: sections up to the footer). The pre-contract version lives at /legacy/facility-partners
-// (src/pages/legacy/FacilityPartnersPage.tsx).
+// Facility partners page at /facility-partners (Figma 5543:1164). No Apply form section (user, 2026-10-06):
+// the hero button links the external facility application.
 export default function FacilityPartnersPage() {
   useInteractions();
 

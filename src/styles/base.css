@@ -1,9 +1,10 @@
 /*
  * Webflow tag styles — mirrors docs/webflow/classes.md → Tag styles.
  *
- * Transition scope: every selector is wrapped in :where(.fk-page) so these defaults don't restyle
- * legacy Tailwind pages. :where() keeps tag-level specificity. In Webflow they are plain, global
- * tag styles, and `.fk-page` is the class on Body. Drop the wrapper once no page is legacy.
+ * Every selector is wrapped in :where(.fk-page): the sync scripts (webflow-style-actions.mjs --tags,
+ * webflow-diff.mjs) read that wrapper as the marker of a tag style, and :where() adds no specificity.
+ * In Webflow they are plain, global tag styles. Webflow's own element base under them is mirrored,
+ * preview only, in webflow-base.css.
  */
 
 :where(.fk-page) {

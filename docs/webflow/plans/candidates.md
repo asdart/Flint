@@ -126,4 +126,4 @@ Note: Webflow uploads of these still follow the project's asset step (`webflow-i
 8. Closing CTA: marquee or static fan? Six visible tiles + edges cropped suggests a wide row; provide the final tile list (names, flags; "Chrismene" flag is unclear).
 9. The hidden old CTA (`5543:1085`) and hidden hero background (`5543:918`): delete confirmed?
 10. FAQ: first item open by default on load or only a design state?
-11. Is the "Apply now" target the shared `#apply` anchor as on Home, or a form on another page (`Section / Apply Form` is legacy on Facility partners)?
+11. Is the "Apply now" target the shared `#apply` anchor as on Home, or a form on another page? **Answered 2026-10-05:** `https://web.withflint.com/apply` (no Apply Form anywhere, D-47).

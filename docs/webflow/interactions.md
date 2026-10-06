@@ -52,7 +52,8 @@
 Easing and durations reference `tokens.md` → Motion.
 
 **Status values:** `migrated` = built to the contract in the repo (the preview runtime in `src/ix/`
-emulates it) · `legacy` = exists only in pre-contract code.
+emulates it) · `dropped` = not built, reason in the row. The **Replaces (legacy)** column names
+pre-contract code deleted on 2026-10-06 (provenance only).
 
 | Interaction | Trigger | Target | Animation | Replaces (legacy) | Status |
 | --- | --- | --- | --- | --- | --- |
@@ -64,7 +65,7 @@ emulates it) · `legacy` = exists only in pre-contract code.
 | `ix-nav-pill-rest` | Same trigger, `leaveBack: restart`; reduced motion `dont-animate` | `.fk-nav` | Remove `is-pill` | `components/SiteNav.tsx` | migrated |
 | `ix-nav-menu` | Click `.fk-nav-toggle`, control `restart` | `.fk-nav-menu`, html, body | Add `is-menu-open`; add `fk-nav-lock` (`overflow: hidden`) to html and body (preview mode and iOS Safari scroll through html). No reduced-motion condition | `SiteNav.tsx` menu state | migrated |
 | `ix-nav-menu-close` | Click `.fk-nav-menu-close`, control `restart` | `.fk-nav-menu`, html, body | Remove `is-menu-open`; remove `fk-nav-lock` from html and body. No reduced-motion condition | `SiteNav.tsx` menu state | migrated |
-| `ix-parallax` | While scrolling in view | `.fk-parallax` (combo `is-reverse`) | Move Y −40px→40px (reverse: 40→−40) | `Stats.tsx` `useScroll`/`useTransform` | legacy |
+| `ix-parallax` | While scrolling in view | `.fk-parallax` (combo `is-reverse`) | Move Y −40px→40px (reverse: 40→−40) | `Stats.tsx` `useScroll`/`useTransform` | dropped 2026-10-06: no rebuilt page uses it (the Stats Bands have no parallax) and its legacy source is deleted |
 | `ix-marquee` | Page load, infinite loop (`repeat: -1`); reduced motion: don't animate | `.fk-logo-marquee-track` (later `.fk-marquee-track`) | Move X 0 → −(100 / copies)%, linear, 32s per set (`is-slow`: 48s). Logo Marquee: 3 copies → −33.333% (coverage rule) | `.logo-marquee-track`, `.cta-marquee-track` keyframes | migrated (Logo Marquee) |
 | `ix-ticker` | Page load, infinite; reduced motion `dont-animate` | `[data-ix="ticker"]` (the track) and rows `[data-ticker-row="n"]` | One timeline, cycle 30.8s (14 states × 2.2s). Step k (1–14) at position 2.2·k: track y −52(k−1) → −52k px, 0.9s `back.out(1.2)`; row 6+k 100% → 20% and row 7+k 20% → 100% opacity, 0.45s `power1.inOut`. Every action `repeat: −1`, `repeatDelay` = 30.8 − duration (29.9 / 30.35), so step 14 lands on the duplicate New York and the restart frame is identical | `PartnersMap.tsx` interval + spring | migrated |
 | `ix-two-ways-card` | Scroll on `.fk-two-ways-card.is-brand-light`, start `"top 70%"`, once; reduced motion `skip-to-end`. A second interaction `ix-two-ways-card-late` does the same on `is-secondary` with every position +0.12s (scroll triggers take no delay) | The trigger card and its children (`within` the trigger) | All `power4.out` unless noted. Card opacity 0→1, y 24→0, 0.7s @0. Nurses: center photo opacity 0→1, y 68→0, 0.8s @0.4; left y 52→0 @0.54; right y 52→0 @0.62; orbs opacity 0→1, 0.7s @0.55. Facilities: photo opacity 0→1, scale 1.06→1, 0.95s @0.4. Eyebrow `splitText: words` (mask) yPercent 115→0, 0.6s @0.62, stagger 0.045; title the same @0.72. Body opacity 0→0.8, y 12→0, 0.6s @1.0. CTA `.fk-blur-reveal` add `is-revealed` @1.12 (the blur's class transition) with a FromTo opacity 0→100%, Y 16→0px, 0.75s CSS ease-in-out `customEase` at the same position (D-19). The eyebrow/title/body word-split targets `[data-two-ways="eyebrow"]`, `[data-two-ways="title"]`, `[data-two-ways="body"]` inside the trigger, not classes: the card's text uses shared typography classes, which an interaction must never target | `legacy/TwoWays.tsx` Framer Motion timeline | migrated |

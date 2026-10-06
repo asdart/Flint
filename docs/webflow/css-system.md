@@ -119,12 +119,16 @@ by classes or utilities: `.fk-article-body <tag>` rules in `src/styles/exception
 are pasted as minified head code on the Posts template (tokens renamed `--_flint---*`) and are never pushed by the scripts. It is the
 one exception to one selector per rule (`classes.md` → Rich Text nested styles).
 
-### Preview-only html/body clip (2026-09-29)
+### Preview-only Webflow base (2026-10-06)
 
-`src/styles/webflow-base.css` sets `overflow-x: clip` on `html` and `body`. The legacy
-`src/index.css` sets `overflow-x: hidden` there, which makes body a scroll container that never
-scrolls and breaks `position: sticky` (the article TOC). Webflow's site has no such rule, so it is
-preview only, never pushed. Drop it together with the legacy `src/index.css`.
+With Tailwind gone, nothing resets the browser defaults in the repo except what Webflow itself ships:
+`src/styles/webflow-base.css` holds Webflow's element base (normalize plus webflow.css, copied from
+the published `webflow.shared.css`) in the `webflow-base` cascade layer, below every tag style, class
+and utility. It is preview only, never pushed. The old preview-only `overflow-x: clip` on `html` and
+`body` (a fix for the legacy stylesheet's `overflow-x: hidden`) was removed with it. Measured on
+2026-10-06 against the Tailwind build on all eight routes at 1440 / 991 / 767 / 390: no box moved.
+The one visible difference, FAQ questions losing Tailwind's inherited −0.64px `letter-spacing`
+(a `button` doesn't inherit it under normalize), now matches Figma and the published Candidates page.
 
 ## Rules (contract 1.6)
 

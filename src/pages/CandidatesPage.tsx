@@ -15,8 +15,7 @@ const STATS = [
   { value: "500,000+", label: "Patients Served" },
 ];
 
-// Candidates page at /candidates (Figma 5543:915). The pre-contract version lives at /legacy/candidates
-// (src/pages/legacy/FacilitiesPage.tsx).
+// Candidates page at /candidates (Figma 5543:915).
 export default function CandidatesPage() {
   useInteractions();
 
