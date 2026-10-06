@@ -56,7 +56,7 @@ export default function FacilityTestimonials() {
     <section className="fk-section" aria-label="Testimonials">
       <div className="fk-panel fk-bg-brand-light" data-x-carousel="tween" data-x-autoplay="5000" data-x-copies="3" data-x-align="start">
         <div className="fk-panel-content">
-          <div className="fk-container is-bleed">
+          <div className="fk-container">
             <div className="fk-flex fk-gap-2" data-x-track>
               {RING.map((quote, index) => (
                 <div key={`${quote.name}-${index}`} className="fk-flex fk-shrink-0" aria-hidden={index >= QUOTES.length || undefined}>

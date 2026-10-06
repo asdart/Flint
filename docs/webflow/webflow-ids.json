@@ -41,6 +41,17 @@
         "Secondary Full": "6bcbf217-a9d7-dccf-f66a-ef13f68597e0"
       }
     },
+    "UI / Quote Card": {
+      "id": "f3524dda-09b6-c248-a1b5-f3d1fd53d192",
+      "props": {
+        "Quote": "4656e057-4d52-c83a-9379-0088914a6ad2",
+        "Image": "31c1d64b-96c3-49b4-e6c1-699faf7860c2",
+        "Name": "96b0444b-38fe-4b08-7e9d-71abc128ce75",
+        "Role": "2ba53725-cd66-c538-1bf5-0c8825fe54ff"
+      },
+      "draftInstance": "removed by the user 2026-10-06 (draft instance and scratch blockquote on /style-guide)",
+      "instancesOnFacilityPartners": "15 on /facility-partners (2026-10-05), ids in pageElements"
+    },
     "UI / Testimonial Card": {
       "id": "2c453fa1-ba5c-c799-9841-ebc12ac220b4",
       "props": {
@@ -264,7 +275,7 @@
     "homeFooter": "<script type=module> x-carousel (Motion 13.4.6 from jsDelivr) as Home page footer freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-01, published and tested by the user 2026-10-01); source docs/webflow/custom-code/x-carousel.html (script block only). Testimonial Card prop Flag af54577d-2273-6579-d6e2-409db1057a4c (image asset id) set on the 21 instances in Testimonials",
     "aboutHead": "<style> x-modal (reduced motion) as About page head freeform code 6abed61fbb91160db13da902 (installed 2026-10-01, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
     "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)",
-    "facilityPartners": "Page 6abfecbb675c8491534c950c: head <style> x-nav-dark (source docs/webflow/custom-code/x-nav-dark-head.html, style only); footer <script type=module> x-facility-illustrations only (source docs/webflow/custom-code/x-facility-illustrations.html, script block only, 5,869 characters). x-video-reduced removed from the footer 2026-10-02 (user-approved retirement: webflow.js pauses videos under reduced motion itself); needs a publish"
+    "facilityPartners": "Page 6abfecbb675c8491534c950c: head <style> x-nav-dark (source docs/webflow/custom-code/x-nav-dark-head.html, style only); footer: two <script type=module> blocks, x-facility-illustrations (source x-facility-illustrations.html, script block only) then x-carousel (source x-carousel.html, script block only, 7,742 characters with the tags; installed 2026-10-05, replaced 2026-10-06 with the middle-copy start, read back). x-video-reduced removed from the footer 2026-10-02 (user-approved retirement: webflow.js pauses videos under reduced motion itself); needs a publish"
   },
   "assets": {
     "/assets/blog/posts/can-healthcare-workers-on-tps-daca-or-asylum-get-eb-3-green-card-sponsorship.webp": {
@@ -1271,6 +1282,38 @@
           ".fk-video-media.fk-absolute.fk-inset-0.fk-w-full": "1da905bf-9283-68c3-08bd-2718285a371f",
           ".fk-video-media.fk-absolute.fk-inset-0.fk-w-full.fk-h-full": "eaeeef8f-38c1-4ad6-5337-17d4c27a75cd"
         }
+      },
+      "testimonialsSection (2026-10-05, page-level, D-17)": {
+        "section": "2e969fd1-2060-2582-7b85-06123097bd9a",
+        "panel": "2e969fd1-2060-2582-7b85-06123097bd99",
+        "track": "2e969fd1-2060-2582-7b85-06123097bd95",
+        "dots": "2e969fd1-2060-2582-7b85-06123097bd97",
+        "slideWrappers": "2e969fd1-…bd86 to …bd94 (15, consecutive; 6..15 aria-hidden)",
+        "quoteCardInstances": [
+          "70c21373-00bf-9fd7-47c1-8fd47d74e10f",
+          "b62b9393-4d7b-27cb-0681-b5fa35bf62f9",
+          "fde5bfa5-e905-ca15-8b7f-6f4b12ddb9cb",
+          "54961139-0421-e71f-4ab4-381530c81436",
+          "e63c4359-b0b0-998f-22f9-e76e2d3f1b61",
+          "dd176878-2828-4927-011e-3032833ff9b2",
+          "f27a3320-51e5-f186-474b-8c15a1894d86",
+          "736b0fce-d7f8-0035-668b-b1a091808fb9",
+          "0ba87f90-9746-80b3-4f1b-3c887dbadbb3",
+          "0354a2f9-ecce-e94a-48cf-b5d334005791",
+          "c6778f44-fc11-4768-0f81-bd51e859816c",
+          "616edeb8-6195-d3c5-b642-6890477af95d",
+          "95f04044-2719-44bc-031e-edfa5468205c",
+          "d8454bf9-f2a2-dc15-776c-d550507895e2",
+          "9487990d-fb75-c7e9-c763-3c2cc3efbdbc"
+        ],
+        "dotButtons": [
+          "2113725c-8811-4140-4f00-eb6b1cf65f95",
+          "bd74dcbc-76cf-5ab6-f20e-92149579b675",
+          "0d27e34c-810d-cc4e-bdff-0682a9f7c2b8",
+          "af16611c-00ed-14eb-792c-e92603f73bbf",
+          "37d31580-7ac9-15ae-c2e4-dbfaf83054d5"
+        ],
+        "note": "Instances 1, 6, 11 keep the component defaults (card 1); the other 12 override Quote, Name, Role and, where the portrait differs from the default, Image. Component Image element f3524dda-09b6-c248-a1b5-f3d1fd53d199 (assetId bound to Image, altText bound to Name)."
       }
     }
   }

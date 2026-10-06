@@ -91,10 +91,9 @@ function setup(root: HTMLElement): Cleanup {
     return !!cards[Math.max(first, 0)]?.classList.contains(currentClass);
   })();
 
-  let current = Math.max(
-    slides.findIndex((slide) => slide.classList.contains(currentClass)),
-    0,
-  );
+  /* No slide flagged: start on the first card of the middle copy, so a repeated set already fills both sides at first paint. */
+  const flagged = slides.findIndex((slide) => slide.classList.contains(currentClass));
+  let current = flagged >= 0 ? flagged : count * Math.floor(copies / 2);
   let playing: Playback[] = [];
   let clock: ReturnType<typeof animate> | null = null;
   let hovering = false;
