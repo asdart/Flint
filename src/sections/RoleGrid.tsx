@@ -66,7 +66,7 @@ export default function RoleGrid({
   title = "Healthcare roles with sponsorship",
   body = "Don't see your role listed? Apply and we will work with you to find a solution.",
   buttonLabel = "Apply now",
-  buttonLink = "#apply",
+  buttonLink = "https://web.withflint.com/apply",
   items = DEFAULT_ITEMS,
 }: RoleGridProps) {
   return (

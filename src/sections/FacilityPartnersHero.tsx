@@ -45,7 +45,7 @@ export default function FacilityPartnersHero() {
             </div>
             <div className="fk-blur-reveal is-delay-2">
               <div className="fk-section-header-action">
-                <Button variant="secondary" link="#apply" />
+                <Button variant="secondary" link="https://web.withflint.com/apply-facility" />
               </div>
             </div>
           </div>

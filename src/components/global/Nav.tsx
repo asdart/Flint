@@ -46,7 +46,7 @@ export default function Nav({ variant = "light" }: NavProps) {
 
       <div className="fk-nav-actions">
         <div className="fk-hidden-tablet">
-          <Button variant="secondary" size="small" />
+          <Button variant="secondary" size="small" link="https://web.withflint.com/apply" />
         </div>
         <button type="button" className="fk-nav-toggle" aria-label="Open menu">
           <img className="fk-icon" src={menuIcon} alt="" width={24} height={24} />
@@ -75,7 +75,7 @@ export default function Nav({ variant = "light" }: NavProps) {
             ))}
           </div>
           <div className="fk-nav-menu-footer">
-            <Button variant="secondary" fullWidth />
+            <Button variant="secondary" link="https://web.withflint.com/apply" fullWidth />
           </div>
         </div>
       </div>

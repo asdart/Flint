@@ -12,7 +12,7 @@ export default function Cta({
   title = "It's time to find your green card sponsor",
   body = "We've helped hundreds of Registered Nurses find a permanent path to stability in the US.\nNow it's your turn. Apply now to check your eligibility.",
   buttonLabel = "Apply now",
-  buttonLink = "#apply",
+  buttonLink = "https://web.withflint.com/apply",
 }: CtaProps) {
   return (
     <section className="fk-section">

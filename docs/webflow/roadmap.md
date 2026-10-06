@@ -373,7 +373,7 @@ P-07 closed (D-41): `ix-count-in` animates each stat value as a whole. P-04 clos
 - [ ] About → Team section repeats the Investors copy ("What makes Flint different / Backed by the best")
 - [ ] Footer: real URLs for the links that are `#` in `Global / Footer` ("LinkeDin" is already
       fixed there)
-- [ ] "Apply now" buttons need a destination (they default to `#apply`)
+- [x] "Apply now" buttons need a destination: `https://web.withflint.com/apply`, same tab (2026-10-05, repo and Webflow, not published: the `UI / Button` default stays `#apply`, each Apply instance carries the URL as an override, `Section / Role Grid`'s Button Link default is the URL). The Facility Partners hero keeps `#apply` in the repo (Webflow currently reads `https://web.withflint.com/apply-facility`, to review); Two Ways "See if you qualify" links Candidates, "Apply as facility" links Facility partners
 - [ ] FAQ answers after the first are placeholders
 - [ ] Featured article: remove the placeholder bullets about Flint, Michigan
 - [ ] Non-featured posts have only an excerpt, and need bodies

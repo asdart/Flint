@@ -7,6 +7,7 @@ type TwoWaysCardProps = {
   title: string;
   body: string;
   buttonLabel: string;
+  buttonLink: string;
 };
 
 function NursesArt() {
@@ -61,7 +62,7 @@ function FacilitiesArt() {
   );
 }
 
-function TwoWaysCard({ variant, eyebrow, title, body, buttonLabel }: TwoWaysCardProps) {
+function TwoWaysCard({ variant, eyebrow, title, body, buttonLabel, buttonLink }: TwoWaysCardProps) {
   const isNurses = variant === "nurses";
 
   return (
@@ -89,7 +90,7 @@ function TwoWaysCard({ variant, eyebrow, title, body, buttonLabel }: TwoWaysCard
         </div>
         <div className="fk-blur-reveal">
           <div className="fk-flex">
-            <Button label={buttonLabel} link="#apply" variant="secondary" />
+            <Button label={buttonLabel} link={buttonLink} variant="secondary" />
           </div>
         </div>
       </div>
@@ -128,6 +129,7 @@ export default function TwoWays({
                 title="Not just a job. A permanent future."
                 body="Find a healthcare role with a facility ready to sponsor your green card from day one."
                 buttonLabel="See if you qualify"
+                buttonLink="/candidates"
               />
               <TwoWaysCard
                 variant="facilities"
@@ -135,6 +137,7 @@ export default function TwoWays({
                 title="Build a permanent team."
                 body="Put an end to expensive agency staff. Flint connects your facility with licensed and motivated professionals already in the US."
                 buttonLabel="Apply as facility"
+                buttonLink="/facility-partners"
               />
             </div>
           </div>

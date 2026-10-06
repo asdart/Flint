@@ -76,7 +76,7 @@ export default function Footer({
             </div>
             <div data-ix="blur-reveal">
               <div className="fk-blur-reveal">
-                <Button variant="secondary" />
+                <Button variant="secondary" link="https://web.withflint.com/apply" />
               </div>
             </div>
           </div>

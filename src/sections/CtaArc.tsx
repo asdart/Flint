@@ -15,7 +15,7 @@ export default function CtaArc({
   title = "It's Time to Find Your Green Card Sponsor",
   body = "Join hundreds of healthcare professionals who have started working towards permanent stability in the US.",
   buttonLabel = "Apply now",
-  buttonLink = "#apply",
+  buttonLink = "https://web.withflint.com/apply",
 }: CtaArcProps) {
   return (
     <section className="fk-section">

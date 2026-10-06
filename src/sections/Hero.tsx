@@ -16,7 +16,7 @@ export default function Hero() {
             </div>
             <div className="fk-blur-reveal is-delay-2">
               <div className="fk-section-header-action fk-pt-2-mobile">
-                <Button />
+                <Button link="https://web.withflint.com/apply" />
               </div>
             </div>
           </div>

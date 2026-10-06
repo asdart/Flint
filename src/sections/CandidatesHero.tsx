@@ -67,7 +67,7 @@ export default function CandidatesHero() {
               </div>
               <div className="fk-blur-reveal is-delay-2">
                 <div className="fk-section-header-action">
-                  <Button />
+                  <Button link="https://web.withflint.com/apply" />
                 </div>
               </div>
             </div>
