@@ -58,7 +58,7 @@ of `AGENTS.md` rules, breakpoints and sync order, with a note that `AGENTS.md` w
 
 The result has the instruction `id` (record it in `webflow-ids.json` → `siteInstructions`) and
 `version: 1`. To change it later use `update_instruction` (`kind`, `path`, `markdown`), which bumps
-the version; do this whenever the contract version changes (`read_instruction` with `resolve_references: false` first, then send the whole markdown again; done for 1.7 on 2026-09-29, version 2; version 3 the same day reworded rule 6 to "used or planned on more than one page" and dropped the retired `x-scroll-lock` from rule 8). `get_site` doesn't return the Webflow
+the version; do this whenever the contract version changes (`read_instruction` with `resolve_references: false` first, then send the whole markdown again; done for 1.7 on 2026-09-29, version 2; version 3 the same day reworded rule 6 to "used or planned on more than one page" and dropped the retired `x-scroll-lock` from rule 8; version 4 on 2026-10-06 for contract 1.11: rule 3 Rich Text exception, rule 7 CSS hovers, rule 8 and rule 6 point to the registries instead of listing names, rule 15 image width / height, a "Markup and defaults" section). `get_site` doesn't return the Webflow
 plan, and the repo has no public URL to link, so the rule refers to "the Flint repo".
 
 ## Diff the repo against Webflow
