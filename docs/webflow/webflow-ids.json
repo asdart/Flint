@@ -271,11 +271,12 @@
     "xmodal": {
       "id": "xmodal",
       "displayName": "xModal",
-      "version": "1.1.0",
-      "appliedTo": "/ Home 6ab9ba4ceffb3329202448f2, footer (1.1.0, 2026-10-06); /about 6abed61fbb91160db13da902, footer stays on 1.0.0 on purpose (page-level by user decision 2026-10-06)",
-      "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6ac5577f75f9ec74452850d7%2Fxmodal-1.1.0.js",
+      "version": "1.2.0",
+      "appliedTo": "/ Home 6ab9ba4ceffb3329202448f2, footer (1.2.0, 2026-10-06; 1.1.0 before); /about 6abed61fbb91160db13da902, footer stays on 1.0.0 on purpose (page-level by user decision 2026-10-06)",
+      "hostedLocation": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6ac56a9ef85616f2d5039e73%2Fxmodal-1.2.0.js",
+      "hostedLocation1_1_0": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6ac5577f75f9ec74452850d7%2Fxmodal-1.1.0.js",
       "hostedLocation1_0_0": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee%2F689e5ba67671442434f3ca35%2F6abedbac239e30a8be33112a%2Fxmodal-1.0.0.js",
-      "note": "Registering the same displayName with a new version reuses the id (new hosted file per version). 1787 characters, byte-identical to the script body of docs/webflow/custom-code/x-modal.html",
+      "note": "Registering the same displayName with a new version reuses the id (new hosted file per version). 2045 characters (the tool schema says 2000 but accepted it; 1.2.0 added iframe focus handling and data-src loading), byte-identical to the script body of docs/webflow/custom-code/x-modal.html",
       "source": "docs/webflow/custom-code/x-modal.html (script body)"
     }
   },
@@ -1335,7 +1336,7 @@
       "close icon (Image, x-mark.svg, alt empty)": "642ac83c-3b1f-9f3b-aaf2-330ffd9abd44",
       "content (fk-modal-content is-compact)": "aa296122-1215-1aad-0bd5-367919e80c6a",
       "title (p#webinar-registration-title)": "e9d99cb8-e4a3-5ba7-dbae-1899a83dbf3e",
-      "HTML Embed (fk-modal-embed, Livestorm iframe)": "5003661b-0559-6cfd-d1c0-c8f44c4ef378",
+      "HTML Embed (fk-modal-embed, Livestorm iframe, data-src since 2026-10-06)": "5003661b-0559-6cfd-d1c0-c8f44c4ef378",
       "Reserve seat Button instance (link #webinar-registration)": "99142133-7c90-5b82-51bb-a01c216fce6f",
       "deleted 2026-10-06 (user approved)": "f3bd56cd-d70e-c68a-285f-e617b75bd42e (empty fk-modal div from a failed builder call)"
     },

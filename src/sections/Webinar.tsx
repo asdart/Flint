@@ -77,7 +77,8 @@ export default function Webinar({
 
 /** The registration modal (UI / Modal, `size="compact"`, Figma node 5985:3080): opened by the Reserve seat link
  * (`#webinar-registration`, exception x-modal). `fk-modal-embed` stands for Webflow's Embed element holding the
- * Livestorm iframe (exception x-webinar-embed). Render it last in `.fk-page`, after the Footer: revealed
+ * Livestorm iframe (exception x-webinar-embed). The iframe ships with `data-src` and no `src`; x-modal copies it to `src` when the
+ * modal first opens, so Livestorm (and its fonts) load on open, not on page view. Render it last in `.fk-page`, after the Footer: revealed
  * sections are transformed and would become a fixed element's containing block. */
 export function WebinarModal() {
   return (
@@ -90,7 +91,7 @@ export function WebinarModal() {
           width="100%"
           height="100%"
           frameBorder="0"
-          src="https://app.livestorm.co/p/ee1df681-411c-4d3f-8900-e3dfd08246eb/form"
+          data-src="https://app.livestorm.co/p/ee1df681-411c-4d3f-8900-e3dfd08246eb/form"
           title="Finding Green Card Sponsored Healthcare Roles with Flint | Q&A Session"
         ></iframe>
       </div>

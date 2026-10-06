@@ -77,7 +77,9 @@ const reveal = () => scrollReveal('[data-ix="reveal"]', 18, 700, EASE_OUT);
 /** ix-count-in */
 const countIn = () => scrollReveal(".fk-stat-value", 8, 500, EASE_POP);
 
-/** ix-nav-pill (past 24px: add `is-pill`) and ix-nav-pill-rest (back above: remove it). */
+/** ix-nav-pill (past 24px: add `is-pill`) and ix-nav-pill-rest (back above: remove it). Skipped under reduced motion,
+ * as on Webflow (`dont-animate`: IX3 can't keep a scroll trigger under reduced motion, D-49); the dark Nav stays
+ * readable there through x-nav-dark's reduced-motion capsule. */
 function navPill(): Cleanup {
   const nav = document.querySelector<HTMLElement>(".fk-nav");
   if (!nav || prefersReducedMotion()) return () => {};
