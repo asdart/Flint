@@ -34,8 +34,8 @@ const LINK_GROUPS = [
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
+      { label: "Privacy", href: "/privacy-policy" },
+      { label: "Terms", href: "/terms-of-service" },
       { label: "Cookie settings", href: "#" },
     ],
   },

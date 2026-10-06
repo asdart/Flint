@@ -5,6 +5,8 @@ import CandidatesPage from "./pages/CandidatesPage";
 import FacilityPartnersPage from "./pages/FacilityPartnersPage";
 import BlogPage from "./pages/BlogPage";
 import AboutPage from "./pages/AboutPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
 import StyleGuidePage from "./pages/StyleGuidePage";
 
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
@@ -36,6 +38,8 @@ export default function App() {
             </Suspense>
           }
         />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms-of-service" element={<TermsOfServicePage />} />
         <Route path="/style-guide" element={<StyleGuidePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

@@ -21,7 +21,9 @@
     "Posts Template (/blog/{slug}, slug detail_blog)": "6abc6c9673c0a3345b7a94bd",
     "/about (draft)": "6abed61fbb91160db13da902",
     "/candidates (draft)": "6abee855a6b6c496e11ca61d",
-    "/facility-partners (draft)": "6abfecbb675c8491534c950c"
+    "/facility-partners (draft)": "6abfecbb675c8491534c950c",
+    "/privacy-policy (draft)": "6ac53f98c016f2675f9a7d45",
+    "/terms-of-service (draft)": "6ac53f99a916ab237adb7022"
   },
   "components": {
     "UI / Button": {
@@ -184,6 +186,13 @@
       },
       "instances": "style-guide 6abbf07b612d4c02ed5bebf4: Large 2024 Founded (transform result), Large 200+ Roles placed f58367b3-4fd1-d665-eee4-6ad146053f0e, Default 1000+ People relocated 48f2fcfb-3095-d1a6-ef41-051f36baeee4",
       "note": "Default variant = style overrides on the base classes (D-44); fk-stat-number style id ba835153-4f4e-1a43-9db2-fec0dcd004ca; fk-stat is-default (from before D-44) is now unused; 2026-10-01 (user, Designer): conditional visibility added to the Suffix span (…337) and the Label p (…338), no new props or prop ids (read back: visibility {sourceType: conditional}); the condition itself (which prop, 'is set') isn't readable through the MCP"
+    },
+    "Section / Page Hero": {
+      "id": "76881060-95f8-8705-011c-ede2b0d82c6d",
+      "props": {
+        "Title": "4e016fc2-5668-d590-6613-82b0548f2c30",
+        "Body": "514fce07-19a7-c556-dd32-db09ffad77da"
+      }
     }
   },
   "collections": {
@@ -1315,6 +1324,29 @@
         ],
         "note": "Instances 1, 6, 11 keep the component defaults (card 1); the other 12 override Quote, Name, Role and, where the portrait differs from the default, Image. Component Image element f3524dda-09b6-c248-a1b5-f3d1fd53d199 (assetId bound to Image, altText bound to Name)."
       }
+    },
+    "/privacy-policy page (draft, 2026-10-06)": {
+      "page": "6ac53f98c016f2675f9a7d45",
+      "fk-page": "8d292cf6-8262-d896-0136-efd8acf4ebf0",
+      "main": "8d292cf6-8262-d896-0136-efd8acf4ebef",
+      "Nav instance": "be24cd62-d13f-5a3c-e7cc-2a44be656628",
+      "Page Hero instance": "a11ed83a-1e66-b0c0-3b5e-b854f5e5e03f",
+      "Legal Body section": "f47df314-d509-ae79-ed3b-084c023a29a9",
+      "Footer instance": "6316ef13-2375-94ce-e8fb-f7a87ed61bf6"
+    },
+    "/terms-of-service page (draft, 2026-10-06)": {
+      "page": "6ac53f99a916ab237adb7022",
+      "fk-page": "bf751734-30db-cb49-62c8-2f2856a0f09e",
+      "main": "bf751734-30db-cb49-62c8-2f2856a0f09d",
+      "Nav instance": "db8e48de-6360-3dd1-42d2-452bbf28234e",
+      "Page Hero instance": "c0f44521-dc6a-7d34-858d-efa9f879db97",
+      "Legal Body section": "4584624f-3260-2e6d-c6f1-a8d090193aac",
+      "Footer instance": "bea78b04-ddd0-5f05-d3ce-abfc68cfffd6"
+    },
+    "Global / Footer legal links (2026-10-06)": {
+      "Privacy link": "4920c00b-a26a-32ea-3bf1-c7b8ccef1a79",
+      "Terms link": "4920c00b-a26a-32ea-3bf1-c7b8ccef1a7b",
+      "Cookie settings link (stays #)": "4920c00b-a26a-32ea-3bf1-c7b8ccef1a7d"
     }
   }
 }
