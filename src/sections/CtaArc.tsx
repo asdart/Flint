@@ -36,7 +36,7 @@ export default function CtaArc({
           </div>
         </div>
 
-        <ArcStage lazy />
+        <ArcStage />
       </div>
     </section>
   );

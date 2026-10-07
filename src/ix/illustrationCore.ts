@@ -13,15 +13,116 @@
  * Markup contract: `[data-x-illustration="<name>"]` is the panel, the animated pieces are
  * `[data-x-part="…"]` inside it. Every final value (opacity, scale) is read from the computed style, so the
  * CSS stays the one description of the resting frame.
+ *
+ * Self-contained (D-57): the animation engine is a small rAF runner (`run`) with Motion's own `cubicBezier`
+ * for the easings, and `inView` is an IntersectionObserver wrapper with Motion's semantics. Motion's
+ * `animate` (55 KB) is never imported, so each shipped bundle is one inline script with no CDN request.
  */
 
-import { animate, inView } from "motion";
+import { cubicBezier } from "motion";
 
 export type Cleanup = () => void;
-export type Playback = ReturnType<typeof animate>;
 export type Ease = readonly [number, number, number, number] | "linear" | "easeInOut";
 
 export const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
+export const easing = (ease: Ease): ((t: number) => number) =>
+  ease === "linear" ? (t) => t : cubicBezier(...(ease === "easeInOut" ? ([0.42, 0, 0.58, 1] as const) : ease));
+
+/* ---- the engine: one shared rAF loop, wall-clock tweens that can pause, resume and stop ---- */
+
+/** A running animation. `then` resolves when it finishes (never when it is stopped or the repeat is endless). */
+export type Playback = { stop: () => void; pause: () => void; play: () => void; then: (done?: () => unknown) => Promise<unknown> };
+type Spec = { duration: number; delay?: number; ease?: Ease; repeat?: boolean };
+
+const active = new Set<(now: number) => void>();
+let frameId = 0;
+const frame = () => {
+  frameId = 0;
+  const now = performance.now();
+  active.forEach((tick) => tick(now));
+  if (active.size && !frameId) frameId = requestAnimationFrame(frame);
+};
+const wake = () => {
+  if (!frameId) frameId = requestAnimationFrame(frame);
+};
+
+/** Calls `write(eased progress 0 → 1)` every frame after `delay`; with `repeat` the progress restarts forever. */
+export function run(spec: Spec, write: (value: number) => void): Playback {
+  const curve = easing(spec.ease ?? "linear");
+  const total = spec.duration * 1000;
+  const delay = (spec.delay ?? 0) * 1000;
+  let start = performance.now();
+  let hold: number | null = null;
+  let resolve!: () => void;
+  const finished = new Promise<void>((done) => (resolve = done));
+  const tick = (now: number) => {
+    const time = now - start - delay;
+    if (time < 0) return write(curve(0));
+    if (spec.repeat) return write(curve((time / total) % 1));
+    if (time < total) return write(curve(time / total));
+    active.delete(tick);
+    write(curve(1));
+    resolve();
+  };
+  active.add(tick);
+  wake();
+  return {
+    stop: () => void active.delete(tick),
+    pause: () => {
+      if (hold !== null || !active.has(tick)) return;
+      hold = performance.now();
+      active.delete(tick);
+    },
+    play: () => {
+      if (hold === null) return;
+      start += performance.now() - hold;
+      hold = null;
+      active.add(tick);
+      wake();
+    },
+    then: (done) => finished.then(done),
+  };
+}
+
+/** Motion's `inView`: calls `onStart` when `root` shows at least `amount`; what it returns runs when it leaves. */
+function inView(root: Element, onStart: () => void | (() => void), { amount }: { amount: number }) {
+  let onEnd: (() => void) | undefined;
+  const observer = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((entry) => {
+        if (entry.isIntersecting === Boolean(onEnd)) return;
+        if (entry.isIntersecting) {
+          const end = onStart();
+          onEnd = typeof end === "function" ? end : undefined;
+          if (!onEnd) observer.unobserve(root);
+        } else {
+          onEnd?.();
+          onEnd = undefined;
+        }
+      }),
+    { threshold: amount },
+  );
+  observer.observe(root);
+  return () => observer.disconnect();
+}
+
+/* Keyframes of a style value: numbers (opacity; height in px) and strings with numbers in them (transform, filter). */
+type Value = number | string;
+type Props = Record<string, Value | [Value, Value]>;
+const NUMBER = /-?\d*\.?\d+(?:e[-+]?\d+)?/g;
+const mix = (from: Value, to: Value, t: number): string => {
+  if (typeof from === "number" && typeof to === "number") return String(from + (to - from) * t);
+  const a = String(from).match(NUMBER) ?? [];
+  const b = String(to).match(NUMBER) ?? [];
+  if (a.length !== b.length) return String(t < 1 ? from : to);
+  let index = 0;
+  return String(to).replace(NUMBER, () => {
+    const [x, y] = [Number(a[index]), Number(b[index])];
+    index++;
+    return String(x + (y - x) * t);
+  });
+};
 
 export const parts = (root: Element, name: string) => Array.from(root.querySelectorAll<HTMLElement>(`[data-x-part="${name}"]`));
 export const clear = (element: HTMLElement, ...properties: string[]) => properties.forEach((property) => element.style.removeProperty(property));
@@ -33,15 +134,28 @@ export function player() {
   const track = (playback: Playback) => {
     running.add(playback);
     if (paused) playback.pause();
-    playback.then(() => running.delete(playback));
+    void playback.then(() => running.delete(playback));
     return playback;
   };
+  /** Tracked `run`. */
+  const go = (spec: Spec, write: (value: number) => void) => track(run(spec, write));
   return {
     track,
-    animate: (...args: Parameters<typeof animate>) => track(animate(...args)),
+    run: go,
+    /** Animates style values of one or several elements: `[from, to]`, or just `to` (from the computed style). */
+    animate: (targets: HTMLElement | HTMLElement[], props: Props, spec: Spec) => {
+      const frames = (Array.isArray(targets) ? targets : [targets]).flatMap((element) =>
+        Object.entries(props).map(([name, value]) => {
+          const unit = typeof (Array.isArray(value) ? value[1] : value) === "number" && name !== "opacity" ? "px" : "";
+          const [from, to] = Array.isArray(value) ? value : [parseFloat(getComputedStyle(element)[name as never]), value];
+          return (t: number) => (element.style[name as never] = mix(from, to, t) + unit);
+        }),
+      );
+      return go(spec, (t) => frames.forEach((write) => write(t)));
+    },
     /** A timed number 0 → 1 (eased), or just a wait when there is no `update`. */
-    tween: (seconds: number, update?: (value: number) => void, ease: Ease = "linear") =>
-      track(animate(0, 1, { duration: seconds, ease, onUpdate: update })),
+    tween: (seconds: number, update?: (value: number) => void, ease: Ease = "linear", delay = 0) =>
+      go({ duration: seconds, ease, delay }, update ?? (() => {})),
     pause: () => {
       paused = true;
       running.forEach((playback) => playback.pause());
@@ -81,7 +195,7 @@ export function entrance(element: HTMLElement, from: From, delay: number, durati
   const scale = style.transform === "none" ? 1 : new DOMMatrix(style.transform).a;
   const transform = (x: number, y: number, factor: number) => `translate(${x}px, ${y}px) scale(${scale * factor})`;
   const start = transform(from.x ?? 0, from.y ?? 0, from.scale ?? 1);
-  const blur = from.blur ? [`blur(${from.blur}px)`, "blur(0px)"] : undefined;
+  const blur: [string, string] | undefined = from.blur ? [`blur(${from.blur}px)`, "blur(0px)"] : undefined;
   element.style.opacity = "0";
   element.style.transform = start;
   if (blur) element.style.filter = blur[0];

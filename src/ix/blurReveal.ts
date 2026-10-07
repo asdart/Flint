@@ -6,6 +6,8 @@
  * DOM order). IX3 holds that from-state at rest, so this emulation applies it inline right away
  * (useInteractions runs in a layout effect, before the first paint) and animates it on trigger.
  * With reduced motion the end state is applied at once, like IX3's skip-to-end.
+ * The above-the-fold heroes carry `data-ix="blur-reveal-hero"` instead (D-53): the selector below is an
+ * exact match, so they are skipped here; their reveal is the CSS animation of exception x-blur-reveal.
  */
 
 type Cleanup = () => void;

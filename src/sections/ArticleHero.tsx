@@ -21,7 +21,7 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
     <section className="fk-section">
       <div className="fk-panel is-blog-hero fk-bg-brand-light">
         <div className="fk-container">
-          <div className="fk-flex fk-flex-col fk-items-center fk-gap-12 fk-gap-10-phone" data-ix="blur-reveal">
+          <div className="fk-flex fk-flex-col fk-items-center fk-gap-12 fk-gap-10-phone" data-ix="blur-reveal-hero">
             <div className="fk-flex fk-flex-col fk-gap-8 fk-w-full fk-max-w-content">
               <div className="fk-blur-reveal fk-flex fk-flex-col fk-items-center fk-gap-6">
                 <nav className="fk-breadcrumb" aria-label="Breadcrumb">

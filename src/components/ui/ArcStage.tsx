@@ -1,35 +1,30 @@
-import { CANDIDATES } from "../../content/portraits";
+import { CANDIDATES, ARC_IMAGE_SIZE } from "../../content/portraits";
 
 const ARC_CARDS = [...CANDIDATES, ...CANDIDATES];
 
-type ArcStageProps = {
-  /** Cards below the fold load lazily (the Home hero's are above it). */
-  lazy?: boolean;
-};
-
 /**
  * The rotating arc of portrait cards (`fk-hero-stage` > `fk-hero-wheel` > 20 `fk-hero-card`s), shared by
- * Section / Hero (Home) and Section / CTA, variant Arc (Candidates). It is the same markup in
- * Webflow, driven by `ix-hero-arc` through `data-ix="hero-arc"`.
+ * Section / Hero (Home) and Section / CTA, variant Arc (Candidates). It is the component
+ * `UI / Arc Stage` in Webflow (no props), driven by `ix-hero-arc` through `data-ix="hero-arc"`. The card images
+ * are lazy everywhere (as in Webflow).
  */
-export default function ArcStage({ lazy = false }: ArcStageProps) {
+export default function ArcStage() {
   return (
     <div className="fk-hero-stage" data-ix="hero-arc" aria-hidden="true">
       <div className="fk-hero-wheel">
         {ARC_CARDS.map((candidate, index) => {
-          const crop = (index % CANDIDATES.length) + 1;
           return (
-            <div className={`fk-hero-card is-a${index + 1}`} key={`${candidate.image}-${index}`}>
+            <div className={`fk-hero-card is-a${index + 1}`} key={`${candidate.arc}-${index}`}>
               <img
-                className={`fk-hero-card-image is-c${crop}`}
-                src={candidate.image}
+                className="fk-hero-card-image fk-w-full fk-h-full"
+                src={candidate.arc}
                 alt=""
-                width={candidate.size[0]}
-                height={candidate.size[1]}
-                loading={lazy ? "lazy" : undefined}
+                width={ARC_IMAGE_SIZE[0]}
+                height={ARC_IMAGE_SIZE[1]}
+                loading="lazy"
               />
               <div className="fk-hero-card-chip">
-                <img className="fk-flag" src={candidate.flag} alt="" width={20} height={20} loading={lazy ? "lazy" : undefined} />
+                <img className="fk-flag" src={candidate.flag} alt="" width={20} height={20} loading="lazy" />
                 <span className="fk-hero-card-name">{candidate.name}</span>
               </div>
             </div>

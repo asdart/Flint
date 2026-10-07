@@ -3,7 +3,7 @@ import Button from "../components/ui/Button";
 /**
  * Section / Facility Partners Hero (Figma 5543:1165, phone 5755:2546). Page-level markup (D-17: only Facility
  * partners has a video hero; a variant of Section / Hero can't swap the arc wheel for a video). A full-bleed video
- * card (`hero.mp4`, poster `hero.png`, as the legacy hero) under a dark overlay, with the centred header on top.
+ * card (`hero.mp4`, poster `hero-poster.webp`, as the legacy hero) under a dark overlay, with the centred header on top.
  * The Nav over it is `Global / Nav` Dark (`fk-nav is-dark`, exception x-nav-dark). With reduced motion the video is
  * paused on its poster: on Webflow by webflow.js itself (native Background Video), in the repo preview by
  * `src/ix/videoReduced.ts` (`data-x-video="reduced"`; x-video-reduced retired on Webflow 2026-10-02, D-43 amended).
@@ -16,7 +16,7 @@ export default function FacilityPartnersHero() {
         <video
           className="fk-video-media fk-absolute fk-inset-0 fk-block fk-w-full fk-h-full fk-object-cover"
           src="/assets/facility/hero.mp4"
-          poster="/assets/facility/hero.png"
+          poster="/assets/facility/hero-poster.webp"
           width={1536}
           height={672}
           autoPlay
@@ -30,7 +30,7 @@ export default function FacilityPartnersHero() {
         />
         <div className="fk-video-overlay fk-absolute fk-inset-0" aria-hidden="true" />
         <div className="fk-container is-inset fk-relative">
-          <div className="fk-section-header is-center is-tight" data-ix="blur-reveal">
+          <div className="fk-section-header is-center is-tight" data-ix="blur-reveal-hero">
             <div className="fk-blur-reveal">
               <h1 className="fk-heading-xl fk-color-white">
                 Find Top

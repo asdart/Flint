@@ -1,13 +1,13 @@
 import ArcStage from "../components/ui/ArcStage";
 import Button from "../components/ui/Button";
 
-/** Section / Hero, Home variant. */
+/** Section / Hero, Home: page-level markup on Webflow (D-59), not a component; the arc is the `UI / Arc Stage` instance. */
 export default function Hero() {
   return (
     <section className="fk-section is-padded-bottom">
       <div className="fk-panel fk-bg-secondary is-hero">
         <div className="fk-container">
-          <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
+          <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal-hero">
             <div className="fk-blur-reveal">
               <h1 className="fk-heading-xl">Find Healthcare Jobs with Green Card Sponsorship</h1>
             </div>

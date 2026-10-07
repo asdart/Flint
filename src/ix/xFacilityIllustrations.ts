@@ -3,16 +3,15 @@
  * the Facility partners page (network, savings, retention), ported 1:1 from the legacy components. A dedicated
  * script so the page loads only its own code (pagespeed); the engine is shared with the Candidates script at the
  * source level only (illustrationCore.ts). `node scripts/build-x-illustrations.mjs` bundles this file with Motion
- * loaded from the CDN into docs/webflow/custom-code/x-facility-illustrations.html, and the local preview runs the
- * same module with Motion from npm. Needs no head CSS.
+ * (its easings only, no CDN request, D-57) into docs/webflow/custom-code/x-facility-illustrations.html, and the local
+ * preview runs the same module. Needs no head CSS.
  *
  * Markup contract: `[data-x-illustration="network|savings|retention"]` is the panel, the animated pieces are
  * `[data-x-part="…"]` inside it (parts per illustration are read below). The static markup is the final frame
  * and the whole state under reduced motion.
  */
 
-import { animate } from "motion";
-import { clear, entrance, fade, EASE_OUT, parts, runIllustrations, type Cleanup, type From, type Illustration, type Player } from "./illustrationCore";
+import { clear, easing, entrance, fade, EASE_OUT, parts, runIllustrations, type Cleanup, type From, type Illustration, type Player } from "./illustrationCore";
 
 /* ---- Facility partners row 1: the network (NetworkIllustration) ---- */
 
@@ -25,6 +24,8 @@ const NET_LINES = NET_FACES + 7 * NET_STAGGER + NET_FACE; // spokes and rings fa
 const NET_LINE = 0.4;
 const NET_TURN = 48; // seconds per turn, clockwise; the faces turn the other way so the portraits stay upright
 const NET_TRAVEL = 48; // px an avatar flies in along its own radius
+const SCALE_PEAK = 0.72; // the avatar's scale overshoots to 1.05 at this share of its flight
+const out = easing(EASE_OUT);
 
 function network(root: HTMLElement, p: Player): Illustration {
   const hub = parts(root, "hub")[0];
@@ -61,17 +62,22 @@ function network(root: HTMLElement, p: Player): Illustration {
       playIcon();
       avatars.forEach((avatar, index) => {
         /* Legacy: opacity, blur and the flight take the whole 0.85s; the scale overshoots to 1.05 at 72% of it. */
-        p.animate(
-          avatar,
-          { opacity: [0, 1], filter: ["blur(6px)", "blur(0px)"], x: [travel[index].x, 0], y: [travel[index].y, 0], scale: [0.75, 1.05, 1] },
-          { duration: NET_FACE, delay: NET_FACES + index * NET_STAGGER, ease: EASE_OUT, scale: { times: [0, 0.72, 1], ease: EASE_OUT } },
-        ).then(() => setTimeout(() => clear(avatar, "opacity", "filter", "transform"), 50));
+        const { x, y } = travel[index];
+        p.run({ duration: NET_FACE, delay: NET_FACES + index * NET_STAGGER }, (raw) => {
+          const t = out(raw);
+          const [from, to, low, high] = raw < SCALE_PEAK ? [0.75, 1.05, 0, SCALE_PEAK] : [1.05, 1, SCALE_PEAK, 1];
+          const size = from + (to - from) * out((raw - low) / (high - low));
+          avatar.style.opacity = String(t);
+          avatar.style.filter = `blur(${6 * (1 - t)}px)`;
+          avatar.style.transform = `translateX(${x * (1 - t)}px) translateY(${y * (1 - t)}px) scale(${size})`;
+        }).then(() => setTimeout(() => clear(avatar, "opacity", "filter", "transform"), 50));
       });
       playStrokes();
       /* Then the whole layer turns for good (delay as legacy: lines done + 0.15s); the faces counter-turn. */
-      const forever = { duration: NET_TURN, ease: "linear", repeat: Infinity, delay: NET_LINES + NET_LINE + 0.15 } as const;
-      p.animate(layer, { rotate: [0, 360] }, forever);
-      faces.forEach((face) => p.animate(face, { rotate: [0, -360] }, forever));
+      p.run({ duration: NET_TURN, repeat: true, delay: NET_LINES + NET_LINE + 0.15 }, (turn) => {
+        layer.style.transform = `rotate(${turn * 360}deg)`;
+        faces.forEach((face) => (face.style.transform = `rotate(${turn * -360}deg)`));
+      });
     },
     startAmount: 0.35,
     loop: { pause: p.pause, resume: p.resume },
@@ -145,7 +151,7 @@ function savings(root: HTMLElement, p: Player): Illustration {
     start: () => {
       plays.forEach((play) => play());
       fades.forEach((play) => play());
-      p.track(animate(0, 1, { duration: 1.1, delay: SAV_LOAD + 0.45, ease: EASE_OUT, onUpdate: clip })).then(() => clear(line, "clip-path"));
+      p.tween(1.1, clip, EASE_OUT, SAV_LOAD + 0.45).then(() => clear(line, "clip-path"));
     },
     dispose: () => {
       all.forEach((element) => clear(element, "opacity", "transform"));

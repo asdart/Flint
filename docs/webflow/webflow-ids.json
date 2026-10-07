@@ -23,7 +23,8 @@
     "/candidates (draft)": "6abee855a6b6c496e11ca61d",
     "/facility-partners (draft)": "6abfecbb675c8491534c950c",
     "/privacy-policy (draft)": "6ac53f98c016f2675f9a7d45",
-    "/terms-of-service (draft)": "6ac53f99a916ab237adb7022"
+    "/terms-of-service (draft)": "6ac53f99a916ab237adb7022",
+    "/404 (utility page, 2026-10-07)": "6ac5be576246587305b44400"
   },
   "components": {
     "UI / Button": {
@@ -83,10 +84,6 @@
         "CTA Title": "562f252e-3175-31fb-01ff-7dd47e45c4ce",
         "CTA Body": "c09f6f02-0016-85f1-525e-08230b812fc9"
       }
-    },
-    "Section / Hero": {
-      "id": "71b39630-a971-6cb4-afd2-0ef5e3edd312",
-      "props": {}
     },
     "Section / Logo Marquee": {
       "id": "2a73f492-26e0-c4b4-a84e-23907570189e",
@@ -193,6 +190,20 @@
         "Title": "4e016fc2-5668-d590-6613-82b0548f2c30",
         "Body": "514fce07-19a7-c556-dd32-db09ffad77da"
       }
+    },
+    "UI / Arc Stage": {
+      "id": "a34144fc-447d-5158-852a-1d66cc43f072",
+      "props": {},
+      "instances": {
+        "Home hero (page markup)": "a3bb5f87-839f-922d-a030-868e67965282",
+        "Candidates CTA": "01e2c1d7-cf1d-0f7f-1e52-f185d8a4e282"
+      }
+    },
+    "_deleted_2026-10-07": {
+      "Section / Hero": {
+        "id": "71b39630-a971-6cb4-afd2-0ef5e3edd312",
+        "note": "unlinked on Home and deleted by the user in the Designer (D-59); the hero is Home page markup"
+      }
     }
   },
   "collections": {
@@ -288,7 +299,8 @@
     "homeHead": "<style> x-modal (reduced motion) as Home page head freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-06, was empty, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
     "aboutHead": "<style> x-modal (reduced motion) as About page head freeform code 6abed61fbb91160db13da902 (installed 2026-10-01, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
     "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)",
-    "facilityPartners": "Page 6abfecbb675c8491534c950c: head <style> x-nav-dark (source docs/webflow/custom-code/x-nav-dark-head.html, style only); footer: two <script type=module> blocks, x-facility-illustrations (source x-facility-illustrations.html, script block only) then x-carousel (source x-carousel.html, script block only, 7,742 characters with the tags; installed 2026-10-05, replaced 2026-10-06 with the middle-copy start, read back). x-video-reduced removed from the footer 2026-10-02 (user-approved retirement: webflow.js pauses videos under reduced motion itself); needs a publish"
+    "facilityPartners": "Page 6abfecbb675c8491534c950c: head <style> x-nav-dark (source docs/webflow/custom-code/x-nav-dark-head.html, style only); footer: two <script type=module> blocks, x-facility-illustrations (source x-facility-illustrations.html, script block only) then x-carousel (source x-carousel.html, script block only, 7,742 characters with the tags; installed 2026-10-05, replaced 2026-10-06 with the middle-copy start, read back). x-video-reduced removed from the footer 2026-10-02 (user-approved retirement: webflow.js pauses videos under reduced motion itself); needs a publish",
+    "categoriesHead": "2026-10-07: Categories template head = x-blog-pagination <style> + <meta name=\"robots\" content=\"noindex, follow\"> (x-noindex-categories); source docs/webflow/custom-code/categories-template-head.html"
   },
   "assets": {
     "/assets/blog/posts/can-healthcare-workers-on-tps-daca-or-asylum-get-eb-3-green-card-sponsorship.webp": {
@@ -470,46 +482,6 @@
     "/assets/home/Flint-logo-brand-circle.svg": {
       "id": "6abbec0ead5b1f1f5f710d8e",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbec0ead5b1f1f5f710d8e_Flint-logo-brand-circle.svg"
-    },
-    "/assets/home/candidate-01.webp": {
-      "id": "6abbebd78b8e492698b557ff",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd78b8e492698b557ff_candidate-01.webp"
-    },
-    "/assets/home/candidate-02.webp": {
-      "id": "6abbebd78b8e492698b55814",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd78b8e492698b55814_7fb6c4919f47d12c6e0232e44e8fbd20_candidate-02.webp"
-    },
-    "/assets/home/candidate-03.webp": {
-      "id": "6abbebd8ea8009d5390ab284",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd8ea8009d5390ab284_92b4905e8f3e72f74239f02437fe38c2_candidate-03.webp"
-    },
-    "/assets/home/candidate-04.webp": {
-      "id": "6abbebd820c655289b9d7014",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd820c655289b9d7014_candidate-04.webp"
-    },
-    "/assets/home/candidate-05.webp": {
-      "id": "6abbebd8f0ec45724fccb1df",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd8f0ec45724fccb1df_candidate-05.webp"
-    },
-    "/assets/home/candidate-06.webp": {
-      "id": "6abbebd88b8e492698b558a9",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd88b8e492698b558a9_candidate-06.webp"
-    },
-    "/assets/home/candidate-07.webp": {
-      "id": "6abbebd820c655289b9d7060",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd820c655289b9d7060_07a57e5f34f29d814de0edd1d5e75f7d_candidate-07.webp"
-    },
-    "/assets/home/candidate-08.webp": {
-      "id": "6abbebd910f8c54b2ab12be4",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd910f8c54b2ab12be4_candidate-08.webp"
-    },
-    "/assets/home/candidate-09.webp": {
-      "id": "6abbebd9113c5daeca1d3dde",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9113c5daeca1d3dde_candidate-09.webp"
-    },
-    "/assets/home/candidate-10.webp": {
-      "id": "6abbebd9113c5daeca1d3df3",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd9113c5daeca1d3df3_candidate-10.webp"
     },
     "/assets/home/cta-circle.svg": {
       "id": "6abbd67f92bbe90d74fbf5f5",
@@ -1003,7 +975,88 @@
     "/assets/quote-photo-3.webp": {
       "id": "6ac587281d047ac5e57d44db",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac587281d047ac5e57d44db_quote-photo-3.webp"
-    }
+    },
+    "/assets/candidates/arc/candidate-01.webp": {
+      "id": "6ac661a0688c87007d2535ba",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a0688c87007d2535ba_candidate-arc-01.webp"
+    },
+    "/assets/candidates/arc/candidate-02.webp": {
+      "id": "6ac661a0688c87007d2535cf",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a0688c87007d2535cf_candidate-arc-02.webp"
+    },
+    "/assets/candidates/arc/candidate-03.webp": {
+      "id": "6ac661a1af428ccbf016d128",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a1af428ccbf016d128_candidate-arc-03.webp"
+    },
+    "/assets/candidates/arc/candidate-04.webp": {
+      "id": "6ac661a1bd69e533afcc4857",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a1bd69e533afcc4857_candidate-arc-04.webp"
+    },
+    "/assets/candidates/arc/candidate-05.webp": {
+      "id": "6ac661a14edd02ee9b9318ff",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a14edd02ee9b9318ff_candidate-arc-05.webp"
+    },
+    "/assets/candidates/arc/candidate-06.webp": {
+      "id": "6ac661a14edd02ee9b93192b",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a14edd02ee9b93192b_candidate-arc-06.webp"
+    },
+    "/assets/candidates/arc/candidate-07.webp": {
+      "id": "6ac661a159d601e0b82ca3af",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a159d601e0b82ca3af_candidate-arc-07.webp"
+    },
+    "/assets/candidates/arc/candidate-08.webp": {
+      "id": "6ac661a112e03dee277a743b",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a112e03dee277a743b_candidate-arc-08.webp"
+    },
+    "/assets/candidates/arc/candidate-09.webp": {
+      "id": "6ac661a112e03dee277a7450",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a112e03dee277a7450_candidate-arc-09.webp"
+    },
+    "/assets/candidates/arc/candidate-10.webp": {
+      "id": "6ac661a199fd470cb5b5c9c6",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a199fd470cb5b5c9c6_candidate-arc-10.webp"
+    },
+    "/assets/candidates/ring/candidate-01.webp": {
+      "id": "6ac661a175e1dfd9b0862619",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a175e1dfd9b0862619_candidate-ring-01.webp"
+    },
+    "/assets/candidates/ring/candidate-02.webp": {
+      "id": "6ac661a2fb142ef8416102c6",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a2fb142ef8416102c6_candidate-ring-02.webp"
+    },
+    "/assets/candidates/ring/candidate-03.webp": {
+      "id": "6ac661a21fcff3cc1eea2e2c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a21fcff3cc1eea2e2c_candidate-ring-03.webp"
+    },
+    "/assets/candidates/ring/candidate-04.webp": {
+      "id": "6ac661a2d5858b1b317ba22f",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a2d5858b1b317ba22f_candidate-ring-04.webp"
+    },
+    "/assets/candidates/ring/candidate-05.webp": {
+      "id": "6ac661a2ea1e03b03dbafd1f",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a2ea1e03b03dbafd1f_candidate-ring-05.webp"
+    },
+    "/assets/candidates/ring/candidate-06.webp": {
+      "id": "6ac661a254b939a67fa9836c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a254b939a67fa9836c_candidate-ring-06.webp"
+    },
+    "/assets/candidates/ring/candidate-07.webp": {
+      "id": "6ac661a2fde96a79c88ebfdf",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a2fde96a79c88ebfdf_candidate-ring-07.webp"
+    },
+    "/assets/candidates/ring/candidate-08.webp": {
+      "id": "6ac661a23b644d69e9a38731",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a23b644d69e9a38731_candidate-ring-08.webp"
+    },
+    "/assets/candidates/ring/candidate-09.webp": {
+      "id": "6ac661a3ea1e03b03dbafd7a",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a3ea1e03b03dbafd7a_candidate-ring-09.webp"
+    },
+    "/assets/candidates/ring/candidate-10.webp": {
+      "id": "6ac661a3ea1e03b03dbafdb8",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a3ea1e03b03dbafdb8_candidate-ring-10.webp"
+    },
+    "_deleted_2026-10-07 (D-56, user confirmed)": "home/candidate-01..10.webp (uncropped Home portraits, replaced by candidates/arc and candidates/ring): ids 6abbebd78b8e492698b557ff, 6abbebd78b8e492698b55814, 6abbebd8ea8009d5390ab284, 6abbebd820c655289b9d7014, 6abbebd8f0ec45724fccb1df, 6abbebd88b8e492698b558a9, 6abbebd820c655289b9d7060, 6abbebd910f8c54b2ab12be4, 6abbebd9113c5daeca1d3dde, 6abbebd9113c5daeca1d3df3"
   },
   "variableCollections": {
     "Flint": "collection-d73e84dd-ed18-1d22-612a-95bbf12f2163"
@@ -1374,6 +1427,15 @@
       "Privacy link": "4920c00b-a26a-32ea-3bf1-c7b8ccef1a79",
       "Terms link": "4920c00b-a26a-32ea-3bf1-c7b8ccef1a7b",
       "Cookie settings link (stays #)": "4920c00b-a26a-32ea-3bf1-c7b8ccef1a7d"
+    },
+    "/404 utility page (2026-10-07)": {
+      "fk-page": "99147ded-50d4-be2a-e64c-0896d8ace400",
+      "main": "99147ded-50d4-be2a-e64c-0896d8ace3ff",
+      "Nav instance": "4cc289e7-1089-27de-7330-2e59a175b288",
+      "Page Hero instance": "4998bd3d-1f4f-fc7f-6d9e-bc4057dc0523",
+      "button row section": "d359aa82-2494-77ba-d571-947bb0d7ef06",
+      "Button instance": "70fb051b-feb9-65ec-5089-9235bc7a3a51",
+      "Footer instance": "fbb511a3-b0c9-5f7b-1ad5-b4798cbacee8"
     }
   }
 }

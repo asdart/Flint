@@ -27,7 +27,7 @@ export default function Nav({ variant = "light" }: NavProps) {
 
   return (
     <nav className={cx("fk-nav", variant === "dark" && "is-dark")} aria-label="Main">
-      <SmartLink href="/" className="fk-nav-logo">
+      <SmartLink href="/" className="fk-nav-logo" aria-label="Flint">
         <img className="fk-nav-logo-brand" src="/assets/flint-logo-brand.svg" alt="Flint" width={49} height={24} />
         <img className="fk-nav-logo-white" src="/assets/flint-logo-white.svg" alt="" width={49} height={24} />
       </SmartLink>
@@ -56,7 +56,7 @@ export default function Nav({ variant = "light" }: NavProps) {
       <div className="fk-nav-menu">
         <div className="fk-nav-menu-panel">
           <div className="fk-nav-menu-header">
-            <SmartLink href="/" className="fk-nav-logo">
+            <SmartLink href="/" className="fk-nav-logo" aria-label="Flint">
               <img src="/assets/flint-logo-brand.svg" alt="Flint" width={49} height={24} />
             </SmartLink>
             <button type="button" className="fk-nav-menu-close" aria-label="Close menu">

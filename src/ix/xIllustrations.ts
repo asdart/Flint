@@ -3,8 +3,8 @@
  * the Candidates page (hero orbit, How It Works rows), ported 1:1 from the legacy Framer Motion
  * components (ProximityOrbit, Send / Interview / ImmigrationFees / CasePrep illustrations).
  * It is the single source of the shipped code: `node scripts/build-x-illustrations.mjs` bundles this
- * file with Motion loaded from the CDN into docs/webflow/custom-code/x-illustrations.html, and the
- * local preview runs the same module with Motion from npm.
+ * file (with the easings of Motion's `cubicBezier`, no CDN request, D-57) into docs/webflow/custom-code/x-illustrations.html,
+ * and the local preview runs the same module.
  *
  * The static markup is the final frame: it is the first paint, and the whole state under reduced
  * motion (the script does nothing then). Otherwise each illustration puts its pieces in their start
@@ -17,7 +17,6 @@
  * of the resting frame. `portrait` has no motion.
  */
 
-import { animate } from "motion";
 import { clear, entrance, EASE_OUT, parts, runIllustrations, type Cleanup, type Ease, type From, type Illustration, type Playback, type Player } from "./illustrationCore";
 
 const LOAD = 0.35;
@@ -304,16 +303,8 @@ function orbit(root: HTMLElement, p: Player): Illustration {
   const move = (values: number[], index: number, to: number, duration: number, ease: Ease, write: (value: number) => void) => {
     const key = values === grown ? index : items.length + index;
     moves[key]?.stop();
-    moves[key] = p.track(
-      animate(values[index], to, {
-        duration,
-        ease,
-        onUpdate: (value) => {
-          values[index] = value;
-          write(value);
-        },
-      }),
-    );
+    const from = values[index];
+    moves[key] = p.tween(duration, (t) => write((values[index] = from + (to - from) * t)), ease);
   };
   const tipOf = (index: number) => (to: number) =>
     move(shown, index, to, 0.18, EASE_OUT, (value) => {
@@ -375,20 +366,14 @@ function orbit(root: HTMLElement, p: Player): Illustration {
     start: () => {
       resize.observe(root);
       items.forEach((_, index) => {
-        p.track(animate(0, 1, {
-          duration: ENTER_DURATION,
-          delay: index * ENTER_STAGGER,
-          ease: EASE_OUT,
-          onUpdate: (value) => (enter[index] = value),
-          onComplete: () => {
-            enter[index] = 1;
-            if (index === items.length - 1) {
-              /* Settled: opacity stays 1 inline (the CSS holds the avatars hidden until the script is ready). */
-              entered = true;
-              items.forEach((element) => (element.style.opacity = "1"));
-            }
-          },
-        }));
+        p.tween(ENTER_DURATION, (value) => (enter[index] = value), EASE_OUT, index * ENTER_STAGGER).then(() => {
+          enter[index] = 1;
+          if (index === items.length - 1) {
+            /* Settled: opacity stays 1 inline (the CSS holds the avatars hidden until the script is ready). */
+            entered = true;
+            items.forEach((element) => (element.style.opacity = "1"));
+          }
+        });
       });
       run();
     },

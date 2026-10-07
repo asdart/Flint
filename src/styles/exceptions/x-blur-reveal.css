@@ -5,7 +5,17 @@
    and the 16px rise are IX3 (a FromTo in ix-blur-reveal), not CSS. Reduced motion (decision D-30):
    the class's filter transition is switched off so the blur never plays; the selector is
    `:root .fk-blur-reveal[class]` (0,3,0) to beat the `is-delay-*` combos, which set their own
-   `transition` shorthand. */
+   `transition` shorthand.
+
+   Hero variant (decision D-53, 2026-10-07): the four above-the-fold headers (Home Hero, Candidates Hero,
+   Facility partners Hero, Article Hero) carry `data-ix="blur-reveal-hero"`, which no IX3 interaction
+   targets. Webflow hides `[data-ix="blur-reveal"] .fk-blur-reveal` (anti-flicker, `visibility: hidden`)
+   until IX3 has loaded, which delayed the mobile LCP by seconds; the hero reveal is instead this pure
+   CSS animation, the same look as ix-blur-reveal (opacity 0 to 100%, rise 16px to 0, blur 16px to 0,
+   0.75s CSS ease-in-out, 0.15s steps from `is-delay-*`), playing from first paint. It starts at opacity
+   0.01 so the text is a paint candidate (LCP) in the first frame. The resting blur and the class
+   transition are switched off here (nothing adds `is-revealed`); the animation is `backwards`, so
+   afterwards the element is just plain. Reduced motion: no animation, shown at once. */
 
 .fk-blur-reveal:not(.is-revealed) {
   filter: blur(16px);
@@ -14,5 +24,43 @@
 @media (prefers-reduced-motion: reduce) {
   :root .fk-blur-reveal[class] {
     transition: none;
+  }
+}
+
+@keyframes fk-blur-reveal-hero {
+  from {
+    opacity: 0.01;
+    transform: translateY(16px);
+    filter: blur(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+[data-ix="blur-reveal-hero"] .fk-blur-reveal[class] {
+  filter: none;
+  transition: none;
+  animation: fk-blur-reveal-hero 750ms cubic-bezier(0.42, 0, 0.58, 1) backwards;
+}
+
+[data-ix="blur-reveal-hero"] .fk-blur-reveal.is-delay-1 {
+  animation-delay: 150ms;
+}
+
+[data-ix="blur-reveal-hero"] .fk-blur-reveal.is-delay-2 {
+  animation-delay: 300ms;
+}
+
+[data-ix="blur-reveal-hero"] .fk-blur-reveal.is-delay-3 {
+  animation-delay: 450ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ix="blur-reveal-hero"] .fk-blur-reveal[class] {
+    animation: none;
   }
 }

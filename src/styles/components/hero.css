@@ -1,7 +1,7 @@
 /* fk-hero — Section / Hero, Home. The wheel is the Figma arc: 200×240 cards on a circle of
    1523px (card centres), 11° apart, so the centre pair sits at ±5.5°. Phone (≤767) is the same arc
-   scaled by 0.5683 (card 113.665×136.398), as drawn in Figma. Card images are cropped in % of the
-   card, so one crop serves both sizes.
+   scaled by 0.5683 (card 113.665×136.398), as drawn in Figma. Card images are pre-cropped 400x480 files
+   (`/assets/candidates/arc/`, D-56, rotation baked in) that fill the card (`fk-w-full fk-h-full`).
    The button row uses the shared `fk-section-header-action` primitive (+ `fk-pt-2-mobile`), not a
    block class; only the arc/cards/chips stay as block geometry here. */
 
@@ -122,80 +122,15 @@
   pointer-events: none;
 }
 
-.fk-hero-card-image.is-c1 {
-  top: -2.563%;
-  left: -57.52%;
-  width: 215.83%;
-  height: 224.742%;
-  transform: rotate(-1.38deg);
-}
 
-.fk-hero-card-image.is-c2 {
-  top: -11.879%;
-  left: -26.21%;
-  width: 154.445%;
-  height: 160.821%;
-  transform: rotate(-1.38deg);
-}
 
-.fk-hero-card-image.is-c3 {
-  top: -8.113%;
-  left: -28.275%;
-  width: 154.445%;
-  height: 160.821%;
-}
 
-.fk-hero-card-image.is-c4 {
-  top: 1.892%;
-  left: -44.43%;
-  width: 185.915%;
-  height: 154.925%;
-}
 
-.fk-hero-card-image.is-c5 {
-  top: -12.163%;
-  left: -43.63%;
-  width: 187.56%;
-  height: 195.304%;
-}
 
-.fk-hero-card-image.is-c6 {
-  top: -12.163%;
-  left: -43.63%;
-  width: 187.56%;
-  height: 195.304%;
-}
 
-.fk-hero-card-image.is-c7 {
-  top: -8.017%;
-  left: -28.125%;
-  width: 154.445%;
-  height: 160.821%;
-}
 
-.fk-hero-card-image.is-c8 {
-  top: -2.292%;
-  left: -57.555%;
-  width: 216.05%;
-  height: 224.971%;
-  transform: rotate(-1.38deg);
-}
 
-.fk-hero-card-image.is-c9 {
-  top: 3.925%;
-  left: -55.235%;
-  width: 213.375%;
-  height: 222.183%;
-  transform: rotate(-1.38deg);
-}
 
-.fk-hero-card-image.is-c10 {
-  top: -0.521%;
-  left: -73.02%;
-  width: 242.575%;
-  height: 252.592%;
-  transform: rotate(-1.38deg);
-}
 
 .fk-hero-card-chip {
   position: absolute;

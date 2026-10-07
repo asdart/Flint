@@ -1,13 +1,23 @@
-/** The ten candidate portraits of the Home hero arc (`ArcStage`); the Candidates hero ring reuses them. `size` is the card's largest displayed size (the `fk-hero-card-image` in `ArcStage`) and `orbitSize` the Candidates ring's (`fk-orbit-image`), both aspect-correct to the file (contract 1.12). */
+/**
+ * The ten candidate portraits shared by the Home hero arc and the Candidates CTA arc (`ArcStage`) and the Candidates
+ * hero ring (`CandidatesHero`). Each slot shows only a window of a portrait, so each consumer has its own pre-cropped file
+ * (D-56): `arc` is the 200x240 card (`fk-hero-card-image`, 400x480 file, rotation baked in where the old crop had it) and
+ * `ring` the 80x80 round avatar (`fk-orbit-image`, 184x184 file, 2x the hover-scaled 92px). `size` is the largest displayed
+ * size, aspect-correct to the file (contract 1.12, rule 15). The uncropped `/assets/home/candidate-NN.webp` are no longer used.
+ */
 export const CANDIDATES = [
-  { image: "/assets/home/candidate-01.webp", size: [539, 539], orbitSize: [200, 200], name: "Maria", flag: "/assets/flags/ph.svg" },
-  { image: "/assets/home/candidate-02.webp", size: [309, 386], orbitSize: [161, 201], name: "Chrismene", flag: "/assets/flags/ht.svg" },
-  { image: "/assets/home/candidate-03.webp", size: [309, 402], orbitSize: [154, 200], name: "Wanjiru", flag: "/assets/flags/ke.svg" },
-  { image: "/assets/home/candidate-04.webp", size: [372, 372], orbitSize: [200, 200], name: "Kwame", flag: "/assets/flags/gh.svg" },
-  { image: "/assets/home/candidate-05.webp", size: [376, 470], orbitSize: [161, 201], name: "Emeka", flag: "/assets/flags/ng.svg" },
-  { image: "/assets/home/candidate-06.webp", size: [376, 470], orbitSize: [161, 201], name: "Ama", flag: "/assets/flags/gh.svg" },
-  { image: "/assets/home/candidate-07.webp", size: [309, 412], orbitSize: [150, 200], name: "Daniel", flag: "/assets/flags/ke.svg" },
-  { image: "/assets/home/candidate-08.webp", size: [540, 540], orbitSize: [200, 200], name: "Ngozi", flag: "/assets/flags/ng.svg" },
-  { image: "/assets/home/candidate-09.webp", size: [427, 569], orbitSize: [150, 200], name: "Linh", flag: "/assets/flags/vn.svg" },
-  { image: "/assets/home/candidate-10.webp", size: [606, 606], orbitSize: [200, 200], name: "Samuel", flag: "/assets/flags/et.svg" },
+  { arc: "/assets/candidates/arc/candidate-01.webp", ring: "/assets/candidates/ring/candidate-01.webp", name: "Maria", flag: "/assets/flags/ph.svg" },
+  { arc: "/assets/candidates/arc/candidate-02.webp", ring: "/assets/candidates/ring/candidate-02.webp", name: "Chrismene", flag: "/assets/flags/ht.svg" },
+  { arc: "/assets/candidates/arc/candidate-03.webp", ring: "/assets/candidates/ring/candidate-03.webp", name: "Wanjiru", flag: "/assets/flags/ke.svg" },
+  { arc: "/assets/candidates/arc/candidate-04.webp", ring: "/assets/candidates/ring/candidate-04.webp", name: "Kwame", flag: "/assets/flags/gh.svg" },
+  { arc: "/assets/candidates/arc/candidate-05.webp", ring: "/assets/candidates/ring/candidate-05.webp", name: "Emeka", flag: "/assets/flags/ng.svg" },
+  { arc: "/assets/candidates/arc/candidate-06.webp", ring: "/assets/candidates/ring/candidate-06.webp", name: "Ama", flag: "/assets/flags/gh.svg" },
+  { arc: "/assets/candidates/arc/candidate-07.webp", ring: "/assets/candidates/ring/candidate-07.webp", name: "Daniel", flag: "/assets/flags/ke.svg" },
+  { arc: "/assets/candidates/arc/candidate-08.webp", ring: "/assets/candidates/ring/candidate-08.webp", name: "Ngozi", flag: "/assets/flags/ng.svg" },
+  { arc: "/assets/candidates/arc/candidate-09.webp", ring: "/assets/candidates/ring/candidate-09.webp", name: "Linh", flag: "/assets/flags/vn.svg" },
+  { arc: "/assets/candidates/arc/candidate-10.webp", ring: "/assets/candidates/ring/candidate-10.webp", name: "Samuel", flag: "/assets/flags/et.svg" },
 ] as const;
+
+/** Largest displayed sizes (CSS px) of the cropped files. */
+export const ARC_IMAGE_SIZE = [200, 240] as const;
+export const RING_IMAGE_SIZE = [80, 80] as const;

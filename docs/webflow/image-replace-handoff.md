@@ -43,6 +43,8 @@ None remain: all 15 re-exported assets were replaced in the Designer and verifie
 | `fk-cta-window-image` | `home/cta-room.webp` | 38e6a1fb (1) | none | **577 × 485** ✓ |
 | `fk-cta-photo` | `home/cta-photo.webp` | 91ba1de8 (1) | 1156x971 | **578 × 486** ✓ |
 
+> **Superseded by D-56 (2026-10-07) for the portraits below:** every `fk-hero-card-image is-cN` and `fk-orbit-image is-cN` row (Home Hero, Candidates ring and CTA arc) no longer exists. The elements use `candidates/arc/` and `candidates/ring/` files without `is-cN` combos; Designer Image width / height to set: **200 × 240** on the 20 Home Hero cards and the 20 Candidates CTA-arc cards, **80 × 80** on the 12 ring images. The old `home/candidate-NN` rows and sizes in this file are historical.
+
 ### Component `Section / Hero` (edit the definition once; Home gets it from the single instance)
 
 | Element (class) | File | Element ids | Now on staging | Set to W × H |

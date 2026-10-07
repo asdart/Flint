@@ -10,6 +10,12 @@
 /* x-blur-reveal */
 .fk-blur-reveal:not(.is-revealed){filter:blur(16px)}
 @media (prefers-reduced-motion:reduce){:root .fk-blur-reveal[class]{transition:none}}
+@keyframes fk-blur-reveal-hero{from{opacity:.01;transform:translateY(16px);filter:blur(16px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+[data-ix="blur-reveal-hero"] .fk-blur-reveal[class]{filter:none;transition:none;animation:fk-blur-reveal-hero 750ms cubic-bezier(.42,0,.58,1) backwards}
+[data-ix="blur-reveal-hero"] .fk-blur-reveal.is-delay-1{animation-delay:150ms}
+[data-ix="blur-reveal-hero"] .fk-blur-reveal.is-delay-2{animation-delay:300ms}
+[data-ix="blur-reveal-hero"] .fk-blur-reveal.is-delay-3{animation-delay:450ms}
+@media (prefers-reduced-motion:reduce){[data-ix="blur-reveal-hero"] .fk-blur-reveal[class]{animation:none}}
 /* x-card-hover */
 .fk-card:hover .fk-card-title{color:var(--_flint---color-white)}
 .fk-card:hover .fk-card-text{color:var(--_flint---color-white);opacity:.6}

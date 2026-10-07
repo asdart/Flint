@@ -1,8 +1,9 @@
 /*
  * Exception x-carousel (docs/webflow/interactions.md, roadmap D-37): the one shared carousel script.
  * It is the single source of the shipped code: `node scripts/build-x-carousel.mjs` bundles this file
- * with Motion loaded from the CDN into docs/webflow/custom-code/x-carousel.html, and the local
- * preview runs the same module with Motion from npm.
+ * with Motion's `JSAnimation` (the spring / tween engine, 21 KB; the full `animate` is 55 KB, D-54)
+ * into one self-contained docs/webflow/custom-code/x-carousel.html, and the local preview runs the
+ * same module.
  *
  * It keeps a current index, animates forward and backward with Motion, and takes the geometry from
  * the CSS: a slide is "current" when it carries the current class, so the script toggles that class,
@@ -29,10 +30,10 @@
  * Testimonial cards (.fk-testimonial-card-quote / -scrim) open on hover while their slide is current.
  */
 
-import { animate } from "motion";
+import { JSAnimation, cubicBezier } from "motion";
 
 type Cleanup = () => void;
-type Playback = { stop: () => void; pause: () => void; play: () => void };
+
 
 type Frame = { width: number; height: number; left: number; right: number; opacity: number; scale: number; card: number };
 
@@ -50,6 +51,47 @@ const SWIPE_GAIN = 0.55;
 
 const mod = (value: number, divisor: number) => ((value % divisor) + divisor) % divisor;
 const px = (value: number) => `${value}px`;
+const translateX = (value: number) => `translateX(${value}px)`;
+
+/*
+ * `animate` replacement on Motion's JSAnimation: the same engine (spring, cubic-bezier, linear) without
+ * the 35 KB of DOM and value plumbing. One tween drives numeric style values of one element from `a` to
+ * `b` with progress p (a spring overshoots p past 1, like Motion's own values do). Starting a new tween
+ * on a property takes it over from the running one, which stops writing it.
+ */
+type Prop = [name: string, from: number, to: number, format: (value: number) => string];
+type Spec = { type?: "spring"; duration: number; bounce?: number; ease?: readonly [number, number, number, number] | "linear" };
+type Tween = { stop: () => void; pause: () => void; play: () => void; cancel: () => void; then: (done: () => void) => void };
+
+const owners = new WeakMap<Element, Map<string, object>>();
+const num = (value: number) => String(value);
+const pct = (value: number) => `${value}%`;
+const scale = (value: number) => `scale(${value})`;
+
+function tween(element: HTMLElement, props: Prop[], spec: Spec): Tween {
+  const owner = {};
+  const claimed = owners.get(element) ?? new Map<string, object>();
+  owners.set(element, claimed);
+  props.forEach(([name]) => claimed.set(name, owner));
+  const write = (p: number) =>
+    props.forEach(([name, from, to, format]) => {
+      if (claimed.get(name) === owner) element.style[name as never] = format(from + (to - from) * p);
+    });
+  const ease = spec.ease === "linear" ? (t: number) => t : spec.ease ? cubicBezier(...spec.ease) : undefined;
+  const animation = new JSAnimation({
+    keyframes: [0, 1],
+    duration: spec.duration * 1000,
+    ...(spec.type ? { type: spec.type, bounce: spec.bounce } : { ease }),
+    onUpdate: write,
+  });
+  return {
+    stop: () => animation.stop(),
+    pause: () => animation.pause(),
+    play: () => animation.play(),
+    cancel: () => animation.cancel(),
+    then: (done) => void animation.then(done, () => {}),
+  };
+}
 
 function scaleOf(element: Element) {
   const transform = getComputedStyle(element).transform;
@@ -94,8 +136,8 @@ function setup(root: HTMLElement): Cleanup {
   /* No slide flagged: start on the first card of the middle copy, so a repeated set already fills both sides at first paint. */
   const flagged = slides.findIndex((slide) => slide.classList.contains(currentClass));
   let current = flagged >= 0 ? flagged : count * Math.floor(copies / 2);
-  let playing: Playback[] = [];
-  let clock: ReturnType<typeof animate> | null = null;
+  let playing: Tween[] = [];
+  let clock: Tween | null = null;
   let hovering = false;
   let dragging = false;
   let visible = true;
@@ -237,18 +279,18 @@ function setup(root: HTMLElement): Cleanup {
     slides.forEach((slide, index) => {
       const a = before[index];
       const b = target[index];
-      const values: Record<string, string[]> = {};
-      if (a.width !== b.width) values.width = [px(a.width), px(b.width)];
-      if (a.height !== b.height) values.height = [px(a.height), px(b.height)];
-      if (a.left !== b.left) values.marginLeft = [px(a.left), px(b.left)];
-      if (a.right !== b.right) values.marginRight = [px(a.right), px(b.right)];
-      if (Object.keys(values).length) playing.push(animate(slide, values, motion));
-      if (a.scale !== b.scale) playing.push(animate(slide, { scale: [a.scale, b.scale] }, motion));
-      if (a.opacity !== b.opacity) playing.push(animate(slide, { opacity: [a.opacity, b.opacity] }, opacity));
+      const values: Prop[] = [];
+      if (a.width !== b.width) values.push(["width", a.width, b.width, px]);
+      if (a.height !== b.height) values.push(["height", a.height, b.height, px]);
+      if (a.left !== b.left) values.push(["marginLeft", a.left, b.left, px]);
+      if (a.right !== b.right) values.push(["marginRight", a.right, b.right, px]);
+      if (values.length) playing.push(tween(slide, values, motion));
+      if (a.scale !== b.scale) playing.push(tween(slide, [["transform", a.scale, b.scale, scale]], motion));
+      if (a.opacity !== b.opacity) playing.push(tween(slide, [["opacity", a.opacity, b.opacity, num]], opacity));
       const card = cards[index];
-      if (card && a.card !== b.card) playing.push(animate(card, { scale: [a.card, b.card] }, motion));
+      if (card && a.card !== b.card) playing.push(tween(card, [["transform", a.card, b.card, scale]], motion));
     });
-    playing.push(animate(track, { x: [startX, targetX] }, motion));
+    playing.push(tween(track, [["transform", startX, targetX, translateX]], motion));
   };
 
   /* ---- dots, clock, arrows ---- */
@@ -268,7 +310,7 @@ function setup(root: HTMLElement): Cleanup {
       const next = parseFloat(getComputedStyle(bar).width);
       if (instant || reduced.matches || width === next) return;
       bar.style.width = px(width);
-      animate(bar, { width: [px(width), px(next)] }, { duration: BAR_MS, ease: EASE_OUT }).then(() =>
+      tween(bar, [["width", width, next, px]], { duration: BAR_MS, ease: EASE_OUT }).then(() =>
         bar.style.removeProperty("width"),
       );
     });
@@ -290,7 +332,7 @@ function setup(root: HTMLElement): Cleanup {
     });
     const fill = fills[shown];
     if (!autoplay || reduced.matches || !fill || disposed) return;
-    const own = animate(fill, { width: ["0%", "100%"] }, { duration: autoplay / 1000, ease: "linear" });
+    const own = tween(fill, [["width", 0, 100, pct]], { duration: autoplay / 1000, ease: "linear" });
     clock = own;
     own.then(() => {
       if (clock === own && !disposed) next();
@@ -368,10 +410,10 @@ function setup(root: HTMLElement): Cleanup {
       if (!quote || open === value) return;
       open = value;
       quote.classList.toggle("is-open", value);
-      animate(quote, { height: [px(parseFloat(getComputedStyle(quote).height)), value ? "160px" : "104px"] }, { duration: OPEN_MS, ease: EASE_OUT }).then(() => {
+      tween(quote, [["height", parseFloat(getComputedStyle(quote).height), value ? 160 : 104, px]], { duration: OPEN_MS, ease: EASE_OUT }).then(() => {
         if (open === value) quote.style.height = value ? "160px" : "";
       });
-      if (scrim) animate(scrim, { opacity: [Number(getComputedStyle(scrim).opacity), value ? 0.9 : 0.6] }, { duration: OPEN_MS, ease: EASE_OUT }).then(() => {
+      if (scrim) tween(scrim, [["opacity", Number(getComputedStyle(scrim).opacity), value ? 0.9 : 0.6, num]], { duration: OPEN_MS, ease: EASE_OUT }).then(() => {
         if (open === value && !value) scrim.style.opacity = "";
       });
     };
@@ -432,7 +474,7 @@ function setup(root: HTMLElement): Cleanup {
     else if (event.type !== "pointercancel" && (dx > SWIPE_DISTANCE || velocity > SWIPE_VELOCITY)) prev();
     else {
       const x = translateXOf(track);
-      playing.push(animate(track, { x: [x, start.baseX] }, reduced.matches ? { duration: 0 } : { duration: 0.45, ease: EASE_IN_OUT }));
+      playing.push(tween(track, [["transform", x, start.baseX, translateX]], reduced.matches ? { duration: 0 } : { duration: 0.45, ease: EASE_IN_OUT }));
       syncClock();
     }
   };
