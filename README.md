@@ -74,6 +74,5 @@ exported from Figma are in `public/assets/`.
 ## Notes
 
 - Testimonial cards reveal the written quote on hover, and the carousel arrows cycle the cards.
-- The FAQ is a working accordion. Only the first answer came from the design; the rest are
-  placeholder copy to review with the client.
+- The FAQ is a working accordion with the final client copy (2026-10-07).
 - The "How Flint Works" image slots are empty placeholder panels in the design and are implemented as such.

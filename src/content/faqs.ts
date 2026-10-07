@@ -1,6 +1,6 @@
 /** Candidates FAQ (Figma 5543:1072). One source for the accordion and its `FAQPage` JSON-LD
- * (seo.md S-08): on Webflow the same pairs go into the page's `jsonLdSchema` setting. Answers after
- * the first are placeholder copy the client replaces (D-38); keep the schema in step when they do. */
+ * (seo.md S-08): on Webflow the same pairs go into the page's `jsonLdSchema` setting. The answers are
+ * the final client copy (2026-10-07, D-38); keep the schema in step whenever they change. */
 export type Faq = { question: string; answer: string };
 
 export const FAQS: Faq[] = [
@@ -12,12 +12,12 @@ export const FAQS: Faq[] = [
   {
     question: "Where are the job locations?",
     answer:
-      "We partner with healthcare facilities in 23 states across the country. During your interviews you can discuss locations and choose the facility that fits you best.",
+      "Most openings are in smaller or rural areas, since those facilities sponsor green cards. You review available roles and only move forward if you choose one.",
   },
   {
     question: "How long is the commitment?",
     answer:
-      "Most placements ask for a 3-5 year commitment while your Green Card processes, giving you stable employment throughout the process.",
+      "The commitment term aligns with the government’s green card processing time (about 3 years for RNs). While you’re working, your green card is processing.",
   },
   {
     question: "What if I am on a temporary or pending status?",
@@ -25,24 +25,24 @@ export const FAQS: Faq[] = [
       "Flint is designed for healthcare professionals on temporary status. We help you move from temporary or pending status to permanent residency through employer sponsorship.",
   },
   {
-    question: "What if I do not have work authorization?",
+    question: "Do I need U.S. work authorization?",
     answer:
-      "Reach out to us anyway — our team can review your situation and let you know what pathways may be available to you.",
+      "Yes — you must be authorized to work in the U.S. in order to be eligible for the Flint program.",
   },
   {
     question: "Do you help with relocation and housing?",
     answer:
-      "Yes. We provide relocation assistance and a moving bonus, and our team can help you get settled in your new city.",
+      "Yes — Flint provides relocation assistance and works with facilities to help identify housing options. In many locations, you will need a car.",
   },
   {
     question: "What about my family?",
     answer:
-      "Your spouse and children can be included in your Green Card application, so your family can build a permanent future with you.",
+      "Spouses and children are included in the green card sponsorship and would get the green card at the same time as you.",
   },
   {
     question: "Is this real? Is Flint a scam?",
     answer:
-      "Flint is a real program working with licensed immigration attorneys and accredited healthcare facilities. We’re happy to connect you with candidates we’ve already placed.",
+      "The Flint Program is completely real and free for candidates. Flint partners with licensed healthcare organizations across the U.S. to make green card sponsorship possible.",
   },
 ];
 
