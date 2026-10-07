@@ -11,7 +11,7 @@ export default function NotFoundPage() {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <PageHero title="Page not found" body="That page doesn't exist or has moved. Head back to the home page or read the Flint blog." />
         <section className="fk-section is-padded-bottom">
           <div className="fk-container">

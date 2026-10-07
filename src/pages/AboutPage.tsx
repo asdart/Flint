@@ -26,7 +26,7 @@ export default function AboutPage() {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <AboutHero />
         <AboutMission />
         <AboutTeam />

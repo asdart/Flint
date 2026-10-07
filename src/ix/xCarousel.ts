@@ -192,7 +192,10 @@ function setup(root: HTMLElement): Cleanup {
   const markClones = () => {
     if (copies === 1) return;
     const real = Math.floor(current / count);
-    slides.forEach((slide, i) => slide.toggleAttribute("aria-hidden", Math.floor(i / count) !== real));
+    slides.forEach((slide, i) => {
+      if (Math.floor(i / count) !== real) slide.setAttribute("aria-hidden", "true");
+      else slide.removeAttribute("aria-hidden");
+    });
   };
 
   /** translateX that puts the slide at `index` where the alignment says (track at x = 0): centre under the viewport's centre, or left edge on the viewport's left edge. */

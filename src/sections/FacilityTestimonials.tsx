@@ -47,19 +47,26 @@ const RING = [...QUOTES, ...QUOTES, ...QUOTES];
 
 /**
  * Section / Facility Testimonials (Figma 5543:1321 > 5543:1322): a left-aligned row of Quote Cards on a brand-light
- * panel, one dot per card. Page-level markup (D-17, one page uses it). No visible title, so the section has an
- * aria-label. Motion is `x-carousel` (tween, autoplay 5s, `data-x-align="start"`): the track starts at the
+ * panel, one dot per card. Page-level markup (D-17, one page uses it). No visible title, so the carousel region
+ * (`role="region"` + `aria-roledescription="carousel"`) carries the aria-label. Motion is `x-carousel` (tween, autoplay 5s, `data-x-align="start"`): the track starts at the
  * container's left edge and the cards run off the panel's right edge.
  */
 export default function FacilityTestimonials() {
   return (
-    <section className="fk-section" aria-label="Testimonials">
-      <div className="fk-panel fk-bg-brand-light" data-x-carousel="tween" data-x-autoplay="5000" data-x-copies="3" data-x-align="start">
+    <section className="fk-section">
+      <div className="fk-panel fk-bg-brand-light" data-x-carousel="tween" data-x-autoplay="5000" data-x-copies="3" data-x-align="start" role="region" aria-roledescription="carousel" aria-label="Facility testimonials">
         <div className="fk-panel-content">
           <div className="fk-container">
             <div className="fk-flex fk-gap-2" data-x-track>
               {RING.map((quote, index) => (
-                <div key={`${quote.name}-${index}`} className="fk-flex fk-shrink-0" aria-hidden={index >= QUOTES.length || undefined}>
+                <div
+                  key={`${quote.name}-${index}`}
+                  className="fk-flex fk-shrink-0"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${(index % QUOTES.length) + 1} of ${QUOTES.length}`}
+                  aria-hidden={index >= QUOTES.length || undefined}
+                >
                   <QuoteCard {...quote} />
                 </div>
               ))}

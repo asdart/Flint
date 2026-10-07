@@ -25,7 +25,7 @@ function PostTemplate({ post }: { post: PostWithRefs }) {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <ArticleHero post={post} />
         <ArticleBody post={post} />
         <ArticleNewsletter />

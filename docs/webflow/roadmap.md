@@ -49,7 +49,7 @@ The order the user agreed on 2026-09-30. Page pre-plans read from the final Figm
 **Agent work now (no client input):**
 1. **SEO settings: done 2026-10-07** (published to staging, checked): category `noindex` (S-04, item toggle + `x-noindex-categories`), auto sitemap on, robots.txt set, `llms.txt` uploaded (D-14), 404 page built and live with a real 404 status. **Left:** switch `llms.txt` links to the production domain and re-upload, check robots / sitemap / canonical on the custom domain (P-06); the hidden default Utility Page Wrap on the 404 page was deleted by the user (2026-10-07)
 2. ~~**QA checks still open**~~ **settled 2026-10-07 (user):** primary button hover tested on staging, P-20 empty states and the style guide need no check, no Figma comparison. PageSpeed (S-15) run 2026-10-07 and fixed (D-53 to D-57): Candidates 95, Post 95; left: re-run Home and Facility partners (86 / 84 right after a publish, 93 / 90 before)
-3. **Minor a11y and registry drift:** carousels without a role / label, no skip link or `header` landmark (optional), `components.md` page rows still saying "draft" / "proposed", Blog settings vs the registry
+3. **~~Minor a11y and registry drift~~ done 2026-10-07 (Stage H-B, D-60, published to staging):** carousels without a role / label, no skip link or `header` landmark (optional), `components.md` page rows still saying "draft" / "proposed", Blog settings vs the registry
 
 **Needs the client or the designer:**
 - **P-06** custom domain and DNS (canonical, robots, sitemap follow), **P-17** default social image, **P-14** post `FAQPage` decision and real social URLs for `x-schema-site`, a GTM id for `x-deferred-tracking`
@@ -153,6 +153,7 @@ Short index. The full text, date and where each decision is applied are in [`arc
 | D-57 | Amends D-54: the two illustration scripts are self-contained (own rAF runner, Motion `cubicBezier`, IO `inView`; JSAnimation was 63 / 58 KB, over the limit), so no CDN import remains; rule: shipped scripts are self-contained and the footer block stays under 50,000 characters (user, 2026-10-07, `archive/decisions.md`) |
 | D-58 | `UI / Arc Stage` component (no props) replaces the arc in `Section / Hero` and the Candidates CTA; images lazy everywhere (Home's first 10 cards were eager); Designer 200x240 now once inside the component, set by the user 2026-10-07 together with the ring 80x80; repo `public/assets/home/candidate-NN.webp` removed (user, 2026-10-07, `archive/decisions.md`) |
 | D-59 | Home hero is page markup: the user unlinked and deleted the `Section / Hero` component; the arc stays a `UI / Arc Stage` instance (user, 2026-10-07, `archive/decisions.md`) |
+| D-60 | Landmarks (header + skip link, `main#main`) and carousel ARIA; `x-carousel` clone `aria-hidden` fix (agent, 2026-10-07, `archive/decisions.md`). Final structure `header.fk-nav` + `nav` link lists, synced and published to staging 2026-10-07 |
 | D-40 | About's Mission, Story, Team and Residency are page-level markup, not components (user decision 2026-10-01): `Section / Text Panel`, `Team Grid` and `Media Split` are retired as components (Facility partners won't use Media Split); the Footer keeps Home's copy; `x-modal` was About-only at the time (page-level on About and Home since 2026-10-06); no responsive background utility, no bigger stat text sizes |
 
 ### Open

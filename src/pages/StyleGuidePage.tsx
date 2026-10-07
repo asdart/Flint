@@ -49,7 +49,7 @@ export default function StyleGuidePage() {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <section className="fk-section">
           <div className="fk-panel fk-bg-tertiary">
             <div className="fk-container is-content">

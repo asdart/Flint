@@ -26,13 +26,16 @@ export default function Nav({ variant = "light" }: NavProps) {
   const { pathname } = useLocation();
 
   return (
-    <nav className={cx("fk-nav", variant === "dark" && "is-dark")} aria-label="Main">
+    <header className={cx("fk-nav", variant === "dark" && "is-dark")}>
+      <a href="#main" className="fk-skip-link">
+        Skip to content
+      </a>
       <SmartLink href="/" className="fk-nav-logo" aria-label="Flint">
         <img className="fk-nav-logo-brand" src="/assets/flint-logo-brand.svg" alt="Flint" width={49} height={24} />
         <img className="fk-nav-logo-white" src="/assets/flint-logo-white.svg" alt="" width={49} height={24} />
       </SmartLink>
 
-      <div className="fk-nav-links">
+      <nav className="fk-nav-links" aria-label="Main">
         {LINKS.map((link) => (
           <SmartLink
             key={link.href}
@@ -42,7 +45,7 @@ export default function Nav({ variant = "light" }: NavProps) {
             {link.label}
           </SmartLink>
         ))}
-      </div>
+      </nav>
 
       <div className="fk-nav-actions">
         <div className="fk-hidden-tablet">
@@ -63,7 +66,7 @@ export default function Nav({ variant = "light" }: NavProps) {
               <img className="fk-icon" src={closeIcon} alt="" width={24} height={24} />
             </button>
           </div>
-          <div className="fk-nav-menu-links">
+          <nav className="fk-nav-menu-links" aria-label="Main">
             {LINKS.map((link) => (
               <SmartLink
                 key={link.href}
@@ -73,12 +76,12 @@ export default function Nav({ variant = "light" }: NavProps) {
                 {link.label}
               </SmartLink>
             ))}
-          </div>
+          </nav>
           <div className="fk-nav-menu-footer">
             <Button variant="secondary" link="https://web.withflint.com/apply" fullWidth />
           </div>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }

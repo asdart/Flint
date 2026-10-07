@@ -55,6 +55,7 @@
 @import "./components/ring.css";
 @import "./components/logo-grid.css";
 @import "./components/modal.css";
+@import "./components/skip-link.css";
 /* Generated utilities (scripts/gen-utilities.mjs): stacked after the main class. */
 @import "./utilities.css";
 /* Custom-code exceptions (interactions.md): installed as site custom code, not as classes. */

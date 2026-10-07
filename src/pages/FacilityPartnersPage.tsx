@@ -22,7 +22,7 @@ export default function FacilityPartnersPage() {
   return (
     <div className="fk-page">
       <Nav variant="dark" />
-      <main>
+      <main id="main">
         <FacilityPartnersHero />
         <LogoMarquee />
         <StatsBand variant="spread" stats={STATS} />

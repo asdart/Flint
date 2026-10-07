@@ -42,7 +42,7 @@ export default function Testimonials({
 }: TestimonialsProps) {
   return (
     <section className="fk-section">
-      <div className="fk-panel fk-bg-brand-light" data-x-carousel="spring" data-x-copies="3" data-x-current="is-center">
+      <div className="fk-panel fk-bg-brand-light" data-x-carousel="spring" data-x-copies="3" data-x-current="is-center" role="region" aria-roledescription="carousel" aria-label="Candidate testimonials">
         <div className="fk-panel-content">
           <div className="fk-container">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
@@ -63,6 +63,9 @@ export default function Testimonials({
                   <div
                     key={`${testimonial.image}-${index}`}
                     className={cx("fk-testimonials-slide", index === CURRENT && "is-center")}
+                    role="group"
+                    aria-roledescription="slide"
+                    aria-label={`${(index % TESTIMONIALS.length) + 1} of ${TESTIMONIALS.length}`}
                     aria-hidden={isClone || undefined}
                   >
                     <TestimonialCard {...testimonial} />

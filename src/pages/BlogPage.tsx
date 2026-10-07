@@ -15,7 +15,7 @@ export default function BlogPage() {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <BlogHero />
         <Newsletter />
         <PostIndex key={slug ?? "all"} category={slug} />

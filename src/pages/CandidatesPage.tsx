@@ -22,7 +22,7 @@ export default function CandidatesPage() {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <CandidatesHero />
         <StatsBand
           variant="default"

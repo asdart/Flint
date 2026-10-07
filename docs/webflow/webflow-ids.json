@@ -70,6 +70,12 @@
       "variants": {
         "Light": "base",
         "Dark": "664f035a-61cf-0d26-ca17-3cfd801d6fa8"
+      },
+      "a11yRestructure2026-10-07": {
+        "status": "PARTIAL (blocked on two removals, see sync-log)",
+        "innerNav": "09d55e04-3728-344a-9783-58c61ab3a969",
+        "skipLink": "a4505271-c5ae-42fc-58ec-122e32658f48",
+        "root": "d411a8cc-2529-1e3e-b6aa-237ec7231143 (tag now header, still carries class fk-nav and aria-label Main until the user approves removing them)"
       }
     },
     "Global / Featured post": {
@@ -1440,5 +1446,8 @@
       "Button instance": "70fb051b-feb9-65ec-5089-9235bc7a3a51",
       "Footer instance": "fbb511a3-b0c9-5f7b-1ad5-b4798cbacee8"
     }
+  },
+  "styles": {
+    "fk-skip-link": "2a8d1f34-c194-928f-d34f-b90b871089ee"
   }
 }

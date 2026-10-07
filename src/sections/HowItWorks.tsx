@@ -64,7 +64,7 @@ const STEPS = [
 export default function HowItWorks() {
   return (
     <section className="fk-section is-x-flush">
-      <div className="fk-how fk-flex fk-flex-col fk-gap-12 fk-overflow-clip" data-x-carousel="tween" data-x-autoplay="5000">
+      <div className="fk-how fk-flex fk-flex-col fk-gap-12 fk-overflow-clip" data-x-carousel="tween" data-x-autoplay="5000" role="region" aria-roledescription="carousel" aria-label="How Flint works">
         <div className="fk-container">
           <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
             <div className="fk-blur-reveal">
@@ -87,6 +87,9 @@ export default function HowItWorks() {
                     <div
                       key={step.title}
                       className={cx("fk-how-slide", index === 0 && "is-active")}
+                      role="group"
+                      aria-roledescription="slide"
+                      aria-label={`${number} of ${STEPS.length}`}
                     >
                       <article
                         className={cx(

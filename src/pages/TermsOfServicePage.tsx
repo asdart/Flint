@@ -12,7 +12,7 @@ export default function TermsOfServicePage() {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <PageHero title={termsOfService.title} body={`Effective date: ${termsOfService.effectiveDate}`} />
         <LegalBody page={termsOfService} />
       </main>

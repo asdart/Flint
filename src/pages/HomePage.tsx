@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
         <LogoMarquee />
         <TwoWays />

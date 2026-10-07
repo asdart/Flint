@@ -1,0 +1,40 @@
+/*
+ * fk-skip-link — "Skip to content", the first focusable element on every page (inside `Global / Nav`, before the
+ * bar). Parked above the viewport until keyboard focus (Focused (keyboard) state in Webflow), then it drops in at the
+ * top left over the Nav, Light or Dark: its own white pill with ink text, so it reads on both. `href="#main"` targets
+ * the page's `main` (`id="main"`). 40px tall, above the 24px tap-target minimum.
+ */
+
+.fk-skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2-5) var(--space-5);
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+  box-shadow:
+    0 2px 2.5px rgba(0, 0, 0, 0.03),
+    0 9px 4.5px rgba(0, 0, 0, 0.03),
+    0 19px 6px rgba(0, 0, 0, 0.01);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.028px;
+  white-space: nowrap;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.fk-skip-link:focus-visible {
+  outline: none;
+  transform: translateY(0);
+  box-shadow:
+    0 0 0 2px var(--color-white),
+    0 0 0 4px var(--color-brand-focus);
+}

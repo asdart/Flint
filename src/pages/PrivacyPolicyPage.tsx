@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="fk-page">
       <Nav />
-      <main>
+      <main id="main">
         <PageHero title={privacyPolicy.title} body={`Effective date: ${privacyPolicy.effectiveDate}`} />
         <LegalBody page={privacyPolicy} />
       </main>
