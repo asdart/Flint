@@ -4,7 +4,7 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.12 (2026-10-06). 1.12: Designer Image width/height = the largest displayed size, aspect-correct, because Webflow builds `sizes` from it; files stay 2×. 1.11: the legacy code is gone (every page is rebuilt): no
+- **Contract version:** 1.12 (2026-10-06). 1.12: Designer Image width/height = the largest displayed size, aspect-correct, because Webflow builds `sizes` from it; files stay 2×. Amended 2026-10-07: CMS-bound images take their largest displayed box size too (the Designer can't leave the fields empty and writes `Auto` otherwise). 1.11: the legacy code is gone (every page is rebuilt): no
   Tailwind, Framer Motion or `src/pages/legacy/`; §8 now says how the preview stands in for Webflow's own base
   stylesheet (`webflow-base.css`). 1.10: every Image added in Webflow gets its alt text and, if static, the Designer's
   Image width / height (rule 15). 1.9: the Rich Text descendant rules (`.fk-article-body <tag>`) are the custom-code
@@ -130,7 +130,7 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
     (`(max-width: Wpx) 100vw, Wpx`), so the file's intrinsic size would make desktop browsers fetch the
     full file; files themselves stay at 2× their largest displayed width. Several elements that show one
     file at different sizes each get their own value. SVG images keep their file's size.
-    A CMS-bound image keeps both fields empty (never "Auto"). The MCP can't set width/height, so an agent
+    A CMS-bound image takes the largest displayed size of its box (width, and the box height at that width, since it is `object-fit: cover` in a fixed-ratio box), because the Designer can't leave the fields empty and writes `Auto` otherwise. The MCP can't set width/height, so an agent
     that places a static image sets the alt itself and lists each image with its size for the user to
     fill in the Designer (in its report and the `sync-log.md` row); the image isn't done until they're set.
 

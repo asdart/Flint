@@ -17,7 +17,7 @@ export default function TestimonialCard({ image, quote, name, role, flag = "/ass
         <img
           className="fk-testimonial-card-image fk-absolute fk-inset-0 fk-block fk-w-full fk-h-full fk-object-cover"
           src={image}
-          alt={name}
+          alt=""
           width={imageSize[0]}
           height={imageSize[1]}
           draggable={false}

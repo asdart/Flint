@@ -5,7 +5,7 @@ type PostCardProps = {
   post: PostWithAuthor;
 };
 
-/** UI / Post Card. Every value is bound to a Posts (or referenced Authors) field in Webflow. */
+/** UI / Post Card. Every value is bound to a Posts (or referenced Authors) field in Webflow. The image `width` / `height` are the box's largest displayed size (695 × 200 at 767 px; D-51), the same numbers as the Designer Image fields. */
 export default function PostCard({ post }: PostCardProps) {
   return (
     <SmartLink href={`/blog/${post.slug}`} className="fk-post-card">
@@ -13,9 +13,9 @@ export default function PostCard({ post }: PostCardProps) {
         <img
           className="fk-post-card-image"
           src={post["main-image"].url}
-          alt={post["main-image"].alt}
-          width={post["main-image"].width}
-          height={post["main-image"].height}
+          alt=""
+          width={695}
+          height={200}
           loading="lazy"
         />
       </div>

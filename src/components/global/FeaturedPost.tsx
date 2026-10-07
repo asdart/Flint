@@ -48,9 +48,9 @@ export default function FeaturedPost() {
               <img
                 className="fk-featured-post-image"
                 src={post["main-image"].url}
-                alt={post["main-image"].alt}
-                width={post["main-image"].width}
-                height={post["main-image"].height}
+                alt=""
+                width={711}
+                height={432}
                 fetchPriority="high"
               />
               <div className="fk-featured-post-scrim" aria-hidden />

@@ -18,7 +18,7 @@ export default function QuoteCard({ quote, image, name, role }: QuoteCardProps) 
         &ldquo;<span>{quote}</span>&rdquo;
       </blockquote>
       <div className="fk-quote-card-person">
-        <img className="fk-quote-card-photo" src={image} alt={name} width={52} height={52} loading="lazy" draggable={false} />
+        <img className="fk-quote-card-photo" src={image} alt="" width={52} height={52} loading="lazy" draggable={false} />
         <div className="fk-quote-card-details">
           <p className="fk-quote-card-name">{name}</p>
           <p className="fk-quote-card-role">{role}</p>

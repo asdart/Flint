@@ -65,8 +65,8 @@ export default function ArticleHero({ post }: ArticleHeroProps) {
               className="fk-article-image fk-blur-reveal is-delay-2 fk-hidden-phone"
               src={post["main-image"].url}
               alt={post["main-image"].alt}
-              width={post["main-image"].width}
-              height={post["main-image"].height}
+              width={552}
+              height={260}
               loading="eager"
               fetchPriority="high"
             />
