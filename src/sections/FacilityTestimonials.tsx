@@ -7,35 +7,35 @@ const QUOTES = [
   {
     quote:
       "We serve both military and civilian patients and previously faced high turnover rates, which made maintaining a reliable workforce challenging. Flint provided a solution by filling 12 critical roles with committed, full-time professionals.",
-    image: "/assets/testimonial-photo-2.webp",
+    image: "/assets/quote-photo-2.webp",
     name: "Sarah Jennings",
     role: "Operations Manager, Metro General Hospital",
   },
   {
     quote:
       "Thanks to the innovative staffing approach, we reduced our hiring time by 40%, allowing us to focus on patient care rather than recruitment.",
-    image: "/assets/testimonial-photo-1.webp",
+    image: "/assets/quote-photo-1.webp",
     name: "Michael Thompson",
     role: "HR Director, Coastal Health System",
   },
   {
     quote:
       "By leveraging technology and analytics, we were able to optimize our scheduling and ensure better coverage for our patients.",
-    image: "/assets/testimonial-photo-3.webp",
+    image: "/assets/quote-photo-3.webp",
     name: "Emily Chen",
     role: "Director of Operations, City Care Clinic",
   },
   {
     quote:
       "We recognized that our previous approach was unsustainable, and Flint’s expertise helped us to stabilize our workforce effectively.",
-    image: "/assets/testimonial-photo-1.webp",
+    image: "/assets/quote-photo-1.webp",
     name: "Richard Martin",
     role: "Chief Executive Officer, West Valley Medical Center",
   },
   {
     quote:
       "Their commitment to understanding our unique challenges has made all the difference in our staffing stability.",
-    image: "/assets/testimonial-photo-2.webp",
+    image: "/assets/quote-photo-2.webp",
     name: "Jessica Lee",
     role: "Nurse Manager, Riverside Hospital",
   },

@@ -40,7 +40,7 @@ export default function StatsBand({ title, stats, variant = "large" }: StatsBand
         {isDefault ? (
           <>
             <div className="fk-ring is-corner-top" aria-hidden="true">
-              <img className="fk-ring-image" src="/assets/home/cta-flower.webp" alt="" width={1672} height={941} loading="lazy" />
+              <img className="fk-ring-image" src="/assets/home/cta-flower.webp" alt="" width={814} height={458} loading="lazy" />
             </div>
             <div className="fk-ring is-corner-bottom" aria-hidden="true">
               <img className="fk-ring-image is-rotated" src="/assets/home/cta-flower.webp" alt="" width={1672} height={941} loading="lazy" />

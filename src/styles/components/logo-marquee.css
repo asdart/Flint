@@ -21,6 +21,7 @@
 }
 
 .fk-logo-marquee-logo {
+  width: auto;
   height: 36px;
   opacity: 0.8;
   object-fit: contain;

@@ -3,21 +3,21 @@ import { cx } from "../lib/cx";
 
 /** The eight network portraits, clockwise from the top (Figma 5594:26794): the legacy `NetworkIllustration` files. */
 const PORTRAITS = [
-  { src: "/assets/network/portrait-01.webp", size: [300, 375] },
-  { src: "/assets/network/portrait-05.webp", size: [300, 375] },
-  { src: "/assets/network/portrait-03.webp", size: [314, 419] },
-  { src: "/assets/network/portrait-07.webp", size: [412, 230] },
-  { src: "/assets/network/portrait-02.webp", size: [300, 400] },
-  { src: "/assets/network/portrait-06.webp", size: [268, 349] },
-  { src: "/assets/network/portrait-04.webp", size: [300, 400] },
-  { src: "/assets/network/portrait-08.webp", size: [370, 493] },
+  { src: "/assets/network/portrait-01.webp", size: [158, 198] },
+  { src: "/assets/network/portrait-05.webp", size: [157, 196] },
+  { src: "/assets/network/portrait-03.webp", size: [165, 220] },
+  { src: "/assets/network/portrait-07.webp", size: [216, 121] },
+  { src: "/assets/network/portrait-02.webp", size: [158, 211] },
+  { src: "/assets/network/portrait-06.webp", size: [141, 184] },
+  { src: "/assets/network/portrait-04.webp", size: [158, 211] },
+  { src: "/assets/network/portrait-08.webp", size: [194, 258] },
 ] as const;
 
 const CANDIDATES = [
   {
     name: "Charlette Nono",
     avatar: "/assets/how-it-works/retention-avatar-charlette.webp",
-    size: [110, 138],
+    size: [55, 69],
     crop: "is-charlette",
     bg: "fk-bg-sand-100",
     flag: "/assets/how-it-works/retention-flag-angola.svg",
@@ -25,7 +25,7 @@ const CANDIDATES = [
   {
     name: "Eizle",
     avatar: "/assets/how-it-works/retention-avatar-eizle.webp",
-    size: [102, 136],
+    size: [51, 68],
     crop: "is-eizle",
     bg: "fk-bg-brand-foreground",
     flag: "/assets/how-it-works/retention-flag-mexico.svg",
@@ -206,11 +206,11 @@ export default function FacilityValueProp() {
                   </div>
                   <div className="fk-retention-card is-facility fk-absolute fk-flex fk-flex-col fk-gap-4 fk-rounded-xl fk-bg-white fk-overflow-clip" data-x-part="facility">
                     <div className="fk-retention-map fk-absolute">
-                      <img className="fk-retention-map-image fk-absolute fk-block fk-w-full fk-h-full fk-object-cover" src="/assets/how-it-works/retention-map.webp" alt="" width={680} height={394} loading="lazy" />
+                      <img className="fk-retention-map-image fk-absolute fk-block fk-w-full fk-h-full fk-object-cover" src="/assets/how-it-works/retention-map.webp" alt="" width={381} height={221} loading="lazy" />
                       <div className="fk-retention-map-fade fk-absolute fk-inset-0" />
                     </div>
                     <div className="fk-retention-thumb fk-relative fk-rounded-sm fk-bg-brand-light fk-overflow-clip" data-x-part="thumb">
-                      <img className="fk-retention-thumb-image fk-absolute fk-block fk-w-full fk-h-full fk-object-cover" src="/assets/how-it-works/retention-facility.webp" alt="" width={146} height={97} loading="lazy" />
+                      <img className="fk-retention-thumb-image fk-absolute fk-block fk-w-full fk-h-full fk-object-cover" src="/assets/how-it-works/retention-facility.webp" alt="" width={73} height={49} loading="lazy" />
                     </div>
                     <div className="fk-flex fk-flex-col fk-gap-1 fk-relative" data-x-part="address">
                       <p className="fk-text-sm fk-font-medium fk-color-ink">Sandstone Healthcare Center</p>

@@ -5,7 +5,7 @@ const NOTICES = [
   {
     name: "Yuki Tanaka",
     image: "/assets/candidates/steps/send-yuki.webp",
-    size: [240, 320],
+    size: [30, 40],
     flag: "/assets/flags/cn.svg",
     bg: "fk-bg-sand-100",
     crop: "is-top",
@@ -14,7 +14,7 @@ const NOTICES = [
   {
     name: "Amara Okafor",
     image: "/assets/candidates/steps/send-amara.webp",
-    size: [200, 200],
+    size: [34, 34],
     flag: "/assets/flags/ph.svg",
     bg: "fk-bg-sand-100",
     crop: "",
@@ -23,7 +23,7 @@ const NOTICES = [
   {
     name: "Raj Patel",
     image: "/assets/candidates/steps/send-raj.webp",
-    size: [200, 200],
+    size: [37, 37],
     flag: "/assets/flags/in.svg",
     bg: "fk-bg-peach-100",
     crop: "",
@@ -32,7 +32,7 @@ const NOTICES = [
   {
     name: "Kwame Asante",
     image: "/assets/candidates/steps/send-kwame.webp",
-    size: [240, 300],
+    size: [74, 93],
     flag: "/assets/flags/ng.svg",
     bg: "fk-bg-peach-100",
     crop: "is-face",
@@ -171,7 +171,7 @@ export default function CandidatesHowItWorks() {
                 <div className="fk-steps-canvas fk-absolute">
                   <div className="fk-steps-call fk-absolute" data-x-part="call">
                     <div className="fk-steps-window fk-absolute fk-rounded-lg fk-overflow-clip">
-                      <img className="fk-steps-call-photo fk-absolute fk-block fk-rounded-md fk-object-cover" src="/assets/candidates/steps/call-main.webp" alt="" width={924} height={520} loading="lazy" />
+                      <img className="fk-steps-call-photo fk-absolute fk-block fk-rounded-md fk-object-cover" src="/assets/candidates/steps/call-main.webp" alt="" width={498} height={280} loading="lazy" />
                       <p className="fk-steps-call-name fk-absolute fk-rounded-full fk-color-white">Cristine</p>
                       <img className="fk-steps-call-people fk-absolute fk-block" src="/assets/how-flint-works/ic-people.svg" alt="" width={16} height={16} loading="lazy" />
                       <div className="fk-steps-call-controls fk-absolute fk-flex fk-items-center">
@@ -185,7 +185,7 @@ export default function CandidatesHowItWorks() {
                         <img className="fk-steps-call-end fk-block" data-x-part="control" src="/assets/candidates/steps/call-end.svg" alt="" width={24} height={24} loading="lazy" />
                       </div>
                     </div>
-                    <img className="fk-steps-call-pip fk-absolute fk-block fk-rounded-md fk-object-cover" data-x-part="pip" src="/assets/candidates/steps/call-pip.webp" alt="" width={420} height={236} loading="lazy" />
+                    <img className="fk-steps-call-pip fk-absolute fk-block fk-rounded-md fk-object-cover" data-x-part="pip" src="/assets/candidates/steps/call-pip.webp" alt="" width={189} height={106} loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default function CandidatesHowItWorks() {
                   <img className="fk-steps-orbit-ring fk-absolute fk-block" data-x-part="ring" src="/assets/candidates/steps/orbit-ring.svg" alt="" width={296} height={296} loading="lazy" />
                   <img className="fk-steps-orbit-ring is-progress fk-absolute fk-block" data-x-part="progress" src="/assets/candidates/steps/orbit-progress.svg" alt="" width={296} height={296} loading="lazy" />
                   <div className="fk-steps-orbit-avatar fk-absolute fk-rounded-full fk-bg-sand-100 fk-overflow-clip" data-x-part="avatar">
-                    <img className="fk-steps-orbit-avatar-image fk-absolute fk-block fk-object-cover" src="/assets/candidates/steps/orbit-avatar.webp" alt="" width={460} height={613} loading="lazy" />
+                    <img className="fk-steps-orbit-avatar-image fk-absolute fk-block fk-object-cover" src="/assets/candidates/steps/orbit-avatar.webp" alt="" width={231} height={308} loading="lazy" />
                   </div>
                   {NODES.map((node, index) => (
                     <div className={cx("fk-steps-orbit-node fk-absolute fk-flex fk-items-center fk-justify-center fk-rounded-full fk-bg-tertiary", node.position)} data-x-part="node" data-x-label={node.label} key={node.icon}>
@@ -262,8 +262,8 @@ export default function CandidatesHowItWorks() {
                   className="fk-steps-photo fk-absolute fk-block fk-object-cover"
                   src="/assets/candidates/steps/portrait.webp"
                   alt="Fabiana, a registered nurse, smiling with her arms crossed in a hospital corridor"
-                  width={1400}
-                  height={1900}
+                  width={758}
+                  height={1029}
                   loading="lazy"
                 />
                 <div className="fk-chip is-portrait fk-absolute fk-rounded-lg fk-bg-white fk-shadow-chip">

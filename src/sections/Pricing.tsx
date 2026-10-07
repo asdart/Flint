@@ -93,8 +93,8 @@ export default function Pricing() {
                         className="fk-pricing-avatar fk-rounded-full fk-bg-sand-100 fk-overflow-clip fk-object-cover"
                         src="/assets/home/pricing-avatar.webp"
                         alt=""
-                        width={200}
-                        height={249}
+                        width={86}
+                        height={108}
                       />
                     </div>
                   </div>

@@ -34,7 +34,7 @@
   gap: var(--space-4);
 }
 
-/* The 52px square photo, cropped from the 1024 × 1333 portrait. */
+/* The 52px square photo, a 104 × 104 file, the 2x square crop of the Home portrait. */
 .fk-quote-card-photo {
   display: block;
   flex: none;

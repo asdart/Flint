@@ -39,8 +39,8 @@ export default function AboutResidency() {
                 className="fk-split-image fk-block fk-w-full fk-object-cover fk-rounded-lg"
                 src="/assets/home/two-ways-facility.webp"
                 alt="A nurse and residents in the bright lounge of a care home"
-                width={1426}
-                height={951}
+                width={919}
+                height={613}
                 loading="lazy"
               />
             </div>

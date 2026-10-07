@@ -44,7 +44,7 @@ export default function CandidatesHero() {
             return (
               <div className={`fk-orbit-item fk-absolute is-a${index + 1}`} aria-hidden="true" key={index}>
                 <div className="fk-relative fk-w-full fk-h-full fk-rounded-full fk-bg-sand-100 fk-overflow-clip" data-x-part="avatar">
-                  <img className={`fk-orbit-image fk-absolute fk-block fk-object-cover is-c${slot + 1}`} src={candidate.image} alt="" width={candidate.size[0]} height={candidate.size[1]} />
+                  <img className={`fk-orbit-image fk-absolute fk-block fk-object-cover is-c${slot + 1}`} src={candidate.image} alt="" width={candidate.orbitSize[0]} height={candidate.orbitSize[1]} />
                 </div>
                 <div className="fk-chip is-tooltip fk-absolute fk-rounded-lg fk-bg-white fk-shadow-chip" data-x-part="tooltip">
                   <img className="fk-flag" src={clara ? "/assets/flags/ke.svg" : candidate.flag} alt="" width={20} height={20} />

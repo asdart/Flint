@@ -5,10 +5,12 @@ type TestimonialCardProps = {
   role: string;
   /** Country flag SVG (prop Flag in Webflow). */
   flag?: string;
+  /** The photo file's intrinsic size, for the `width`/`height` attributes (Webflow holds one static pair on the Image). */
+  imageSize?: readonly [number, number];
 };
 
 /** UI / Testimonial Card. Hover motion is `x-carousel`. */
-export default function TestimonialCard({ image, quote, name, role, flag = "/assets/country-flag.svg" }: TestimonialCardProps) {
+export default function TestimonialCard({ image, quote, name, role, flag = "/assets/country-flag.svg", imageSize = [625, 814] }: TestimonialCardProps) {
   return (
     <article className="fk-testimonial-card fk-relative fk-rounded-2xl fk-bg-white fk-overflow-clip">
       <div className="fk-testimonial-card-media fk-absolute">
@@ -16,8 +18,8 @@ export default function TestimonialCard({ image, quote, name, role, flag = "/ass
           className="fk-testimonial-card-image fk-absolute fk-inset-0 fk-block fk-w-full fk-h-full fk-object-cover"
           src={image}
           alt={name}
-          width={612}
-          height={798}
+          width={imageSize[0]}
+          height={imageSize[1]}
           draggable={false}
         />
       </div>

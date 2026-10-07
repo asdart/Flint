@@ -9,7 +9,7 @@ const STEPS = [
     variant: "tertiary",
     scrim: false,
     bgSize: [360, 464],
-    artSize: [888, 822] as [number, number] | null,
+    artSize: [334, 309] as [number, number] | null,
   },
   {
     title: "Meet with Flint",
@@ -18,7 +18,7 @@ const STEPS = [
     variant: "tertiary",
     scrim: true,
     bgSize: [398, 512],
-    artSize: [1194, 1473] as [number, number] | null,
+    artSize: [334, 412] as [number, number] | null,
   },
   {
     title: "Interview Directly with Facilities",
@@ -26,8 +26,8 @@ const STEPS = [
     tone: "default",
     variant: "tertiary",
     scrim: false,
-    bgSize: [882, 723],
-    artSize: [1083, 1296] as [number, number] | null,
+    bgSize: [294, 241],
+    artSize: [382, 457] as [number, number] | null,
   },
   {
     title: "Relocate",
@@ -35,7 +35,7 @@ const STEPS = [
     tone: "default",
     variant: "tertiary",
     scrim: false,
-    bgSize: [1083, 1391],
+    bgSize: [399, 513],
     artSize: null as [number, number] | null,
   },
   {
@@ -44,8 +44,8 @@ const STEPS = [
     tone: "default",
     variant: "brand-light",
     scrim: false,
-    bgSize: [882, 723],
-    artSize: [891, 1016] as [number, number] | null,
+    bgSize: [294, 241],
+    artSize: [334, 381] as [number, number] | null,
   },
   {
     title: "Processing",
@@ -53,8 +53,8 @@ const STEPS = [
     tone: "inverse",
     variant: "tertiary",
     scrim: true,
-    bgSize: [1083, 1392],
-    artSize: [722, 864] as [number, number] | null,
+    bgSize: [399, 513],
+    artSize: [382, 457] as [number, number] | null,
   },
 ] as const;
 

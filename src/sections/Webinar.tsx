@@ -30,8 +30,8 @@ export default function Webinar({
           className="fk-webinar-bg"
           src="/assets/home/webinar-bg-arc.webp"
           alt=""
-          width={2400}
-          height={668}
+          width={1200}
+          height={334}
           loading="lazy"
         />
         <div className="fk-container fk-relative">
@@ -55,16 +55,16 @@ export default function Webinar({
                 className="fk-webinar-call"
                 src="/assets/home/webinar-call.webp"
                 alt="Neil Prigge hosting a live Q&A webinar on a video call"
-                width={1254}
-                height={836}
+                width={627}
+                height={418}
                 loading="lazy"
               />
               <img
                 className="fk-webinar-participants"
                 src="/assets/home/webinar-participants.webp"
                 alt="234 participants"
-                width={708}
-                height={306}
+                width={470}
+                height={203}
                 loading="lazy"
               />
             </div>

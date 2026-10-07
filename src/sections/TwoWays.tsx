@@ -22,13 +22,13 @@ function NursesArt() {
           src="/assets/home/two-ways-nurse-right.webp"
           alt=""
           width={159}
-          height={211}
+          height={213}
         />
         <img
           className="fk-two-ways-nurse-left fk-absolute fk-block fk-object-cover"
           src="/assets/home/two-ways-nurse-left.webp"
           alt=""
-          width={249}
+          width={311}
           height={311}
         />
         <div className="fk-two-ways-orb is-left fk-absolute fk-rounded-full fk-bg-tertiary" />
@@ -38,7 +38,7 @@ function NursesArt() {
           src="/assets/home/two-ways-nurse-center.webp"
           alt=""
           width={173}
-          height={184}
+          height={185}
         />
       </div>
     </div>
@@ -55,8 +55,8 @@ function FacilitiesArt() {
         className="fk-two-ways-facility-image fk-absolute fk-block fk-w-full fk-rounded-lg fk-object-cover"
         src="/assets/home/two-ways-facility.webp"
         alt=""
-        width={2346}
-        height={1560}
+        width={975}
+        height={650}
       />
     </div>
   );

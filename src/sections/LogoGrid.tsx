@@ -1,4 +1,4 @@
-/** Investor logos in Figma's order (5805:4037): file, rendered alt text, intrinsic size. */
+/** Investor logos in Figma's order (5805:4037): file, rendered alt text, size (displayed size, capped at the file's own size; SVGs: the file's size). */
 const LOGOS = [
   { src: "/assets/about/investor-yc.svg", alt: "Y Combinator", width: 185, height: 90 },
   { src: "/assets/about/investor-haystack.webp", alt: "Haystack", width: 316, height: 77 },

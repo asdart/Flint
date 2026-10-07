@@ -7,6 +7,7 @@ type Testimonial = {
   name: string;
   role: string;
   image: string;
+  imageSize: readonly [number, number];
   quote: string;
   flag: string;
 };
@@ -15,13 +16,13 @@ const QUOTE =
   "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.";
 
 const TESTIMONIALS: Testimonial[] = [
-  { name: "Sarah Mitchell", role: "Registered Nurse", image: "/assets/testimonial-photo-2.webp", flag: "/assets/flags/ph.svg", quote: QUOTE },
-  { name: "James Chen", role: "Physical Therapist", image: "/assets/testimonial-photo-1.webp", flag: "/assets/flags/ng.svg", quote: QUOTE },
-  { name: "Emily Rodriguez", role: "Nursing Assistant", image: "/assets/testimonial-photo-3.webp", flag: "/assets/flags/ke.svg", quote: QUOTE },
-  { name: "Michael Thompson", role: "Medical Technician", image: "/assets/testimonial-photo-3.webp", flag: "/assets/flags/gh.svg", quote: QUOTE },
-  { name: "Lisa Park", role: "Lab Specialist", image: "/assets/testimonial-photo-1.webp", flag: "/assets/flags/vn.svg", quote: QUOTE },
-  { name: "David Santos", role: "Clinical Coordinator", image: "/assets/testimonial-photo-2.webp", flag: "/assets/flags/ht.svg", quote: QUOTE },
-  { name: "Jennifer Adams", role: "Healthcare Administrator", image: "/assets/testimonial-photo-3.webp", flag: "/assets/flags/et.svg", quote: QUOTE },
+  { name: "Sarah Mitchell", role: "Registered Nurse", image: "/assets/testimonial-photo-2.webp", imageSize: [625, 814], flag: "/assets/flags/ph.svg", quote: QUOTE },
+  { name: "James Chen", role: "Physical Therapist", image: "/assets/testimonial-photo-1.webp", imageSize: [625, 814], flag: "/assets/flags/ng.svg", quote: QUOTE },
+  { name: "Emily Rodriguez", role: "Nursing Assistant", image: "/assets/testimonial-photo-3.webp", imageSize: [625, 702], flag: "/assets/flags/ke.svg", quote: QUOTE },
+  { name: "Michael Thompson", role: "Medical Technician", image: "/assets/testimonial-photo-3.webp", imageSize: [625, 702], flag: "/assets/flags/gh.svg", quote: QUOTE },
+  { name: "Lisa Park", role: "Lab Specialist", image: "/assets/testimonial-photo-1.webp", imageSize: [625, 814], flag: "/assets/flags/vn.svg", quote: QUOTE },
+  { name: "David Santos", role: "Clinical Coordinator", image: "/assets/testimonial-photo-2.webp", imageSize: [625, 814], flag: "/assets/flags/ht.svg", quote: QUOTE },
+  { name: "Jennifer Adams", role: "Healthcare Administrator", image: "/assets/testimonial-photo-3.webp", imageSize: [625, 702], flag: "/assets/flags/et.svg", quote: QUOTE },
 ];
 
 /** Three copies in a row: the middle one is the real set, the outer two let the track slide in

@@ -8,9 +8,9 @@ const BIO =
   "Kenton Jarvie didn't set out to build a company — he set out to solve a problem he couldn't stop thinking about. Growing up, he watched his mother immigrate from South Africa to the United States and navigate the grueling, opaque process of building a career in a new country. That experience left a mark. Years later, as he met healthcare workers from around the world — nurses, doctors, specialists — he kept hearing the same story: talented professionals desperate to work in the U.S., trapped in a system that seemed designed to keep them out. In 2024, Kenton co-founded Flint with Anson Kung and Neil Prigge, bringing together their shared frustration into something actionable. As CEO, Kenton leads with a simple belief: the world's best healthcare workers shouldn't be held back by paperwork, bureaucracy, or broken systems. Under his leadership, Flint is building the infrastructure to match international healthcare talent with the American hospitals that need them — faster, more transparently, and more humanely than ever before.";
 
 const FOUNDERS = [
-  { id: "kenton", name: "Kenton Jarvie", role: "CEO, Co-Founder", image: "team-kenton", size: [778, 778], bio: BIO },
-  { id: "anson", name: "Anson Kung", role: "COO, Co-Founder", image: "team-anson", size: [778, 778], bio: BIO },
-  { id: "neil", name: "Neil Prigge", role: "VP Operations, Co-Founder", image: "team-neil", size: [778, 972], bio: BIO },
+  { id: "kenton", name: "Kenton Jarvie", role: "CEO, Co-Founder", image: "team-kenton", size: [711, 711], bio: BIO },
+  { id: "anson", name: "Anson Kung", role: "COO, Co-Founder", image: "team-anson", size: [711, 711], bio: BIO },
+  { id: "neil", name: "Neil Prigge", role: "VP Operations, Co-Founder", image: "team-neil", size: [711, 888], bio: BIO },
 ] as const;
 
 /**

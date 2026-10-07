@@ -4,7 +4,7 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.11 (2026-10-06). 1.11: the legacy code is gone (every page is rebuilt): no
+- **Contract version:** 1.12 (2026-10-06). 1.12: Designer Image width/height = the largest displayed size, aspect-correct, because Webflow builds `sizes` from it; files stay 2×. 1.11: the legacy code is gone (every page is rebuilt): no
   Tailwind, Framer Motion or `src/pages/legacy/`; §8 now says how the preview stands in for Webflow's own base
   stylesheet (`webflow-base.css`). 1.10: every Image added in Webflow gets its alt text and, if static, the Designer's
   Image width / height (rule 15). 1.9: the Rich Text descendant rules (`.fk-article-body <tag>`) are the custom-code
@@ -123,7 +123,13 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
     schema code only through their registered exceptions.
     **Every time an Image is added to a page or component in Webflow**, fill its alt text and, on a
     static image, the Designer's **Image width** / **Image height** (image settings: double-click, Enter,
-    the cog, or `D`) with the file's intrinsic size, the same numbers as the repo's `width={}` / `height={}`.
+    the cog, or `D`) with the image's **largest displayed size** (CSS px, the maximum over viewports 360 to 1920,
+    rounded up, never above the file's own width; for `object-fit: cover`, the larger of the box width and the width the crop needs) and the
+    height that keeps the file's aspect ratio (`round(width × file height / file width)`), the same numbers
+    as the repo's `width={}` / `height={}`. Webflow writes the image's `sizes` from that width
+    (`(max-width: Wpx) 100vw, Wpx`), so the file's intrinsic size would make desktop browsers fetch the
+    full file; files themselves stay at 2× their largest displayed width. Several elements that show one
+    file at different sizes each get their own value. SVG images keep their file's size.
     A CMS-bound image keeps both fields empty (never "Auto"). The MCP can't set width/height, so an agent
     that places a static image sets the alt itself and lists each image with its size for the user to
     fill in the Designer (in its report and the `sync-log.md` row); the image isn't done until they're set.
@@ -240,7 +246,7 @@ can become a component later without a rename.
 - [ ] Registries and status columns updated
 - [ ] Webflow updated through the MCP (if requested) and logged in `sync-log.md`
 - [ ] Every failure, workaround or discovered payload recorded per rule 13
-- [ ] One `h1`; headings follow the outline; images have alt, `width`/`height`, WebP and lazy loading below the fold
+- [ ] One `h1`; headings follow the outline; images have alt, `width`/`height` = largest displayed size (rule 15), WebP and lazy loading below the fold
 - [ ] Icon-only buttons labelled; tap targets at least 24px; page settings and schema per `seo.md`
 
 ## 8. Preview fidelity

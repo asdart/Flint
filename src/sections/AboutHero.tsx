@@ -1,16 +1,16 @@
 /**
  * The seven cut-out portraits of the desktop strip, left to right (Figma 5993:3822). Eager: it is the first
  * screen. Decorative: the people aren't named anywhere in the design, so the images carry an empty alt.
- * [file, width, height] are the WebP's own size; the on-screen size and position are `fk-photo-strip-image is-pN`.
+ * [file, width, height] are the largest displayed size (contract 1.12, same aspect as the file); the on-screen size and position are `fk-photo-strip-image is-pN`.
  */
 const STRIP: Array<[string, number, number]> = [
-  ["strip-1", 484, 605],
-  ["strip-2", 568, 568],
-  ["strip-3", 612, 764],
-  ["strip-4", 592, 740],
-  ["strip-5", 540, 720],
-  ["strip-6", 522, 696],
-  ["strip-7", 540, 720],
+  ["strip-1", 234, 293],
+  ["strip-2", 275, 275],
+  ["strip-3", 296, 370],
+  ["strip-4", 287, 359],
+  ["strip-5", 267, 356],
+  ["strip-6", 252, 336],
+  ["strip-7", 277, 369],
 ];
 
 /**
@@ -45,9 +45,9 @@ export default function AboutHero() {
               </div>
               <div className="fk-blur-reveal is-delay-1">
                 <h1 className="fk-heading-lg fk-flex-tablet fk-flex-col fk-items-center fk-gap-3">
-                  <span>Building {pill("strip-2", 568, 568, "is-brand", true)} the path</span>{" "}
-                  <span>to permanence for {pill("strip-6", 522, 696, "is-peach")}</span>{" "}
-                  <span>{pill("strip-4", 592, 740, "is-sand")} the nurses</span> <span>America needs</span>
+                  <span>Building {pill("strip-2", 92, 92, "is-brand", true)} the path</span>{" "}
+                  <span>to permanence for {pill("strip-6", 73, 97, "is-peach")}</span>{" "}
+                  <span>{pill("strip-4", 74, 93, "is-sand")} the nurses</span> <span>America needs</span>
                 </h1>
               </div>
             </div>
