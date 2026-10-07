@@ -150,3 +150,5 @@ pulling section. No pushes until I review the diff."*
 > Sync `<registry entries or files>` to Webflow following `docs/webflow/mcp-playbook.md`. Site ID
 > from `AGENTS.md`. Read before write, no destructive actions, no publish. Log the result in
 > `docs/webflow/sync-log.md`.
+
+**Template custom code with CMS fields (checked 2026-10-07, Stage J-A):** `set_page_freeform_code` and `bulk_update_pages_schema_markup` take a raw string/object with no field-token syntax, so `{{Post: Name}}` placeholders written through the MCP stay literal text. The tokens only exist when inserted with the Designer's "Add Field" in the page's custom code editor. `x-schema-post` is therefore a manual Designer paste; the MCP read-back (`get_page_freeform_code`) does **not** show the pasted block (checked 2026-10-07, Stage J-B): verify on the staging HTML instead. Plain-text tokens are HTML-escaped there (`'` becomes `&#39;`), see `cms.md`. A script that reads the rendered DOM (`x-schema-faq`) avoids the problem.

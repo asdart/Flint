@@ -1,18 +1,45 @@
 <!--
-  x-schema-post (DRAFT): BlogPosting + BreadcrumbList JSON-LD. Posts template page, head code
-  (docs/webflow/interactions.md, seo.md S-07 and S-09). Not installed.
+  x-schema-post (DRAFT, domain filled in 2026-10-07, D-62): BlogPosting + BreadcrumbList JSON-LD. Posts template
+  page, head code (docs/webflow/interactions.md, seo.md S-07 and S-09). Not installed. The FAQPage is NOT here:
+  it is built at runtime from the visible FAQ by x-schema-faq (footer, post-template footer; P-14 closed, D-62).
 
-  Placeholders: {{Post: Name}} means "insert the CMS field here" with the Add Field button in the
-  template's custom code editor (Post: Name, Excerpt, Main image, Publish date; Author: Name;
-  Category: Name and Slug). Fields inside JSON strings must not contain quotes: Name and Excerpt are
-  plain text (Excerpt max 160), so check a post with a quote or backslash in the title on staging.
-  Dates: Publish date must come out as ISO 8601 (YYYY-MM-DD); check the inserted format on staging.
-  {{Site: URL}} stands for the production origin (https://<domain>), a literal until the custom domain
-  exists (roadmap P-06); {{Post: Slug}} completes the canonical URL.
+  HOW THE {{...}} PLACEHOLDERS BECOME CMS FIELDS (Designer only, the MCP can't do it): open the Posts template
+  page > Page settings > Custom code > Inside <head> tag, paste this block with the placeholders still in it, then
+  for each one select the text between the quotes (including the {{ }}), click "+ Add Field", choose the field
+  and the same text is replaced by Webflow's token. Do not type the tokens by hand. Fields:
+    {{Post: Name}}       Post > Title (name)       plain text; headline, the last breadcrumb name
+    {{Post: Excerpt}}    Post > Excerpt            plain text, max 160
+    {{Post: Slug}}       Post > Slug               in the two URLs
+    {{Post: Main image}} Post > Main image         inserts the image URL (Webflow CDN, 1400px WebP)
+    {{Post: Publish date}} Post > Publish date     see "Dates" below
+    {{Post: Updated On}} system field "Updated On" (dateModified); delete that line if Add Field doesn't list it
+    {{Author: Name}}     Post > Author > Name      "Flint Editorial Team"
+    {{Category: Name}} / {{Category: Slug}}  Post > Category > Name / Slug (reference fields; Add Field offers
+                         them under the reference)
+  Quotes and backslashes in Name or Excerpt would break the JSON (plain text fields are inserted unescaped):
+  check on staging a post whose title has an apostrophe or quote (Rich Results Test / view-source). If one
+  fails, rename the title or move to the runtime fallback (build the same graph in a script from h1, og:image,
+  time[datetime] and the breadcrumb, like x-schema-faq).
 
-  Organization and WebSite live in x-schema-site (site head), referenced here by @id
-  {{Site: URL}}/#organization, so the publisher is not repeated. The logo is defined there too.
-  FAQPage is NOT included (roadmap P-14 is open).
+  Dates: schema.org wants ISO 8601. The Date/Time token's output format in a custom code embed is not
+  documented: inspect a published post. The hero's <time datetime="2025-12-03"> is ISO, so the page already has
+  one in a bound attribute; if the embed prints "Dec 3, 2025" or a long JS date, Google still parses many
+  forms but Rich Results Test warns: then switch datePublished to the runtime fallback above.
+
+  Design notes (D-62):
+  - publisher is inline with @id https://withflint.com/#organization. x-schema-site (which will define the
+    same Organization with logo and sameAs) is not installed yet (waits for social URLs, P-08), and an
+    @id-only reference to a node that exists nowhere is empty to Google. When x-schema-site goes in, the
+    @id matches and consumers merge the two; the inline copy can then be reduced to { "@id": ... }.
+    No logo here: Google no longer requires a publisher logo for BlogPosting.
+  - author is an Organization because every post is by the Flint Editorial Team (cms.md). If real people are
+    added to Authors, change the type to Person (the collection has no type field). Author pages are not
+    published, so there is no author url.
+  - headline max 110 characters (Google): post titles are longer than that on some posts; Google truncates and
+    does not reject, but a headline that equals the page H1 is what the guideline asks for.
+  - Breadcrumb: Home > Blog > Category > Post. URLs follow the real routes /blog, /blog/{slug},
+    /categories/{slug} (the category pages are noindex, S-04; the trail still works, they just aren't indexed).
+    The last item has no "item" URL, which Google allows for the current page.
 -->
 <script type="application/ld+json">
 {
@@ -20,31 +47,38 @@
   "@graph": [
     {
       "@type": "BlogPosting",
-      "@id": "{{Site: URL}}/blog/{{Post: Slug}}#article",
+      "@id": "https://withflint.com/blog/{{Post: Slug}}#article",
       "headline": "{{Post: Name}}",
       "description": "{{Post: Excerpt}}",
-      "image": "{{Post: Main image URL}}",
+      "image": "{{Post: Main image}}",
       "datePublished": "{{Post: Publish date}}",
+      "dateModified": "{{Post: Updated On}}",
       "author": {
         "@type": "Organization",
         "name": "{{Author: Name}}"
       },
-      "publisher": { "@id": "{{Site: URL}}/#organization" },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://withflint.com/#organization",
+        "name": "Flint",
+        "url": "https://withflint.com/"
+      },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "{{Site: URL}}/blog/{{Post: Slug}}"
+        "@id": "https://withflint.com/blog/{{Post: Slug}}"
       }
     },
     {
       "@type": "BreadcrumbList",
+      "@id": "https://withflint.com/blog/{{Post: Slug}}#breadcrumb",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{Site: URL}}/" },
-        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "{{Site: URL}}/blog" },
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://withflint.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://withflint.com/blog" },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "{{Category: Name}}",
-          "item": "{{Site: URL}}/categories/{{Category: Slug}}"
+          "item": "https://withflint.com/categories/{{Category: Slug}}"
         },
         { "@type": "ListItem", "position": 4, "name": "{{Post: Name}}" }
       ]

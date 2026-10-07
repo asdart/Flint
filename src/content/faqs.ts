@@ -20,11 +20,6 @@ export const FAQS: Faq[] = [
       "The commitment term aligns with the government’s green card processing time (about 3 years for RNs). While you’re working, your green card is processing.",
   },
   {
-    question: "What if I am on a temporary or pending status?",
-    answer:
-      "Flint is designed for healthcare professionals on temporary status. We help you move from temporary or pending status to permanent residency through employer sponsorship.",
-  },
-  {
     question: "Do I need U.S. work authorization?",
     answer:
       "Yes — you must be authorized to work in the U.S. in order to be eligible for the Flint program.",

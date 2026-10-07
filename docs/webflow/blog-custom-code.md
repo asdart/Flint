@@ -15,7 +15,7 @@ original bodies are in the archived CSV.
 | Type | What it is | Done in the import | Posts | Rebuild as |
 | --- | --- | --- | --- | --- |
 | `quick-answer` | "💡 Quick Answer" callout at the top of the post | Text moved to the Posts `quick-answer` field | 27 | Post template: styled block bound to `quick-answer`, hidden when empty |
-| `faq` | "Frequently Asked Questions" block: eyebrow, subtitle, question/answer list | Converted in place to rich text: H2 "Frequently Asked Questions", H3 per question, answers as paragraphs. The subtitle was dropped | 29 | `FAQPage` schema per post (`seo.md` S-08) needs the pairs outside the rich text: see [`blog-embeds/faq-pairs.json`](blog-embeds/faq-pairs.json) (232 pairs, 28 posts). Open decision |
+| `faq` | "Frequently Asked Questions" block: eyebrow, subtitle, question/answer list | Converted in place to rich text: H2 "Frequently Asked Questions", H3 per question, answers as paragraphs. The subtitle was dropped | 29 | `FAQPage` schema per post (`seo.md` S-08) needs the pairs outside the rich text: see [`blog-embeds/faq-pairs.json`](blog-embeds/faq-pairs.json) (232 pairs, 28 posts). Decided (P-14, option 3, D-62): no field; the `x-schema-faq` script reads the visible FAQ at runtime. `faq-pairs.json` stays as the test reference |
 | `apply-button` | Lone "Apply Now" button (`.flint-apply-btn`) | Removed | 7 | Post template CTA after the body |
 | `apply-link` | Heading or paragraph holding only an "👉 Apply Now" link | Removed | 2 | Same |
 | `cta-promo-card` | Gradient card: badge pill, heading, copy, button, note | Removed | 9 | Same |

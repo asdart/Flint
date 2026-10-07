@@ -92,6 +92,16 @@ Body decisions:
   (`interactions.md`; roadmap P-02 closed as (a), 2026-09-29). It is desktop only, sticky, with a
   scroll-spy, and the script hides it when a post has no H2. FAQ questions are H3s, so they stay
   out of an H2-based TOC.
+- **Titles and excerpts and the post schema (D-62, exception `x-schema-post`):** the article JSON-LD in the Posts template head prints Title and Excerpt through Webflow tokens, and Webflow HTML-escapes plain text there (a straight `'` becomes `&#39;`, which a script tag doesn't decode, so Google would read it literally). In Title and Excerpt use the curly apostrophe `’`, and avoid `&`, `<` and `>` (write "and"). Quotes `"` and backslashes would break the JSON: don't use them either. Checked 2026-10-07: the 28 published posts are clean after four excerpts were changed from `'` to `’`.
+- **Editing a post's FAQ (schema rule, D-62, exception `x-schema-faq`):** the FAQ of a post is read by a
+  script to build its `FAQPage` JSON-LD, so keep this exact shape in the body: one **H2** titled
+  "Frequently Asked Questions" (or "FAQ"), then for each question an **H3 that ends with a "?"**, followed by
+  its answer as paragraphs, lists or H4s up to the next H3. Nothing else between answers. Anything after the last
+  answer (a disclaimer paragraph, a "Related Guides" list) goes under a new H2, or under an H3 that doesn't end in
+  "?" (that closes the FAQ), otherwise it is appended to the last answer. No FAQ H2, no schema. Known post fixes
+  (2026-10-07, staging): `nclex-for-foreign-educated-nurses-what-you-need-to-know` shows the layoff FAQ of
+  another post (wrong content, not a schema bug); `green-card-sponsorship-for-nurses` has a disclaimer paragraph
+  right after its last answer.
 
 Posts template page (built in the repo 2026-09-29, `src/pages/BlogPostPage.tsx`; the Webflow build
 was done on 2026-09-30, see the last bullet):

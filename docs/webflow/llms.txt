@@ -6,21 +6,21 @@ Flint connects nurses and other healthcare professionals with employers that spo
 
 ## Main pages
 
-- [Home](https://fint-fc2589.webflow.io/): Flint helps healthcare professionals on temporary status find sponsored healthcare jobs.
-- [Candidates](https://fint-fc2589.webflow.io/candidates): For nurses and healthcare professionals on temporary status looking for U.S. jobs with green card sponsorship, with filing, lawyer and relocation costs covered.
-- [Facility partners](https://fint-fc2589.webflow.io/facility-partners): For hospitals, clinics and care facilities hiring from 100,000+ vetted healthcare professionals with green card sponsorship, to cut staffing costs.
-- [About](https://fint-fc2589.webflow.io/about): Flint was founded in 2024 to build a permanent path to the U.S. for healthcare professionals, with hospitals ready to sponsor a green card from day one.
-- [Blog](https://fint-fc2589.webflow.io/blog): Immigration, licensing, and hiring tips for healthcare workers seeking visa sponsorship, with guides on green card sponsorship for CNAs, LPNs, and RNs.
+- [Home](https://withflint.com/): Flint helps healthcare professionals on temporary status find sponsored healthcare jobs.
+- [Candidates](https://withflint.com/candidates): For nurses and healthcare professionals on temporary status looking for U.S. jobs with green card sponsorship, with filing, lawyer and relocation costs covered.
+- [Facility partners](https://withflint.com/facility-partners): For hospitals, clinics and care facilities hiring from 100,000+ vetted healthcare professionals with green card sponsorship, to cut staffing costs.
+- [About](https://withflint.com/about): Flint was founded in 2024 to build a permanent path to the U.S. for healthcare professionals, with hospitals ready to sponsor a green card from day one.
+- [Blog](https://withflint.com/blog): Immigration, licensing, and hiring tips for healthcare workers seeking visa sponsorship, with guides on green card sponsorship for CNAs, LPNs, and RNs.
 
 ## Blog categories
 
-- [Careers](https://fint-fc2589.webflow.io/categories/careers)
-- [Immigration](https://fint-fc2589.webflow.io/categories/immigration)
-- [Institutional](https://fint-fc2589.webflow.io/categories/institutional)
-- [Licensing](https://fint-fc2589.webflow.io/categories/licensing)
-- [Relocation](https://fint-fc2589.webflow.io/categories/relocation)
+- [Careers](https://withflint.com/categories/careers)
+- [Immigration](https://withflint.com/categories/immigration)
+- [Institutional](https://withflint.com/categories/institutional)
+- [Licensing](https://withflint.com/categories/licensing)
+- [Relocation](https://withflint.com/categories/relocation)
 
 ## Legal
 
-- [Privacy Policy](https://fint-fc2589.webflow.io/privacy-policy): How Flint Healthcare collects, uses, and shares your information, including SMS messaging data, and the choices and rights you have.
-- [Terms of Service](https://fint-fc2589.webflow.io/terms-of-service): The terms for using the Flint Healthcare website, applying to job opportunities, and receiving SMS text messages from Flint.
+- [Privacy Policy](https://withflint.com/privacy-policy): How Flint Healthcare collects, uses, and shares your information, including SMS messaging data, and the choices and rights you have.
+- [Terms of Service](https://withflint.com/terms-of-service): The terms for using the Flint Healthcare website, applying to job opportunities, and receiving SMS text messages from Flint.
