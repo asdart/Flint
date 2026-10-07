@@ -431,10 +431,6 @@
       "id": "6abc6af5098417409101f7a4",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af5098417409101f7a4_why-eb-3-is-one-of-the-best-green-card-pathways-for-nurses.webp"
     },
-    "/assets/country-flag.svg": {
-      "id": "6abbebd510f8c54b2ab12917",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd510f8c54b2ab12917_country-flag.svg"
-    },
     "/assets/flags/cn.svg": {
       "id": "6ac461ef1aa08d2a5a264eaf",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac461ef1aa08d2a5a264eaf_cn.svg"
@@ -1056,7 +1052,14 @@
       "id": "6ac661a3ea1e03b03dbafdb8",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a3ea1e03b03dbafdb8_candidate-ring-10.webp"
     },
-    "_deleted_2026-10-07 (D-56, user confirmed)": "home/candidate-01..10.webp (uncropped Home portraits, replaced by candidates/arc and candidates/ring): ids 6abbebd78b8e492698b557ff, 6abbebd78b8e492698b55814, 6abbebd8ea8009d5390ab284, 6abbebd820c655289b9d7014, 6abbebd8f0ec45724fccb1df, 6abbebd88b8e492698b558a9, 6abbebd820c655289b9d7060, 6abbebd910f8c54b2ab12be4, 6abbebd9113c5daeca1d3dde, 6abbebd9113c5daeca1d3df3"
+    "_deleted_2026-10-07 (D-56, user confirmed)": "home/candidate-01..10.webp (uncropped Home portraits, replaced by candidates/arc and candidates/ring): ids 6abbebd78b8e492698b557ff, 6abbebd78b8e492698b55814, 6abbebd8ea8009d5390ab284, 6abbebd820c655289b9d7014, 6abbebd8f0ec45724fccb1df, 6abbebd88b8e492698b558a9, 6abbebd820c655289b9d7060, 6abbebd910f8c54b2ab12be4, 6abbebd9113c5daeca1d3dde, 6abbebd9113c5daeca1d3df3",
+    "_deleted_2026-10-07": {
+      "/assets/country-flag.svg": {
+        "id": "6abbebd510f8c54b2ab12917",
+        "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd510f8c54b2ab12917_country-flag.svg",
+        "note": "deleted by the user in the Designer 2026-10-07 (unused, Stage G)"
+      }
+    }
   },
   "variableCollections": {
     "Flint": "collection-d73e84dd-ed18-1d22-612a-95bbf12f2163"
