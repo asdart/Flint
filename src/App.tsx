@@ -9,6 +9,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import StyleGuidePage from "./pages/StyleGuidePage";
+import { siteSchema } from "./content/schema";
 
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 
@@ -20,10 +21,24 @@ function ScrollToTop() {
   return null;
 }
 
+/** x-schema-site: on Webflow this is site head code. In the preview it is appended once to <head>, so
+ * `.fk-page` stays the first child of #root. */
+function SiteSchema() {
+  useEffect(() => {
+    const el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.textContent = JSON.stringify(siteSchema());
+    document.head.appendChild(el);
+    return () => el.remove();
+  }, []);
+  return null;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <SiteSchema />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/candidates" element={<CandidatesPage />} />
