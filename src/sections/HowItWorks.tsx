@@ -7,7 +7,7 @@ const STEPS = [
     body: "We’ll reach out to confirm we can support your unique case.",
     tone: "inverse",
     variant: "tertiary",
-    scrim: false,
+    scrim: true,
     bgSize: [360, 464],
     artSize: [334, 309] as [number, number] | null,
   },

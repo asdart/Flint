@@ -338,10 +338,6 @@
   color: var(--color-subtle);
 }
 
-.fk-color-subtle-80 {
-  color: var(--color-subtle-80);
-}
-
 .fk-color-brand {
   color: var(--color-brand);
 }
@@ -356,10 +352,6 @@
 
 .fk-color-white-80 {
   color: var(--color-white-80);
-}
-
-.fk-color-white-60 {
-  color: var(--color-white-60);
 }
 
 .fk-color-stone-100 {

@@ -35,7 +35,7 @@
   width: 12px;
   height: 12px;
   border-radius: var(--radius-sm);
-  background-color: var(--color-stone-100);
+  background-color: var(--color-stone-400);
   overflow: hidden;
 }
 

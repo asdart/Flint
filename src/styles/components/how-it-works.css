@@ -100,7 +100,7 @@
 
 .fk-how-scrim {
   grid-area: 1 / 1;
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0) 85%);
   pointer-events: none;
 }
 
@@ -168,7 +168,7 @@
   font-weight: 400;
   letter-spacing: -0.04px;
   color: inherit;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 479px) {

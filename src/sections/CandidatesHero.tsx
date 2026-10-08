@@ -61,7 +61,7 @@ export default function CandidatesHero() {
                 <h1 className="fk-heading-xl">Find the right sponsored healthcare role for you</h1>
               </div>
               <div className="fk-blur-reveal is-delay-1">
-                <p className="fk-text-lg fk-color-subtle-80">
+                <p className="fk-text-lg fk-color-subtle">
                   Flint helps healthcare professionals on temporary status find sponsored healthcare jobs.
                 </p>
               </div>

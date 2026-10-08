@@ -267,7 +267,7 @@ export default function StyleGuidePage() {
       <Modal id="sample-modal" labelledBy="sample-modal-title">
         <div className="fk-flex fk-flex-col fk-gap-1">
           <p id="sample-modal-title" className="fk-text-lg fk-font-medium fk-color-ink-80">Modal title</p>
-          <p className="fk-text-lg fk-color-subtle-80">Optional subtitle</p>
+          <p className="fk-text-lg fk-color-subtle">Optional subtitle</p>
         </div>
         <div className="fk-flex fk-flex-col fk-gap-4">
           <p className="fk-text-lg fk-color-brand-80">

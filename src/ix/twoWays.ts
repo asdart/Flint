@@ -203,7 +203,7 @@ export function twoWays(): Cleanup {
     animate(
       record.body,
       { opacity: "0", transform: "translateY(12px)" },
-      { opacity: "0.8", transform: "translateY(0px)" },
+      { opacity: "1", transform: "translateY(0px)" },
       offset + AT.body,
       0.6,
     );
@@ -234,7 +234,7 @@ export function twoWays(): Cleanup {
       );
       setTransform(record.facility, "scale(1)", "1");
       record.orbs.forEach((orb) => setTransform(orb, "", "1"));
-      setTransform(record.body, "translateY(0px)", "0.8");
+      setTransform(record.body, "translateY(0px)", "1");
       record.eyebrowWords.forEach((word) => setTransform(word, "translateY(0%)"));
       record.titleWords.forEach((word) => setTransform(word, "translateY(0%)"));
       setTransform(record.cta, "translateY(0px)", "1");

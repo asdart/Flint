@@ -39,7 +39,7 @@ export default function FacilityPartnersHero() {
               </h1>
             </div>
             <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg fk-color-white-60">
+              <p className="fk-text-lg fk-color-white">
                 Connect with 100,000+ vetted candidates. We simplify staffing for hospitals, clinics, and care facilities.
               </p>
             </div>

@@ -31,4 +31,5 @@
 
 .fk-card-text.is-subtle {
   color: var(--color-subtle);
+  opacity: 1;
 }

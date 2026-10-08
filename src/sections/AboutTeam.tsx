@@ -63,7 +63,7 @@ export default function AboutTeam() {
                   <div className="fk-flex fk-flex-col fk-gap-4">
                     <div className="fk-flex fk-flex-col fk-gap-1">
                       <h3 className="fk-text-lg fk-font-medium fk-color-ink-80">{founder.name}</h3>
-                      <p className="fk-text-lg fk-color-subtle-80">{founder.role}</p>
+                      <p className="fk-text-lg fk-color-subtle">{founder.role}</p>
                     </div>
                     <a className="fk-team-link fk-text-lg" href={`#bio-${founder.id}`} data-x-modal-open={`bio-${founder.id}`}>
                       Read more<span className="fk-sr-only"> about {founder.name}</span>
@@ -89,7 +89,7 @@ export function AboutTeamModals() {
             <p id={`bio-${founder.id}-title`} className="fk-text-lg fk-font-medium fk-color-ink-80">
               {founder.name}
             </p>
-            <p className="fk-text-lg fk-color-subtle-80">{founder.role}</p>
+            <p className="fk-text-lg fk-color-subtle">{founder.role}</p>
           </div>
           <div className="fk-flex fk-flex-col fk-gap-4">
             <p className="fk-text-lg fk-color-brand-80">{founder.bio}</p>
