@@ -25,7 +25,7 @@
     "/privacy-policy (draft)": "6ac53f98c016f2675f9a7d45",
     "/terms-of-service (draft)": "6ac53f99a916ab237adb7022",
     "/404 (utility page, 2026-10-07)": "6ac5be576246587305b44400",
-    "/thank-you (draft, 2026-10-10)": "6acaa20e7d5a60e3e02bd2fc"
+    "/thank-you (un-drafted 2026-10-10; recreated 2026-10-10, the first page 6acaa20e7d5a60e3e02bd2fc was corrupt and deleted by the user)": "6acaaf221cc16eca4d04973a"
   },
   "components": {
     "UI / Button": {
@@ -1456,14 +1456,14 @@
       "Button instance": "70fb051b-feb9-65ec-5089-9235bc7a3a51",
       "Footer instance": "fbb511a3-b0c9-5f7b-1ad5-b4798cbacee8"
     },
-    "/thank-you page (draft, 2026-10-10)": {
-      "page": "6acaa20e7d5a60e3e02bd2fc",
-      "body": "6acaa20e7d5a60e3e02bd302",
-      "fk-page": "bed9a173-25f9-5f0b-6a96-efa3cad9c121",
-      "main": "bed9a173-25f9-5f0b-6a96-efa3cad9c120 (DOM id main NOT set: set_dom_id failed)",
-      "Nav instance": "de9b6405-22ed-e411-3281-9497d6a71137",
-      "Page Hero instance": "bab7e7c7-67d5-9b9b-b227-52e2bae4fff8",
-      "Footer instance": "6f6235d6-0fd7-d6c5-b1ed-f8f38b18df9c"
+    "/thank-you page (un-drafted 2026-10-10, recreated 2026-10-10; old page 6acaa20e7d5a60e3e02bd2fc deleted by the user 2026-10-10)": {
+      "page": "6acaaf221cc16eca4d04973a",
+      "body": "6acaaf221cc16eca4d049740",
+      "fk-page": "71758824-5ef5-1ef2-7927-9ff28bf99833",
+      "main": "71758824-5ef5-1ef2-7927-9ff28bf99832 (DOM id main set and read back)",
+      "Nav instance": "00fe0605-faab-797a-15f2-2ac363572aad",
+      "Page Hero instance": "9f81f3b0-2b74-bde8-6d22-fc1c69903aa9",
+      "Footer instance": "1c75e209-bcd0-3174-cff8-eb5be959d709"
     }
   },
   "styles": {
