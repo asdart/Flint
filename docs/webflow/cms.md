@@ -147,7 +147,7 @@ filter in `AllPosts.tsx`. No script needed. The preview serves the same URLs: `/
 
 ## Import from the current site
 
-Done in the repo on 2026-09-28. The three collections and their fields exist on production since 2026-09-29 (ids in `webflow-ids.json`; Excerpt's max length 160 and Read time's minimum 1 were set in the Designer by the user on 2026-09-30 and read back through the MCP the same day: `excerpt` `maxLength` 160, `read-time` `minValue` 1, `allowNegative` false); items were imported manually from CSV on 2026-09-29 (5 categories, 1 author, 34 posts of which 6 are drafts; alt text set through the MCP), nothing is published.
+Done in the repo on 2026-09-28. The three collections and their fields exist on production since 2026-09-29 (ids in `webflow-ids.json`; Excerpt's max length 160 and Read time's minimum 1 were set in the Designer by the user on 2026-09-30 and read back through the MCP the same day: `excerpt` `maxLength` 160, `read-time` `minValue` 1, `allowNegative` false); items were imported manually from CSV on 2026-09-29 (5 categories, 1 author, 34 posts of which 6 are drafts; alt text set through the MCP), nothing is published. **Update 2026-10-10:** 3 of the 6 drafts were published (user decision): 31 published, 3 drafts left.
 
 - **Posts:** 40 in the export. 6 placeholders ("This is a test blog" and 5 template posts with
   invented authors) were dropped; 34 real posts are in the seed. 6 are drafts: the 4 drafts on the
