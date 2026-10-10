@@ -54,6 +54,13 @@
   padding-block: var(--space-32);
 }
 
+/* Section / Page Hero, variant Half Screen: at least half the viewport high, with the default panel padding.
+   Geometry only: the vertical and horizontal centring is utilities in the markup
+   (`fk-flex fk-items-center fk-justify-center`). */
+.fk-panel.is-half {
+  min-height: 50vh;
+}
+
 .fk-panel.is-tight-bottom {
   padding-bottom: var(--space-12);
 }

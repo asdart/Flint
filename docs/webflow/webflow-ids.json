@@ -24,7 +24,8 @@
     "/facility-partners (draft)": "6abfecbb675c8491534c950c",
     "/privacy-policy (draft)": "6ac53f98c016f2675f9a7d45",
     "/terms-of-service (draft)": "6ac53f99a916ab237adb7022",
-    "/404 (utility page, 2026-10-07)": "6ac5be576246587305b44400"
+    "/404 (utility page, 2026-10-07)": "6ac5be576246587305b44400",
+    "/thank-you (draft, 2026-10-10)": "6acaa20e7d5a60e3e02bd2fc"
   },
   "components": {
     "UI / Button": {
@@ -194,8 +195,17 @@
       "id": "76881060-95f8-8705-011c-ede2b0d82c6d",
       "props": {
         "Title": "4e016fc2-5668-d590-6613-82b0548f2c30",
-        "Body": "514fce07-19a7-c556-dd32-db09ffad77da"
-      }
+        "Body": "514fce07-19a7-c556-dd32-db09ffad77da",
+        "Show Button": "238c5439-46be-d1c5-32a9-11cc5ab608b5",
+        "Button Label": "fc5c8f36-27f1-03a5-0165-c928a6ef6078",
+        "Button Link": "1b271bb0-8335-7448-3739-0a5d5f5a6d26",
+        "Variant": "b389df73-2a11-5b0f-c5b0-61477c38a88b"
+      },
+      "variants": {
+        "Base": "base",
+        "Half Screen": "01c1e36c-ea5f-5282-2eb9-309f896327eb"
+      },
+      "note": "Synced 2026-10-10 (Stage 2). Button block fk-blur-reveal is-delay-2 44d8cae3-b475-140c-a18b-2954a3e213ff (visibility bound to Show Button) > fk-section-header-action 36166044-c207-40e4-bdb9-83c1c519d4bd > UI / Button instance 64c772e9-a743-9c5f-505e-0ae7deac8cce (Label and Link bound to the host props). Half Screen = variant style overrides on the is-blog-hero combo (parent fk-panel), not the class fk-panel.is-half (unused)"
     },
     "UI / Arc Stage": {
       "id": "a34144fc-447d-5158-852a-1d66cc43f072",
@@ -1441,10 +1451,19 @@
       "fk-page": "99147ded-50d4-be2a-e64c-0896d8ace400",
       "main": "99147ded-50d4-be2a-e64c-0896d8ace3ff",
       "Nav instance": "4cc289e7-1089-27de-7330-2e59a175b288",
-      "Page Hero instance": "4998bd3d-1f4f-fc7f-6d9e-bc4057dc0523",
-      "button row section": "d359aa82-2494-77ba-d571-947bb0d7ef06",
+      "Page Hero instance": "4998bd3d-1f4f-fc7f-6d9e-bc4057dc0523 (Half Screen, Show Button on, 2026-10-10)",
+      "button row section": "d359aa82-2494-77ba-d571-947bb0d7ef06 (hidden, named 'LEFTOVER - delete me' 2026-10-10; no longer returned by get_all_elements / query_elements; user to confirm and delete in the Designer)",
       "Button instance": "70fb051b-feb9-65ec-5089-9235bc7a3a51",
       "Footer instance": "fbb511a3-b0c9-5f7b-1ad5-b4798cbacee8"
+    },
+    "/thank-you page (draft, 2026-10-10)": {
+      "page": "6acaa20e7d5a60e3e02bd2fc",
+      "body": "6acaa20e7d5a60e3e02bd302",
+      "fk-page": "bed9a173-25f9-5f0b-6a96-efa3cad9c121",
+      "main": "bed9a173-25f9-5f0b-6a96-efa3cad9c120 (DOM id main NOT set: set_dom_id failed)",
+      "Nav instance": "de9b6405-22ed-e411-3281-9497d6a71137",
+      "Page Hero instance": "bab7e7c7-67d5-9b9b-b227-52e2bae4fff8",
+      "Footer instance": "6f6235d6-0fd7-d6c5-b1ed-f8f38b18df9c"
     }
   },
   "styles": {

@@ -7,6 +7,7 @@ import BlogPage from "./pages/BlogPage";
 import AboutPage from "./pages/AboutPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
+import ThankYouPage from "./pages/ThankYouPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import StyleGuidePage from "./pages/StyleGuidePage";
 import { siteSchema } from "./content/schema";
@@ -56,6 +57,7 @@ export default function App() {
         />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+        <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/style-guide" element={<StyleGuidePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

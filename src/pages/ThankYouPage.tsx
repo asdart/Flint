@@ -3,8 +3,8 @@ import Nav from "../components/global/Nav";
 import { useInteractions } from "../ix/useInteractions";
 import PageHero from "../sections/PageHero";
 
-// 404 at any unknown path (Webflow's 404 utility page): Page Hero (Half Screen, with the button), no extra sections.
-export default function NotFoundPage() {
+// Thank You page at /thank-you (where the application ends): Page Hero (Half Screen, with the button), no extra sections.
+export default function ThankYouPage() {
   useInteractions();
 
   return (
@@ -13,8 +13,8 @@ export default function NotFoundPage() {
       <main id="main">
         <PageHero
           variant="half-screen"
-          title="Page not found"
-          body={"That page doesn't exist or has moved.\nHead back to the home page or read the Flint blog."}
+          title="Thanks for applying!"
+          body={"We're reviewing your application now.\nWe will send a text message or call as soon as we have an update."}
           showButton
         />
       </main>
