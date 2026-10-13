@@ -4,7 +4,7 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.12 (2026-10-06). 1.12: Designer Image width/height = the largest displayed size, aspect-correct, because Webflow builds `sizes` from it; files stay 2×. Amended 2026-10-07: CMS-bound images take their largest displayed box size too (the Designer can't leave the fields empty and writes `Auto` otherwise). 1.11: the legacy code is gone (every page is rebuilt): no
+- **Contract version:** 1.13 (2026-10-11). 1.13: form fields are plain Form Block elements per form (rule 10); `UI / Input Field` and `UI / Select Field` are Designer templates (D-67). 1.12 (2026-10-06): Designer Image width/height = the largest displayed size, aspect-correct, because Webflow builds `sizes` from it; files stay 2×. Amended 2026-10-07: CMS-bound images take their largest displayed box size too (the Designer can't leave the fields empty and writes `Auto` otherwise). 1.11: the legacy code is gone (every page is rebuilt): no
   Tailwind, Framer Motion or `src/pages/legacy/`; §8 now says how the preview stands in for Webflow's own base
   stylesheet (`webflow-base.css`). 1.10: every Image added in Webflow gets its alt text and, if static, the Designer's
   Image width / height (rule 15). 1.9: the Rich Text descendant rules (`.fk-article-body <tag>`) are the custom-code
@@ -103,7 +103,7 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
     Icons are SVG files from `src/assets/icons/` placed as images, never drawn with styled
     elements (no stacked spans for a menu icon). Headings follow the page outline, not the look:
     one `h1` per page, section titles `h2`, items `h3`; dates, authors, quotes, eyebrows and stat
-    values are never headings (size comes from the `fk-heading-*` class).
+    values are never headings (size comes from the `fk-heading-*` class). Form fields are plain Form Block elements per form, built directly with the shared `fk-input-*` classes, each with its own Name, Placeholder, Type and options; an icon only when the field needs one. `UI / Input Field` and `UI / Select Field` are Designer templates (place, unlink, set) and a structure reference for agents (D-67).
 11. **Read before write in Webflow.** Query existing styles, variables and components by name before
     creating anything. Never create duplicates, and never rename or delete without updating the registry.
 12. **No destructive or publishing action without explicit user confirmation.** That covers deleting

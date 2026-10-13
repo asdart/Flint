@@ -252,7 +252,7 @@ still pending** (the user or the future integration, P-05).
 
 Native Webflow elements are used instead of interactions for: **Slider** (testimonial carousel,
 replaces `CarouselPagination.tsx` and `Testimonials.tsx` paging), **Form select** (replaces the
-animated `components/Select.tsx`), **Form Block** (the newsletter's success and error messages; the preview's `src/ix/form.ts` stands in for webflow.js), **Dropdown** (the blog's category select: a list of links to the category
+animated `components/Select.tsx`), **Form Block** (the newsletter's success and error messages; the preview's `src/ix/form.ts` stands in for webflow.js), **Dropdown** (the blog's category select, now `UI / Filter Dropdown`: a list of links to the category
 pages; the preview's `src/ix/dropdown.ts` only stands in for webflow.js), **Collection List pagination** (replaces `AllPosts.tsx` paging
 and `AnimatePresence`).
 

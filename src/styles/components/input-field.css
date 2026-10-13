@@ -1,22 +1,42 @@
-/* fk-input-field — UI / Input Field, also the toggle of UI / Dropdown (`is-select`). Figma
+/* fk-input-container, fk-input-field-label, fk-input-field — UI / Input Field and UI / Select Field, also the
+   toggle of UI / Filter Dropdown (`is-select`). Figma
    "Input-Container" 5535:1635: medium 40px / large 48px, `radius-md`, states Default, Hover,
    Click, Focus, Disable, plus a trailing icon and a phone-number prefix. The container carries the
    border, states and horizontal padding; the native input (`w-input`) inside hides its own outline.
-   Elements: `-input` (Form Text Field), `-text` (a select's label), `-icon` (20px), `-prefix`.
+   Pulled back from the Designer 2026-10-11: `fk-input-container` (column, 4px gap) wraps an optional
+   `fk-input-field-label` (12px / 16px, `color-subtle`, Figma 5985:3085: 4px above a 40px field) and the field; the
+   field has 8px vertical padding and keeps its 300ms border and ring transition.
+   Elements: `-input` (Form Text Field), `-select` (the Form Select, next to `-input`), `-text` (a dropdown toggle's label), `-icon` (20px), `-prefix`, `-label`.
    States: Hover = `color-stone-200` border. Click = a focused input (`:focus-within`) or an open
    select (`w--open`): `color-brand` border and a 2px `color-brand-10` ring. Focus (keyboard, a select's
    toggle only, since a text input can't tell keyboard from mouse focus) = white gap + `color-brand-focus`
    ring. Disable = `is-disabled` (`color-stone-50` fill).
    `is-action`: the newsletter variation, a `radius-full` pill with a control inside it (2px inset),
    which stacks on phones: input above, full-width control below, 16px top corners and 24px bottom
-   corners (Figma draws 22). */
+   corners (Figma draws 22). Only `UI / Newsletter Form` uses it now (Input Field has no action layout). */
+
+.fk-input-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: var(--space-1);
+}
+
+.fk-input-field-label {
+  /* Webflow's base `label` has margin-bottom 5px (see webflow-base.css): the gap is the container's 4px only. */
+  margin-bottom: 0px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--color-subtle);
+}
 
 .fk-input-field {
   display: flex;
   align-items: center;
   gap: var(--space-2);
   height: 40px;
-  padding: 0px var(--space-3-5);
+  padding: var(--space-2) var(--space-3-5);
   border: 1px solid var(--color-stone-100);
   border-radius: var(--radius-md);
   background-color: var(--color-white);
@@ -106,7 +126,15 @@
   cursor: not-allowed;
 }
 
-/* A select's label: placeholder look, or the chosen value's look (`is-selected`). */
+/* The native Form Select (`w-select fk-input-field-input fk-input-field-select`) as the field's control: no native arrow (the chevron icon sits after
+   it), the pointer cursor, the long option clipped. */
+.fk-input-field-select {
+  cursor: pointer;
+  text-overflow: ellipsis;
+  appearance: none;
+}
+
+/* A dropdown toggle's label: placeholder look, or the chosen value's look (`is-selected`). */
 .fk-input-field-text {
   flex: 1;
   min-width: 0;

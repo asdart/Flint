@@ -112,18 +112,18 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 
 | Token | Value | | Token | Value |
 | --- | --- | --- | --- | --- |
-| `space-0-5` | 2px | | | |
-| `space-1` | 4px | | `space-7` | 28px |
-| `space-1-5` | 6px | | `space-8` | 32px |
-| `space-2` | 8px | | `space-10` | 40px |
-| `space-2-5` | 10px | | `space-12` | 48px |
-| `space-3` | 12px | | `space-14` | 56px |
-| `space-3-5` | 14px | | `space-16` | 64px |
-| `space-4` | 16px | | `space-19` | 76px |
-| `space-5` | 20px | | `space-20` | 80px |
-| `space-6` | 24px | | `space-24` | 96px |
-| | | | `space-32` | 128px |
-| | | | `space-36` | 144px |
+| `space-0-5` | 2px | | `space-8` | 32px |
+| `space-1` | 4px | | `space-10` | 40px |
+| `space-1-5` | 6px | | `space-12` | 48px |
+| `space-2` | 8px | | `space-14` | 56px |
+| `space-2-5` | 10px | | `space-16` | 64px |
+| `space-3` | 12px | | `space-19` | 76px |
+| `space-3-5` | 14px | | `space-20` | 80px |
+| `space-4` | 16px | | `space-24` | 96px |
+| `space-4-5` | 18px | | `space-32` | 128px |
+| `space-5` | 20px | | `space-36` | 144px |
+| `space-6` | 24px | | | |
+| `space-7` | 28px | | | |
 
 `space-1-5`, `space-2-5` and `space-3-5` exist only for button padding: default 10 × 20
 (`space-2-5` / `space-5`), small 6 × 14 (`space-1-5` / `space-3-5`), as in the legacy
@@ -131,7 +131,7 @@ A 4px grid, named like the legacy Tailwind scale so migration is mechanical (`px
 
 `space-14`, `space-19` and `space-36` come from the homepage section shell. `space-14` is the row
 gap in `fk-logo-marquee`. `space-19` is the gap between the heading and the ticker viewport in
-`fk-partners-map-inner`. `space-36` is the top padding of `fk-panel.is-hero` (Hero's rhythm combo). `space-0-5` is the inset between an input field's border and the button inside it (`fk-input-field is-action`).
+`fk-partners-map-inner`. `space-4-5` (18px) was added in the Designer on 2026-10-11 (pulled back; no class uses it yet; renamed `space-4.5` → `space-4-5` on Webflow 2026-10-11, like the other half steps; `fk-gap-4-5` created on Webflow the same day). `space-36` is the top padding of `fk-panel.is-hero` (Hero's rhythm combo). `space-0-5` is the inset between an input field's border and the button inside it (`fk-input-field is-action`, now only in `UI / Newsletter Form`).
 
 ## Widths (size variables)
 

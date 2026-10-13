@@ -136,12 +136,12 @@ image, `avatar` is the author's name (S-16). The post template also carries `x-s
 | Blog — `Section / Post Index` | Posts | — | Publish date ↓ | 6 | Native, 6 per page (numbered links: exception `x-blog-pagination`, D-31; P-15 closed, no native numbered links). On Webflow 2026-09-30: `pagination` = `{ "itemsPerPage": 6 }` (`limit` stays the default 100) |
 | Blog — featured post | Posts | Featured = on | Publish date ↓ | 1 | — (on Webflow 2026-09-30: `filters` = `[{ "fieldSlug": "featured", "operator": "isOn" }]`) |
 | Blog category template — `Section / Post Index` | Posts | Category = current category | Publish date ↓ | 6 | Native (**on Webflow 2026-09-30:** source, sort, pagination set; the filter is Designer-only, same limit as above: for the itemRef field `category` the valid operators are `equals`, `doesNotEqual`, `isSet`, `isNotSet`, and `equals` won't take a binding through the MCP). **Designer pass 2026-09-30: works on staging** (`/categories/{slug}` list counts match the content: licensing 1, relocation 1, institutional 4, careers and immigration paged 6 + Next); the MCP reads the list's `filters` as `[]`. The category page's *featured* list now reads `filters` = `featured isOn` plus a stray `name equals ""` (added in the Designer; the featured card still renders `how-flint-works` on every category page, so it has no visible effect today, but an empty `equals` filter is fragile: ask the user to remove it) |
-| Category links in the Post Index's Dropdown (`fk-dropdown`) | Categories | **Not current** (on a category template; none on `/blog`) | Name ↑ | all | — (D-28: `/blog` lists all five; a category page shows a static "All categories" link then the other four) |
+| Category links in the Post Index's Filter Dropdown (`fk-filter-dropdown`) | Categories | **Not current** (on a category template; none on `/blog`) | Name ↑ | all | — (D-28: `/blog` lists all five; a category page shows a static "All categories" link then the other four) |
 
 **Categories collection slug is `categories` (changed in the Designer 2026-09-30, was `blog-categories`):** the template page is `detail_categories`, published at `/categories/{slug}` (the old `/blog-categories/{slug}` is 404 on staging); the repo route, links and registries follow.
 
 Category filtering uses Category template pages and plain links inside Webflow's native Dropdown (the
-design's category select, `classes.md` → `fk-dropdown`), which replaces the legacy client-side `Select` +
+design's category select, `classes.md` → `fk-filter-dropdown`), which replaces the legacy client-side `Select` +
 filter in `AllPosts.tsx`. No script needed. The preview serves the same URLs: `/blog`,
 `/categories/{slug}` and `?page=n`, from `src/content/index.ts` (`postPage`, `featuredPost`).
 

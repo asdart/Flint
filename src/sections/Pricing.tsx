@@ -41,7 +41,7 @@ export default function Pricing() {
           <div className="fk-panel-content">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
               <div className="fk-blur-reveal">
-                <h2 className="fk-heading-xl">Why Flint is free?</h2>
+                <h2 className="fk-heading-xl">Why is Flint free?</h2>
               </div>
               <div className="fk-blur-reveal is-delay-1">
                 <p className="fk-text-lg fk-color-brand-80">

@@ -2,8 +2,9 @@ import chevronRight from "../assets/icons/chevron-right.svg";
 import Footer from "../components/global/Footer";
 import Nav from "../components/global/Nav";
 import Button from "../components/ui/Button";
-import Dropdown from "../components/ui/Dropdown";
+import FilterDropdown from "../components/ui/FilterDropdown";
 import InputField from "../components/ui/InputField";
+import SelectField from "../components/ui/SelectField";
 import Modal from "../components/ui/Modal";
 import PostCard from "../components/ui/PostCard";
 import { latestPosts } from "../content";
@@ -106,13 +107,13 @@ export default function StyleGuidePage() {
           <div className="fk-panel fk-bg-surface">
             <div className="fk-container">
               <div className="fk-flex fk-flex-col fk-gap-6">
-                <h2 className="fk-heading-md">Dropdown</h2>
-                <p className="fk-text-md fk-color-subtle">UI / Dropdown: placeholder look, options slot (plain links, as on the blog: the current option is left out of the list, D-28)</p>
+                <h2 className="fk-heading-md">Filter dropdown</h2>
+                <p className="fk-text-md fk-color-subtle">UI / Filter Dropdown (a menu of links, no label: the toggle text names it): placeholder look, options slot (plain links, as on the blog: the current option is left out of the list, D-28)</p>
                 <div className="fk-flex fk-items-start">
-                  <Dropdown label="All categories" menuLabel="Filter by category">
-                    <a href="#careers" className="fk-dropdown-link">Careers</a>
-                    <a href="#licensing" className="fk-dropdown-link">Licensing</a>
-                  </Dropdown>
+                  <FilterDropdown label="All categories" menuLabel="Filter by category">
+                    <a href="#careers" className="fk-filter-dropdown-link">Careers</a>
+                    <a href="#licensing" className="fk-filter-dropdown-link">Licensing</a>
+                  </FilterDropdown>
                 </div>
               </div>
             </div>
@@ -139,19 +140,48 @@ export default function StyleGuidePage() {
           <div className="fk-panel fk-bg-surface">
             <div className="fk-container">
               <div className="fk-flex fk-flex-col fk-gap-6">
-                <h2 className="fk-heading-md">Input field</h2>
-                <p className="fk-text-md fk-color-subtle">
-                  UI / Input Field: the newsletter email field (Action layout) with its submit Button, inside a form. Hover and focus it
-                  to see the states. The other sizes and layouts exist only in the repo until a second form needs them (roadmap D-24).
-                </p>
-                <div className="w-form">
-                  <form name="wf-form-Style-guide" data-name="Style guide" method="get" aria-label="Input field samples">
-                    <div className="fk-flex fk-flex-col fk-gap-4 fk-max-w-content-sm">
-                      <InputField variant="action" label="Email address" name="Email" type="email" placeholder="Email address" required>
-                        <Button submit label="Subscribe" className="fk-w-full-mobile" />
-                      </InputField>
-                    </div>
-                  </form>
+                <div className="fk-flex fk-flex-col fk-gap-6">
+                  <h2 className="fk-heading-md">Input field</h2>
+                  <p className="fk-text-md fk-color-subtle">
+                    Form fields are plain markup per form (roadmap D-66): the Figma FormBody below is four Webflow Form Block fields (select, email,
+                    text, text) styled with the shared fk-input-* classes, each with its own Name, Placeholder, Type and options. UI / Input
+                    Field and UI / Select Field stay on Webflow as templates: place one, unlink it, then set Name / Placeholder / Type. Hover
+                    and focus a field to see the states.
+                  </p>
+                  <div className="w-form">
+                    <form name="wf-form-Style-guide" data-name="Style guide" method="get" aria-label="Input field samples">
+                      <div className="fk-flex fk-flex-col fk-gap-6 fk-max-w-content-sm">
+                        <InputField label="Email address" name="Email" id="email-field" type="email" placeholder="maria@facility.com" required />
+                        <InputField label="First name" name="First-name" id="field-first-name" placeholder="Maria" />
+                        <InputField label="Last name" name="Last-name" id="field-last-name" placeholder="Xavier" />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div className="fk-flex fk-flex-col fk-gap-6">
+                  <h3 className="fk-heading-sm">Templates</h3>
+                  <p className="fk-text-md fk-color-subtle">
+                    The two template components, still linked, for editors to drop in and unlink. Their Name, Placeholder and options are fixed in
+                    the definition. Never leave one linked in a real form.
+                  </p>
+                  <div className="w-form">
+                    <form name="wf-form-Style-guide-templates" data-name="Style guide templates" method="get" aria-label="Field templates">
+                      <div className="fk-flex fk-flex-col fk-gap-6 fk-max-w-content-sm">
+                        <InputField label="Input Field template" name="Email" id="template-input" type="email" placeholder="Email address" />
+                        <SelectField
+                          label="Select Field template"
+                          name="Select"
+                          id="template-select"
+                          placeholder="Select one..."
+                          options={[
+                            { value: "option-1", label: "Option 1" },
+                            { value: "option-2", label: "Option 2" },
+                            { value: "option-3", label: "Option 3" },
+                          ]}
+                        />
+                      </div>
+                    </form>
+                </div>
                 </div>
               </div>
             </div>

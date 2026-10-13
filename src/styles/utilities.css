@@ -126,6 +126,10 @@
   gap: var(--space-4);
 }
 
+.fk-gap-4-5 {
+  gap: var(--space-4-5);
+}
+
 .fk-gap-5 {
   gap: var(--space-5);
 }

@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import chevronLeft from "../assets/icons/chevron-left.svg";
 import chevronRight from "../assets/icons/chevron-right.svg";
-import Dropdown from "../components/ui/Dropdown";
+import FilterDropdown from "../components/ui/FilterDropdown";
 import PostCard from "../components/ui/PostCard";
 import { categories, categoryBySlug, postPage } from "../content";
 import EmptyState from "../components/ui/EmptyState";
@@ -15,7 +15,7 @@ type PostIndexProps = {
 /**
  * Section / Post Index. Page markup: the feed is a Collection List (Posts, Publish date ↓, 6 per
  * page, filtered to the current category on a category template page) with native pagination, and
- * the category select is `UI / Dropdown` whose slot holds a Collection List of Categories (sorted by
+ * the category select is `UI / Filter Dropdown` whose slot holds a Collection List of Categories (sorted by
  * name, current one excluded) plus, on a category page, a static "All categories" link (D-28), so
  * nothing here needs a script. The wrapper, list and `role="listitem"` divs mirror Webflow's
  * Collection List Wrapper, Collection List and Collection Item.
@@ -39,9 +39,9 @@ export default function PostIndex({ category }: PostIndexProps) {
                 className="fk-flex fk-items-center fk-justify-between fk-gap-4 fk-flex-col-mobile fk-items-stretch-mobile"
               >
                 <h2 className="fk-heading-lg">All posts</h2>
-                <Dropdown label={current ? current.name : "All categories"} selected={Boolean(current)} menuLabel="Filter by category">
+                <FilterDropdown label={current ? current.name : "All categories"} selected={Boolean(current)} menuLabel="Filter by category">
                   {current ? (
-                    <SmartLink href="/blog" className="fk-dropdown-link">
+                    <SmartLink href="/blog" className="fk-filter-dropdown-link">
                       All categories
                     </SmartLink>
                   ) : null}
@@ -49,14 +49,14 @@ export default function PostIndex({ category }: PostIndexProps) {
                     <div role="list">
                       {categoryOptions.map((item) => (
                         <div key={item.slug} role="listitem">
-                          <SmartLink href={`/categories/${item.slug}`} className="fk-dropdown-link">
+                          <SmartLink href={`/categories/${item.slug}`} className="fk-filter-dropdown-link">
                             {item.name}
                           </SmartLink>
                         </div>
                       ))}
                     </div>
                   </div>
-                </Dropdown>
+                </FilterDropdown>
               </div>
               <div className="fk-flex fk-flex-col fk-gap-8">
                 {posts.length > 0 ? (

@@ -111,7 +111,7 @@
         "Body": "fa78bc91-fbbe-5cd6-3e54-0337fbd2a098"
       }
     },
-    "UI / Dropdown": {
+    "UI / Filter Dropdown": {
       "id": "d65ee1fa-7a35-366a-4fc0-5d772a2776ad",
       "props": {
         "Variant": "2f9203a1-8fb5-8381-2249-aaee2a56a1eb",
@@ -143,10 +143,26 @@
     "UI / Input Field": {
       "id": "e7a87f07-0d64-7333-a929-de8fbcc186fc",
       "props": {
-        "Label": "b8686228-893e-bbcb-1e81-51c5785b32e4",
-        "Show Icon": "338a8593-e146-ba46-cdc9-4c2336470d1b",
-        "Icon": "283f5acf-ade7-7ceb-c8e2-a7218ad8128f",
-        "Button Label": "af1dd1fa-3baa-61a4-b111-ccccc6323142"
+        "Label": "af1dd1fa-3baa-61a4-b111-ccccc6323142",
+        "ID": "c9a72f79-06ea-82d5-3b38-5b1b4861f1eb"
+      },
+      "slots": {}
+    },
+    "UI / Select Field": {
+      "id": "52457ea5-4b1e-6c12-8cf5-2b0954937f99",
+      "props": {
+        "Label": "d0be63b1-e64c-320b-1a97-8b842945d6d4",
+        "ID": "a2ea0d55-159e-f86a-952a-1a126d1b50f6"
+      },
+      "slots": {}
+    },
+    "UI / Newsletter Form": {
+      "id": "a2af1369-3af3-3507-d424-07644b29bd1f",
+      "props": {
+        "Button Label": "99d342d9-670c-7250-f929-0a4c89132076",
+        "Success Message": "80316ab7-0264-f598-25d3-6147a6b1e8dd",
+        "Error Message": "c462238f-6c92-ed64-c94a-4bfbaa566db8",
+        "ID": "26415610-a58d-dc23-af20-4e9466dfc8a5"
       },
       "slots": {}
     },
@@ -1128,6 +1144,7 @@
     "space-3": "variable-946cc17a-b55c-3ca1-d1a4-d6efa65916a0",
     "space-3-5": "variable-02cbf3a4-a64f-35f7-e0de-a47b2bf3a6c6",
     "space-4": "variable-a332dc7c-42f1-0f24-a675-55a189d89ffe",
+    "space-4-5": "variable-7f0ad6c0-8585-30f6-e065-6c38dcc811f0",
     "space-5": "variable-fc68713f-31e4-540b-9be1-fd36d5f4422f",
     "space-6": "variable-78c61ec9-cf77-2831-8f64-5b7d6ffa85ce",
     "space-7": "variable-337f66ca-14df-4b59-75fb-baa9e0d1d199",
@@ -1464,9 +1481,57 @@
       "Nav instance": "00fe0605-faab-797a-15f2-2ac363572aad",
       "Page Hero instance": "9f81f3b0-2b74-bde8-6d22-fc1c69903aa9",
       "Footer instance": "1c75e209-bcd0-3174-cff8-eb5be959d709"
+    },
+    "/style-guide form fields (2026-10-11, D-67)": {
+      "page": "6abbf07b612d4c02ed5bebf4",
+      "plainForm": {
+        "formForm": "cc2ad9fd-eca8-d845-2885-26cf1a3db7c2",
+        "formWrapper": "cc2ad9fd-eca8-d845-2885-26cf1a3db7c1",
+        "stack": "cc2ad9fd-eca8-d845-2885-26cf1a3db7c0",
+        "email": {
+          "container": "dd6a4625-63bb-73be-ad8e-e9ffc05b892f",
+          "label": "d6de3e17-f44b-44da-3b7e-844b02908fc9",
+          "input": "d6de3e17-f44b-44da-3b7e-844b02908fcc"
+        },
+        "firstName": {
+          "container": "2d5af55a-de45-5503-72dd-5d29b689a55c",
+          "label": "aa9ad2a4-8e27-27b6-0b5b-1abb47a5e2c9",
+          "input": "aa9ad2a4-8e27-27b6-0b5b-1abb47a5e2cc"
+        },
+        "lastName": {
+          "container": "28029249-330f-1aad-9b0f-260fa9a2396e",
+          "label": "dd715cc7-aaeb-adf3-9484-960cf1135138",
+          "input": "dd715cc7-aaeb-adf3-9484-960cf113513b"
+        }
+      },
+      "templates": {
+        "note": "pulled from the Designer 2026-10-11 (user rebuilt the Templates group: new ids, own wrapper)",
+        "wrapperIntro": "cc2ad9fd-eca8-d845-2885-26cf1a3db7c9 (fk-flex fk-flex-col fk-gap-6: Input field heading, paragraph, plain form)",
+        "wrapperTemplates": "14561aab-8746-5f81-f44f-9ebd00642dfc (fk-flex fk-flex-col fk-gap-6)",
+        "heading": "14561aab-8746-5f81-f44f-9ebd00642e15",
+        "paragraph": "14561aab-8746-5f81-f44f-9ebd00642e17",
+        "formWrapper": "14561aab-8746-5f81-f44f-9ebd00642e19",
+        "formForm": "14561aab-8746-5f81-f44f-9ebd00642e1a",
+        "stack": "14561aab-8746-5f81-f44f-9ebd00642e1b (no DOM id since 2026-10-12)",
+        "inputFieldInstance": "14561aab-8746-5f81-f44f-9ebd00642e1c",
+        "selectFieldInstance": "14561aab-8746-5f81-f44f-9ebd00642e1e",
+        "scratchSelect": "removed by the user in the Designer (verified gone 2026-10-12: element_id query returns no match)"
+      },
+      "selectFieldComponentSelectId": "ced9b307-91ad-213c-b586-93db41d4ba02 (2026-10-11: new Form Select inside the UI / Select Field definition, options 'Select one...' (empty value), Option 1, Option 2, Option 3 via WHTML; name Select; DOM id bound to the ID prop (read back); aria-label bound to the Label prop by the user in the Designer 2026-10-12, read back). The old select 52457ea5-4b1e-6c12-8cf5-2b0954937f9d was deleted",
+      "deleted2026-10-11": [
+        "cd077d55-d12d-f50a-63ce-b6c94a0e561a (Date container with label b754511a-…1b, field div …1d, plain select e891dad8-…, hidden old select b754511a-…1e, chevron …20)",
+        "d6de3e17-…fce, aa9ad2a4-…e2ce, dd715cc7-…513d (hidden fk-input-field-icon images)",
+        "54a81ecb-c14d-737b-0888-dbc878b58b51 (empty wrapper div)",
+        "52457ea5-…937f9d (old select in the Select Field definition)"
+      ]
     }
   },
   "styles": {
-    "fk-skip-link": "2a8d1f34-c194-928f-d34f-b90b871089ee"
+    "fk-skip-link": "2a8d1f34-c194-928f-d34f-b90b871089ee",
+    "fk-filter-dropdown": "d03c4fb2-049f-c15c-5838-e8ebca3d2d05",
+    "fk-filter-dropdown-list": "1e019a64-534d-bf43-68ce-7c05519005d5",
+    "fk-filter-dropdown-link": "f9d57a76-545a-18e1-2697-ec17fa719fad",
+    "fk-input-field-select": "0bbdae34-9893-a7c3-8d27-3f215a40c3f8",
+    "fk-gap-4-5": "2887fedc-d937-aab5-47bf-47a5b295e7fd"
   }
 }
