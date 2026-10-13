@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Webflow reconcile: raw MCP dumps and the local snapshot data (spec stays committed)
+.cache/
+docs/webflow/snapshot/data/

@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "about": "Known differences between the repo and Webflow at the baseline. Reconcile does not report a line listed here as a change; it matches the exact `line` text (which holds both the repo and the Webflow value), so a line whose value moves on either side is reported again. Curated by hand from the tools below; survives a snapshot rebuild.",
+  "baseline": {
+    "dump": "20261011T194658Z",
+    "repoCommit": "68829d449d8de184568783e27f9e8e10a942d3aa",
+    "styleCommand": "node scripts/webflow-diff.mjs <dump>/styles.json src/styles/base.css src/styles/layout.css src/styles/typography.css src/styles/utilities.css src/styles/components/*.css --unregistered"
+  },
+  "style": [
+    {
+      "line": ".fk-how-bg @main:noPseudo pointer-events: (not in repo) → none",
+      "selector": ".fk-how-bg",
+      "breakpoint": "main",
+      "pseudo": "noPseudo",
+      "property": "pointer-events",
+      "repo": null,
+      "webflow": "none",
+      "reason": "Webflow has pointer-events: none on the How It Works background; the repo class does not set it. Older drift, already listed as known noise in sync-log.md since 2026-10-07; cause not investigated."
+    },
+    {
+      "line": ".fk-how-art @main:noPseudo pointer-events: (not in repo) → none",
+      "selector": ".fk-how-art",
+      "breakpoint": "main",
+      "pseudo": "noPseudo",
+      "property": "pointer-events",
+      "repo": null,
+      "webflow": "none",
+      "reason": "Same as .fk-how-bg: pointer-events: none on Webflow only. Older drift, known noise since 2026-10-07."
+    },
+    {
+      "line": ".fk-modal @main:noPseudo transition: opacity 300ms cubic-bezier(0.22,1,0.36,1),visibility 0s linear 300ms → (missing)",
+      "selector": ".fk-modal",
+      "breakpoint": "main",
+      "pseudo": "noPseudo",
+      "property": "transition",
+      "repo": "opacity 300ms cubic-bezier(0.22,1,0.36,1),visibility 0s linear 300ms",
+      "webflow": null,
+      "reason": "The repo class has the modal fade transition; the Webflow class has none. Older drift, listed as known noise in sync-log.md since 2026-10-07; cause not investigated (the x-modal exception only covers reduced motion)."
+    },
+    {
+      "line": "MISSING STYLE .fk-stat-value.is-default",
+      "selector": ".fk-stat-value.is-default",
+      "breakpoint": null,
+      "pseudo": null,
+      "property": null,
+      "repo": "combo class",
+      "webflow": null,
+      "reason": "UI / Stat Default is a component variant on Webflow: its style overrides replace the is-default combos, so the class does not exist there (classes.md fk-stat, components.md UI / Stat)."
+    },
+    {
+      "line": "MISSING STYLE .fk-stat-number.is-default",
+      "selector": ".fk-stat-number.is-default",
+      "breakpoint": null,
+      "pseudo": null,
+      "property": null,
+      "repo": "combo class",
+      "webflow": null,
+      "reason": "Same: lives in the Stat Default variant overrides."
+    },
+    {
+      "line": "MISSING STYLE .fk-stat-suffix.is-default",
+      "selector": ".fk-stat-suffix.is-default",
+      "breakpoint": null,
+      "pseudo": null,
+      "property": null,
+      "repo": "combo class",
+      "webflow": null,
+      "reason": "Same: lives in the Stat Default variant overrides."
+    },
+    {
+      "line": "MISSING STYLE .fk-stat-label.is-default",
+      "selector": ".fk-stat-label.is-default",
+      "breakpoint": null,
+      "pseudo": null,
+      "property": null,
+      "repo": "combo class",
+      "webflow": null,
+      "reason": "Same: lives in the Stat Default variant overrides."
+    },
+    {
+      "line": "MISSING STYLE .fk-stat.is-default",
+      "selector": ".fk-stat.is-default",
+      "breakpoint": null,
+      "pseudo": null,
+      "property": null,
+      "repo": "combo class (incl. :last-child state)",
+      "webflow": null,
+      "reason": "Same: lives in the Stat Default variant overrides."
+    },
+    {
+      "line": "NOT IN THESE FILES .utility-page-wrap",
+      "selector": ".utility-page-wrap",
+      "breakpoint": null,
+      "pseudo": null,
+      "property": null,
+      "repo": null,
+      "webflow": "class with properties",
+      "reason": "Webflow's own utility-page class (404 / password page template); the repo does not use it."
+    },
+    {
+      "line": "NOT IN THESE FILES .utility-page-content",
+      "selector": ".utility-page-content",
+      "breakpoint": null,
+      "pseudo": null,
+      "property": null,
+      "repo": null,
+      "webflow": "class with properties",
+      "reason": "Webflow's own utility-page class; the repo does not use it."
+    }
+  ],
+  "tree": [
+    {
+      "scope": "About, sections AboutTeam (6 lines) and CtaSplit (2 lines), checked with scripts/webflow-tree-diff.mjs on the baseline dump; AboutHero, AboutMission, AboutStory, AboutResidency and LogoGrid had 0 differences",
+      "lines": [
+        "TAG AboutTeam>…>a[…]: repo=a wf=Link (6 lines: the three team cards' photo link and name link)",
+        "PROP CtaSplit>…>Button[0]: Link repo=\"/candidates\" wf={\"pageId\":…} (and /facility-partners)"
+      ],
+      "reason": "Tool limits, not drift: the tree diff reads Webflow's `Link` element type as a tag name different from `a`, and compares a Button's page-link prop (`{pageId}`) with the repo's URL string. Phase 3's id-based diff replaces this script; the other pages were not re-run on the baseline (phase 1 ran About only, with the same 14-line noise before the script collapsed instances)."
+    }
+  ]
+}
