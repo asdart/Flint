@@ -20,7 +20,7 @@ const LOOSE = new Set([
 ]);
 
 export const wfTag = (w) => w.s?.tag ?? TYPE_TAG[w.t] ?? "div";
-const classes = (list) => (list ?? []).filter((c) => !c.startsWith("w-"));
+export const classes = (list) => (list ?? []).filter((c) => !c.startsWith("w-"));
 
 /** Webflow children as alignment nodes: adjacent String nodes become one text group, blank ones are dropped. */
 export function wfKids(w) {

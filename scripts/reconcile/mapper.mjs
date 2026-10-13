@@ -1,6 +1,6 @@
 // Turns an alignment into map entries: Webflow element id -> repo location (file, line, order path,
 // text, which occurrence). See docs/webflow/snapshot/README.md → map/.
-import { Aligner, normName, wfKids } from "./align.mjs";
+import { Aligner, classes, normName, wfKids } from "./align.mjs";
 import { allSourceFiles, componentFile, findPattern, findString, pick } from "./locate.mjs";
 import { norm } from "./html.mjs";
 
@@ -45,8 +45,13 @@ export class Mapper extends Aligner {
     return { locate: "manual", file: own.file ?? null, line: own.anchor ?? null };
   }
 
-  elEntry(r) {
-    return { k: "el", file: r.src?.file ?? null, line: r.src?.line ?? null, col: r.src?.col ?? null, path: r.path };
+  /** `rc` (the repo's classes) is written only when they differ from the Webflow element's, as a sorted list. */
+  elEntry(r, w) {
+    const e = { k: "el", file: r.src?.file ?? null, line: r.src?.line ?? null, col: r.src?.col ?? null, path: r.path };
+    const rc = [...new Set(classes(r.cls))].sort();
+    const wc = [...new Set(classes(w.c))].sort();
+    if (rc.join(" ") !== wc.join(" ")) e.rc = rc;
+    return e;
   }
 
   textEntries(r, w) {
@@ -73,6 +78,9 @@ export class Mapper extends Aligner {
       const p = { prop: repoProp };
       if (typeof value === "string" || typeof value === "boolean" || typeof value === "number") p.value = value;
       else if (value && typeof value === "object") p.value = value.sourceType ? { sourceType: value.sourceType } : value;
+      // The repo's own value when it is a plain value that differs from Webflow's (a page link is a URL here, {pageId} there).
+      const rv = repoProp ? r.props[repoProp] : undefined;
+      if (["string", "number", "boolean"].includes(typeof rv) && rv !== p.value) p.repoValue = rv;
       let loc = null;
       if (r.src && repoProp) {
         const line = findPattern(r.src.file, new RegExp(`\\b${repoProp}\\s*=`), r.src.line, 40);
@@ -104,7 +112,7 @@ export class Mapper extends Aligner {
       this.map[w.id] = this.instEntry(r, w);
       return;
     }
-    const entry = this.elEntry(r);
+    const entry = this.elEntry(r, w);
     this.map[w.id] = entry;
     const Rk = this.rkids(r);
     const Wk = wfKids(w);

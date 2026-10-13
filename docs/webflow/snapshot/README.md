@@ -1,6 +1,6 @@
 # Webflow snapshot: format
 
-**Status:** format from reconcile phase 1 (2026-10-10), map and diff added in phase 3 stage 1 (2026-10-13), updated with the user's decisions of
+**Status:** format from reconcile phase 1 (2026-10-10), map and diff added in phase 3 stage 1 (2026-10-13), reconcile report added in stage 2 (2026-10-13), updated with the user's decisions of
 2026-10-11 and with what `scripts/webflow-snapshot.mjs` actually writes (reconcile phase 2 step b,
 2026-10-11, baseline dump `20261011T194658Z`, repo commit `68829d4`). See
 [`../plans/reconcile.md`](../plans/reconcile.md) for the plan and the measurements behind every
@@ -414,6 +414,72 @@ Change object, one per difference:
 Elements are matched by id only, so a deleted and re-created element is one `removed` plus one `added`
 (stage 2 pairs them by parent and position), and inserting a sibling does not make the later ones "moved"
 (moves are the siblings out of order among those both sides share).
+
+### Reconcile report (reconcile phase 3, stage 2)
+
+```text
+node scripts/webflow-reconcile.mjs <new-dump-dir> [--base <dir>] [--base-map <dir>] [--out <report.md>] [--json] [--date YYYY-MM-DD] [--quiet]
+```
+
+Offline, writes only `--out` (default `docs/webflow/reconcile/<date>.md`, committed) and, with `--json`, the same rows
+as `<out>.json` (the input of the apply phase; not meant to be committed). `<new-dump-dir>` is a raw dump (checked with
+`webflow-snapshot.mjs --check` first; the run is refused, exit code 2, when the check fails, when the site differs, or when
+the base commit is no longer reachable) or an already normalised snapshot folder. Steps: normalise the dump to a scratch
+folder, diff it against the base (`scripts/reconcile/diff.mjs`) for the Webflow side, work out the repo side, classify.
+
+**The repo side, and when the stored map is valid.** The base is the repo at `manifest.repoCommit`. The map and the
+repo CSS / tokens are valid for the working tree when `src/` (styles and tokens included) has no change since that
+commit, committed or not (`git diff <repoCommit> -- src` plus untracked files under `src/`). Commit equality is not
+the test: `HEAD` moves for docs, scripts and skill commits, and `repoHead` / `srcDirty` in a map header are only
+information. The report header says which case applied:
+
+- `src/` unchanged: the stored `map/` gives every location, and the repo equals the base, so no row can be CONFLICT or
+  REPO AHEAD. Nothing is rendered.
+- `src/` changed: every page and component is rendered again from the working tree and aligned with the base tree
+  (`build-map.mjs`, in memory), and a second time with the new tree. For each id three values compare: the base value
+  (the stored map: `text` / `repoText`, `rc`, `props.<name>.repoValue`, else Webflow's base value), the repo value now
+  (this alignment) and the new Webflow value. Locations (`file:line`) come from the working-tree alignment, so they are
+  current. CSS is compared per selector, breakpoint, state and property: `src/styles` at `repoCommit` (`git archive`
+  into a scratch folder, through that commit's own `webflow-style-actions.mjs`) against the working tree, with
+  `webflow-diff.mjs`'s normalisation. Tokens: `tokens.css` at both states. Other areas (page settings, component
+  props, interactions, assets, custom code) use presence of the old / new value in the registry or source files at
+  both states, or "did the target file change" when the value is not text.
+
+Map additions for this (written by `webflow-map.mjs`): an `el` entry has `rc` (the repo's classes, sorted, only when
+they differ from Webflow's); an `inst` prop has `repoValue` (the repo's primitive value when it differs from Webflow's).
+Regenerate the stored map after upgrading, or the base values fall back to Webflow's.
+
+**Classification** (the plan's three-way table): Webflow changed and repo same = `PULL`; both changed and ended at the
+same value = `CONVERGED`; both changed otherwise = `CONFLICT`; repo changed, Webflow same = `REPO AHEAD` (listed, no
+action; only styles, tokens and mapped element text, classes and instance props are enumerated). Lines of
+`accepted.json` `style` are subtracted by exact text when the repo and the new Webflow value differ by exactly that
+line (the count goes in the footer); Webflow grid defaults are ignored. Added or removed element subtrees are one row
+(the topmost element, with the count). `signal` and `manifest` changes, interactions whose only change is the version
+counter, and the CMS field schemas a first dump lacked are footer lines, not rows.
+
+**Rows.** `#` is stable for the same inputs: PULL and CONFLICT first, then CONVERGED, then REPO AHEAD; within them by
+area (Elements, Styles, Variables, Components, Pages, Custom code, Interactions, Assets, Site and CMS), `where`, and
+document order. The markdown has a header table (base dump, new dump, repo HEAD, src state, map used, counts), one
+table per area for PULL and CONFLICT rows, then converged and repo-ahead tables and a footer. Columns: `#`, Area
+(the field), Where (page, component, class or variable), Element, Base → Webflow (a conflict adds `repo:` with the
+repo value), Direction, Proposed repo edit (`file:line`, what to do, notes), Mode. JSON row fields: `n`, `key`,
+`area`, `sub`, `where`, `element`, `base`, `webflow`, `repo`, `repoBase`, `direction`, `mode`, `edit`, `notes`, `ref`
+(the diff change it came from). `edit.op` is one of `replace-text` (`file`, `line`, `old`, `new`, `locate`, `occ`, `of`,
+`alts`), `change-classes` (`remove`, `add`), `set-prop` (`comp`, `prop`, `repoProp`, `locate`), `set-declaration` /
+`add-declaration` / `remove-declaration` / `add-rule` / `remove-rule` (CSS: `file`, `line`, `decl`, `old`, `new`,
+a literal that equals one token gets a "snap to token" note), `set-token` / `add-token` / `remove-token` /
+`rename-token` (`tokens.css` line and the `tokens.md` line), `add-element` / `remove-element` / `move-element`,
+component and page ops (registry line in `components.md`), `set-custom-code` (`file`, `builder`, `source`:
+change the source and regenerate), and interaction, asset, site and cms ops. `mode` is `auto` when the edit is
+mechanical (the old value is at that line, one place, no shorthand, not a generated file) and `assisted` otherwise
+(`—` for converged and repo-ahead rows).
+
+**Known limits** (kept in the plan): element fields other than text, classes and instance props are not compared on the
+repo side after a `src/` change (the row is PULL with a note); moves are never compared; an `added` element is compared
+only through the alignment with the new tree; component meta (description, defaults, variants) and page settings use
+presence or file-change heuristics and err towards CONFLICT; REPO AHEAD does not list repo-only changes to components,
+pages, interactions or custom code; an alignment lost after a restructure shows as a PULL / CONFLICT that is really
+converged (the historical test has two); an element missing from the map is a PULL with "edit by hand".
 
 ## Rebuilding the base
 

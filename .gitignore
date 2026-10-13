@@ -26,3 +26,5 @@ dist-ssr
 # Webflow reconcile: raw MCP dumps and the local snapshot data (spec stays committed)
 .cache/
 docs/webflow/snapshot/data/
+# Machine-readable reconcile rows (regenerable from the dumps; the .md report is the record)
+docs/webflow/reconcile/*.json
