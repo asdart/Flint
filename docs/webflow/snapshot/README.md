@@ -1,6 +1,6 @@
 # Webflow snapshot: format
 
-**Status:** format from reconcile phase 1 (2026-10-10), updated with the user's decisions of
+**Status:** format from reconcile phase 1 (2026-10-10), map and diff added in phase 3 stage 1 (2026-10-13), updated with the user's decisions of
 2026-10-11 and with what `scripts/webflow-snapshot.mjs` actually writes (reconcile phase 2 step b,
 2026-10-11, baseline dump `20261011T194658Z`, repo commit `68829d4`). See
 [`../plans/reconcile.md`](../plans/reconcile.md) for the plan and the measurements behind every
@@ -51,7 +51,8 @@ docs/webflow/snapshot/
   interactions/<name>.json  one per interaction, full triggers and timelines
   assets.json            id, displayName, contentType, altText, folderId, sorted by id
   cms.json               collections (id, name, slug) and fields (the field schemas from cms-collection-details.json or cms-details.json; null when the dump has neither); no items
-  map/<slug>.json        element id -> repo location (written at sync time, see below)
+  map/pages/<slug>.json  element id -> repo location, one per page (written by webflow-map.mjs, see "Map")
+  map/components/<slug>.json  the same for each component definition
 ```
 
 `<slug>` is the Webflow page slug (`home` for the page without one, `about`, `blog`, `404`) or, for a
@@ -249,17 +250,73 @@ variable ids, page ids.
   by `transform_element_to_component` get a new id.
 - Component definition elements: ids under the component, same rules.
 - Styles: selector. Variables: name. Interactions: id (`i-…`), also keep the name. Pages: page id.
-- Repo location: `map/<slug>.json`, `{ "<elementId>": { "file": "src/sections/Hero.tsx", "path": [0,2,1], "text": "Apply now", "occ": 1 } }`.
-  `path` is the order path inside the file's rendered markup, `text` the string at the snapshot,
-  `occ` which occurrence of that string in the file (1-based). It is written when the snapshot is
-  refreshed, from the order-and-text alignment that `webflow-tree-diff.mjs` already does on a
-  repo that equals Webflow. It is not part of the compare; it only tells the report where an edit
-  goes.
+- Repo location: `map/pages/<slug>.json` and `map/components/<slug>.json` (spec in "Map" below). It is
+  written by `scripts/webflow-map.mjs` when the snapshot is refreshed, from an alignment of the repo's
+  traced render with the snapshot tree on a repo that equals Webflow. It is not part of the compare; it
+  only tells the report where an edit goes.
+
+## Map
+
+*Changed 2026-10-13 (reconcile phase 3 stage 1): the spec said one `map/<slug>.json` with
+`{file, path, text, occ}` per id. Built as below instead: pages and components in two folders (a slug
+like `newsletter` could be both), and the location comes from the JSX itself, not from searching the
+file. `map/` is part of the gitignored `data/`.*
+
+`webflow-map.mjs` renders each repo page with Vite SSR and a JSX runtime that records where every
+element was written (`scripts/reconcile/jsx-trace/`, used only by that script's own Vite server): a host
+element carries `src/path.tsx:line:col` of its opening tag, a function component is wrapped with its call
+site and its primitive props. The render is aligned with the snapshot tree (order, tag, classes, text;
+components that are not Webflow components are transparent; Webflow-only wrappers and repo-only
+wrappers are opened up when their children match) and each Webflow element id gets one entry.
+Components are aligned with the best-matching repo render of that component (up to 25 call sites tried).
+
+File shape (one entry per line inside `elements`):
+
+```json
+{
+"schema":1, "kind":"page", "name":"home", "snapshotDump":".cache/webflow-dump/…", "snapshotRepoCommit":"…",
+"repoHead":"…", "srcDirty":false, "total":446, "mapped":440, "byType":{"Block":[164,165],…},
+"unmapped":[{"id":"…","type":"DynamoEmpty","classes":"fk-panel fk-bg-white","parent":"…","nodes":6,"reason":"webflow-only wrapper"}],
+"repoOnly":[{"file":"src/sections/PostGrid.tsx","line":36,"tag":"div"}], "source":"src/pages/HomePage.tsx", "route":"/",
+"elements":{
+"<id>":{"k":"el","file":"src/sections/Hero.tsx","line":12,"col":15,"path":[0,1,0,0,0,0,0,0,0]},
+"<id>":{"k":"text","file":"src/sections/Pricing.tsx","line":44,"locate":"literal","path":[…],"text":"Why is Flint free?"},
+"<id>":{"k":"inst","comp":"Button","file":"src/pages/HomePage.tsx","line":23,"col":7,"path":[…],"compFile":"src/components/ui/Button.tsx",
+        "props":{"Label":{"prop":"label","value":"Apply now","file":"…","line":31,"locate":"attr"}}},
+"<id>":{"k":"el", …, "textBound":{"text":"December 3, 2025","locate":"manual","file":"…","line":22}}
+}
+}
+```
+
+- `k`: `body` (the page root), `el` (a host element: `file`, `line`, `col` of its opening JSX tag, `path` = child
+  indexes from the render root, wrappers and text runs counted), `text` (a `String` node), `inst` (a component
+  instance: `file:line:col` is the call site, `compFile` the component's own file).
+- `text` entries: `text` is the Webflow string; `repoText` is added when the aligned repo text differs (text built
+  from parts such as `"{n} min read"`, CMS-bound text). `part: [i, n]` when one repo run is several `String` nodes.
+  `locate`: `literal` (the string is in the file at `line`), `partial` (only its first or last words are), `data`
+  (found in another source file, for example `src/content/*.json`), `manual` (not found: edit by hand; `file:line` is the
+  element that renders it). Search order: the call site of the prop that carries the text, the element's file, the
+  enclosing call sites, then every file in `src/`. With several hits, the one at or after the element's line wins and
+  the others are listed in `alts` (`occ` / `of` say which).
+- `inst.props[<Webflow prop name>]`: `prop` is the repo prop (`null` when the repo has none, e.g. CMS-bound
+  props), `value` the Webflow value, `locate` `attr` (the `prop=` attribute at the call site), `literal` / `data` (the
+  string found elsewhere, e.g. in the array a section maps over), `default` (the component's own default,
+  `compFile:line`), `manual`.
+- `textBound`: the Webflow element has no text because it is bound to a component prop or a CMS field; the repo
+  text and where it is written.
+- Not in `elements` (listed under `unmapped` as a group per top-most unmapped element, `nodes` counts its
+  descendants): Collection List empty states, pagination, utility wrappers, a form field that is an instance on
+  Webflow but plain markup in the repo (style guide templates), anything Webflow-only.
+  `repoOnly` lists repo elements with no Webflow counterpart (CMS items beyond the first, scripts, iframes).
+- Coverage at the baseline (2026-10-13, commit 831b811): 2,390 of 2,486 Webflow elements (96.1%); every page and
+  component 100% except Home 98.7%, Blog / Categories template 73.5% (empty state, pagination), Posts template 82.3%,
+  Style guide 54.1% (template instances), Featured post, Newsletter form, Post card 88 to 93%. 467 text entries:
+  all but 7 sit on the line of their text.
+- Deterministic (no clock): two runs give identical files (the test checks it).
 
 ## Size on disk
 
-Measured on the baseline (2026-10-11), 49 files, 752 KB, none of it committed (the `map/` files of
-the plan are not written yet and would add about 60 KB):
+Measured on the baseline (2026-10-11), 49 files, 752 KB (the 2026-10-13 baseline: 51 files, 777 KB), none of it committed (`map/` adds 434 KB, 30 files):
 
 | File | Size |
 | --- | --- |
@@ -319,6 +376,44 @@ node scripts/webflow-snapshot.mjs <dump-dir> [--out <dir>] [--commit <hash>] [--
   against an edit during the dump, so the dump must keep both reads.
 - Deterministic: it reads nothing but the dump (and `git rev-parse` for the commit), so two runs on
   one dump are byte-identical.
+
+### Map and diff scripts (reconcile phase 3, stage 1)
+
+```text
+node scripts/webflow-map.mjs [--data <dir>] [--out <dir>] [--page <slug>] [--quiet]
+node scripts/webflow-tree-diff-ids.mjs <base dir> <new dir> [--json <file>] [--quiet]
+node --test scripts/test-reconcile.mjs
+```
+
+- `webflow-map.mjs` writes `<data>/map/` (or `--out`) and prints mapped / total per page and component. Run it
+  once per sync, on a repo that equals Webflow. It reads only the snapshot and the repo.
+- `webflow-tree-diff-ids.mjs` compares two snapshot folders by identity and prints one line per change; `--json`
+  writes the machine-readable list (the input of the report stage). Exit code 1 when anything differs. The code
+  is in `scripts/reconcile/diff.mjs`. It does not read `accepted.json` (that file is about repo vs Webflow; the
+  report stage carries it).
+
+Change object, one per difference:
+
+```json
+{ "area": "element", "where": "page:home", "id": "8a16145e-ee69-d410-8c15-f94add50aa78", "field": "text",
+  "base": "Why Flint is free?", "new": "Why is Flint free?", "parent": "…", "ctx": { "t": "String", "x": "Why is Flint free?" } }
+```
+
+| `area` | `where` | `id` | `field` |
+| --- | --- | --- | --- |
+| `element` | `page:<file slug>` or `component:<file slug>` | Webflow element id | `added` / `removed` (`base` / `new` hold the element line, `parent`, `index`), `moved` (parent or sibling order; `base` / `new` = `{parent, index}`, `after` = the previous sibling), `text`, `classes`, `type`, `settings.<key>`, `attr.<name>`, `component`, `prop.<Webflow prop name>`, `slots`. `ctx` = type, tag, classes, text or component name of the element. A text run Webflow re-created under the same parent (equal counts) is one `text` change with `idChanged: true` and `newId` |
+| `page` | `page:<slug>` | page id | `added` / `removed`, `title`, `slug`, `seo.*`, `openGraph.*`, `draft`, `jsonLd`, `jsonLdRaw`, `scripts`, `head`, `footer`, `includeInSitemap` |
+| `component` | `component:<slug>` | component id | `added` / `removed`, `name`, `group`, `description`, `props[<prop id>].<key>` (also whole-prop add / remove), `variants[<variant id>].<key>`, `variantStyles…` |
+| `style` | selector (`.fk-button.is-secondary`) | `null` | `added` / `removed` (whole style line), `type`, or a CSS property with `bp` (`main`, `medium`, `small`, `tiny`) and `pseudo` |
+| `variable` | variable name | variable id | `added` / `removed`, `name` (a rename keeps the id), `type`, `value` |
+| `interaction` | interaction name | `i-…` id | `added` / `removed`, or a top-level key (`version`, `triggers`, `timelines`, …) |
+| `asset` | file name | asset id | `added` / `removed`, `altText`, `displayName`, `contentType`, `folderId` |
+| `site`, `cms` | `site` / `cms` | `null` | dotted path inside `site.json` / `cms.json` (arrays of scripts, fonts, collections and fields are matched by id) |
+| `signal`, `manifest` | `manifest` | `null` | `pageLastUpdated.<id>`, `siteLastUpdated`, … (noise by themselves: the compare, not the signal, decides) |
+
+Elements are matched by id only, so a deleted and re-created element is one `removed` plus one `added`
+(stage 2 pairs them by parent and position), and inserting a sibling does not make the later ones "moved"
+(moves are the siblings out of order among those both sides share).
 
 ## Rebuilding the base
 

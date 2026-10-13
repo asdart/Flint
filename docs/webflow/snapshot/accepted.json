@@ -2,8 +2,8 @@
   "schema": 1,
   "about": "Known differences between the repo and Webflow at the baseline. Reconcile does not report a line listed here as a change; it matches the exact `line` text (which holds both the repo and the Webflow value), so a line whose value moves on either side is reported again. Curated by hand from the tools below; survives a snapshot rebuild.",
   "baseline": {
-    "dump": "20261011T194658Z",
-    "repoCommit": "68829d449d8de184568783e27f9e8e10a942d3aa",
+    "dump": "20261013T023829Z",
+    "repoCommit": "831b811d502141335ec2e06ba00ca5634ec78b4e",
     "styleCommand": "node scripts/webflow-diff.mjs <dump>/styles.json src/styles/base.css src/styles/layout.css src/styles/typography.css src/styles/utilities.css src/styles/components/*.css --unregistered"
   },
   "style": [

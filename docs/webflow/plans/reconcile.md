@@ -1,6 +1,6 @@
 # Plan — Reconcile Webflow changes back into the repo
 
-**Status:** phase 1 (measure) done 2026-10-10. The user answered the five open questions on 2026-10-11 (see "User decisions (2026-10-11)"); the format ([`../snapshot/README.md`](../snapshot/README.md)) is updated to match. **Phase 2: steps (a) to (d) done 2026-10-11** (see "Phase 2 progress"). Next: phase 3. Decision to record when phase 2 closes: D-66.
+**Status:** phase 1 (measure) done 2026-10-10. The user answered the five open questions on 2026-10-11 (see "User decisions (2026-10-11)"); the format ([`../snapshot/README.md`](../snapshot/README.md)) is updated to match. **Phase 2 done** (steps (a) to (d) on 2026-10-11; baseline taken 2026-10-13, see "Phase 2 progress"). **Phase 3 stage 1 (id map and id diff) done 2026-10-13** (see "Phase 3 stage 1 progress"). Next: phase 3 stages 2 and 3. Decision to record when phase 2 closes: D-66.
 
 ## Why
 
@@ -365,6 +365,15 @@ in trees or styles.
   phase 3 / 4. The new dump's `cms-collection-details.json` closes the CMS gap; `get_variant_styles` and
   the site instruction are still open.
 
+- **Phase 2 closed (2026-10-13).** The baseline was retaken after the reconcile push of 2026-10-11 so
+  that `data/` matches the repo again: dump `.cache/webflow-dump/20261013T023829Z` (check passes),
+  `repoCommit` `831b811`, `src/` clean; `data/` is 51 files, about 777 KB (the map adds 434 KB, 30 files).
+  Counts: 13 pages, 18 components, 2,487 elements, 1,502 styles of which 705 with properties, 75 variables,
+  14 interactions, 197 assets, 3 CMS collections. Accepted repo-vs-Webflow differences: exactly the same
+  10 as before (`webflow-diff.mjs` on the new dump: 2 `pointer-events`, 1 `.fk-modal` transition, 5
+  `fk-stat.is-default` classes in the variant, 2 utility-page classes; `accepted.json` `baseline` now names
+  this dump and commit). Still open from the dump: `variantStyles` and the site instruction (manifest `gaps`).
+
 ## First reconcile (manual, 2026-10-11)
 
 Done by hand before `webflow-reconcile.mjs` exists, from the (d) change table above (repo only, no Webflow
@@ -455,6 +464,74 @@ Deviations from the contract or Figma (the repo mirrors Webflow; the user decide
    `fk-input-field-select` pushed), tree check of the three components, new dump + `webflow-snapshot.mjs` to rebuild the
    base, `sync-log.md` row, ask the user to set Image width/height (rule 15) on the new chevron.
 
+## Phase 3 stage 1 progress (2026-10-13)
+
+Offline, no Webflow call, no commit. Built by one Sonnet agent. Spec in [`../snapshot/README.md`](../snapshot/README.md)
+("Map", "Map and diff scripts").
+
+- **Built.** `scripts/webflow-map.mjs` (CLI), `scripts/webflow-tree-diff-ids.mjs` (CLI), `scripts/test-reconcile.mjs`
+  (`node --test`; there is no test setup in the repo, so a plain Node runner outside `src/`, nothing lands in the
+  Vite build), and the shared code in `scripts/reconcile/`: `jsx-trace/` (the JSX runtime used only by the map's own
+  Vite server), `html.mjs` (markup parser and repo tree), `repo-render.mjs` (Vite SSR renderer), `align.mjs`
+  (tree alignment), `mapper.mjs` (map entries and text / prop location), `locate.mjs` (string search by line),
+  `snapshot-io.mjs`, `diff.mjs`, `paths.mjs`. `webflow-markup.mjs` and `webflow-tree-diff.mjs` are untouched (the
+  3 old lint warnings in the latter stay).
+- **How the map found the line (changes the "Mapping" decision above in one respect).** Instead of rendering and
+  then searching the file for the n-th occurrence of a string, the render itself says where each element was written:
+  the Vite dev JSX transform passes `source` (file, line, column) to `jsxDEV`, and a replacement runtime
+  (`jsx-trace`) adds it to host elements as `data-src` and wraps every function component in an `<x-comp>` element with
+  its call site and primitive props. So a host element and a component instance map to an exact `file:line:col`, and a
+  text maps to the nearest hit of its string at or after that line (prop strings: at the call site that passes them).
+  Order-and-text alignment still builds the id correspondence (as planned); it is a sequence alignment over children
+  (score by tag, classes, text), not the strict positional walk of `webflow-tree-diff.mjs`, and it opens up an
+  unmatched wrapper on either side to match the children (Collection List, `w-form` blocks, section components
+  that are plain markup on Webflow). This also removed the need to collapse Nav / Footer / Stat / link nodes by hand:
+  a component is an instance only when the Webflow component has that name (`Nav`, `Footer`, `Button`, `Stat`...);
+  every other repo component is transparent, and a Webflow component rendered as plain markup (Input Field in the
+  style guide, D-67) opens up too.
+- **Coverage (baseline, repo 831b811):** 2,390 of 2,486 Webflow elements (96.1%); whitespace-only strings are not
+  counted. 100% on About, Candidates, Facility partners, Privacy, Terms, Thank you, 404 and on 15 of 18
+  components; Home 440/446; Blog 36/49 and Categories template 36/49 (Collection List empty state with its panel, a
+  visually-hidden pagination label, the Pagination Next arrow); Posts template 65/79 (the Collection empty state,
+  spans around the read time and date); Style guide 53/98 (five Input / Select Field template instances that are
+  plain markup in the repo, a form, three blocks); Featured post 22/25, Newsletter form 11/12, Post card 13/14 (a
+  decorative span, an icon image, empty states). Text entries: 467; 322 `literal`, 136 `data` (strings that live in
+  `src/content/*.json` or `legal.ts`), 2 `partial`, 7 `manual` (text built from parts: `"{n} min read"`, the
+  `about {name}` aria text; the CMS-bound dates), plus 39 `textBound` (element bound to a prop or field). Instance
+  props: 229 (51 at the call site, 98 literal elsewhere, 1 data, 23 component defaults, 56 `manual`: CMS-bound Post Card
+  props, Quote Card `Image` asset ids, Stat `Suffix`, which is a one-character string).
+- **Spot-check.** `test-reconcile.mjs` prints 10 evenly spaced text entries with the line they resolve to (all
+  `ok`), and a one-off check of all 467 text entries found 7 not at their line, exactly the 7 `manual`.
+  The Pricing "Why is Flint free?" id resolves to `src/sections/Pricing.tsx:44`.
+- **Diff test (a).** Dumps `20261011T194658Z` and `20261011T223401Z` normalised to scratch folders: all 10
+  changes of step (d) found with the right ids and values (Home text, the Facility partners class, `space-4.5`
+  added 18 px, `.fk-input-field` padding-top / padding-bottom and the removed transition, `.fk-input-container` and
+  `.fk-input-field-label` added, the Input Field props / tree, the Newsletter Form component, the Newsletter and
+  Posts template instances, the Style guide `ID`). 43 change objects belong to them and 8 more are explainable: the 5 page `lastUpdated` signals and `siteLastUpdated`, the CMS field
+  schemas that only the second dump has, and the manifest `gaps` text. Nothing unexplained; the Blog page, whose
+  `lastUpdated` moved with an unchanged tree, shows only as a signal. Base vs itself: 0 changes. A synthetic edit
+  of the About page (text edit, removed and added element, a swap, a re-created text run) is reported as text /
+  removed / added / moved / one `text` change with `idChanged`.
+- **Failure modes seen (stage 2 has to handle them).**
+  1. A text or bound text with no literal (`manual`): show old / new and the element's `file:line` only.
+  2. Several hits of one string: the entry carries `occ`, `of` and `alts`; the report must show them.
+  3. An `inst` prop with `locate: "default"` means the repo does not pass it: the edit is the default in the
+     component file, but it changes every instance that relies on it.
+  4. `textBound` elements: a text edit on Webflow cannot happen on them (the value is on the instance); an
+     instance prop change maps through `inst.props`.
+  5. Unmapped groups and `repoOnly` lists are normal on the Collection List / form / pagination pages; an id
+     missing from the map is "added or moved on Webflow", never an error.
+  6. Page `slug` in headers vs file slug: `where` uses the file slug (`page:home`, `page:template-posts`).
+  7. The map is only valid for the repo commit in its header (`repoHead`, `srcDirty`); a repo that moved since needs
+     the report to compare each mapped string with the current file (as planned) or to rebuild the map.
+  8. Component maps are built from the best of up to 25 repo renders of that component; an edit on a component
+     with text that differs between instances maps to the instance whose render matched best.
+  9. A component the repo uses but Webflow does not have an instance of (and the reverse) shows up as `unmapped`
+     (`instance without a repo component`: the style guide templates).
+- **Not done / left.** `variantStyles` triples and the site instruction (dump gaps); the check that fails a sync
+  writing an unlisted variant-style triple; the three-way logic, the report, `accepted.json` subtraction (stage 2);
+  the apply and wire-in phases.
+
 ## Phases (revised)
 
 Agent stages follow the memory rule: one Sonnet agent per stage, the orchestrator confirms
@@ -462,8 +539,8 @@ between stages.
 
 | # | Phase | Work | MCP calls | Agent stages | Effort | Risks |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2 | **Baseline** (a to d done 2026-10-11) | (a) a Sonnet agent at low effort runs the full dump (58 calls) into `.cache/webflow-dump/<UTC timestamp>/` while nobody edits the Designer, prints counts, and a script checks them against the expected totals (repeat if the check fails); (b) Sonnet writes `scripts/webflow-snapshot.mjs` (normaliser, no MCP, with the `--rebuild` command), generates `data/` with the repo commit hash in `manifest.json`, runs `webflow-diff.mjs` and `webflow-tree-diff.mjs` to record the 10 known differences, and scans the dump for keys and secrets; (c) the user makes one unpublished Designer text edit plus reversible edits to a style, a component and a variable; (d) readback: which reads show the edits, which timestamps move; the user reverts. `.gitignore` already has `.cache/` and `data/`; nothing in `data/` is committed | about 58 + 6 for the tests | 3 (Sonnet low-effort dump; Sonnet script and snapshot; Sonnet readback) | 1 to 1.5 days | the repo and Webflow differ in a few known places (10 style lines, Nav / Footer expansions): baseline records them as accepted; an edit by the marketing team during the dump gives a mixed baseline, so run it right after a sync and compare the page `lastUpdated` signals before and after; the dump may hold secrets (scan before keeping it) |
-| 3 | **Report** | `scripts/webflow-reconcile.mjs` (id diff, three-way compare, string locator, changes report), `scripts/webflow-map.mjs`, extend the tree diff for Nav / Footer / Stat / links; the base-vs-repo column reads the changes since the commit in `manifest.json` plus the working tree; the check that fails if a sync writes a variant-style triple not listed in `components.md`; the routine gate dump (about 8 calls) runs on Sonnet at low effort with a count check, all interpretation on Sonnet; unit tests on saved dumps (edit a copy of a dump to simulate a text edit, an add, a move, a style change) | 8 (quick check) to 58 per run | 3 (map and tree diff; styles, variables, settings; report writer) | 3 to 4 days | text built from parts; stale map; the read gaps above (variant overrides, alt inherit); the first real Designer edit may show id behaviour not seen yet |
+| 2 | **Baseline** (done: a to d 2026-10-11, retaken 2026-10-13) | (a) a Sonnet agent at low effort runs the full dump (58 calls) into `.cache/webflow-dump/<UTC timestamp>/` while nobody edits the Designer, prints counts, and a script checks them against the expected totals (repeat if the check fails); (b) Sonnet writes `scripts/webflow-snapshot.mjs` (normaliser, no MCP, with the `--rebuild` command), generates `data/` with the repo commit hash in `manifest.json`, runs `webflow-diff.mjs` and `webflow-tree-diff.mjs` to record the 10 known differences, and scans the dump for keys and secrets; (c) the user makes one unpublished Designer text edit plus reversible edits to a style, a component and a variable; (d) readback: which reads show the edits, which timestamps move; the user reverts. `.gitignore` already has `.cache/` and `data/`; nothing in `data/` is committed | about 58 + 6 for the tests | 3 (Sonnet low-effort dump; Sonnet script and snapshot; Sonnet readback) | 1 to 1.5 days | the repo and Webflow differ in a few known places (10 style lines, Nav / Footer expansions): baseline records them as accepted; an edit by the marketing team during the dump gives a mixed baseline, so run it right after a sync and compare the page `lastUpdated` signals before and after; the dump may hold secrets (scan before keeping it) |
+| 3 | **Report** (stage 1, map and id diff, done 2026-10-13) | `scripts/webflow-reconcile.mjs` (id diff, three-way compare, string locator, changes report), `scripts/webflow-map.mjs`, extend the tree diff for Nav / Footer / Stat / links; the base-vs-repo column reads the changes since the commit in `manifest.json` plus the working tree; the check that fails if a sync writes a variant-style triple not listed in `components.md`; the routine gate dump (about 8 calls) runs on Sonnet at low effort with a count check, all interpretation on Sonnet; unit tests on saved dumps (edit a copy of a dump to simulate a text edit, an add, a move, a style change) | 8 (quick check) to 58 per run | 3 (map and tree diff; styles, variables, settings; report writer) | 3 to 4 days | text built from parts; stale map; the read gaps above (variant overrides, alt inherit); the first real Designer edit may show id behaviour not seen yet |
 | 4 | **Apply** | agent workflow: read the approved rows, edit the files, run `npm run build` and `npm run lint`, refresh the snapshot for exactly what was applied, rewrite the map entries; no commit (the manifest commit hash moves to the new repo commit at the next sync, once the applied edits are committed) | 0 to 12 (re-read of what changed) | 2 | 1.5 days | applying a Webflow style value that breaks the token rule: the row says "snap to token" and the agent asks; generated files (utilities, x-* scripts) are resolved in the source |
 | 5 | **Wire in** | `/reconcile` skill or a section of `flint-webflow-sync`; gate at the start of every sync stage and `/safe-publish`: run the quick check, full compare only when a signal moved or the styles / components / variables hash moved; refresh the snapshot at the end of each sync, recording the repo commit it matched | 8 per gate | 1 | 1 day | the gate adds about 8 calls and 6k tokens to every stage; a stage agent must not push while the report has open rows |
 | 6 | **Contract** | amend AGENTS.md (§1 "mirrored back", rule 11, §7 workflow), `mcp-playbook.md` pulling section replaced by the reconcile, `sync-log.md` row, record D-66 | 0 | 1 | 0.5 day | none |
