@@ -1,6 +1,6 @@
 # Plan — Reconcile Webflow changes back into the repo
 
-**Status:** phase 1 (measure) done 2026-10-10. The user answered the five open questions on 2026-10-11 (see "User decisions (2026-10-11)"); the format ([`../snapshot/README.md`](../snapshot/README.md)) is updated to match. **Phase 2 done** (steps (a) to (d) on 2026-10-11; baseline taken 2026-10-13, see "Phase 2 progress"). **Phase 3 stage 1 (id map and id diff) done 2026-10-13** (see "Phase 3 stage 1 progress"). **Phase 3 stage 2 (`webflow-reconcile.mjs`, three-way rows and the report) done 2026-10-13** (see "Phase 3 stage 2 progress"). Next: phase 3 stage 3. Decision to record when phase 2 closes: D-66.
+**Status:** phase 1 (measure) done 2026-10-10. The user answered the five open questions on 2026-10-11 (see "User decisions (2026-10-11)"); the format ([`../snapshot/README.md`](../snapshot/README.md)) is updated to match. **Phase 2 done** (steps (a) to (d) on 2026-10-11; baseline taken 2026-10-13, see "Phase 2 progress"). **Phase 3 stage 1 (id map and id diff) done 2026-10-13** (see "Phase 3 stage 1 progress"). **Phase 3 stage 2 (`webflow-reconcile.mjs`, three-way rows and the report) done 2026-10-13** (see "Phase 3 stage 2 progress"). **Phase 3 stage 3 part A (offline: moves, restructure, attributes, repo-ahead coverage, pre-existing differences) done 2026-10-13** (see "Phase 3 stage 3 part A progress"). **Phase 3 done** (stage 3 part B, 2026-10-13). **Phase 4 (apply and partial refresh) done 2026-10-13** (see "Phase 4 done"). **Phase 5 (wire in: the gate's partial dump, `/reconcile`, gate and refresh in the sync skill, playbook and contract) and phase 6 (contract 1.14, D-66) done 2026-10-13** (see "Phases 5 and 6 done"). **The plan is complete**; this file stays as the record of findings. Left for the user and the next Webflow stage: the site instruction `rules/flint-contract.md` (to-do below), the drift list of the first report, and the open gaps listed under "Phases 5 and 6 done".
 
 ## Why
 
@@ -591,6 +591,166 @@ Offline, no Webflow call, no commit, no report written to `docs/webflow/reconcil
   commit it (or gitignore `docs/webflow/reconcile/*.json`) is open. (7) Still open from before: `variantStyles` and
   the site instruction in the dump, and the check that fails a sync writing an unlisted variant-style triple.
 
+## Phase 3 stage 3 part A progress (2026-10-13)
+
+Offline, no Webflow call, no commit. Built by one Sonnet agent. Spec: [`../snapshot/README.md`](../snapshot/README.md) → "Reconcile
+report" and "Map" (`ra`).
+
+- **Built.** (1) Moves compared three-way (`rows.mjs` `moveRow`, `structure.mjs`): the repo parent and order of every mapped id
+  come from the order paths of the maps; the repo base, the repo now and the repo against the NEW tree are compared with
+  the Webflow base to new move. A Webflow-only move is PULL (assisted) with the `file:line` of the element and of its new
+  neighbour; the repo already in the new place is CONVERGED; a move caused by an add (into a new wrapper) or a remove is
+  folded into that add / remove. (2) Restructure: two or more adds / removes / moves under one parent are one
+  `restructure` row (`members` listed, direction aggregated); removed elements are recognised as gone from the repo
+  through the repo-only nodes of the new-tree alignment (`repoOnly` now has `cls` and `path`); text, class and prop rows read
+  what the repo has now from the new-tree alignment first; instance props the base lacks (the Style guide `ID`) use it too.
+  A bound `id` / `for` (component with an ID prop) is not a change. A prop `default` is compared with the repo prop's
+  default parameter, and a description equal to the sync pattern (`<Group> / <Name>. Repo: <file>`) is CONVERGED.
+  (3) Attributes and settings (`fields.mjs`): `attr.*` and `settings.link|altText|assetId|input` are compared by value;
+  the map carries `ra` (where the repo render differs from Webflow). (4) REPO AHEAD for component props / variants and
+  component files, page sections (added, removed, reordered), interaction registry rows and `src/ix` runtime files, custom-code
+  sources. (5) A "Pre-existing differences" section (`footer.preexisting`, `accepted.json` `element` to silence a line); the
+  repo-ahead text rows now use the new-tree alignment and drop a pair that shares no word with the Webflow text to the footer
+  (`misaligned`). The alignment prefers a link with the same target (the footer lists many links with the same classes).
+- **Historical run (a), before to after** (dumps 2026-10-11 against the repo now): 40 rows, PULL 10 / CONFLICT 2 /
+  CONVERGED 17 / REPO AHEAD 11 became 40 rows, **PULL 5 / CONFLICT 0 / CONVERGED 16 / REPO AHEAD 19**. Gone as PULL:
+  the `attr.id` row (bound to the ID prop, footer), the two `moved` rows (folded into the restructure), the two
+  `removed` Newsletter forms (restructure rows, CONVERGED, one per Newsletter component and Posts template, with the added
+  Newsletter Form instance), the Style guide texts (two footer "misaligned" lines instead of two wrong REPO AHEAD pairs). Gone as
+  CONFLICT: the Input Field description (equal to the sync pattern) and the prop default `Subscribe` to `Email` (the repo default
+  is `Email`). The three restructure rows replace eight add / remove rows (and two move rows). **Left as PULL (5):** the Facility partners
+  `fk-bg-white` to `fk-bg-brand` and the removed `.fk-input-field` transition (Webflow edits the user decided not to keep,
+  restored on Webflow in the reconcile push, so the repo never took them); `attr.autocomplete` removed from the Input Field input
+  (a real Webflow-side removal in that window: the repo keeps `autoComplete` for email; in the current baseline the same
+  gap is a **pre-existing difference**, listed once in the footer); the Style guide Input Field `ID` override (an
+  instance the repo renders as plain markup since D-67, no mapping: edit by hand); the prop rename `Label` to
+  `Placeholder` (the repo has both props; superseded by later Webflow work). **REPO AHEAD (19)** grew by the new
+  coverage: one prop removed (`icon`), the new `SelectField` component file, seven Style guide page-section changes and the
+  `dropdown.ts` preview runtime, besides the nine style rows of before.
+- **Current baseline.** Against its own dump: 0 rows; 77 pre-existing differences, 21 of them the same attribute
+  repeated (`data-tm-slide`, `data-how-*`: set by the page scripts, absent in the render), the Input Field `autocomplete`
+  once, the footer links (the repo and Webflow point two of them at different pages), the `fk-stat is-default` classes.
+- **Tests.** `node --test scripts/test-reconcile.mjs`: 14 tests (8 before): the historical run asserts the breakdown above;
+  new: moves (Webflow-only reorder, move to another parent, repo already in the new order), a restructure with an absorbed
+  move, attributes (link target, image alt PULL auto, alt CONVERGED in a scratch checkout), repo ahead (component prop and
+  variant, page section, interaction row, custom code, in a scratch checkout), pre-existing differences listed once. All pass;
+  the baseline against its own dump stays at 0 rows.
+- **Known limits left.** (1) The alignment still pairs wrongly on a page rewritten in the repo (the Style guide): the
+  footer lists dropped text pairs, and a few pre-existing differences there are artifacts. (2) An instance the repo renders
+  as plain markup has no prop entry. (3) Component meta other than description and prop default, page settings, assets and
+  site rows keep their presence / file-change heuristics. (4) The `removed` test cannot tell a removed element from one the
+  alignment paired with another. (5) The `--json` file is still working data for the apply phase (commit or ignore: open).
+  (6) `variantStyles`, the site instruction and the unlisted-variant-style check: still open. (7) Part B left: wire the
+  report into the gate (phase 5) and the apply workflow (phase 4).
+
+## Phase 3 stage 3 part B progress and "Phase 3 done" (2026-10-13)
+
+Offline, no Webflow MCP call, no commit, nothing applied to `src/`. Decisions taken while the user slept, all recorded here.
+
+- **Noise triage (77 pre-existing differences to 53).** Each group was checked against the repo, `interactions.md`, the skill and the
+  published staging HTML (curl, not the MCP). **By design, accepted in `accepted.json` `element`** (8 regex patterns, 12 elements,
+  with the reason): `UI / Button` Secondary, the five `UI / Stat` `is-default` combos and the `UI / Page Hero` Half Screen classes
+  (component variants carry their own overrides on Webflow); the Filter Dropdown `aria-expanded` (webflow.js writes it) and the list
+  `aria-label` (bound to the Menu Label prop, present on staging); the Facility partners hero `tabindex` and `fk-block fk-object-cover`
+  (native Background Video wrapper); the Nav skip link `href="#main"` (a tree-read gap, the published HTML has it). **Unaligned**
+  (new `accepted.json` list): `page:style-guide`, 12 differences that are alignment artifacts (the Webflow page is a partial build, the
+  repo page has many more sections, so Filter Dropdown attributes pair with Form messages and utility wrappers pair by position).
+  Improving the alignment was not cheap (the pages share too little); the footer counts them with a clear "not listed" note.
+  **Real drift, kept listed (53 elements, 10 table rows):** footer links `For nurses` / `For facilities` (repo stale), `Webinars`
+  anchor and the Home `id="webinars"` (Webflow ahead), 45 stale IX3 carousel attributes (`data-tm-slide` x21, `data-how-*` x12,
+  `data-dot-*` x12: **not** runtime-set, the interactions that used them were deleted for `x-carousel`, D-37), Newsletter message
+  `role`s (known MCP limit), Quote Card `draggable`, Input Field `autocomplete`. The user's triage list is the report's `## Summary`.
+- **Format changes.** `accepted.json` `element` entries take `pattern` (regex over the acceptLine) besides `line`; new `unaligned`
+  list (`where`, `reason`); `--summary <file.md>` on the CLI inserts a hand-written summary under the report title. All in
+  `scripts/webflow-reconcile.mjs`, `rows.mjs` (`preexisting`), `report.mjs`; documented in the snapshot README.
+- **First real run** (`docs/webflow/reconcile/2026-10-13.md` + `.json` + `.summary.md`): base dump 20261013T023829Z (`831b811`), new dump
+  20261013T060458Z. **0 rows** (PULL 0, CONFLICT 0, CONVERGED 0, REPO AHEAD 0), which is correct: every dump file other than the two
+  site signals files is byte-identical to the base apart from the dump envelope `label` (the user's publish at 03:32Z moved
+  `siteLastPublished` / `siteLastUpdated`; the `_w-select` deletion was before the baseline), and `src/` is unchanged since `831b811`.
+  The "4-byte smaller blog tree": the raw `tree-blog.json` differs only in the envelope's `label`; the normalised `pages/blog.json` is
+  byte-identical (10,122 bytes both). No tool artifact was found in the run, so no tool fix was needed beyond the format additions.
+  The `.json` is committed with the report (small when there are no rows); the bigger-run policy stays open.
+- **Tests.** `node --test scripts/test-reconcile.mjs`: 15 tests (14 before), all pass; the new one asserts the patterns and the
+  unaligned page leave the real drift listed and that `--summary` lands under the title.
+- **Phase 3 done.** Tools: `webflow-snapshot.mjs` (normalise, check, rebuild), `webflow-map.mjs` and `reconcile/build-map.mjs`
+  (element-id map), `webflow-tree-diff-ids.mjs` (id diff), `webflow-reconcile.mjs` with `reconcile/*` (three-way rows, moves,
+  restructure, attributes, repo-ahead coverage, pre-existing differences, report). Left for later: the apply workflow (phase 4), the
+  gate and skill wiring (phase 5), the contract (phase 6), the variant-style triple check, the `variantStyles` and site-instruction dump
+  gaps, and whether `docs/webflow/reconcile/*.json` stays committed. The user triages the drift list (above) before the next sync
+  stage; decisions 1, 2, 5 and 6 of that list are one-line repo edits or `set_attributes` calls, 3 is a deletion of attributes on
+  Webflow (rule 12: confirm first), 4 is a Designer to-do.
+
+## Phase 4 done: apply and partial refresh (2026-10-13)
+
+Offline, no Webflow MCP call, no commit, nothing applied to the real `src/` (the report `2026-10-13` has 0 rows). Built by one Sonnet agent
+while the user slept; the decisions below are its own and stand until the user says otherwise. Spec:
+[`../snapshot/README.md`](../snapshot/README.md) → "Apply and refresh".
+
+- **Built.** `scripts/webflow-reconcile-apply.mjs` (CLI), `scripts/reconcile/apply.mjs` (row handlers and the agent's task text),
+  `edit-ops.mjs` (pure text, CSS and token edits with guards, and the in-memory `Workspace` with `diff -u`), `refresh.mjs` (the partial
+  refresh, also behind `webflow-snapshot.mjs --refresh`), `applied.mjs` (the `## Applied` record), `rowspec.mjs` (`--rows`). Changes to
+  phase 3: `rows.mjs` marks a new class (`add-rule`) and a new Color / Size token (`add-token`) `auto`, counts Webflow's grid defaults as
+  equal when a new style is compared, and puts the raw value (not the lower-cased one) into `add-rule`; `webflow-reconcile.mjs` records
+  `meta.new.input` and lays `manifest.repoBase` over the repo-at-commit CSS and tokens; `repo-state.mjs` has `applyRepoBase`.
+- **Which rows are auto, which go to the agent.** Applied by the script when the row is a PULL marked `auto` and its guard holds: text
+  (JSX text, attribute, JS string, JSON value, escaped for the context), one class swapped for one other, a string instance prop or
+  attribute or alt, CSS `set-declaration` / `remove-declaration` (one-line) / `add-declaration` (rule with one selector), `add-rule`
+  into the class family's file, `set-token` (also the `tokens.md` value cell), `add-token` (also the id in `webflow-ids.json`;
+  `gen-utilities.mjs` runs for a `space-*` token). Everything else is printed as a task and the exit code is 3: structure
+  (add / remove / move / restructure), components, props, variants, pages, interactions, assets, site and CMS, custom code, shorthands,
+  multi-line values, `utilities.css`, "snap to token" rows (rule 2: ask), and every CONFLICT (the script never picks a side). A task has
+  `file:line`, old to new, what to do and the contract reminders; generated files are never edited, the task names the source and the
+  generator. Rows with a follow-up (class registry row, `tokens.md` row) apply and still exit 3.
+- **Guards.** The old value must be on the recorded line exactly once (text and classes also: exactly once in the file when another row
+  moved it); a CSS declaration must still be a one-line declaration with the expected value. A failed guard is a task, not an error. The
+  guard earned its keep in the first test run: the report marks every `attr` instance prop `auto`, including `label={buttonLabel}` which
+  is not a literal.
+- **Build and lint.** The apply script does not run them by default (`--build` does, exit 4 on failure): the agent still edits the
+  task-list rows after it, so they run once at the end (workflow step 6). Justification: build is about 10 s and lint is quick, but running
+  them between the two halves of the same change proves nothing.
+- **Validity after a partial refresh (the sound option).** `repoCommit` does not move. Moving it would hide the repo's other changes (the
+  commit has to be the one the *whole* base matched), and the applied edits may be uncommitted. Instead the repo side of an absorbed item
+  is the value that was applied: `manifest.repoBase` (styles, tokens) laid over the values read from `repoCommit`, and the updated `map/`
+  entries (text, classes, props, attributes); other items need nothing because the new base equals Webflow. A later Webflow edit of an
+  absorbed item is a plain PULL (tested), committing the applied edits changes nothing, and a full rebuild at the next sync (after the
+  commit) sets `repoCommit` to HEAD and clears `refreshedRows` / `repoBase`. Considered and rejected: a per-item repo commit (the repo
+  value of an uncommitted edit has no commit) and requiring a commit before the refresh (the user commits when they ask).
+- **Refresh verifies first.** `webflow-snapshot.mjs --refresh` re-runs the reconcile against the same dump and refuses (exit 3) a row that is
+  still PULL or CONFLICT, so the base can't claim a value the repo doesn't have. `--force` / `--no-verify` exist; the skill says not to use
+  them without telling the user. Repo-ahead rows are skipped. Signals follow: a page's or interaction's signal takes the new dump's value
+  when its file now equals the new one, all of them when the whole base does.
+- **Agent workflow.** A separate skill, [`flint-reconcile`](../../../.agents/skills/flint-reconcile/SKILL.md) (symlinked in `.claude/skills`;
+  phase 5 adds the `/reconcile` entry point and the gate to it), plus a pointer row in `flint-webflow-sync`. Flow: dump, report, user
+  approves rows, apply (dry run first), agent edits the tasks under the contract, build and lint, refresh, the report's `## Applied`
+  section (sidecar `<report>.applied.json`), commit only when asked (`--record-commit` notes the hash).
+- **Tests** (`node --test scripts/test-reconcile.mjs`, 20 tests, about 40 s, 5 new; scratch checkouts via `git worktree`, removed at the
+  end): pure edit ops and `--rows` parsing; 8 mechanical rows applied (text, class, style value, removed declaration, new class, token
+  value, new token, string prop), exactly the expected files changed, the generator ran, the multi-line `transition` stayed a task, a dry
+  run writes nothing, a second reconcile shows the applied rows CONVERGED, the refresh changes only the targeted base items (styles
+  `.fk-input-container`, `.fk-input-field-hint`, `.fk-input-field-label`; variables `color-brand`, `space-9`; the unapproved About text
+  untouched), the same rows gone afterwards, a later Webflow edit of an absorbed item a PULL, applying again a no-op; a failed guard, a
+  CONFLICT and an assisted move become tasks with exit 3 and no file touched, a stale report is refused; a structural row is refused by
+  the refresh until the repo has it, then refreshed through `webflow-snapshot.mjs --refresh` and the base page equals the new one; the
+  data layer (restructure with an absorbed move, a re-created text run, a link, page SEO, an asset alt, a component description, a site
+  setting) lands in the base with `--no-verify`, the base then equals the new dump (signals included) and a reconcile has nothing left.
+- **Known limits.** (1) The map gets no entry for elements a refresh adds or moves. (2) Agent-resolved structure leaves REPO AHEAD rows for
+  component files and page sections until the next rebuild. (3) `add-token` needs a Color or Size and leaves the `tokens.md` row to the
+  agent. (4) The refresh trusts the reconcile's CONVERGED for assisted rows. (5) Text in a JSX expression, a template string with `${}`
+  and strings that wrap over lines are tasks. (6) Open from phase 3: whether `docs/webflow/reconcile/*.json` is committed (it is
+  gitignored now, with the new `*.applied.json`), `variantStyles`, the site instruction.
+
+## Phases 5 and 6 done: wire in and contract (2026-10-13)
+
+Offline, no Webflow call (no write, no read), no commit. Built by one Sonnet agent while the user slept; the decisions are its own and stand until the user says otherwise. Spec: [`../snapshot/README.md`](../snapshot/README.md) → "The gate: a partial dump".
+
+- **Gate dump design.** `scripts/webflow-gate.mjs` (CLI) over `scripts/reconcile/gate.mjs`. The dump agent saves the five quick-check reads (`site-before`, `pages-before`, `interactions`, `cms-collections`, `registered-scripts`) in a new folder; `--plan <dir>` compares them with `manifest.signals` and prints the other reads; `--compose <dir>` verifies them, merges them with the unchanged files of the base's raw dump (`manifest.dump`, hashed against `manifest.rawDump`) into a complete dump, runs `webflow-snapshot.mjs --check`, and the normal reconcile runs on that. Decisions: (1) a new script, not a flag on `webflow-snapshot.mjs`, because the snapshot script is a one-dump normaliser with no knowledge of the base; (2) per-item files (`page-code.json`, `interactions-full.json`, `cms-details.json`) hold only the entries that moved and are merged by page / interaction / collection id; trees are whole files per page; (3) a complete dump is the output, so reconcile, `--refresh` and `--rebuild` need no change and a rebuilt base's `manifest.dump` is a full folder; (4) styles, components, component trees and variables are always re-read (no timestamp), `variable-collections.json` is taken from the base; (5) `siteLastUpdated` / `siteLastPublished` moving (any page save or publish) re-reads site code, fonts and assets, because assets and fonts have no timestamp of their own; (6) a full dump is required (exit 3, with the reason) when there is no base, the raw dump folder is gone or a file in it no longer matches its hash, the base was partially refreshed (its raw dump no longer equals the base state), or `get_site` returns another site.
+- **Cost.** 11 calls when nothing moved (5 signals, 4 always, 2 end checks), about 1 MB; +2 per moved page (tree, code), +2 when any page moved (schema, sitemap), +1 per changed interaction batch and collection batch, +4 after a publish or any page save (site code, fonts, 2 asset pages). One page edit with its publish is about 20 calls, against 58. The earlier estimate of about 8 calls left out the two end-of-dump checks and the component-meta call; those are needed to detect an edit during the dump. Accepted gap: an asset or font changed with no site timestamp moving is not seen by a partial dump.
+- **Tests.** `node --test scripts/test-reconcile.mjs`: 23 tests (20 before, 3 `gate:`), all pass. They use dump `20261013T023829Z` as the base and synthetic changes to its own files, so they do not depend on today's base: nothing moved (the composed dump normalises byte for byte to the full dump), a moved page plus a changed interaction plus a publish (exact read list, missing reads named with exit 2 and nothing written, merge of page code and interactions, the reconcile on the composed dump shows the edited text), and every full-dump case (no base, raw dump gone, hash changed, partial refresh, empty folder lists the five signals, an edit during the dump exits 1). Also run by hand against the real dump `20261013T060458Z` (a publish moved the site signals): the composed dump normalises to the same files as the full one.
+- **Wired in.** `flint-reconcile` skill: description now triggers on "reconcile" / "/reconcile", the gate and the sync-end refresh; new "Run a reconcile" recipe with the dump-agent brief (Sonnet, low effort, force results to files, print counts only), "Gate" and "Refresh at the end of every sync" sections. `flint-webflow-sync` skill: step 6 of "Before the first call" is the gate, new "After the last write" closing section is the refresh, a pitfalls-table row records the gate recipe. `mcp-playbook.md`: "Gate first" paragraph, the order table gets step 11 "Refresh the base" and 12 "Publish" with its gate, and "Pulling Designer edits back" now points to the reconcile. `AGENTS.md` 1.14: header, registry table (`snapshot/`, `reconcile/`), §1, rule 11, §7 steps 4, 7 and 8, definition of done. `/safe-publish` is a plugin skill and is not edited: the gate sits in our docs and runs before it is invoked.
+- **Decisions.** (1) The refresh is a full rebuild from a dump taken after the last write and after the commit (`--rebuild --yes --commit HEAD`, then `webflow-map.mjs`), not a partial refresh: it also clears `refreshedRows` / `repoBase` and makes `repoCommit` the commit that matched. The reconcile is run on that dump first so someone else's edit meanwhile is shown to the user before it is absorbed. (2) The gate runs once per sync when stages run back to back and nobody else edits; a long gap or an unsupervised stage runs it again. (3) Read-only stages (diff, audit) skip the gate. (4) During a pending partial refresh the gate asks for a full dump. (5) In AGENTS.md §7 the refresh is part of step 7 and publish stays step 8, so no step number moves. (6) D-66 is recorded in `roadmap.md` (index) and `archive/decisions.md` (full text); the "reserved" wording in D-67 was updated.
+- **Things found.** The Style guide text on both sides cites "roadmap D-66" for the form-fields rule, written while D-66 was reserved; it is D-67 (and the sentence says four fields where the page shows three). Not changed (it would make `src/` differ from the base); noted in `components.md` and the handoff. `components.md` Style guide row now describes the Webflow page (Buttons, Filter dropdown, Input field, Templates, Post card, then Section / Newsletter) against the larger repo page.
+- **Open.** (1) **Site instruction:** the Webflow site instruction `rules/flint-contract.md` mirrors the contract and still says 1.13: it was not written (Webflow write). To do in the next Webflow stage: `data_agent_instructions_tool` `update_instruction`, add one line on contract 1.14 (Designer edits are allowed and pulled back through the reconcile; the gate before pushes) and bump its version; read it first (`search_instructions`). The site instruction is also still a dump gap (`manifest.gaps`). (2) `variantStyles` in the dump and the check that fails a sync writing a variant-style triple not listed in `components.md`: still open. (3) Whether the `docs/webflow/reconcile/*.json` stays ignored: it is ignored (`.gitignore`), reports `.md` are committed. (4) The reconcile has only seen one real run (0 rows); the first run with real PULL rows will test the apply path on live data.
+
 ## Phases (revised)
 
 Agent stages follow the memory rule: one Sonnet agent per stage, the orchestrator confirms
@@ -599,10 +759,10 @@ between stages.
 | # | Phase | Work | MCP calls | Agent stages | Effort | Risks |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2 | **Baseline** (done: a to d 2026-10-11, retaken 2026-10-13) | (a) a Sonnet agent at low effort runs the full dump (58 calls) into `.cache/webflow-dump/<UTC timestamp>/` while nobody edits the Designer, prints counts, and a script checks them against the expected totals (repeat if the check fails); (b) Sonnet writes `scripts/webflow-snapshot.mjs` (normaliser, no MCP, with the `--rebuild` command), generates `data/` with the repo commit hash in `manifest.json`, runs `webflow-diff.mjs` and `webflow-tree-diff.mjs` to record the 10 known differences, and scans the dump for keys and secrets; (c) the user makes one unpublished Designer text edit plus reversible edits to a style, a component and a variable; (d) readback: which reads show the edits, which timestamps move; the user reverts. `.gitignore` already has `.cache/` and `data/`; nothing in `data/` is committed | about 58 + 6 for the tests | 3 (Sonnet low-effort dump; Sonnet script and snapshot; Sonnet readback) | 1 to 1.5 days | the repo and Webflow differ in a few known places (10 style lines, Nav / Footer expansions): baseline records them as accepted; an edit by the marketing team during the dump gives a mixed baseline, so run it right after a sync and compare the page `lastUpdated` signals before and after; the dump may hold secrets (scan before keeping it) |
-| 3 | **Report** (stage 1, map and id diff, done 2026-10-13; stage 2, three-way rows and report, done 2026-10-13) | `scripts/webflow-reconcile.mjs` (id diff, three-way compare, string locator, changes report), `scripts/webflow-map.mjs`, extend the tree diff for Nav / Footer / Stat / links; the base-vs-repo column reads the changes since the commit in `manifest.json` plus the working tree; the check that fails if a sync writes a variant-style triple not listed in `components.md`; the routine gate dump (about 8 calls) runs on Sonnet at low effort with a count check, all interpretation on Sonnet; unit tests on saved dumps (edit a copy of a dump to simulate a text edit, an add, a move, a style change) | 8 (quick check) to 58 per run | 3 (map and tree diff; styles, variables, settings; report writer) | 3 to 4 days | text built from parts; stale map; the read gaps above (variant overrides, alt inherit); the first real Designer edit may show id behaviour not seen yet |
-| 4 | **Apply** | agent workflow: read the approved rows, edit the files, run `npm run build` and `npm run lint`, refresh the snapshot for exactly what was applied, rewrite the map entries; no commit (the manifest commit hash moves to the new repo commit at the next sync, once the applied edits are committed) | 0 to 12 (re-read of what changed) | 2 | 1.5 days | applying a Webflow style value that breaks the token rule: the row says "snap to token" and the agent asks; generated files (utilities, x-* scripts) are resolved in the source |
-| 5 | **Wire in** | `/reconcile` skill or a section of `flint-webflow-sync`; gate at the start of every sync stage and `/safe-publish`: run the quick check, full compare only when a signal moved or the styles / components / variables hash moved; refresh the snapshot at the end of each sync, recording the repo commit it matched | 8 per gate | 1 | 1 day | the gate adds about 8 calls and 6k tokens to every stage; a stage agent must not push while the report has open rows |
-| 6 | **Contract** | amend AGENTS.md (§1 "mirrored back", rule 11, §7 workflow), `mcp-playbook.md` pulling section replaced by the reconcile, `sync-log.md` row, record D-66 | 0 | 1 | 0.5 day | none |
+| 3 | **Report** (stage 1, map and id diff, done 2026-10-13; stage 2, three-way rows and report, done 2026-10-13; stage 3 part A, moves, restructure, attributes, repo-ahead coverage, done 2026-10-13; part B, noise triage and the first real run, done 2026-10-13; phase 3 done) | `scripts/webflow-reconcile.mjs` (id diff, three-way compare, string locator, changes report), `scripts/webflow-map.mjs`, extend the tree diff for Nav / Footer / Stat / links; the base-vs-repo column reads the changes since the commit in `manifest.json` plus the working tree; the check that fails if a sync writes a variant-style triple not listed in `components.md`; the routine gate dump (about 8 calls) runs on Sonnet at low effort with a count check, all interpretation on Sonnet; unit tests on saved dumps (edit a copy of a dump to simulate a text edit, an add, a move, a style change) | 8 (quick check) to 58 per run | 3 (map and tree diff; styles, variables, settings; report writer) | 3 to 4 days | text built from parts; stale map; the read gaps above (variant overrides, alt inherit); the first real Designer edit may show id behaviour not seen yet |
+| 4 | **Apply** (done 2026-10-13, see "Phase 4 done") | agent workflow: read the approved rows, edit the files, run `npm run build` and `npm run lint`, refresh the snapshot for exactly what was applied, rewrite the map entries; no commit (the manifest commit hash moves to the new repo commit at the next sync, once the applied edits are committed) | 0 to 12 (re-read of what changed) | 2 | 1.5 days | applying a Webflow style value that breaks the token rule: the row says "snap to token" and the agent asks; generated files (utilities, x-* scripts) are resolved in the source |
+| 5 | **Wire in** (done 2026-10-13, see "Phases 5 and 6 done") | `/reconcile` skill or a section of `flint-webflow-sync`; gate at the start of every sync stage and `/safe-publish`: run the quick check, full compare only when a signal moved or the styles / components / variables hash moved; refresh the snapshot at the end of each sync, recording the repo commit it matched | 8 per gate | 1 | 1 day | the gate adds about 8 calls and 6k tokens to every stage; a stage agent must not push while the report has open rows |
+| 6 | **Contract** (done 2026-10-13: contract 1.14, D-66; the site instruction is a to-do) | amend AGENTS.md (§1 "mirrored back", rule 11, §7 workflow), `mcp-playbook.md` pulling section replaced by the reconcile, `sync-log.md` row, record D-66 | 0 | 1 | 0.5 day | none |
 
 Total: about 7 to 9 working days of agent and review time. A routine run once built: about 8 MCP
 calls, 3 files read from disk, one report; the user's review is the slow step.

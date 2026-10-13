@@ -44,7 +44,13 @@ Every rule in `AGENTS.md` still applies, especially rules 11, 12 and 13.
 
 ## Order of operations
 
-Always sync in this order, because later steps depend on earlier ones:
+**Gate first.** Every sync stage that writes, and every publish, starts with a reconcile gate (`AGENTS.md` rule 11 and §7):
+a gate dump (about 11 to 20 reads, `scripts/webflow-gate.mjs`, run by a Sonnet agent at low effort), then
+`scripts/webflow-reconcile.mjs`. PULL or CONFLICT rows in the report: stop and show them to the user before any write.
+No base: say that a rebuild resets it, take a full dump and rebuild. Procedure: the
+[`flint-reconcile`](../../.agents/skills/flint-reconcile/SKILL.md) skill ("Gate").
+
+Then sync in this order, because later steps depend on earlier ones:
 
 | Step | Registry | Tools (actions) |
 | --- | --- | --- |
@@ -59,7 +65,8 @@ Always sync in this order, because later steps depend on earlier ones:
 | 8. Interactions | `interactions.md` | `data_interactions_tool`: `guide`, `list_interactions`, `create_interaction`, `update_interaction` |
 | 9. Custom code | `interactions.md` → exceptions only | `data_scripts_tool`: raw CSS or JSON-LD goes in the freeform head/footer blocks (`set_site_freeform_code`, `set_page_freeform_code`; CSS exceptions come from `docs/webflow/custom-code/site-head.html`), scripts through `register_inline_script` (max 2,000 characters) + `add_site_script` / `add_page_script`. Read before write (`get_site_freeform_code`), because the write replaces the whole block. SEO exceptions: `x-schema-site`, `x-schema-post`, `x-deferred-tracking` (`seo.md`) |
 | 10. Verify | — | `node scripts/webflow-diff.mjs` on a fresh `get_styles` dump (skill recipe "Diff"), `element_snapshot_tool`, `data_element_tool` → `query_elements`, `/site-audit`, `/accessibility-audit`, and the `seo.md` checks on staging (one H1, page settings, schema in the Rich Results Test, image sizes and lazy loading, `curl -I` for the 404) |
-| 11. Publish | — | Only on user request, via `/safe-publish` |
+| 11. Refresh the base | — | After the writes are read back and committed: a gate or full dump taken after the last write, `webflow-reconcile.mjs` on it (anything that is not your own writes goes to the user), then `node scripts/webflow-snapshot.mjs <dump> --rebuild --yes --commit HEAD` and `node scripts/webflow-map.mjs`. Base = the agreed state |
+| 12. Publish | — | Only on user request: the reconcile gate immediately before, then `/safe-publish` (a plugin skill, not edited here) |
 
 ## What the MCP can and can't do (found in the test stage, 2026-09-23 to 2026-09-27)
 
@@ -105,31 +112,19 @@ again with a `-2` suffix (or dropped, in the builder). Query first, every time, 
 
 ## Pulling Designer edits back into the repo
 
-Anyone may fix things directly in the Designer. Before the next push, pull them back
-(`AGENTS.md` §1), or the push overwrites them.
+Anyone may edit in the Designer (the marketing team, the user). The repo stays the source of truth, and edits made in the Designer
+reach it through the **reconcile** (decision D-66): a three-way compare of the base snapshot, a new read-only dump and the repo,
+a changes report the user approves row by row, then `webflow-reconcile-apply.mjs` and a base refresh. Procedure, flags and
+formats: [`flint-reconcile`](../../.agents/skills/flint-reconcile/SKILL.md) and
+[`snapshot/README.md`](snapshot/README.md). It runs on demand and as the gate above; the manual recipe that used to be here
+(`get_styles` by hand and compare names) is replaced by it.
 
 Not every difference is an edit. A Designer tab that was open before an MCP push can save its
 older copy of a style over the push (seen 2026-09-24: `fk-button` lost its new gradient and
 `transition` while padding stayed). If Webflow's value equals an earlier pushed value and
 contradicts a recorded decision, treat it as stale: re-push and tell the user. If unsure, ask.
-After every push, ask the user to reload the Designer.
-
-1. **Detect.** `data_style_tool` → `get_styles` (`query: "all"`) and compare names with
-   `classes.md`; unknown classes or new tag styles (`type: "tag"`) are Designer edits.
-   `data_interactions_tool` → `list_interactions` and compare with `webflow-ids.json` (a missing id
-   means it was deleted or recreated). `data_element_tool` → `get_all_elements` on the edited page.
-2. **Read the values.** `query_styles` (or `get_styles` with `filter_ids`) with
-   `include_properties`, every breakpoint and the `hover`/`focus-visible` pseudos. Variable values
-   come back as `{ id }`; map them to token names through `webflow-ids.json`.
-3. **Compare with the repo.** For the same classes, run `node scripts/webflow-style-actions.mjs
-   <file> --only <class>` to see what the repo would push, and diff it against what Webflow returned.
-4. **Back-port.** Edit `src/styles/` (and the markup, if structure changed), and the registries if a
-   name or rule changed. A Designer value that breaks a rule (a raw hex, a new class name) is snapped to
-   a token or renamed, then pushed back.
-5. **Log it** in `sync-log.md` as a pull, listing what came from the Designer.
-
-Prompt: *"Pull Designer changes for `<page or classes>` into the repo following the playbook's
-pulling section. No pushes until I review the diff."*
+After every push, ask the user to reload the Designer. A Webflow edit the user does not want to keep is not pulled:
+the next sync pushes the repo's value back (say so in the report summary).
 
 ## Safety rules
 

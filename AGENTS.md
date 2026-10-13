@@ -4,7 +4,7 @@ This file is the contract every contributor (human or AI agent) follows when cha
 Its purpose: keep the codebase a **1:1 blueprint of the Webflow site**, so any change made here can be
 pushed to Webflow through the Webflow MCP without reinterpretation.
 
-- **Contract version:** 1.13 (2026-10-11). 1.13: form fields are plain Form Block elements per form (rule 10); `UI / Input Field` and `UI / Select Field` are Designer templates (D-67). 1.12 (2026-10-06): Designer Image width/height = the largest displayed size, aspect-correct, because Webflow builds `sizes` from it; files stay 2×. Amended 2026-10-07: CMS-bound images take their largest displayed box size too (the Designer can't leave the fields empty and writes `Auto` otherwise). 1.11: the legacy code is gone (every page is rebuilt): no
+- **Contract version:** 1.14 (2026-10-13). 1.14: Webflow Designer edits are allowed and pulled into the repo through the reconcile (D-66): a reconcile gate runs before every sync write and every publish, and the base is refreshed after every sync (§1, rule 11, §7). 1.13 (2026-10-11): form fields are plain Form Block elements per form (rule 10); `UI / Input Field` and `UI / Select Field` are Designer templates (D-67). 1.12 (2026-10-06): Designer Image width/height = the largest displayed size, aspect-correct, because Webflow builds `sizes` from it; files stay 2×. Amended 2026-10-07: CMS-bound images take their largest displayed box size too (the Designer can't leave the fields empty and writes `Auto` otherwise). 1.11: the legacy code is gone (every page is rebuilt): no
   Tailwind, Framer Motion or `src/pages/legacy/`; §8 now says how the preview stands in for Webflow's own base
   stylesheet (`webflow-base.css`). 1.10: every Image added in Webflow gets its alt text and, if static, the Designer's
   Image width / height (rule 15). 1.9: the Rich Text descendant rules (`.fk-article-body <tag>`) are the custom-code
@@ -45,6 +45,8 @@ registries define the inventory. If they disagree, fix the registry, not the rul
 | [`mcp-playbook.md`](docs/webflow/mcp-playbook.md) | How to push changes with the Webflow MCP, safely |
 | [`seo.md`](docs/webflow/seo.md) | SEO, performance and accessibility requirements every page must meet |
 | [`sync-log.md`](docs/webflow/sync-log.md) | What has been pushed to the production site, and when |
+| [`snapshot/`](docs/webflow/snapshot/README.md) | The base snapshot of Webflow (format, the reconcile report, apply and refresh, the gate's partial dump). The data itself is local-only and gitignored |
+| [`reconcile/`](docs/webflow/reconcile/) | The reconcile changes reports (`<date>.md`, committed): the lasting record of what changed on Webflow between syncs |
 | [`webflow-ids.json`](docs/webflow/webflow-ids.json) | Ids of everything created on the production site (variables, assets, collections, components…) |
 | [`archive/test-site/`](docs/webflow/archive/test-site/README.md) | Read-only records of the test stage (ids, sync log, homepage plan). Not a sync target |
 
@@ -59,8 +61,10 @@ registries define the inventory. If they disagree, fix the registry, not the rul
 | Visual design intent | Figma (linked in `README.md`) | Figma → Repo |
 | Webflow site ID, workspace, publish state | [§9 Webflow project](#9-webflow-project) | — |
 
-Structural or style edits made directly in the Webflow Designer **must be mirrored back** into the
-registries and `src/` in the same iteration. Otherwise the next MCP sync will overwrite them.
+Webflow may be edited directly in the Designer (the marketing team, the user): nothing there is locked. Such edits are
+**pulled back through the reconcile** (D-66, `flint-reconcile` skill, "/reconcile"): a read-only dump is compared with the base snapshot
+and the repo, the user approves the changes report row by row, and only approved rows are applied to `src/` and the
+registries. The repo stays the source of truth: a Designer edit the user does not approve is overwritten by the next sync.
 
 ## 2. Rules
 
@@ -106,6 +110,8 @@ registries and `src/` in the same iteration. Otherwise the next MCP sync will ov
     values are never headings (size comes from the `fk-heading-*` class). Form fields are plain Form Block elements per form, built directly with the shared `fk-input-*` classes, each with its own Name, Placeholder, Type and options; an icon only when the field needs one. `UI / Input Field` and `UI / Select Field` are Designer templates (place, unlink, set) and a structure reference for agents (D-67).
 11. **Read before write in Webflow.** Query existing styles, variables and components by name before
     creating anything. Never create duplicates, and never rename or delete without updating the registry.
+    Before any sync write and any publish, run the **reconcile gate** (`flint-reconcile` skill): if the report has PULL or
+    CONFLICT rows, stop and show them to the user first, so a push never overwrites a Designer edit.
 12. **No destructive or publishing action without explicit user confirmation.** That covers deleting
     styles, components, fields or items, unregistering components, and publishing. Publishing goes
     through the `/safe-publish` skill only.
@@ -225,7 +231,8 @@ can become a component later without a rename.
 2. **Implement in the repo.** Change tokens/classes/components following §2–§6. Run
    `npm run build` and `npm run lint`, and preview with `npm run dev`.
 3. **Update registries.** Keep `docs/webflow/*.md` in sync with the code, including the status column.
-4. **Sync to Webflow.** Follow [`mcp-playbook.md`](docs/webflow/mcp-playbook.md) in its fixed
+4. **Sync to Webflow.** First the reconcile gate (rule 11): a gate dump, then `scripts/webflow-reconcile.mjs`; PULL or
+   CONFLICT rows stop the stage until the user decides. Then follow [`mcp-playbook.md`](docs/webflow/mcp-playbook.md) in its fixed
    order: variables → classes → components → pages → CMS → interactions → custom code.
 5. **Verify.** Read back what was written (styles, element snapshots). For class changes, run
    `scripts/webflow-diff.mjs` until it reports no differences. Run `/site-audit` for page
@@ -233,9 +240,10 @@ can become a component later without a rename.
    `seo.md` requirements on staging (headings, page settings, schema, images).
 6. **Record learnings** (rule 13). Anything that failed or had to be discovered goes into the
    skill, the playbook or the registries before you report back.
-7. **Log.** Add a row to [`sync-log.md`](docs/webflow/sync-log.md) and tick the item in
-   [`roadmap.md`](docs/webflow/roadmap.md).
-8. **Publish** only when the user asks, via `/safe-publish`.
+7. **Log and refresh.** Add a row to [`sync-log.md`](docs/webflow/sync-log.md) and tick the item in
+   [`roadmap.md`](docs/webflow/roadmap.md). Once the writes are read back and committed (when the user asks), take a dump and
+   rebuild the base (`webflow-snapshot.mjs <dump> --rebuild --yes --commit HEAD`), so the base is the agreed state.
+8. **Publish** only when the user asks: the reconcile gate immediately before, then `/safe-publish`.
 
 ### Definition of done
 
@@ -244,7 +252,7 @@ can become a component later without a rename.
 - [ ] Responsive styles only at the breakpoints in §5
 - [ ] Interactions respect reduced motion; focus-visible states exist on interactive elements
 - [ ] Registries and status columns updated
-- [ ] Webflow updated through the MCP (if requested) and logged in `sync-log.md`
+- [ ] Webflow updated through the MCP (if requested), preceded by a clean reconcile gate, logged in `sync-log.md`, and the base refreshed
 - [ ] Every failure, workaround or discovered payload recorded per rule 13
 - [ ] One `h1`; headings follow the outline; images have alt, `width`/`height` = largest displayed size (rule 15), WebP and lazy loading below the fold
 - [ ] Icon-only buttons labelled; tap targets at least 24px; page settings and schema per `seo.md`
