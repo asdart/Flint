@@ -3,6 +3,7 @@
 import { Aligner, classes, normName, wfKids } from "./align.mjs";
 import { allSourceFiles, componentFile, findPattern, findString, pick } from "./locate.mjs";
 import { norm } from "./html.mjs";
+import { repoDiffs, wfCmp } from "./fields.mjs";
 
 /** Gives every repo node its order path (child indexes from the root, comps and text runs included). */
 export function assignPaths(nodes, prefix = []) {
@@ -19,6 +20,25 @@ const propHas = (props, text) =>
 const ALIASES = { link: ["link", "href", "to"], image: ["image", "src"], variant: ["variant"], showbutton: ["showbutton"] };
 
 export class Mapper extends Aligner {
+  /** @param {{fc?: object, cms?: Set<string>, boundId?: boolean, boundImage?: boolean, boundLink?: boolean}} opts `fc` (fields.mjs fieldCtx) turns on `ra`; `boundId` / `boundImage` / `boundLink`: the component has a prop of that type, so the matching attributes are bound */
+  constructor(names, opts = {}) {
+    super(names);
+    this.fc = opts.fc ?? null;
+    this.bound = { boundId: !!opts.boundId, boundImage: !!opts.boundImage, boundLink: !!opts.boundLink }; // props of type id / image / link
+    this.cms = opts.cms ?? new Set();
+  }
+
+  /** Links to the same target pair first (the footer lists many links with the same classes). */
+  sim(r, w) {
+    const s = super.sim(r, w);
+    if (s > 0 && this.fc && w.t === "Link" && r.k === "el" && r.attrs?.href !== undefined) {
+      const wl = w.s?.link ? wfCmp("settings.link", w.s.link, this.fc) : w.a?.href;
+      const rl = this.fc.paths.has(r.attrs.href) ? `page:${r.attrs.href}` : r.attrs.href;
+      if (wl !== undefined) return s + (wl === rl ? 1 : 0);
+    }
+    return s;
+  }
+
   /** Where a rendered string is written: the prop's call site, the element's file, then data files. */
   locateText(text, r) {
     const chain = r.chain ?? [];
@@ -47,10 +67,17 @@ export class Mapper extends Aligner {
 
   /** `rc` (the repo's classes) is written only when they differ from the Webflow element's, as a sorted list. */
   elEntry(r, w) {
-    const e = { k: "el", file: r.src?.file ?? null, line: r.src?.line ?? null, col: r.src?.col ?? null, path: r.path };
+    // A host element rendered inside a library component (React Router's <a>) has no source: use the call site.
+    const src = r.src ?? r.chain?.[0]?.src;
+    const e = { k: "el", file: src?.file ?? null, line: src?.line ?? null, col: src?.col ?? null, path: r.path };
     const rc = [...new Set(classes(r.cls))].sort();
     const wc = [...new Set(classes(w.c))].sort();
     if (rc.join(" ") !== wc.join(" ")) e.rc = rc;
+    // `ra`: the attributes / settings where the repo differs from Webflow's element (repo value, null = the repo has none).
+    if (this.fc) {
+      const ra = repoDiffs(r, w, this.fc, { ...this.bound, cms: this.cms.has(w.id) });
+      if (Object.keys(ra).length) e.ra = ra;
+    }
     return e;
   }
 
@@ -124,7 +151,11 @@ export class Mapper extends Aligner {
       // The Webflow element shows no text: it is bound to a component prop (or a CMS field).
       const bound = this.locateText(loose[0].text, loose[0]);
       entry.textBound = { text: loose[0].text, ...bound };
-    } else for (const x of Rk) if (!matched.has(x) && x.k !== "text") this.repoOnly.push({ file: x.src?.file, line: x.src?.line, tag: x.tag ?? x.name });
+    } else for (const x of Rk) if (!matched.has(x) && x.k !== "text") this.noteRepoOnly(x);
+  }
+
+  noteRepoOnly(x) {
+    this.repoOnly.push({ file: x.src?.file, line: x.src?.line, tag: x.tag ?? x.name, cls: x.cls ? [...new Set(classes(x.cls))].sort() : undefined, path: x.path });
   }
 
   apply(pairs) {
@@ -136,13 +167,15 @@ export class Mapper extends Aligner {
 
   /** Aligns a page (repo root nodes against the Body) or a component definition (the wrapper's render against its root). */
   run(wfRoot, repoNodes, { body }) {
+    const Rk = this.rkids({ kids: repoNodes });
+    let pairs;
     if (body) {
       this.map[wfRoot.id] = { k: "body" };
-      this.apply(this.alignLists(this.rkids({ kids: repoNodes }), wfKids(wfRoot)));
-    } else {
-      const Rk = this.rkids({ kids: repoNodes });
-      this.apply(this.alignLists(Rk, [wfRoot]));
-    }
+      pairs = this.alignLists(Rk, wfKids(wfRoot));
+    } else pairs = this.alignLists(Rk, [wfRoot]);
+    this.apply(pairs);
+    const matched = new Set(pairs.map(([x]) => x));
+    for (const x of Rk) if (!matched.has(x) && x.k !== "text") this.noteRepoOnly(x);
     return this.map;
   }
 }

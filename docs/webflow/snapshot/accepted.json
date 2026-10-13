@@ -117,5 +117,45 @@
       ],
       "reason": "Tool limits, not drift: the tree diff reads Webflow's `Link` element type as a tag name different from `a`, and compares a Button's page-link prop (`{pageId}`) with the repo's URL string. Phase 3's id-based diff replaces this script; the other pages were not re-run on the baseline (phase 1 ran About only, with the same 14-line noise before the script collapsed instances)."
     }
+  ],
+  "element": [
+    {
+      "pattern": "^component:button .* classes: fk-button is-secondary → fk-button$",
+      "reason": "UI / Button is a component with variants on Webflow: each variant carries its own style overrides instead of the `is-secondary` combo, so the base tree has the plain `fk-button` while the repo render (SmartLink inside Button, Secondary) has the combo (components.md UI / Button, mcp-playbook variant overrides)."
+    },
+    {
+      "pattern": "^component:stat .* classes: fk-stat(-value|-number|-suffix|-label)? is-default → fk-stat(-value|-number|-suffix|-label)?$",
+      "reason": "UI / Stat Default is a component variant on Webflow: its overrides replace the `is-default` combos (same cause as the MISSING STYLE `.fk-stat*.is-default` lines in `style`)."
+    },
+    {
+      "pattern": "^component:page-hero .* classes: fk-bg-brand-light fk-flex fk-items-center fk-justify-center fk-panel is-half → fk-bg-brand-light fk-panel is-blog-hero$",
+      "reason": "UI / Page Hero variants: the repo render is the Half Screen variant (`is-half` plus centering utilities) while the Webflow base tree is the Blog Hero variant (`is-blog-hero`); each Webflow variant holds its own overrides (components.md Page Hero)."
+    },
+    {
+      "pattern": "^component:filter-dropdown .* attr\\.aria-expanded: false → \\(none\\)$",
+      "reason": "Webflow's native Dropdown sets `aria-expanded` at runtime (webflow.js); WHTML drops it, so the tree never has it (skill: native Dropdown from WHTML, 2026-09-30). On staging the toggle has `role=\"button\"`, `aria-haspopup=\"menu\"`, `tabindex=\"0\"`."
+    },
+    {
+      "pattern": "^component:filter-dropdown .* attr\\.aria-label: Filter by category → \\(none\\)$",
+      "reason": "The list's `aria-label` is bound to the Menu Label prop (`value_binding`), so the tree has no static value; on staging the `nav` carries `aria-label=\"Filter by category\"`."
+    },
+    {
+      "pattern": "^page:facility-partners .* attr\\.tabindex: -1 → \\(none\\)$",
+      "reason": "The hero video is Webflow's native Background Video: webflow.js writes the `video` element itself (autoplay, loop, muted, playsinline, poster) and no `tabindex` is set; the repo needs `tabIndex={-1}` on its own `video` (interactions.md, D-43)."
+    },
+    {
+      "pattern": "^page:facility-partners .* classes: fk-absolute fk-block fk-h-full fk-inset-0 fk-object-cover fk-video-media fk-w-full → fk-absolute fk-h-full fk-inset-0 fk-video-media fk-w-full$",
+      "reason": "Same: the native Background Video wrapper gets `object-fit: cover` and `display: block` from Webflow's own `.w-background-video` rules, so `fk-block` and `fk-object-cover` exist only on the repo's `video`."
+    },
+    {
+      "pattern": "^component:nav .* attr\\.href: #main → \\(none\\)$",
+      "reason": "Read gap, not drift: the tree read returns no link setting for the skip link's same-page anchor, but the published HTML has `<a href=\"#main\" class=\"fk-skip-link\">` (checked on staging 2026-10-13)."
+    }
+  ],
+  "unaligned": [
+    {
+      "where": "page:style-guide",
+      "reason": "The Webflow Style guide is a partial build (Buttons, Filter dropdown, Input field and Templates, Post card, Newsletter) while the repo page has more sections (Typography, Modal, panel colors, grids, Rich Text and others), so the element pairing on this page is not trustworthy and its pre-existing differences (12 on 2026-10-13: Filter Dropdown attributes paired with Form messages, utility wrappers paired by position) are artifacts. Page-section differences stay visible as REPO AHEAD rows."
+    }
   ]
 }

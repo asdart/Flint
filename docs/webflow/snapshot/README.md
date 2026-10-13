@@ -1,6 +1,6 @@
 # Webflow snapshot: format
 
-**Status:** format from reconcile phase 1 (2026-10-10), map and diff added in phase 3 stage 1 (2026-10-13), reconcile report added in stage 2 (2026-10-13), updated with the user's decisions of
+**Status:** the gate's partial dump was added in phase 5 (2026-10-13). Format from reconcile phase 1 (2026-10-10), map and diff added in phase 3 stage 1 (2026-10-13), reconcile report added in stage 2 (2026-10-13), updated with the user's decisions of
 2026-10-11 and with what `scripts/webflow-snapshot.mjs` actually writes (reconcile phase 2 step b,
 2026-10-11, baseline dump `20261011T194658Z`, repo commit `68829d4`). See
 [`../plans/reconcile.md`](../plans/reconcile.md) for the plan and the measurements behind every
@@ -203,6 +203,20 @@ the dump did not contain. `pageScriptsLastUpdated` has an entry only for pages w
 
 The signals are the values of the quick check. Everything else is compared by file hash.
 
+Two optional fields exist only after a **partial refresh** (see "Refreshing the base" below; a full rebuild writes a manifest without them):
+
+```json
+{
+  "refreshedRows": [{ "report": "2026-10-13", "rows": "2-5,7", "keys": ["element|page:home|…|text", "style|.fk-x|font-size|main|noPseudo"],
+                      "newDump": ".cache/webflow-dump/20261013T060458Z", "at": "2026-10-13T08:00:00.000Z" }],
+  "repoBase": { "css": [[".fk-input-field-label", "main", "noPseudo", "font-size", "15px"]], "tokens": { "color-brand": "#123456", "space-9": "36px" } }
+}
+```
+
+`refreshedRows` lists which report rows were absorbed (row numbers for people, row `key`s for the tools, the dump they came from; the
+`at` time is the one clock value in the file). `repoBase` says what the repo held for the absorbed styles and tokens (`null`: no such
+property or token); the reconcile lays it over the repo-at-`repoCommit` values.
+
 `repoCommit` replaces git history for the "base vs repo" column of the three-way compare. Repo
 changes since base = changes since that commit (`git diff <repoCommit>`), plus uncommitted
 working-tree changes. It is written when the snapshot is taken or refreshed after a sync, so the
@@ -304,6 +318,23 @@ File shape (one entry per line inside `elements`):
   `compFile:line`), `manual`.
 - `textBound`: the Webflow element has no text because it is bound to a component prop or a CMS field; the repo
   text and where it is written.
+- `ra` (reconcile stage 3 part A, 2026-10-13): on an `el` entry, the attributes and settings where the repo
+  render differs from Webflow's element, as `{ "<field>": <repo comparable value | null> }` (`null`: the repo has
+  none), with the fields named like the diff (`attr.autocomplete`, `attr.role`, `settings.link`, `settings.altText`,
+  `settings.assetId`, `settings.input`). Comparable values (`scripts/reconcile/fields.mjs`): an attribute as its
+  string (`data-*` `""` equals `"true"`, React Router's `data-discover` and Webflow's `data-wait` ignored,
+  camel-case names like `autoComplete` lower-cased); a link as `page:<published path>` for a page (resolved
+  through the page ids of the snapshot) or its href; alt text with "none" equal to `""`; an image as its Webflow
+  asset id (the repo `src` looked up in `webflow-ids.json` `assets`, else file name equal to the asset's name,
+  else `file:<name>`); a form field as `name=…;type=…;required=…`. Not compared: `id` / `for` in a component with an ID
+  prop (bound, not static), `href` / link / alt / asset below a Collection List, on a CMS template page, or in a
+  component with a link / image prop (bound to the CMS or a prop), anything on Pagination elements, `role` on
+  Collection List elements. Like `rc` and `repoValue` it is written only when it differs, so a map without
+  it reads as "equal"; regenerate the stored map after upgrading.
+- `repoOnly` (in memory for the working-tree maps; the file keeps the first 40): repo nodes with no Webflow
+  counterpart now also carry `cls` (sorted classes) and `path`, and the unmatched top-level nodes are included.
+  The reconcile uses the list of the alignment with the new tree to tell that a removed Webflow element is
+  already gone from the repo.
 - Not in `elements` (listed under `unmapped` as a group per top-most unmapped element, `nodes` counts its
   descendants): Collection List empty states, pagination, utility wrappers, a form field that is an instance on
   Webflow but plain markup in the repo (style guide templates), anything Webflow-only.
@@ -344,7 +375,7 @@ One reconcile run reads only the files that changed, never all of it.
   of wrappers, or a one-element array around either (and `interactions.json` with `result: [{items}]`),
   and skips blocks that are not a result (a leading `{session_id}`). Labels are ignored. The CMS
   details file may be named `cms-collection-details.json` (a map of label to wrapper) or `cms-details.json`.
-- Raw dumps are kept for the last 3 runs and are never committed. They are the proof behind a
+- Raw dumps are kept for the last 3 runs (never the one `manifest.json → dump` names: the gate reuses its files) and are never committed. They are the proof behind a
   changes report, so the report names the dump folder it used.
 - A raw dump is about 1.8 MB (styles 0.69, pages 0.55, page code 0.12, components 0.18, assets 0.17,
   interactions 0.05, the rest 0.05).
@@ -360,6 +391,8 @@ One reconcile run reads only the files that changed, never all of it.
 ```text
 node scripts/webflow-snapshot.mjs <dump-dir> [--out <dir>] [--commit <hash>] [--rebuild] [--yes] [--check]
 ```
+
+`--refresh <report.json> --rows …` is a different mode (no dump run): it absorbs approved reconcile rows into the existing base; see "Apply and refresh".
 
 - Default output: `docs/webflow/snapshot/data/`. It refuses to write into an existing, non-empty
   folder without `--rebuild`, and writes nothing from an incomplete or inconsistent dump.
@@ -418,7 +451,7 @@ Elements are matched by id only, so a deleted and re-created element is one `rem
 ### Reconcile report (reconcile phase 3, stage 2)
 
 ```text
-node scripts/webflow-reconcile.mjs <new-dump-dir> [--base <dir>] [--base-map <dir>] [--out <report.md>] [--json] [--date YYYY-MM-DD] [--quiet]
+node scripts/webflow-reconcile.mjs <new-dump-dir> [--base <dir>] [--base-map <dir>] [--out <report.md>] [--json] [--date YYYY-MM-DD] [--summary <file.md>] [--quiet]
 ```
 
 Offline, writes only `--out` (default `docs/webflow/reconcile/<date>.md`, committed) and, with `--json`, the same rows
@@ -451,35 +484,144 @@ Regenerate the stored map after upgrading, or the base values fall back to Webfl
 
 **Classification** (the plan's three-way table): Webflow changed and repo same = `PULL`; both changed and ended at the
 same value = `CONVERGED`; both changed otherwise = `CONFLICT`; repo changed, Webflow same = `REPO AHEAD` (listed, no
-action; only styles, tokens and mapped element text, classes and instance props are enumerated). Lines of
-`accepted.json` `style` are subtracted by exact text when the repo and the new Webflow value differ by exactly that
-line (the count goes in the footer); Webflow grid defaults are ignored. Added or removed element subtrees are one row
-(the topmost element, with the count). `signal` and `manifest` changes, interactions whose only change is the version
-counter, and the CMS field schemas a first dump lacked are footer lines, not rows.
+action). Lines of `accepted.json` `style` are subtracted by exact text when the repo and the new Webflow value differ by
+exactly that line (the count goes in the footer); Webflow grid defaults are ignored. `signal` and `manifest` changes,
+interactions whose only change is the version counter, and the CMS field schemas a first dump lacked are footer lines,
+not rows.
+
+**Element rows** (stage 3 part A). What the repo has now is read off the alignment of the working tree with the NEW
+Webflow tree (the one with the base tree is lost by a restructure and only used as a fallback):
+
+- *Text, classes, instance props, attributes and settings* (`attr.*`, `settings.*`): compared by value, repo
+  base (the stored map, else Webflow's base value) against repo now against the new Webflow value. `attr.href` is
+  folded into the `settings.link` row of the same element. A component's ID prop binds `id` / `for`: the removal of
+  that static attribute is a footer line ("bound"), not a change.
+- *Added / removed*: an added element is CONVERGED when the new-tree alignment finds a matching repo element; a
+  removed one when no repo node of the new-tree alignment is left that looks like it (same classes, under the same
+  parent), PULL when one is.
+- *Moved*: the parent id and the order among the shared siblings, three-way: Webflow base to new (the diff), the repo
+  base to now (order paths of the maps), and the repo against the new tree. A Webflow-only move is PULL with the
+  element's `file:line` and its new neighbour (`target`: the nearest earlier sibling with a repo location, else the new
+  parent as "first child of"); the repo already in the new place is CONVERGED; the repo moved it elsewhere is
+  CONFLICT. A move that only follows an add (into a new wrapper) or a remove (out of a deleted one) is not a row: it is
+  noted on that add / remove.
+- *Restructure*: two or more adds / removes / moves under one parent are one row, `sub: restructure`, `id` the parent,
+  with `members` (each: `change`, `element`, `direction`, `file`, `line`, `target`, `notes`). The row is PULL when any
+  member is, CONFLICT when any is and none is PULL, else CONVERGED; the notes say how many already match.
+- Webflow-only changes to other fields (`type`, `slots`, `component`) are PULL with a note.
+
+**REPO AHEAD** lists: styles and tokens (as before); element text, classes, instance props and attributes whose
+repo value changed (aligned with the new tree; a text pair that shares no word with the Webflow text is a
+misalignment and is dropped to the footer); **components** (props and variant values added or removed in
+`src/components` and `src/sections` files of a Webflow component, parsed from the `...Props` type, only props that
+Webflow also lacks (added) or still has (removed); new and removed component files); **pages** (sections added,
+removed or reordered in the page files, from the imported `sections` / `components` used in the JSX);
+**interactions** (rows of `interactions.md` added, removed or changed; `src/ix` files other than the shipped
+`x*.ts`); **custom code** (changed files in `docs/webflow/custom-code`, `scripts/build-x-*.mjs`, `src/ix/x*.ts`,
+`src/styles/exceptions`). A repo change that Webflow also made is not listed.
+
+**Pre-existing differences** (footer section and `footer.preexisting` in the JSON): repo-vs-Webflow differences in
+attributes, settings and classes that exist in the base and still exist against the new tree, where Webflow did not
+change the field (so no row), and not in `accepted.json`. They come from `ra` / `rc` of the maps, are listed once per
+element and field (grouped by page or component and field in the markdown), and carry `acceptLine` for
+`accepted.json`'s `element` list. Example: the `autocomplete="email"` the repo sets on the Input Field input and the
+Webflow template does not have.
 
 **Rows.** `#` is stable for the same inputs: PULL and CONFLICT first, then CONVERGED, then REPO AHEAD; within them by
 area (Elements, Styles, Variables, Components, Pages, Custom code, Interactions, Assets, Site and CMS), `where`, and
 document order. The markdown has a header table (base dump, new dump, repo HEAD, src state, map used, counts), one
-table per area for PULL and CONFLICT rows, then converged and repo-ahead tables and a footer. Columns: `#`, Area
-(the field), Where (page, component, class or variable), Element, Base → Webflow (a conflict adds `repo:` with the
-repo value), Direction, Proposed repo edit (`file:line`, what to do, notes), Mode. JSON row fields: `n`, `key`,
-`area`, `sub`, `where`, `element`, `base`, `webflow`, `repo`, `repoBase`, `direction`, `mode`, `edit`, `notes`, `ref`
-(the diff change it came from). `edit.op` is one of `replace-text` (`file`, `line`, `old`, `new`, `locate`, `occ`, `of`,
-`alts`), `change-classes` (`remove`, `add`), `set-prop` (`comp`, `prop`, `repoProp`, `locate`), `set-declaration` /
-`add-declaration` / `remove-declaration` / `add-rule` / `remove-rule` (CSS: `file`, `line`, `decl`, `old`, `new`,
-a literal that equals one token gets a "snap to token" note), `set-token` / `add-token` / `remove-token` /
-`rename-token` (`tokens.css` line and the `tokens.md` line), `add-element` / `remove-element` / `move-element`,
-component and page ops (registry line in `components.md`), `set-custom-code` (`file`, `builder`, `source`:
+table per area for PULL and CONFLICT rows, then converged and repo-ahead tables, a footer (signals and noise) and the
+Pre-existing differences table. Columns: `#`, Area (the field), Where (page, component, class or variable), Element,
+Base → Webflow (a conflict adds `repo:` with the repo value), Direction, Proposed repo edit (`file:line`, what to do,
+notes; a move adds "after `file:line`"; a restructure lists its members), Mode. JSON row fields: `n`, `key`,
+`area`, `sub`, `where`, `element`, `base`, `webflow`, `repo`, `repoBase`, `direction`, `mode`, `edit`, `notes`, `members`
+(restructure), `ref` (the diff change it came from). `edit.op` is one of `replace-text` (`file`, `line`, `old`, `new`,
+`locate`, `occ`, `of`, `alts`), `change-classes` (`remove`, `add`), `set-prop` (`comp`, `prop`, `repoProp`, `locate`),
+`set-attr.<name>` / `set-settings.<name>` (`old`, `new`), `set-declaration` / `add-declaration` /
+`remove-declaration` / `add-rule` / `remove-rule` (CSS: `file`, `line`, `decl`, `old`, `new`, a literal that equals one
+token gets a "snap to token" note), `set-token` / `add-token` / `remove-token` / `rename-token` (`tokens.css` line and
+the `tokens.md` line), `add-element` / `remove-element` / `move-element` (`target`) / `restructure` (`parent`,
+`members`), component and page ops (registry line in `components.md`), `set-custom-code` (`file`, `builder`, `source`:
 change the source and regenerate), and interaction, asset, site and cms ops. `mode` is `auto` when the edit is
 mechanical (the old value is at that line, one place, no shorthand, not a generated file) and `assisted` otherwise
-(`—` for converged and repo-ahead rows).
+(`—` for converged and repo-ahead rows). A new class (`add-rule`, the whole style or one missing state, into the family's CSS file) and a new Color or Size token (`add-token`) are `auto` too (2026-10-13, phase 4) because the apply script can write them; each leaves a follow-up (registry row). `meta.new.input` is the path of the new dump as it was given to the CLI (repo-relative when inside the repo): the apply and refresh tools read it back.
 
-**Known limits** (kept in the plan): element fields other than text, classes and instance props are not compared on the
-repo side after a `src/` change (the row is PULL with a note); moves are never compared; an `added` element is compared
-only through the alignment with the new tree; component meta (description, defaults, variants) and page settings use
-presence or file-change heuristics and err towards CONFLICT; REPO AHEAD does not list repo-only changes to components,
-pages, interactions or custom code; an alignment lost after a restructure shows as a PULL / CONFLICT that is really
-converged (the historical test has two); an element missing from the map is a PULL with "edit by hand".
+**Known limits** (kept in the plan): an alignment is only as good as the two trees are alike: a page rewritten in the
+repo (the Style guide after D-67) pairs elements wrongly, which shows as footer "misaligned" lines and a few
+spurious pre-existing differences; an instance that the repo renders as plain markup has no prop entry (PULL, edit by
+hand); component meta (description, variants) and page settings still use presence or file-change heuristics and err
+towards CONFLICT, except a prop default (read from the repo prop's default parameter) and a description equal to the
+sync pattern; the `removed` test cannot tell an element removed from the repo from one the alignment paired with
+another Webflow element; an element missing from the map is a PULL with "edit by hand".
+
+### Apply and refresh (reconcile phase 4)
+
+```text
+node scripts/webflow-reconcile-apply.mjs <report.json> --rows <1-5,8|auto|all> [--dry-run] [--refresh] [--build]
+          [--base <snapshot dir>] [--new <dump or snapshot>] [--tasks-json <file>] [--force] [--no-verify]
+node scripts/webflow-reconcile-apply.mjs <report.json> --record-commit [<hash>]
+node scripts/webflow-snapshot.mjs --refresh <report.json> --rows <1-5,8|auto|all> [--new <dump>] [--base <dir>] [--force] [--no-verify]
+```
+
+`<report.json>` is the file `webflow-reconcile.mjs --json` wrote next to the report (gitignored, with the other row JSON). `--rows`
+takes the numbers of the report ("1-5,8"), `auto` (every PULL row marked `auto`) or `all` (every row except repo-ahead ones). Offline;
+no Webflow call; no git commit. The scripts read and write the repo at `FLINT_ROOT` (default: this checkout).
+
+**What is edited and what is not.** A row is edited only when it is a **PULL**, the report marks it **`auto`**, and its guard holds
+(the old value is still where the report says, exactly once, or exactly once in that file). Everything else is **not edited**: it is
+printed as a task (`#n [direction] area · where · element`, why it was not automatic, old → new, what to do with `file:line`, the contract
+reminders) and the script exits with code 3. `--tasks-json` writes the same list as JSON.
+
+| Row | Applied by the script | Left to the agent (task) |
+| --- | --- | --- |
+| Text (`replace-text`) | the string at `file:line` (JSX text, an attribute, a JS string or a JSON value), escaped for its context (`"` in an attribute, `\'` in a JS string, no `{ } < >` in JSX text) | several places hold the string, text built from parts, text that spans lines, a new text JSX can't hold as is |
+| Classes (`change-classes`) | one class swapped for one other on the recorded line | more than one class, a class list built in a helper |
+| Instance prop (`set-prop`), attribute, alt (`set-attr.*`, `set-settings.altText`) | a string at the call site or in a data array (`label="…"`, `alt="…"`) | a prop passed as `label={buttonLabel}`, numbers, booleans, a prop the repo doesn't pass |
+| CSS declaration | `set-declaration`, `remove-declaration` (one-line declarations), `add-declaration` (to a rule with one selector) in `src/styles/**` | a shorthand (`padding`), a multi-line value (`transition`), a rule shared by several selectors, `utilities.css` (generated: change the token or `gen-utilities.mjs`), a value that equals a token (rule 2: ask, then `var(--x)`) |
+| New class (`add-rule`) | the rule (all states and breakpoints) appended to the class family's CSS file; Webflow's grid defaults left out | a family with no CSS file, a tag style, a removed class (`remove-rule`) |
+| Token (`set-token`, `add-token`) | `tokens.css` (a new token goes after the nearest of its scale), the `tokens.md` value cell, a new variable's id in `webflow-ids.json`; `gen-utilities.mjs` runs for a new `space-*` token | the `tokens.md` row of a new token, a renamed or removed token, a Font or other type |
+| Structure (`add/remove/move-element`, `restructure`), components (props, variants, rename, new), pages, interactions, assets, site and CMS rows, custom code (`set-custom-code`) | nothing | all of it: the task names the files, the registry rows and, for custom code, the source and the build script (never the generated output) |
+| CONFLICT, REPO AHEAD, CONVERGED | nothing (a conflict needs the user's choice; repo ahead and converged have nothing to apply) | a conflict is a task with both values |
+
+Some rows apply and still leave a **follow-up** (the class registry row in `classes.md` for a new class, the `tokens.md` row of a new
+token, an empty rule left behind): the script prints them under the task list and exits with 3. `--dry-run` prints `diff -u` of
+everything it would write and writes nothing. `--build` runs `npm run build` and `npm run lint` afterwards (exit 4 when one fails); by
+default it does not, because the agent still edits the task-list rows and runs them once at the end. A report whose base moved (the
+base was rebuilt) is refused (exit 2), `--force` overrides. Rows the manifest already lists in `refreshedRows` for the same dump are
+reported as "already applied". The "Applied" record: `<report>.applied.json` (rows, how, files) and a `## Applied` section in the
+markdown report (rows, how, files, base refreshed, commit), written on every non-dry run; `--record-commit` adds the commit hash after
+the user commits.
+
+#### Refreshing the base
+
+`webflow-snapshot.mjs --refresh` (or `--refresh` on the apply script, for the rows it applied plus the approved rows that were already
+converged) makes the base items behind the given rows equal to the new dump, and nothing else:
+
+1. **Verify.** Unless `--no-verify`, it runs the reconcile against the same new dump first: every approved row must now be CONVERGED or
+   gone. A row that is still PULL or CONFLICT is refused (listed, exit 3 when nothing was refreshed): the repo does not have Webflow's
+   value yet. `--force` refreshes it anyway (the repo then shows as ahead of the base). Repo-ahead rows are skipped.
+2. **Units.** The row `ref`s (a restructure row: its members; a page row: its whole group; an interaction row: all its changes) select
+   the changes of the id diff. Each is copied from the new snapshot into the base file by identity: an element's field, an added or
+   removed subtree (with the moves that only follow them), a style property, a variable, a component or page header path, a whole
+   interaction file, an asset field, a path of `site.json` / `cms.json`. Files are written in the normaliser's exact format (a file that
+   would not round-trip stops the refresh: rebuild the base).
+3. **Map.** The `map/` entries of refreshed elements take the new value (text without `repoText`, no `rc`, `ra`, prop `repoValue`;
+   removed elements are dropped; a re-created text run moves to its new id). Added and moved elements get no entry (no location is known
+   until the next rebuild).
+4. **Manifest.** `files` hashes, `refreshedRows`, `repoBase` (styles and tokens), and the signals: a page's (or interaction's) signal takes
+   the new dump's value when its file is now equal to the new one; when every base file equals the new snapshot, all signals, `dump`,
+   `takenAt`, `counts`, `gaps` and `rawDump` do too.
+
+**How base-vs-repo stays valid after a partial refresh.** `repoCommit` does **not** move. The applied edits may be uncommitted, and the
+working tree has other changes since that commit (repo ahead) that must stay visible. So the repo side of a refreshed item is not "the
+repo at `repoCommit`" any more but the value that was applied: for styles and tokens it is `manifest.repoBase`, which
+`webflow-reconcile.mjs` lays over the values it reads from `repoCommit`; for element text, classes, props and attributes it is the
+updated `map/` entry; for everything else the new base equals Webflow, so there is nothing to report. A later Webflow edit of an
+absorbed item is therefore a plain PULL (not a CONFLICT), and a repo edit of it is REPO AHEAD. Committing the applied edits changes
+nothing (`repoCommit` still points at the old commit; the diff against it includes them). A full rebuild after the commit
+(`webflow-snapshot.mjs <dump> --rebuild`) sets `repoCommit` to HEAD and drops `refreshedRows` and `repoBase`. Known limits: the map has no
+entry for elements added or moved by a refresh; a restructure the agent did leaves REPO AHEAD rows for component files and page sections
+until the next rebuild.
 
 ## Rebuilding the base
 
@@ -500,11 +642,25 @@ between syncs.
 ## Accepted differences
 
 `accepted.json` (committed) lists the repo-vs-Webflow differences that already existed at the
-baseline: 10 style lines from `scripts/webflow-diff.mjs` and the tree-diff noise on About. Each
+baseline: 10 style lines from `scripts/webflow-diff.mjs`, the tree-diff noise on About, and (`element`, `unaligned`) 8 by-design element patterns and the Style guide page. Each
 entry has the exact diff `line` (it contains both the repo and the Webflow value), the parsed
 selector, breakpoint, pseudo, property and values, and a reason. Reconcile subtracts these lines
 from a repo-vs-Webflow compare by exact text, so a value that moves on either side is reported
-again. Remove an entry when the difference is fixed.
+again. Remove an entry when the difference is fixed. An optional `element` list holds the same for the
+**Pre-existing differences** section of the report: `{ "line": "<the acceptLine of the footer entry>", "reason": … }`
+(`<where> <element> <field>: <repo> → <Webflow>`, as the JSON footer's `acceptLine` has it). An `element` entry may
+carry a `pattern` (a JavaScript regular expression tested against that line) instead of `line`, to silence a whole
+family (the five `is-default` combos of `UI / Stat`); anchor it with `^`/`$` and the `<where>` and field. An optional
+`unaligned` list, `{ "where": "page:style-guide", "reason": … }`, marks a page or component whose element pairing is not
+trustworthy (the repo page and the Webflow page differ too much): its pre-existing differences are counted in the
+footer ("not listed because the page is marked `unaligned`") but not listed; rows (changes since the base) are
+unaffected. Accept only differences that are **by design** (a component variant that replaces a combo, an attribute
+webflow.js writes at runtime, a bound prop, a tree-read gap confirmed on staging); real drift stays listed until one
+side is fixed. The 2026-10-13 triage is in `plans/reconcile.md` → "Phase 3 done".
+
+**Report summary.** `--summary <file.md>` inserts a hand-written markdown file under the report title as `## Summary`
+(what changed, what needs a decision, the drift list). Keep it next to the report
+(`docs/webflow/reconcile/<date>.summary.md`) so a re-run regenerates the same report.
 
 ## Gaps in the baseline dump
 
@@ -536,6 +692,56 @@ page's `lastUpdated` (and the schema's, which carries the same value, and `siteL
 `siteLastPublished` stayed put), so the page signal catches text. The style, variable and
 component edits of the same session moved no timestamp of their own, and `siteLastUpdated` equals
 the latest page save, so it cannot stand in for them. The three always-re-read reads stay.
+
+## The gate: a partial dump (reconcile phase 5)
+
+A gate (the reconcile before a sync stage or a publish) does not need the full dump of about 58 reads. The dump agent
+saves the five quick-check reads, `scripts/webflow-gate.mjs` says which others the signals ask for, and `--compose` builds a
+**complete raw dump** from those reads plus the unchanged files of the base's raw dump. `webflow-reconcile.mjs` then runs on it
+unchanged. Offline, no Webflow call.
+
+```text
+node scripts/webflow-gate.mjs --plan <partial-dir> [--base <data dir>] [--from <base raw dump>] [--json]
+node scripts/webflow-gate.mjs --compose <partial-dir> [--out <dump dir>] [--base <data dir>] [--from <base raw dump>] [--force]
+```
+
+1. **Signals.** Save to `<partial-dir>` (a new folder in `.cache/webflow-dump/`, e.g. `<UTC>-gate/`; the file names are the dump's own):
+   `site-before.json` (`get_site`), `pages-before.json` (`list_pages`), `interactions.json` (`list_interactions`),
+   `cms-collections.json` (`get_collection_list`), `registered-scripts.json` (`get_registered_scripts`). `--plan` on a folder
+   without them prints exactly these five reads (exit 2).
+2. **Plan.** With the signals in place `--plan` compares them with `manifest.json → signals` and prints the other reads:
+
+   | Signal | Re-read |
+   | --- | --- |
+   | Always (these have no timestamp) | `styles.json`, `components.json`, `component-trees.json`, `variables.json` |
+   | A page `lastUpdated` moved, or a page is new | that page's `tree-<file>.json` and its two code results in `page-code.json` (labels `p-<x>` and `f-<x>`); plus `schema.json` and `sitemap.json` when any page moved or the page set changed |
+   | An interaction `version` moved or a new interaction | that interaction's entry in `interactions-full.json` (a result labelled with the id) |
+   | A collection `lastUpdated` moved | that collection's entry in `cms-details.json` |
+   | A registered script id or version moved | `site-code.json` and every page's code in `page-code.json` |
+   | `siteLastUpdated` or `siteLastPublished` moved (any page save or publish does it) | `site-code.json`, `fonts.json`, `assets-1.json` (`assets-2.json` as `pagination.total` needs) |
+   | Always, last | `site-after.json`, `pages-after.json` (nothing was edited during the dump) |
+
+   Cost: **11 calls** when nothing moved (5 signals, 4 always, 2 end), about 1 MB of which 0.9 MB (styles, component trees)
+   is written to files by the client; **+2 per moved page** (tree, code in one call), +2 when any page moved (schema,
+   sitemap), +1 per changed interaction batch and collection batch, **+4 after a publish or any page save** (site code, fonts,
+   2 asset pages). A typical gate after one page edit is about 20 calls, against 58. Accepted gaps of the partial dump: an
+   asset or font edited with no site-level timestamp moving is not seen (a full dump catches it); a pure style, component or
+   variable edit is always seen (always-read).
+3. **Compose.** `--compose` verifies that everything the plan asked for is in the folder (exit 2, listing what is missing, and
+   nothing is written), that nothing moved between the `-before` and `-after` reads (exit 1), writes the full dump to
+   `--out` (default `.cache/webflow-dump/<UTC>`), runs `webflow-snapshot.mjs --check` on it and prints the reconcile command.
+   Unchanged files come from the base's raw dump, which the plan hashes against `manifest.json → rawDump`. The composed folder
+   is a full dump: it can be the `<new-dump>` of a reconcile, of `--refresh`, and of `--rebuild` (its `COMPOSED.txt` says
+   what came from where).
+4. **When a full dump is required** (exit 3, the reasons are printed): no base (`data/manifest.json` missing; the rebuild
+   warning applies), the raw dump folder the manifest names is gone or one of its files no longer matches `rawDump`, the base was
+   partially refreshed by an apply (its raw dump no longer equals the base: finish with the sync's full rebuild first), or
+   `get_site` returned another site. Keep the dump folder named in `manifest.dump` when you clear `.cache/` (the "last 3 runs"
+   rule must not delete it).
+
+Tested in `scripts/test-reconcile.mjs` (three `gate:` tests): no signal moved (the composed dump normalises byte for byte to
+the full dump), a moved page plus a changed interaction plus a publish (exact read list, missing reads named, merge,
+reconcile on the composed dump), and every full-dump case.
 
 ## Not in the snapshot
 

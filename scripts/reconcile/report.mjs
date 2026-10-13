@@ -8,6 +8,7 @@ const OPS = {
   "add-element": "insert the element",
   "remove-element": "remove the element",
   "move-element": "move the element",
+  restructure: "restructure",
   "set-declaration": "set the declaration",
   "remove-declaration": "remove the declaration",
   "add-declaration": "add a declaration to the rule",
@@ -47,6 +48,13 @@ export function editCell(r) {
   if (e.registry) parts.push(`\`${e.registry}\``);
   if (e.builder) parts.push(`then \`node ${e.builder}\``);
   if (e.op === "change-classes") parts.push(`${e.remove?.length ? `−${e.remove.join(" ")}` : ""}${e.add?.length ? ` +${e.add.join(" ")}` : ""}`.trim());
+  if (e.target) parts.push(`${e.target.position === "after" ? "after" : "as first child of"} ${e.target.file ? `\`${e.target.file}:${e.target.line}\` ` : ""}(${cell(clip(e.target.desc, 50))})`);
+  if (e.members) {
+    const mark = { PULL: "pull", CONFLICT: "conflict", CONVERGED: "done" };
+    const list = e.members.slice(0, 10).map((m) => `${mark[m.direction]}: ${m.change} ${cell(clip(m.element, 45))}${m.file ? ` \`${m.file}:${m.line}\`` : ""}${m.target ? ` → after \`${m.target.file}:${m.target.line}\`` : ""}`);
+    if (e.members.length > 10) list.push(`… ${e.members.length - 10} more`);
+    return `${parts.join("; ")}${note}<br>${list.join("<br>")}`;
+  }
   return `${parts.join("; ")}${note}`;
 }
 
@@ -98,7 +106,27 @@ export function renderMarkdown(rep) {
   if (footer.versionOnly.length) L.push(`- Interactions whose only change is the version counter: ${footer.versionOnly.join(", ")}`);
   if (footer.goneFromRender) L.push(`- Mapped elements no longer found in the repo render: ${footer.goneFromRender} (removed, or the alignment lost them: not listed as rows)`);
   if (footer.unlocated.length) L.push(`- Custom code with no matching file in docs/webflow/custom-code: ${footer.unlocated.join(", ")}`);
+  if (footer.bound?.length) L.push(`- Attributes now bound to a component prop, not changes: ${footer.bound.length}${footer.bound.length <= 3 ? ` (${footer.bound.join("; ")})` : ""}`);
+  if (footer.unalignedPre) L.push(`- Pre-existing differences not listed because the page is marked \`unaligned\` in \`accepted.json\` (the repo page and the Webflow page differ too much to pair elements): ${footer.unalignedPre}`);
+  if (footer.misaligned?.length) L.push(`- Repo-ahead text rows dropped because the alignment paired unrelated strings (${footer.misaligned.length}): ${footer.misaligned.slice(0, 6).join("; ")}${footer.misaligned.length > 6 ? "; …" : ""}`);
   for (const s of footer.signals) L.push(`- ${s}`);
   L.push("");
+  const pre = footer.preexisting ?? [];
+  L.push(`## Pre-existing differences (${pre.length})`, "");
+  L.push("The repo and Webflow differ here in the base and still do; Webflow did not change it, so it is not a row. Review them, fix one side, or list the line (or a `pattern`) in `accepted.json` (`element`).", "");
+  if (pre.length) {
+    const groups = new Map();
+    for (const p of pre) {
+      const k = `${p.where}\u0000${p.field}`;
+      groups.set(k, [...(groups.get(k) ?? []), p]);
+    }
+    L.push("| Where | Field | Repo | Webflow | Elements | Example |", "| --- | --- | --- | --- | --- | --- |");
+    for (const list of groups.values()) {
+      const p = list[0];
+      const same = (f) => list.every((x) => x[f] === p[f]);
+      L.push(`| ${cell(p.where)} | ${cell(p.field)} | ${val(p.repo, 50)}${same("repo") ? "" : " …"} | ${val(p.webflow, 50)}${same("webflow") ? "" : " …"} | ${list.length}${list.length > 1 ? "" : ` (${cell(clip(p.element, 40))})`} | ${p.file ? `\`${p.file}:${p.line}\`` : ""} |`);
+    }
+    L.push("");
+  }
   return `${L.join("\n")}\n`;
 }

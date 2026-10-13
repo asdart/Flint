@@ -35,6 +35,17 @@ export function changedSince(commit, specs) {
   return [...out].sort();
 }
 
+/** Like changedSince, with the git status letter: [{ status: "A" | "M" | "D", file }] (untracked files are "A"). */
+export function changedStatus(commit, specs) {
+  const out = new Map();
+  for (const l of (git(["diff", "--name-status", commit, "--", ...specs]) ?? "").split("\n")) {
+    const [st, ...f] = l.split("\t");
+    if (st && f.length) out.set(f.at(-1), st[0] === "R" ? "M" : st[0]);
+  }
+  for (const f of (git(["ls-files", "--others", "--exclude-standard", "--", ...specs]) ?? "").split("\n")) if (f) out.set(f, "A");
+  return [...out].map(([file, status]) => ({ status, file })).sort((a, b) => (a.file < b.file ? -1 : 1));
+}
+
 /** Extracts `specs` of `commit` into a fresh scratch folder (git archive | tar). Returns the folder. */
 export function exportCommit(commit, specs) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "flint-reconcile-repo-"));
@@ -116,6 +127,29 @@ export function repoValue(flat, sel, bp, pseudo, prop) {
     return x !== undefined && x === flat.get(flatKey(sel, bp, pseudo, "overflow-y")) ? x : flat.get(flatKey(sel, bp, pseudo, "overflow"));
   }
   return flat.get(flatKey(sel, bp, pseudo, prop));
+}
+
+/**
+ * A partial refresh of the base (scripts/reconcile/refresh.mjs) records, in manifest.repoBase, what the repo
+ * held for the items it absorbed: { css: [[selector, bp, pseudo, property, value|null]], tokens: { name: value|null } }.
+ * Returns the repo-at-commit CSS map and tokens map with those items replaced, or null when there is nothing.
+ */
+export function applyRepoBase(repoBase, r0, tokensR0) {
+  const rules = repoBase?.css ?? [];
+  const toks = Object.entries(repoBase?.tokens ?? {});
+  if (!rules.length && !toks.length) return null;
+  const css = new Map(r0);
+  for (const [sel, bp, pseudo, prop, value] of rules) {
+    const k = flatKey(sel, bp, pseudo, prop);
+    if (value === null) css.delete(k);
+    else css.set(k, value);
+  }
+  const tokens = new Map(tokensR0);
+  for (const [name, value] of toks) {
+    if (value === null) tokens.delete(name);
+    else tokens.set(name, { value, line: null });
+  }
+  return { css, tokens };
 }
 
 // ---- tokens -----------------------------------------------------------------------------------

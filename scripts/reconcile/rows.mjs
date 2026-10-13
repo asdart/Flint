@@ -3,10 +3,15 @@
 // with the proposed repo edit (file:line, old -> new, auto or assisted). See docs/webflow/plans/reconcile.md
 // ("The changes report") and docs/webflow/snapshot/README.md ("Reconcile report").
 import path from "node:path";
-import { classes } from "./align.mjs";
+import { classes, normName, wfTag } from "./align.mjs";
 import { norm } from "./html.mjs";
+import { lis } from "./diff.mjs";
+import { wfCmp, wfShow } from "./fields.mjs";
 import { allSourceFiles, componentFile, findPattern, findString } from "./locate.mjs";
-import { canonToken, flatKey, familyFile, locateCss, normalizeValue, parseTokens, repoValue, sha256, showFile as showFileRaw, readNow as readNowRaw, tokenName, WEBFLOW_DEFAULTS } from "./repo-state.mjs";
+import { repoPages } from "./build-map.mjs";
+import { componentSurface, pageSequence, registryRows, sequenceDiff } from "./repo-ahead.mjs";
+import { layoutOf } from "./structure.mjs";
+import { canonToken, changedStatus, flatKey, familyFile, locateCss, normalizeValue, parseCssRules, parseTokens, repoValue, sha256, showFile as showFileRaw, readNow as readNowRaw, tokenName, WEBFLOW_DEFAULTS } from "./repo-state.mjs";
 
 const esc = (s) => String(s).replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -30,6 +35,17 @@ function describe(ctx) {
   return `${head}${ctx.c?.length ? ` .${ctx.c.join(".")}` : ""}`;
 }
 
+const clip = (t, n = 50) => (String(t).length > n ? `${String(t).slice(0, n)}…` : String(t));
+const words = (t) => new Set(String(t).toLowerCase().match(/[a-z0-9]+/g) ?? []);
+/** Do two strings share enough words to be the same text edited (not two unrelated texts)? */
+const related = (a, b) => {
+  const x = words(a);
+  const y = words(b);
+  if (!x.size || !y.size) return true;
+  const common = [...x].filter((w) => y.has(w)).length;
+  return common / (x.size + y.size - common) >= 0.25;
+};
+
 const AREA_ORDER = ["Elements", "Styles", "Variables", "Components", "Pages", "Custom code", "Interactions", "Assets", "Site and CMS"];
 
 const memo = (fn) => {
@@ -47,7 +63,7 @@ export class Rows {
   constructor(ctx) {
     this.ctx = ctx;
     this.rows = [];
-    this.footer = { noise: [], accepted: 0, signals: [], goneFromRender: 0, versionOnly: [], unlocated: [] };
+    this.footer = { noise: [], accepted: 0, signals: [], goneFromRender: 0, versionOnly: [], unlocated: [], bound: [], preexisting: [], misaligned: [] };
     this.order = 0;
   }
 
@@ -62,22 +78,49 @@ export class Rows {
     for (const [where, cs] of by) {
       const sets = { added: new Map(), removed: new Map() };
       for (const c of cs) if (c.field === "added" || c.field === "removed") sets[c.field].set(c.id, c);
-      const subtree = new Map();
-      const topOf = (c) => {
-        let cur = c;
-        while (sets[c.field].has(cur.parent)) cur = sets[c.field].get(cur.parent);
+      const topIn = (field, id) => {
+        let cur = sets[field].get(id);
+        if (!cur) return null;
+        while (sets[field].has(cur.parent)) cur = sets[field].get(cur.parent);
         return cur;
       };
-      for (const c of cs) if ((c.field === "added" || c.field === "removed") && sets[c.field].has(c.parent)) subtree.set(topOf(c).id, (subtree.get(topOf(c).id) ?? 1) + 1);
+      const subtree = new Map();
+      for (const c of cs) if ((c.field === "added" || c.field === "removed") && sets[c.field].has(c.parent)) subtree.set(topIn(c.field, c.id).id, (subtree.get(topIn(c.field, c.id).id) ?? 1) + 1);
+      // A move caused by an add / remove (into a new parent, out of a removed one) belongs to that row.
+      const absorbed = new Map();
+      const isAbsorbed = new Set();
       for (const c of cs) {
+        if (c.field !== "moved" || !c.parentChanged) continue;
+        const top = topIn("added", c.new.parent) ?? topIn("removed", c.base.parent);
+        if (!top) continue;
+        absorbed.set(top.id, [...(absorbed.get(top.id) ?? []), c]);
+        isAbsorbed.add(c);
+      }
+      const structural = [];
+      // Webflow writes a link's resolved href into the attributes too: one edit of the target is one row.
+      const linkEdited = new Set(cs.filter((c) => c.field === "settings.link").map((c) => c.id));
+      for (const c of cs) {
+        if (c.field === "attr.href" && linkEdited.has(c.id)) continue;
+        if (isAbsorbed.has(c)) continue;
         if ((c.field === "added" || c.field === "removed") && sets[c.field].has(c.parent)) continue;
         const key = `${c.area}|${where}|${c.id}|${c.field}`;
         const base = { key, area: "Elements", sub: c.field, where, element: describe(c.ctx), id: c.id, change: c };
         if (c.field === "text") this.add({ ...base, ...this.textRow(c) });
         else if (c.field === "classes") this.add({ ...base, ...this.classRow(c) });
         else if (c.field.startsWith("prop.")) this.add({ ...base, ...this.propRow(c) });
-        else if (c.field === "added" || c.field === "removed" || c.field === "moved") this.add({ ...base, ...this.structureRow(c, subtree.get(c.id) ?? 1) });
-        else this.add({ ...base, ...this.otherRow(c) });
+        else if (c.field === "added" || c.field === "removed") structural.push({ c, base, parent: c.parent, row: this.structureRow(c, subtree.get(c.id) ?? 1, absorbed.get(c.id) ?? []) });
+        else if (c.field === "moved") structural.push({ c, base, parent: c.new.parent, row: this.moveRow(c) });
+        else if (/^(attr|settings)\./.test(c.field)) {
+          const row = this.fieldRow(c);
+          if (row) this.add({ ...base, ...row });
+        } else this.add({ ...base, ...this.otherRow(c) });
+      }
+      // Several adds / removes / moves under one parent are one restructure of that parent.
+      const groups = new Map();
+      for (const it of structural) groups.set(it.parent, [...(groups.get(it.parent) ?? []), it]);
+      for (const [parent, items] of groups) {
+        if (items.length === 1) this.add({ ...items[0].base, ...items[0].row });
+        else this.add(this.restructureRow(where, parent, items, absorbed));
       }
     }
   }
@@ -95,15 +138,16 @@ export class Rows {
     const { baseMaps, nowMaps } = this.ctx;
     const be = entryAt(baseMaps, c.where, c.id);
     const ne = nowMaps ? entryAt(nowMaps, c.where, c.id) : be;
-    const loc = ne ?? be;
+    // The alignment with the NEW tree is the better witness of what the repo has now (a restructure loses the one with the base tree).
+    const nme = entryAt(this.ctx.newMaps, c.where, c.id);
+    const loc = nme ?? ne ?? be;
     const notes = [...this.componentNote(c)];
     if (c.idChanged) notes.push("Webflow re-created this text run (new element id)");
     if (!loc) return { webflow: c.new, base: c.base, direction: "PULL", mode: "assisted", edit: null, notes: [...notes, "no repo location in the map (element not mapped): find the text by hand"] };
     const repoBase = be ? be.repoText ?? be.text : c.base;
-    const repoNow = nowMaps ? (ne ? ne.repoText ?? ne.text : GONE) : repoBase;
+    const repoNow = nowMaps ? (nme ? nme.repoText ?? nme.text : ne ? ne.repoText ?? ne.text : GONE) : repoBase;
     const repoChanged = repoNow === GONE || norm(repoNow) !== norm(repoBase);
-    const nme = entryAt(this.ctx.newMaps, c.where, c.id);
-    const converged = (repoNow !== GONE && norm(repoNow) === norm(c.new)) || (!!nme && nme.k === "text" && nme.repoText === undefined);
+    const converged = repoNow !== GONE && norm(repoNow) === norm(c.new);
     const dir = direction(true, repoChanged, converged);
     const edit = { op: "replace-text", file: loc.file, line: loc.line, locate: loc.locate, old: c.base, new: c.new };
     if (loc.of) Object.assign(edit, { occ: loc.occ, of: loc.of, alts: loc.alts });
@@ -120,16 +164,16 @@ export class Rows {
     const { baseMaps, nowMaps } = this.ctx;
     const be = entryAt(baseMaps, c.where, c.id);
     const ne = nowMaps ? entryAt(nowMaps, c.where, c.id) : be;
-    const loc = ne ?? be;
+    const nme = entryAt(this.ctx.newMaps, c.where, c.id);
+    const loc = nme ?? ne ?? be;
     const notes = [...this.componentNote(c)];
     const wfBase = cls(c.base);
     const wfNew = cls(c.new);
     const repoBase = be ? (be.rc ?? wfBase) : wfBase;
-    const repoNow = nowMaps ? (ne ? ne.rc ?? wfBase : GONE) : repoBase;
+    // What the repo has now: read off the alignment with the NEW tree (the base-tree one is lost by a restructure).
+    const repoNow = nowMaps ? (nme ? nme.rc ?? wfNew : ne ? ne.rc ?? wfBase : GONE) : repoBase;
     const repoChanged = repoNow === GONE || repoNow.join(" ") !== repoBase.join(" ");
-    // Aligning the working tree with the NEW tree is a second witness that the repo already has Webflow's classes.
-    const nme = entryAt(this.ctx.newMaps, c.where, c.id);
-    const converged = (repoNow !== GONE && repoNow.join(" ") === wfNew.join(" ")) || (!!nme && nme.k === "el" && !nme.rc);
+    const converged = repoNow !== GONE && repoNow.join(" ") === wfNew.join(" ");
     const dir = loc ? direction(true, repoChanged, converged) : "PULL";
     const removed = wfBase.filter((x) => !wfNew.includes(x));
     const added = wfNew.filter((x) => !wfBase.includes(x));
@@ -151,16 +195,18 @@ export class Rows {
     const name = c.field.slice(5);
     const be = entryAt(baseMaps, c.where, c.id);
     const ne = nowMaps ? entryAt(nowMaps, c.where, c.id) : be;
-    const loc = ne ?? be;
+    const nme = entryAt(this.ctx.newMaps, c.where, c.id);
+    const loc = nme ?? ne ?? be;
     const notes = [...this.componentNote(c)];
     const val = (v) => (v && typeof v === "object" ? JSON.stringify(v) : v);
     const res = { base: val(c.base) ?? null, webflow: val(c.new) ?? null, direction: "PULL", notes, mode: "assisted", edit: null };
     const bp = be?.props?.[name];
     const np = ne?.props?.[name];
-    const p = np ?? bp;
-    if (!loc || !p) return { ...res, notes: [...notes, "no repo location for this instance prop in the map (new override, or prop not mapped)"] };
+    const mp = nme?.props?.[name];
+    const p = np ?? bp ?? mp; // where and how the repo writes it: the entry of the repo as it stands, else the new alignment's
+    if (!loc || !p) return { ...res, notes: [...notes, "no repo location for this instance prop in the map (a new override, a prop the repo does not pass, or an instance the repo renders as plain markup): edit by hand"] };
     const repoBase = bp ? bp.repoValue ?? bp.value : c.base;
-    const repoNow = nowMaps ? (np ? np.repoValue ?? np.value : GONE) : repoBase;
+    const repoNow = nowMaps ? (mp ? mp.repoValue ?? mp.value : np ? np.repoValue ?? np.value : GONE) : repoBase;
     const repoChanged = repoNow === GONE || !same(repoNow, repoBase);
     const converged = repoNow !== GONE && same(repoNow, c.new);
     const dir = direction(true, repoChanged, converged);
@@ -172,10 +218,31 @@ export class Rows {
     return { ...res, repo: dir === "CONFLICT" ? (repoNow === GONE ? "(instance not found in the repo render)" : val(repoNow)) : undefined, direction: dir, edit, mode: dir === "PULL" && ["attr", "literal", "data"].includes(p.locate) && plain && p.repoValue === undefined ? "auto" : "assisted" };
   }
 
-  structureRow(c, count) {
-    const { baseMaps, nowMaps, nw } = this.ctx;
+  // ---- Structure: added, removed, moved, restructured --------------------------------------------
+  tree(snap, where) {
+    return (where.startsWith("page:") ? snap.pages : snap.components)[where.slice(where.indexOf(":") + 1)];
+  }
+
+  nodeDesc(where, id) {
+    const n = this.tree(this.ctx.nw, where)?.byId.get(id) ?? this.tree(this.ctx.base, where)?.byId.get(id);
+    return n ? describe({ t: n.t, tag: n.s?.tag, c: n.c, x: n.x, comp: n.i?.name }) : String(id).slice(0, 8);
+  }
+
+  /** The nearest ancestor of `id` (itself included) in `tree` that has an entry in `elements`; null at the root. */
+  mappedUp(tree, id, elements) {
+    let cur = id;
+    while (cur) {
+      if (elements?.[cur] && elements[cur].k !== "body") return cur;
+      cur = tree?.byId.get(cur)?.p ?? null;
+    }
+    return null;
+  }
+
+  structureRow(c, count, absorbed = []) {
+    const { baseMaps, nw } = this.ctx;
     const notes = [...this.componentNote(c)];
     if (count > 1) notes.push(`${count} elements (the element and its descendants)`);
+    for (const m of absorbed) notes.push(c.field === "added" ? `also moves ${describe(m.ctx)} into it` : `also moves ${describe(m.ctx)} out of it`);
     if (c.field === "added") {
       // Aligning the working-tree render with the NEW tree shows whether the repo already has the element.
       const nme = entryAt(this.ctx.newMaps, c.where, c.id);
@@ -184,8 +251,7 @@ export class Rows {
         return { base: null, webflow: describe(c.ctx) + (count > 1 ? ` (+${count - 1} inside)` : ""), repo: same1 ? undefined : nme.rc ? nme.rc.join(" ") : "(differs)", direction: same1 ? "CONVERGED" : "CONFLICT", mode: "assisted", edit: { op: "add-element", file: nme.file, line: nme.line, parent: c.parent, index: c.index, element: c.new }, notes: [...notes, "the repo already has a matching element here"] };
       }
       // The nearest mapped ancestor tells where to insert it.
-      const i = c.where.indexOf(":");
-      const tree = (c.where.startsWith("page:") ? nw.pages : nw.components)[c.where.slice(i + 1)];
+      const tree = this.tree(nw, c.where);
       let cur = c.parent;
       let at = null;
       while (cur && !at) {
@@ -196,16 +262,180 @@ export class Rows {
       return { base: null, webflow: describe(c.ctx) + (count > 1 ? ` (+${count - 1} inside)` : ""), direction: "PULL", mode: "assisted", edit, notes: [...notes, at ? "insert inside the nearest mapped ancestor" : "no mapped ancestor: place by hand", "repo side not compared for new elements"] };
     }
     const be = entryAt(baseMaps, c.where, c.id);
-    const goneInRepo = nowMaps && be && !entryAt(nowMaps, c.where, c.id);
     const loc = entryAt(this.ctx.locMaps, c.where, c.id) ?? be;
-    const edit = { op: c.field === "removed" ? "remove-element" : "move-element", file: loc?.file ?? null, line: loc?.line ?? null, base: c.base, new: c.new, after: c.after };
+    const edit = { op: "remove-element", file: loc?.file ?? null, line: loc?.line ?? null, base: c.base, new: c.new };
     if (!loc) notes.push("element not mapped: locate by hand");
-    if (c.field === "removed") {
-      const dir = direction(true, !!goneInRepo, !!goneInRepo);
-      return { base: describe(c.ctx) + (count > 1 ? ` (+${count - 1} inside)` : ""), webflow: null, direction: dir, mode: "assisted", edit, notes };
+    const state = this.removedState(c, be);
+    if (state === "converged") notes.push("the repo no longer has this element");
+    return { base: describe(c.ctx) + (count > 1 ? ` (+${count - 1} inside)` : ""), webflow: null, direction: state === "converged" ? "CONVERGED" : "PULL", mode: "assisted", edit, notes };
+  }
+
+  /** Is the removed element already gone from the repo? Read off the repo nodes that no new-tree element claims. */
+  removedState(c, be) {
+    const { nowMaps, newMaps } = this.ctx;
+    if (!be) return "unknown";
+    if (!nowMaps || !newMaps) return "present";
+    if (be.k === "text") return entryAt(nowMaps, c.where, c.id) ? "present" : "converged";
+    const i = c.where.indexOf(":");
+    const orphans = newMaps[c.where.startsWith("page:") ? "pages" : "components"]?.[c.where.slice(i + 1)]?.repoOnly;
+    if (!orphans) return "present";
+    const want = cls(c.base.c);
+    const tag = wfTag(c.base);
+    const pp = entryAt(this.ctx.baseMaps, c.where, c.parent)?.path;
+    const like = orphans.some((o) => {
+      const oc = o.cls ?? [];
+      const sameLook = want.length ? oc.join(" ") === want.join(" ") : o.tag === tag && !oc.length;
+      return sameLook && (!pp || !o.path || (pp.length < o.path.length && pp.every((v, k) => o.path[k] === v)));
+    });
+    return like ? "present" : "converged";
+  }
+
+  /** A sibling reorder or a move to another parent, three-way: the repo's parent and order in the base, now and against the new tree. */
+  moveRow(c) {
+    const { baseMaps, nowMaps, newMaps, nw } = this.ctx;
+    const kind = c.where.startsWith("page:") ? "pages" : "components";
+    const slug = c.where.slice(c.where.indexOf(":") + 1);
+    const bEls = baseMaps?.[kind]?.[slug]?.elements;
+    const nEls = nowMaps?.[kind]?.[slug]?.elements;
+    const wEls = newMaps?.[kind]?.[slug]?.elements;
+    const x = c.id;
+    const tree = this.tree(nw, c.where);
+    const notes = [...this.componentNote(c)];
+    const pNew = c.new.parent;
+    const pBase = c.base.parent;
+    notes.push(c.parentChanged ? `moves from ${this.nodeDesc(c.where, pBase)} to ${this.nodeDesc(c.where, pNew)}` : `reordered inside ${this.nodeDesc(c.where, pNew)}`);
+    // The neighbour it now follows (nearest earlier sibling with a repo location), else its parent.
+    const kidsNew = tree?.byId.get(pNew)?.kids ?? [];
+    let target = null;
+    for (let k = kidsNew.findIndex((n) => n.id === x) - 1; k >= 0 && !target; k--) {
+      const e = entryAt(this.ctx.locMaps, c.where, kidsNew[k].id) ?? entryAt(baseMaps, c.where, kidsNew[k].id);
+      if (e?.file) target = { position: "after", id: kidsNew[k].id, desc: this.nodeDesc(c.where, kidsNew[k].id), file: e.file, line: e.line };
     }
-    if (nowMaps) notes.push("repo side not compared for moves");
-    return { base: JSON.stringify(c.base), webflow: JSON.stringify(c.new), direction: "PULL", mode: "assisted", edit, notes };
+    if (!target) {
+      const e = entryAt(this.ctx.locMaps, c.where, pNew) ?? entryAt(baseMaps, c.where, pNew);
+      target = { position: "first-child-of", id: pNew, desc: this.nodeDesc(c.where, pNew), file: e?.file ?? null, line: e?.line ?? null };
+    }
+    const loc = entryAt(this.ctx.locMaps, c.where, x) ?? bEls?.[x];
+    const edit = { op: "move-element", file: loc?.file ?? null, line: loc?.line ?? null, target, base: c.base, new: c.new };
+    if (!loc) notes.push("element not mapped: locate by hand");
+    const res = { base: `${this.nodeDesc(c.where, pBase)} #${c.base.index}`, webflow: `${this.nodeDesc(c.where, pNew)} #${c.new.index}`, mode: "assisted", edit, notes };
+    if (!bEls?.[x]) return { ...res, direction: "PULL", notes: [...notes, "repo side not compared (element not in the base map)"] };
+    // Did the repo move it since the base?
+    let repoMoved = false;
+    const lb = layoutOf(bEls);
+    const ln = layoutOf(nEls);
+    if (ln) {
+      if (!nEls[x]) repoMoved = true;
+      else {
+        const pb = lb.parent.get(x);
+        const pn = ln.parent.get(x);
+        const kb = lb.kids.get(pb) ?? [];
+        if (pb !== pn) repoMoved = true;
+        else {
+          const seq = (ln.kids.get(pn) ?? []).filter((id) => kb.includes(id));
+          if (!lis(seq.map((id) => kb.indexOf(id))).has(seq.indexOf(x))) repoMoved = true;
+        }
+      }
+    }
+    // Does the repo already have the new position? (aligned against the NEW tree, parent and order)
+    let converged = false;
+    const lw = layoutOf(wEls);
+    if (lw && wEls[x]) {
+      const expect = this.mappedUp(tree, pNew, wEls);
+      const got = lw.parent.get(x) ?? null;
+      const order = kidsNew.map((n) => n.id).filter((id) => lw.parent.get(id) === got);
+      const repoOrder = (lw.kids.get(got) ?? []).filter((id) => order.includes(id));
+      const siblingsKept = kidsNew.every((n) => !bEls[n.id] || wEls[n.id]);
+      converged = got === expect && order.join() === repoOrder.join() && siblingsKept;
+    }
+    if (converged) return { ...res, direction: "CONVERGED", notes: [...notes, "the repo already has this order"] };
+    if (repoMoved) return { ...res, direction: "CONFLICT", repo: "(moved differently in the repo)", notes: [...notes, "the element is elsewhere in the repo render now; compare by hand"] };
+    return { ...res, direction: "PULL" };
+  }
+
+  /** Several adds / removes / moves under one parent: one row listing them, with the direction of the whole. */
+  restructureRow(where, parentId, items) {
+    const { baseMaps, newMaps } = this.ctx;
+    const members = items.map(({ c, base, row }) => ({
+      change: c.field,
+      element: base.element,
+      id: c.id,
+      direction: row.direction,
+      op: row.edit?.op ?? null,
+      file: row.edit?.file ?? null,
+      line: row.edit?.line ?? null,
+      ...(row.edit?.target ? { target: row.edit.target } : {}),
+      ...(row.notes?.length ? { notes: row.notes.filter((n) => !/^edits the component definition/.test(n)) } : {}),
+    }));
+    const n = (f) => members.filter((m) => m.change === f).length;
+    const dirs = new Set(members.map((m) => m.direction));
+    const direction = dirs.has("CONFLICT") ? "CONFLICT" : dirs.has("PULL") ? "PULL" : "CONVERGED";
+    const parentDesc = this.nodeDesc(where, parentId);
+    const at = entryAt(this.ctx.locMaps, where, parentId) ?? entryAt(baseMaps, where, parentId) ?? entryAt(newMaps, where, parentId);
+    const notes = [...(where.startsWith("component:") ? ["edits the component definition: applies to every instance"] : [])];
+    notes.push(`${members.length} structural changes under ${parentDesc}: ${["removed", "added", "moved"].filter((f) => n(f)).map((f) => `${n(f)} ${f}`).join(", ")}`);
+    const done = members.filter((m) => m.direction === "CONVERGED").length;
+    if (direction !== "CONVERGED" && done) notes.push(`${done} of ${members.length} already match the repo`);
+    if (direction === "CONVERGED") notes.push("the repo already has the new structure");
+    return {
+      key: `element|${where}|${parentId}|restructure`,
+      area: "Elements",
+      sub: "restructure",
+      where,
+      element: `restructure of ${parentDesc}`,
+      id: parentId,
+      base: `${n("removed")} removed, ${n("moved")} moved`,
+      webflow: `${n("added")} added`,
+      direction,
+      mode: "assisted",
+      edit: { op: "restructure", file: at?.file ?? null, line: at?.line ?? null, parent: parentId, members },
+      notes,
+      members,
+      change: { area: "element", where, id: parentId, field: "restructure" },
+    };
+  }
+
+  /** Attributes and settings (link, image asset / alt, loading, ids, form field), compared by value with the render. */
+  fieldRow(c) {
+    const { baseMaps, nowMaps, base, nw, fcBase, fcNew } = this.ctx;
+    const F = c.field;
+    const slug = c.where.slice(c.where.indexOf(":") + 1);
+    // A component's ID prop binds the input's id and the label's for: Webflow shows no static attribute for them.
+    if ((F === "attr.id" || F === "attr.for") && c.where.startsWith("component:") && c.new == null && (nw.components[slug] ?? base.components[slug])?.props?.some((p) => p.type === "id")) {
+      this.footer.bound.push(`${c.where} ${describe(c.ctx)} ${F}: ${JSON.stringify(c.base)} is now bound to the component's ID prop (not a change)`);
+      return null;
+    }
+    const type = c.ctx?.t;
+    const be = entryAt(baseMaps, c.where, c.id);
+    const ne = nowMaps ? entryAt(nowMaps, c.where, c.id) : be;
+    const nme = entryAt(this.ctx.newMaps, c.where, c.id);
+    const loc = nme ?? ne ?? be;
+    const notes = [...this.componentNote(c)];
+    const wfB = wfCmp(F, c.base, fcBase, type);
+    const wfN = wfCmp(F, c.new, fcNew, type);
+    const repoVal = (e, wf) => (F in (e.ra ?? {}) ? e.ra[F] ?? undefined : wf);
+    const repoBase = be ? repoVal(be, wfB) : wfB;
+    const repoNow = nowMaps ? (nme ? repoVal(nme, wfN) : ne ? repoVal(ne, wfB) : GONE) : repoBase;
+    const repoChanged = repoNow === GONE || repoNow !== repoBase;
+    const converged = repoNow !== GONE && repoNow === wfN;
+    const dir = loc ? direction(true, repoChanged, converged) : "PULL";
+    const res = { base: wfShow(F, c.base, fcBase) ?? null, webflow: wfShow(F, c.new, fcNew) ?? null, direction: dir, notes };
+    if (dir === "CONFLICT") res.repo = repoNow === GONE ? "(element not found in the repo render)" : repoNow ?? "(none)";
+    if (!loc) return { ...res, mode: "assisted", edit: null, notes: [...notes, "no repo location in the map (element not mapped): locate by hand"] };
+    if (be && F in (be.ra ?? {})) notes.push(`the repo differed from Webflow here already: it renders ${JSON.stringify(be.ra[F])}`);
+    const edit = { op: `set-${F}`, file: loc.file ?? null, line: loc.line ?? null, old: res.base, new: res.webflow };
+    let mode = "assisted";
+    const oldStr = typeof c.base === "string" ? c.base : null;
+    const prop = F.startsWith("attr.") ? F.slice(5) : F === "settings.altText" ? "alt" : null;
+    if (loc.file && prop && oldStr && typeof c.new === "string" && dir === "PULL") {
+      const line = findPattern(loc.file, new RegExp(`\\b${esc(prop)}\\s*=\\s*[{"']*${esc(oldStr)}`), loc.line, 30);
+      if (line) {
+        edit.line = line;
+        mode = "auto";
+      }
+    }
+    if (mode === "assisted" && dir !== "CONVERGED") notes.push(F === "settings.link" || F === "attr.href" ? "the repo writes the target in the component call (href / link prop) or a data array: search the old target" : "edit the attribute in the element's JSX");
+    return { ...res, mode, edit, notes };
   }
 
   otherRow(c) {
@@ -215,43 +445,48 @@ export class Rows {
     const v = (x) => (x && typeof x === "object" ? JSON.stringify(x) : x ?? null);
     const edit = loc ? { op: `set-${c.field}`, file: loc.file ?? null, line: loc.line ?? null, old: c.base ?? null, new: c.new ?? null } : null;
     if (!loc) notes.push("element not mapped: locate by hand");
-    let mode = "assisted";
-    if (edit && loc.file && typeof c.base === "string" && c.base && typeof c.new === "string" && c.field.startsWith("attr.")) {
-      const line = findPattern(loc.file, new RegExp(`\\b${esc(c.field.slice(5))}\\s*=\\s*[{"']*${esc(c.base)}`), loc.line, 30);
-      if (line) {
-        edit.line = line;
-        mode = "auto";
-      }
-    }
-    return { base: v(c.base), webflow: v(c.new), direction: "PULL", mode, edit, notes };
+    return { base: v(c.base), webflow: v(c.new), direction: "PULL", mode: "assisted", edit, notes };
   }
 
-  /** Repo-ahead elements: a mapped element whose repo text, classes or prop value changed while Webflow's did not. */
+  /** Repo-ahead elements: a mapped element whose repo text, classes, attribute or prop value changed while Webflow's did not. */
   elementsRepoAhead() {
-    const { baseMaps, nowMaps, nw, webflowChangeKeys } = this.ctx;
-    if (!nowMaps) return;
+    const { baseMaps, nowMaps, newMaps, base, nw, webflowChangeKeys, fcBase, fcNew } = this.ctx;
+    if (!newMaps) return;
+    // The alignment with the NEW tree says what the repo has at each Webflow element now.
     for (const kind of ["pages", "components"]) {
       for (const [slug, { elements }] of Object.entries(baseMaps[kind] ?? {})) {
         const where = `${kind === "pages" ? "page" : "component"}:${slug}`;
         const tree = (kind === "pages" ? nw.pages : nw.components)[slug];
-        for (const [id, be] of Object.entries(elements)) {
-          const ne = nowMaps[kind]?.[slug]?.elements?.[id];
-          if (!ne) {
-            this.footer.goneFromRender++;
-            continue;
-          }
+        const baseTree = (kind === "pages" ? base.pages : base.components)[slug];
+        for (const id of Object.keys(elements)) if (nowMaps && !nowMaps[kind]?.[slug]?.elements?.[id]) this.footer.goneFromRender++;
+        for (const [id, ne] of Object.entries(newMaps[kind]?.[slug]?.elements ?? {})) {
+          const be = elements[id];
           const node = tree?.byId.get(id);
-          if (!node) continue;
-          const mk = (field, sub, baseV, nowV, wfV, edit, mode = "assisted") =>
-            this.add({ key: `repo|${where}|${id}|${field}`, area: "Elements", sub, where, id, element: describe({ t: node.t, tag: node.s?.tag, c: node.c, x: node.x, comp: node.i?.name }), base: wfV, webflow: wfV, repo: nowV, repoBase: baseV, direction: "REPO AHEAD", mode, edit, notes: [] });
+          if (!be || !node || be.k !== ne.k) continue;
+          const mk = (field, sub, baseV, nowV, wfV, edit) =>
+            this.add({ key: `repo|${where}|${id}|${field}`, area: "Elements", sub, where, id, element: describe({ t: node.t, tag: node.s?.tag, c: node.c, x: node.x, comp: node.i?.name }), base: wfV, webflow: wfV, repo: nowV, repoBase: baseV, direction: "REPO AHEAD", mode: "assisted", edit, notes: [] });
           if (be.k === "text") {
             const b = be.repoText ?? be.text;
             const n = ne.repoText ?? ne.text;
-            if (norm(b) !== norm(n) && norm(n) !== norm(node.x ?? "") && !webflowChangeKeys.has(`${where}|${id}|text`)) mk("text", "text", b, n, node.x, { op: "replace-text", file: ne.file, line: ne.line });
+            if (norm(b) !== norm(n) && norm(n) !== norm(node.x ?? "") && !webflowChangeKeys.has(`${where}|${id}|text`)) {
+              // An edit keeps some of the string; a text that shares nothing with Webflow's is a pair the alignment got wrong.
+              if (!related(node.x ?? "", n)) this.footer.misaligned.push(`${where} ${JSON.stringify(clip(node.x ?? ""))} paired with ${JSON.stringify(clip(n))} (${ne.file}:${ne.line})`);
+              else mk("text", "text", b, n, node.x, { op: "replace-text", file: ne.file, line: ne.line });
+            }
           } else if (be.k === "el" && !/^(Form|Dynamo|Pagination|Dropdown|HtmlEmbed|Slot|RichText)/.test(node.t)) {
-            const bc = be.rc ?? cls(node.c);
+            const bc = be.rc ?? cls(baseTree?.byId.get(id)?.c ?? node.c);
             const nc = ne.rc ?? cls(node.c);
             if (bc.join(" ") !== nc.join(" ") && nc.join(" ") !== clsJoin(node.c) && !webflowChangeKeys.has(`${where}|${id}|classes`)) mk("classes", "classes", bc.join(" "), nc.join(" "), clsJoin(node.c), { op: "change-classes", file: ne.file, line: ne.line });
+            const bNode = baseTree?.byId.get(id);
+            for (const F of new Set([...Object.keys(be.ra ?? {}), ...Object.keys(ne.ra ?? {})])) {
+              if (webflowChangeKeys.has(`${where}|${id}|${F}`)) continue;
+              const raw = (n, field) => (field.startsWith("attr.") ? n?.a?.[field.slice(5)] : n?.s?.[field.slice(9)]);
+              const wfB = wfCmp(F, raw(bNode, F), fcBase, node.t);
+              const wfN = wfCmp(F, raw(node, F), fcNew, node.t);
+              const b = F in (be.ra ?? {}) ? be.ra[F] ?? undefined : wfB;
+              const n = F in (ne.ra ?? {}) ? ne.ra[F] ?? undefined : wfN;
+              if (b !== n && n !== wfN) mk(F, F, b ?? null, n ?? "(none)", wfShow(F, raw(node, F), fcNew) ?? null, { op: `set-${F}`, file: ne.file, line: ne.line });
+            }
           } else if (be.k === "inst") {
             for (const [name, bp] of Object.entries(be.props ?? {})) {
               const np = ne.props?.[name];
@@ -264,6 +499,49 @@ export class Rows {
         }
       }
     }
+  }
+
+  /**
+   * Pre-existing differences: the repo and Webflow differ here in the base and still do in the new dump, and Webflow did not
+   * change it (so it is not a row). Read off `ra` (attributes and settings) and `rc` (classes) of the map; listed once.
+   */
+  preexisting() {
+    const { baseMaps, newMaps, nw, webflowChangeKeys, acceptedElements } = this.ctx;
+    const maps = newMaps ?? baseMaps;
+    const seen = new Set();
+    for (const kind of ["pages", "components"]) {
+      for (const [slug, { elements }] of Object.entries(maps[kind] ?? {})) {
+        const where = `${kind === "pages" ? "page" : "component"}:${slug}`;
+        const tree = (kind === "pages" ? nw.pages : nw.components)[slug];
+        for (const [id, e] of Object.entries(elements)) {
+          if (e.k !== "el") continue;
+          const node = tree?.byId.get(id);
+          const before = baseMaps[kind]?.[slug]?.elements?.[id];
+          if (!node || !before) continue;
+          const fields = [...Object.keys(e.ra ?? {}), ...(e.rc ? ["classes"] : [])];
+          for (const F of fields) {
+            const wasThere = F === "classes" ? !!before.rc : F in (before.ra ?? {});
+            if (!wasThere || webflowChangeKeys.has(`${where}|${id}|${F}`)) continue;
+            const repo = F === "classes" ? e.rc.join(" ") : e.ra[F];
+            const wf = F === "classes" ? clsJoin(node.c) : wfShow(F, F.startsWith("attr.") ? node.a?.[F.slice(5)] : node.s?.[F.slice(9)], this.ctx.fcNew);
+            const line = `${where} ${describe({ t: node.t, tag: node.s?.tag, c: node.c })} ${F}: ${repo ?? "(none)"} → ${wf ?? "(none)"}`;
+            const k = `${where}|${id}|${F}`;
+            if (seen.has(k)) continue;
+            seen.add(k);
+            if (acceptedElements?.has(line)) {
+              this.footer.accepted++;
+              continue;
+            }
+            if (acceptedElements?.unaligned?.(where)) {
+              this.footer.unalignedPre = (this.footer.unalignedPre ?? 0) + 1;
+              continue;
+            }
+            this.footer.preexisting.push({ where, id, element: describe({ t: node.t, tag: node.s?.tag, c: node.c }), field: F, repo: repo ?? null, webflow: wf ?? null, file: e.file ?? null, line: e.line ?? null, acceptLine: line });
+          }
+        }
+      }
+    }
+    this.footer.preexisting.sort((a, b) => (a.where + a.field + a.id < b.where + b.field + b.id ? -1 : 1));
   }
 
   // ---- Styles ----------------------------------------------------------------------------------
@@ -283,6 +561,12 @@ export class Rows {
     return `${sel} @${bp}:${pseudo} ${prop}: ${repo === undefined ? "(not in repo)" : repo} → ${wf === undefined ? "(missing)" : wf}`;
   }
 
+  /** The CSS file that holds a rule for exactly this class chain (any state), else null. */
+  ruleFile(sel) {
+    for (const rel of this.ctx.files) if (parseCssRules(rel).some((r) => r.sel === sel)) return rel;
+    return null;
+  }
+
   styles(changes) {
     const { css, accepted, files } = this.ctx;
     for (const c of changes) {
@@ -292,18 +576,23 @@ export class Rows {
       if (c.field === "added" || c.field === "removed") {
         const style = c.field === "added" ? c.new : c.base;
         const props = [];
-        for (const [pseudo, p] of Object.entries(style.base ?? {})) for (const [k, v] of Object.entries(p)) props.push(["main", pseudo, k, normalizeValue(v)]);
-        for (const [bp, ps] of Object.entries(style.bp ?? {})) for (const [pseudo, p] of Object.entries(ps)) for (const [k, v] of Object.entries(p)) props.push([bp, pseudo, k, normalizeValue(v)]);
-        const has1 = props.filter(([bp, ps, k]) => repoValue(css.r1, sel, bp, ps, k) !== undefined).length;
-        const eq1 = props.filter(([bp, ps, k, v]) => repoValue(css.r1, sel, bp, ps, k) === v).length;
+        for (const [pseudo, p] of Object.entries(style.base ?? {})) for (const [k, v] of Object.entries(p)) props.push(["main", pseudo, k, normalizeValue(v), v]);
+        for (const [bp, ps] of Object.entries(style.bp ?? {})) for (const [pseudo, p] of Object.entries(ps)) for (const [k, v] of Object.entries(p)) props.push([bp, pseudo, k, normalizeValue(v), v]);
+        // Webflow adds a few defaults to every grid; a repo rule without them is the same style.
+        const real = props.filter(([, , k, v]) => WEBFLOW_DEFAULTS[k] !== v);
+        const has1 = real.filter(([bp, ps, k]) => repoValue(css.r1, sel, bp, ps, k) !== undefined).length;
+        const eq1 = real.filter(([bp, ps, k, v]) => repoValue(css.r1, sel, bp, ps, k) === v).length;
         const has0 = [...css.r0.keys()].some((k) => k.startsWith(`${sel}\u0000`));
         const now = [...css.r1.keys()].some((k) => k.startsWith(`${sel}\u0000`));
         const fam = familyFile(sel, files);
         const hereAt = locateCss(files, sel, "main", "noPseudo", "display") ?? locateCss(files, sel, "main", "noPseudo", props[0]?.[2]);
         if (c.field === "added") {
-          const dir = !now ? "PULL" : eq1 === props.length ? "CONVERGED" : "CONFLICT";
+          const dir = !now ? "PULL" : eq1 === real.length ? "CONVERGED" : "CONFLICT";
           const repoChanged = now && !has0;
-          this.add({ key, area: "Styles", sub: "added", where: sel, element: `new style (${props.length} properties)`, base: null, webflow: props.map(([bp, ps, k, v]) => `${k}: ${v}${bp !== "main" || ps !== "noPseudo" ? ` [${bp}/${ps}]` : ""}`).slice(0, 6).join("; ") + (props.length > 6 ? "; …" : ""), repo: dir === "CONFLICT" ? `${has1}/${props.length} properties set, ${eq1} equal` : undefined, direction: direction(true, repoChanged || (now && has0), eq1 === props.length && now), mode: "assisted", edit: { op: "add-rule", file: hereAt?.rule?.file ?? fam.file, line: hereAt?.rule?.line ?? null, selector: sel, properties: props.map(([bp, pseudo, prop, value]) => ({ bp, pseudo, prop, value: this.cssValue(value) })) }, notes: hereAt ? ["the repo has this rule"] : fam.file ? [] : ["no component CSS file for this class family: see classes.md"], change: c });
+          const rowDir = direction(true, repoChanged || (now && has0), eq1 === real.length && now);
+          // A brand-new class goes into its family's CSS file (never the generated one); the registry row is the agent's follow-up.
+          const auto = rowDir === "PULL" && !hereAt && !!fam.file && !/utilities\.css$/.test(fam.file) && /^(\.[a-z0-9-]+)+$/.test(sel) && real.length > 0;
+          this.add({ key, area: "Styles", sub: "added", where: sel, element: `new style (${props.length} properties)`, base: null, webflow: props.map(([bp, ps, k, v]) => `${k}: ${v}${bp !== "main" || ps !== "noPseudo" ? ` [${bp}/${ps}]` : ""}`).slice(0, 6).join("; ") + (props.length > 6 ? "; …" : ""), repo: dir === "CONFLICT" ? `${has1}/${real.length} properties set, ${eq1} equal` : undefined, direction: rowDir, mode: auto ? "auto" : "assisted", edit: { op: "add-rule", file: hereAt?.rule?.file ?? fam.file, line: hereAt?.rule?.line ?? null, selector: sel, properties: props.map(([bp, pseudo, prop, , raw]) => ({ bp, pseudo, prop, value: this.cssValue(raw) })) }, notes: hereAt ? ["the repo has this rule"] : fam.file ? [] : ["no component CSS file for this class family: see classes.md"], change: c });
         } else {
           const unchanged = [...css.r0].filter(([k]) => k.startsWith(`${sel}\u0000`)).every(([k, v]) => css.r1.get(k) === v);
           const dir = !now ? "CONVERGED" : unchanged ? "PULL" : "CONFLICT";
@@ -344,8 +633,11 @@ export class Rows {
         mode = c.new !== null && !/utilities\.css$/.test(found.rule.file) ? "auto" : "assisted";
       } else {
         const fam = familyFile(sel, files);
-        edit = { op: "add-rule", file: fam.file, line: null, selector: sel, bp, pseudo, decl: prop, new: newCss };
+        // A new state of a class the repo already styles goes beside its other rules, else into the family file.
+        const home = this.ruleFile(sel) ?? fam.file;
+        edit = { op: "add-rule", file: home, line: null, selector: sel, bp, pseudo, decl: prop, new: newCss };
         notes.push("no rule for this selector/state in src/styles");
+        if (dir === "PULL" && home && !/utilities\.css$/.test(home) && c.new !== null && /^(\.[a-z0-9-]+)+$/.test(sel)) mode = "auto";
       }
       const hint = this.snapHint(c.new);
       if (hint) notes.push(hint);
@@ -412,6 +704,8 @@ export class Rows {
         w = `${c.new.type} ${JSON.stringify(c.new.value)}`;
         if (dir === "CONFLICT") repo = t1.value;
         notes.push("add the token in its section of tokens.css and a row in tokens.md");
+        edit.variableId = c.id;
+        if (dir === "PULL" && ["Color", "Size"].includes(c.new.type) && /^[a-z0-9-]+$/.test(tn) && typeof css(c.new.value) === "string") mode = "auto";
         if (!/-/.test(tn) || tn !== name) notes.push(`Webflow name ${JSON.stringify(name)} is spelled --${tn} in the repo`);
       } else if (c.field === "removed") {
         dir = !t1 ? "CONVERGED" : canon(t1) === canon(t0) ? "PULL" : "CONFLICT";
@@ -520,12 +814,32 @@ export class Rows {
         edit = { op: "rename-prop", file, registry: reg, old: c.base, new: c.new, repoOld: camel(c.base), repoNew: camel(c.new) };
         notes.push("rename the prop at every call site too");
       } else {
-        // Other prop keys, variants, description, variant styles: not compared field by field.
+        // Other prop keys, variants, description, variant styles: compared where the repo shows the value, else by file change.
         const touched = file && textNow !== textThen;
+        const def = /^props\[([^\]]+)\]\.default$/.exec(c.field);
         if (c.field === "description") {
           const snippet = String(c.new ?? "").slice(0, 50);
           const reg0 = (readNow("docs/webflow/components.md") ?? "").includes(snippet);
-          dir = reg0 && snippet ? "CONVERGED" : touched ? "CONFLICT" : "PULL";
+          // What Webflow dropped from the description (the base ends with the new text plus a tail) is gone from the registry too.
+          const tail = typeof c.base === "string" && typeof c.new === "string" && c.base.startsWith(c.new) ? c.base.slice(c.new.length).replace(/^[\s.]+/, "") : "";
+          const tailGone = tail.length > 8 && !(readNow("docs/webflow/components.md") ?? "").includes(tail.slice(0, 40)) && (showFile(commit, "docs/webflow/components.md") ?? "").includes(tail.slice(0, 40));
+          // The sync writes `<Group> / <Name>. Repo: <file>`; a description equal to that is derived from the repo file.
+          const generic = file && comp ? `${comp.group} / ${comp.name}. Repo: ${file}` : null;
+          const isGeneric = !!generic && c.new === generic;
+          dir = (reg0 && snippet && !tail) || tailGone || isGeneric ? "CONVERGED" : touched ? "CONFLICT" : "PULL";
+          if (tailGone) notes.push("the part Webflow dropped is gone from components.md too");
+          if (isGeneric) notes.push("the description is the one derived from the component file (the sync pattern)");
+        } else if (def) {
+          // A text prop's default is the default parameter of the repo prop of the same name.
+          const pr = (nw.components[slug] ?? base.components[slug])?.props?.find((p) => p.id === def[1]);
+          const repoDefault = (text) => (pr ? new RegExp(`\\b${esc(camel(pr.name))}\\s*=\\s*"([^"]*)"`).exec(text)?.[1] : undefined);
+          const rNow = repoDefault(textNow);
+          const rThen = repoDefault(textThen);
+          dir = rNow !== undefined && rNow === c.new ? "CONVERGED" : rNow !== undefined && rNow === rThen ? "PULL" : touched ? "CONFLICT" : "PULL";
+          if (rNow !== undefined) {
+            repo = rNow;
+            notes.push(`the repo default of \`${camel(pr.name)}\` is ${JSON.stringify(rNow)}`);
+          }
         } else dir = touched ? "CONFLICT" : "PULL";
         if (dir === "CONFLICT") notes.push("the component file changed in the repo since the base; this field was not compared: check by hand");
       }
@@ -721,6 +1035,97 @@ export class Rows {
         if (!p.known) notes.push("old alt text not found in src/: locate the image by name");
       }
       this.add({ key, area: "Assets", sub: c.field, where: c.where, element: c.field, base: typeof b === "object" ? JSON.stringify(b) : b, webflow: typeof w === "object" ? JSON.stringify(w) : w, direction: dir, mode: "assisted", edit: { op: `asset-${c.field}`, file: "docs/webflow/webflow-ids.json", assetId: c.id, name: c.where }, notes, change: c });
+    }
+  }
+
+  // ---- Repo-only changes: components, pages, interactions, custom code ---------------------------------
+  aheadRow(row) {
+    this.add({ notes: ["push at the next sync"], mode: "assisted", direction: "REPO AHEAD", base: null, webflow: null, repoBase: null, edit: null, ...row });
+  }
+
+  componentsRepoAhead() {
+    const { commit, base, nw, changes } = this.ctx;
+    const camel = (s) => (/^[A-Z0-9]+$/.test(s) ? String(s).toLowerCase() : String(s).replace(/\s+(.)/g, (_, ch) => ch.toUpperCase()).replace(/^./, (ch) => ch.toLowerCase()));
+    for (const { status, file } of changedStatus(commit, ["src/components", "src/sections"])) {
+      if (!/\.tsx$/.test(file)) continue;
+      const stem = path.basename(file, ".tsx");
+      const find = (snap) => Object.entries(snap.components).find(([, c]) => normName(c.name) === normName(stem));
+      const wfBase = find(base);
+      const wfNew = find(nw);
+      const slug = (wfNew ?? wfBase)?.[0] ?? stem.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+      const where = `component:${slug}`;
+      if (!wfBase && !wfNew) {
+        if (status === "A" && file.startsWith("src/components/")) this.aheadRow({ key: `repo|component|${file}|added`, area: "Components", sub: "added", where, element: "component file added", repo: file, edit: { op: "add-component", file }, notes: ["not on Webflow yet: create it at the next sync"] });
+        continue;
+      }
+      if (status === "D") {
+        this.aheadRow({ key: `repo|component|${file}|removed`, area: "Components", sub: "removed", where, element: "component file removed", repoBase: file, repo: "(removed)", edit: { op: "remove-component", file } });
+        continue;
+      }
+      if (status !== "M") continue;
+      const before = componentSurface(showFile(commit, file));
+      const after = componentSurface(readNow(file));
+      const wfTouched = new Set(changes.filter((c) => c.area === "component" && c.where === where && /^props\[/.test(c.field)).flatMap((c) => [c.base?.name, c.new?.name, c.field.endsWith(".name") ? c.base : null, c.field.endsWith(".name") ? c.new : null].filter(Boolean).map(camel)));
+      // Webflow's component only has some of the repo's props (CMS-bound or layout props never became Webflow props).
+      const wfProps = new Set(((wfNew ?? wfBase)[1].props ?? []).map((p) => camel(p.name)));
+      const emit = (sub, name, repoBase, repo) => {
+        if (wfTouched.has(name)) return;
+        const prop = name.split("=")[0];
+        if (sub === "prop removed" && !wfProps.has(prop)) return;
+        if (sub === "prop added" && wfProps.has(prop)) return;
+        this.aheadRow({ key: `repo|component|${file}|${sub}|${name}`, area: "Components", sub, where, element: `${sub}: ${name}`, repoBase, repo, edit: { op: sub.startsWith("variant") ? "set-variant" : sub === "prop removed" ? "remove-prop" : "add-prop", file, prop: name } });
+      };
+      for (const [name, p] of after) if (!before.has(name)) emit("prop added", name, null, `${name}: ${p.type}`);
+      for (const [name, p] of before) if (!after.has(name)) emit("prop removed", name, `${name}: ${p.type}`, "(removed)");
+      for (const [name, a] of after) {
+        const b = before.get(name);
+        if (!b?.values || !a.values) continue;
+        for (const v of a.values) if (!b.values.has(v)) emit("variant added", `${name}=${v}`, `${name}: ${[...b.values].join(" | ")}`, `${name}: ${[...a.values].join(" | ")}`);
+        for (const v of b.values) if (!a.values.has(v)) emit("variant removed", `${name}=${v}`, `${name}: ${[...b.values].join(" | ")}`, `${name}: ${[...a.values].join(" | ")}`);
+      }
+    }
+  }
+
+  pagesRepoAhead() {
+    const { commit } = this.ctx;
+    const done = new Set();
+    for (const [slug, [file]] of Object.entries(repoPages())) {
+      if (done.has(file)) continue;
+      done.add(file);
+      const before = showFile(commit, file);
+      const after = readNow(file);
+      if (before === after || before == null || after == null) continue;
+      const d = sequenceDiff(pageSequence(before), pageSequence(after));
+      const where = `page:${slug}`;
+      for (const [sub, list] of [["section added", d.added], ["section removed", d.removed], ["section reordered", d.moved]]) {
+        for (const name of list) this.aheadRow({ key: `repo|page|${slug}|${sub}|${name}`, area: "Pages", sub, where, element: `${sub}: ${name}`, repo: name, repoBase: null, edit: { op: sub.replace(" ", "-"), file, section: name } });
+      }
+    }
+  }
+
+  interactionsRepoAhead() {
+    const { commit, nw, base, changes } = this.ctx;
+    const before = registryRows(showFile(commit, "docs/webflow/interactions.md"));
+    const after = registryRows(readNow("docs/webflow/interactions.md"));
+    const wfSide = new Set(changes.filter((c) => c.area === "interaction").map((c) => c.where));
+    for (const name of [...new Set([...before.keys(), ...after.keys()])].sort()) {
+      const b = before.get(name);
+      const a = after.get(name);
+      if (b?.text === a?.text || wfSide.has(name)) continue;
+      const sub = !b ? "added" : !a ? "removed" : "changed";
+      this.aheadRow({ key: `repo|interaction|${name}`, area: "Interactions", sub, where: name, element: `registry row ${sub}`, repo: sub === "removed" ? "(removed)" : `${name} (registry row)`, repoBase: b ? `${name} (registry row)` : null, edit: { op: "set-interaction", file: "docs/webflow/interactions.md", line: a?.line ?? null }, notes: [nw.interactions[name] || base.interactions[name] ? "push at the next sync (the interaction exists on Webflow)" : "not on Webflow yet: create it at the next sync"] });
+    }
+    for (const { status, file } of changedStatus(commit, ["src/ix"])) {
+      if (/^src\/ix\/x[A-Z]\w*\.ts$/.test(file)) continue; // shipped scripts: custom code
+      this.aheadRow({ key: `repo|ix|${file}`, area: "Interactions", sub: "runtime", where: file, element: "preview runtime", repo: status === "A" ? "(added)" : status === "D" ? "(removed)" : "changed", edit: { op: "set-interaction-runtime", file }, notes: ["the local preview only; the Webflow interaction follows the registry row"] });
+    }
+  }
+
+  codeRepoAhead() {
+    const { commit } = this.ctx;
+    const isCode = (f) => /^docs\/webflow\/custom-code\//.test(f) || /^scripts\/build-x-[a-z-]+\.mjs$/.test(f) || /^src\/ix\/x[A-Z]\w*\.ts$/.test(f) || /^src\/styles\/exceptions\//.test(f);
+    for (const { status, file } of changedStatus(commit, ["docs/webflow/custom-code", "scripts", "src/ix", "src/styles/exceptions"]).filter((f) => isCode(f.file))) {
+      this.aheadRow({ key: `repo|code|${file}`, area: "Custom code", sub: "source", where: file, element: path.basename(file), repo: status === "A" ? "(added)" : status === "D" ? "(removed)" : "changed", edit: { op: "set-custom-code", file }, notes: ["rebuild with its build script, then push the code at the next sync"] });
     }
   }
 

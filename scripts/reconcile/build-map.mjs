@@ -7,6 +7,7 @@ import path from "node:path";
 import { Mapper, assignPaths } from "./mapper.mjs";
 import { normName } from "./align.mjs";
 import { ROOT } from "./paths.mjs";
+import { cmsIds, fieldCtx } from "./fields.mjs";
 
 export function repoPages() {
   const posts = JSON.parse(fs.readFileSync(path.join(ROOT, "src/content/posts.json"), "utf8"));
@@ -88,8 +89,11 @@ function report(label, root, mapper, extra = {}) {
  * Aligns every repo page and component render with the snapshot trees.
  * @returns {{ reports: object[], pages: Record<string,{header:object,elements:object}>, components: Record<string,{header:object,elements:object}> }}
  */
+const boundOf = (comp) => ({ boundId: (comp.props ?? []).some((p) => p.type === "id"), boundImage: (comp.props ?? []).some((p) => p.type === "image"), boundLink: (comp.props ?? []).some((p) => p.type === "link") });
+
 export async function buildMaps(snap, renderer, { onlyPage = null } = {}) {
   const names = new Set(Object.values(snap.components).map((c) => normName(c.name)));
+  const fc = fieldCtx(snap);
   const repoHead = git("rev-parse", "HEAD");
   const srcDirty = git("status", "--porcelain", "src").length > 0;
   const header = (kind, name, rep) => ({
@@ -116,11 +120,11 @@ export async function buildMaps(snap, renderer, { onlyPage = null } = {}) {
       continue;
     }
     trees[slug] = assignPaths(await renderer.renderPage(file, { url, pattern }));
-    const m = new Mapper(names);
+    const m = new Mapper(names, { fc, cms: page.collectionId ? new Set(page.elements.map((e) => e.id)) : cmsIds(page.root) });
     m.run(page.root, trees[slug], { body: true });
     const rep = report(`page ${slug}`, page.root, m, { source: file });
     out.reports.push(rep);
-    out.pages[slug] = { header: { ...header("page", slug, rep), source: file, route: url }, elements: m.map };
+    out.pages[slug] = { header: { ...header("page", slug, rep), source: file, route: url }, elements: m.map, repoOnly: m.repoOnly };
   }
 
   // Components: align the definition with the best repo render of that component.
@@ -142,13 +146,13 @@ export async function buildMaps(snap, renderer, { onlyPage = null } = {}) {
     });
     let best = null;
     for (const c of cands.slice(0, 25)) {
-      const m = new Mapper(names);
+      const m = new Mapper(names, { fc, cms: cmsIds(comp.root), ...boundOf(comp) });
       m.run(comp.root, c.kids, { body: false });
       const score = Object.keys(m.map).length * 1000 + m.exact;
       if (!best || score > best.score) best = { score, m, from: c.src };
     }
     if (!best) {
-      const m = new Mapper(names);
+      const m = new Mapper(names, { fc });
       const rep = report(`component ${slug}`, comp.root, m, { source: null, note: "no repo render found" });
       out.reports.push(rep);
       out.components[slug] = { header: { ...header("component", slug, rep), source: null }, elements: {} };
@@ -156,7 +160,7 @@ export async function buildMaps(snap, renderer, { onlyPage = null } = {}) {
     }
     const rep = report(`component ${slug}`, comp.root, best.m, { source: best.from ? `${best.from.file}:${best.from.line}` : null });
     out.reports.push(rep);
-    out.components[slug] = { header: { ...header("component", slug, rep), source: rep.source }, elements: best.m.map };
+    out.components[slug] = { header: { ...header("component", slug, rep), source: rep.source }, elements: best.m.map, repoOnly: best.m.repoOnly };
   }
   return out;
 }

@@ -7,6 +7,8 @@
 //   --out       write to another folder (default docs/webflow/snapshot/data) to compare dumps without touching the base
 //   --commit    repo commit the snapshot matched (default: git rev-parse HEAD)
 //   --rebuild   overwrite an existing output folder (the default data/ asks for a yes first; --yes answers it)
+//   --refresh <report.json> --rows <1-5,8|auto|all> [--new <dump>] [--base <dir>] [--force] [--no-verify]
+//               not a dump run: absorbs the approved rows of a reconcile report into the existing base (see README → "Refreshing the base")
 // Exit code 1 when the dump is incomplete or inconsistent, 2 on a usage error.
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -30,6 +32,11 @@ const option = (name) => {
   const i = argv.indexOf(name);
   return i === -1 ? undefined : argv[i + 1];
 };
+// Partial refresh of the base after approved reconcile rows were applied (scripts/reconcile/refresh.mjs).
+if (flag("--refresh")) {
+  const { runRefreshCli } = await import("./reconcile/refresh.mjs");
+  process.exit(await runRefreshCli(argv));
+}
 const optionNames = new Set(["--out", "--commit"]);
 const positional = argv.filter((a, i) => !a.startsWith("--") && !optionNames.has(argv[i - 1]));
 const usage = "Usage: node scripts/webflow-snapshot.mjs <dump-dir> [--out <dir>] [--commit <hash>] [--rebuild] [--yes] [--check]";

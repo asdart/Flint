@@ -8,7 +8,7 @@ const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const nul = (v) => (v === undefined ? null : v);
 
 /** Longest increasing subsequence (indexes into `seq`), to find the siblings that really moved. */
-function lis(seq) {
+export function lis(seq) {
   const tails = [];
   const prev = new Array(seq.length).fill(-1);
   const idx = [];

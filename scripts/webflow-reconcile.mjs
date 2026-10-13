@@ -4,12 +4,14 @@
 // file outside --out is written. See docs/webflow/plans/reconcile.md and docs/webflow/snapshot/README.md
 // ("Reconcile report").
 // Usage: node scripts/webflow-reconcile.mjs <new-dump-dir> [--base <snapshot dir>] [--base-map <map dir>]
-//          [--out <report.md>] [--json] [--date YYYY-MM-DD] [--quiet]
+//          [--out <report.md>] [--json] [--date YYYY-MM-DD] [--summary <file.md>] [--quiet]
 //   <new-dump-dir> is a raw dump (.cache/webflow-dump/<UTC>/, checked and normalised first; the run is
 //   refused when the check fails) or an already normalised snapshot folder (it has a manifest.json).
 //   --base      the base snapshot (default docs/webflow/snapshot/data); its manifest names the repo commit.
 //   --base-map  the id map of the base (default <base>/map).
 //   --out       the report (default docs/webflow/reconcile/<date>.md); --json also writes <out>.json.
+//   --summary   a hand-written markdown file inserted under the title as "## Summary" (kept next to the report,
+//               so a re-run regenerates the same report).
 // Exit code 0 when the report was written, 2 when the run is refused.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -17,11 +19,12 @@ import os from "node:os";
 import path from "node:path";
 import { buildMaps, loadMaps } from "./reconcile/build-map.mjs";
 import { diffSnapshots } from "./reconcile/diff.mjs";
+import { fieldCtx } from "./reconcile/fields.mjs";
 import { ROOT } from "./reconcile/paths.mjs";
 import { renderMarkdown } from "./reconcile/report.mjs";
 import { startRenderer } from "./reconcile/repo-render.mjs";
 import { Rows } from "./reconcile/rows.mjs";
-import { changedSince, commitReachable, exportCommit, flatKey, git, parseTokens, readNow, repoStyles, showFile, snapshotStyles, styleFiles } from "./reconcile/repo-state.mjs";
+import { applyRepoBase, changedSince, commitReachable, exportCommit, flatKey, git, parseTokens, readNow, repoStyles, showFile, snapshotStyles, styleFiles } from "./reconcile/repo-state.mjs";
 import { DEFAULT_DATA, loadSnapshot } from "./reconcile/snapshot-io.mjs";
 
 const args = process.argv.slice(2);
@@ -29,7 +32,7 @@ const opt = (name) => {
   const i = args.indexOf(name);
   return i >= 0 ? args[i + 1] : undefined;
 };
-const VALUE_FLAGS = new Set(["--base", "--base-map", "--out", "--date"]);
+const VALUE_FLAGS = new Set(["--base", "--base-map", "--out", "--date", "--summary"]);
 const positional = args.filter((a, i) => !a.startsWith("--") && !VALUE_FLAGS.has(args[i - 1]));
 const quiet = args.includes("--quiet");
 const refuse = (msg) => {
@@ -38,6 +41,12 @@ const refuse = (msg) => {
 };
 if (positional.length !== 1) refuse("usage: node scripts/webflow-reconcile.mjs <new-dump-dir> [--base <dir>] [--base-map <dir>] [--out <report.md>] [--json] [--date YYYY-MM-DD]");
 
+// How the new dump was named on the command line (repo-relative when it lives in the repo): the apply and refresh tools read it back.
+const inputRef = (() => {
+  const abs = path.resolve(positional[0]);
+  const rel = path.relative(ROOT, abs);
+  return rel.startsWith("..") ? abs : rel;
+})();
 const date = opt("--date") ?? new Date().toISOString().slice(0, 10);
 const outFile = path.resolve(ROOT, opt("--out") ?? `docs/webflow/reconcile/${date}.md`);
 const baseDir = path.resolve(opt("--base") ?? DEFAULT_DATA);
@@ -113,7 +122,7 @@ addVars(base.variables);
 addVars(nw.variables);
 const idsNow = JSON.parse(readNow("docs/webflow/webflow-ids.json") ?? "{}");
 for (const [name, id] of Object.entries(idsNow.variables ?? {})) varNames[id] ??= name;
-const stylesChanged = changedSince(commit, ["src/styles", "scripts/webflow-style-actions.mjs", "docs/webflow/webflow-ids.json"]).length > 0;
+let stylesChanged = changedSince(commit, ["src/styles", "scripts/webflow-style-actions.mjs", "docs/webflow/webflow-ids.json"]).length > 0;
 const r1 = repoStyles(ROOT, varNames);
 let r0 = r1;
 if (stylesChanged) {
@@ -125,8 +134,27 @@ if (stylesChanged) {
 }
 const tokens = { r0: parseTokens(showFile(commit, "src/styles/tokens.css")), r1: parseTokens(readNow("src/styles/tokens.css")) };
 if (!stylesChanged) tokens.r0 = tokens.r1;
+// Items a partial refresh absorbed (webflow-snapshot.mjs --refresh): the repo base there is the value that was applied, not the one at the commit.
+const overlay = applyRepoBase(base.manifest.repoBase, r0, tokens.r0);
+if (overlay) {
+  r0 = overlay.css;
+  tokens.r0 = overlay.tokens;
+  stylesChanged = true;
+}
 
-const accepted = new Set(JSON.parse(fs.readFileSync(path.join(ROOT, "docs/webflow/snapshot/accepted.json"), "utf8")).style.map((s) => s.line));
+const acceptedFile = JSON.parse(fs.readFileSync(path.join(ROOT, "docs/webflow/snapshot/accepted.json"), "utf8"));
+const accepted = new Set(acceptedFile.style.map((s) => s.line));
+// `element` entries: an exact `line` or a `pattern` (regex over the line); `unaligned` entries: a `where` whose pairing is not trusted.
+const acceptedElements = (() => {
+  const exact = new Set();
+  const patterns = [];
+  for (const s of acceptedFile.element ?? []) {
+    if (s.line) exact.add(s.line);
+    if (s.pattern) patterns.push(new RegExp(s.pattern));
+  }
+  const unaligned = new Set((acceptedFile.unaligned ?? []).map((s) => s.where));
+  return { has: (line) => exact.has(line) || patterns.some((r) => r.test(line)), unaligned: (where) => unaligned.has(where) };
+})();
 const wfNewStyles = snapshotStyles(nw.styles);
 const webflowStyleKeys = new Set();
 const webflowChangeKeys = new Set();
@@ -150,7 +178,7 @@ const wholeSelectors = new Set([...webflowStyleKeys].filter((k) => k.endsWith("\
 if (wholeSelectors.size) for (const k of [...r0.keys(), ...r1.keys()]) if (wholeSelectors.has(k.split("\u0000")[0])) webflowStyleKeys.add(k);
 
 const ctx = {
-  base, nw, commit, srcChanged, baseMaps, nowMaps, newMaps, locMaps, css: { r0, r1 }, files, tokens, accepted, wfNewStyles,
+  base, nw, changes, commit, srcChanged, fcBase: fieldCtx(base), fcNew: fieldCtx(nw), acceptedElements, baseMaps, nowMaps, newMaps, locMaps, css: { r0, r1 }, files, tokens, accepted, wfNewStyles,
   webflowStyleKeys, webflowChangeKeys, webflowVarNames, git, changedPaths: (p) => changedSince(commit, [p]),
 };
 
@@ -166,6 +194,11 @@ rows.interactions(of("interaction"));
 rows.assets(of("asset"));
 rows.siteRows([...of("site"), ...of("cms")]);
 rows.elementsRepoAhead();
+rows.componentsRepoAhead();
+rows.pagesRepoAhead();
+rows.interactionsRepoAhead();
+rows.codeRepoAhead();
+rows.preexisting();
 if (stylesChanged) {
   rows.stylesRepoAhead();
   rows.tokensRepoAhead();
@@ -186,7 +219,7 @@ const result = {
   meta: {
     date,
     base: { dump: base.manifest.dump, takenAt: base.manifest.takenAt, repoCommit: commit },
-    new: { dump: nw.manifest.dump, takenAt: nw.manifest.takenAt },
+    new: { dump: nw.manifest.dump, takenAt: nw.manifest.takenAt, input: inputRef },
     repo: { head, srcDirty, srcChangedFiles: srcFiles.length, srcFiles: srcFiles.slice(0, 200), stylesChanged, mapNote },
   },
   counts,
@@ -195,7 +228,12 @@ const result = {
 };
 
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
-fs.writeFileSync(outFile, renderMarkdown(result));
+let markdown = renderMarkdown(result);
+if (opt("--summary")) {
+  const summary = fs.readFileSync(path.resolve(opt("--summary")), "utf8").trim();
+  markdown = markdown.replace(/^(# .*\n)/, (title) => `${title}\n## Summary\n\n${summary}\n`);
+}
+fs.writeFileSync(outFile, markdown);
 if (args.includes("--json")) fs.writeFileSync(outFile.replace(/\.md$/, "") + ".json", `${JSON.stringify(result, null, 1)}\n`);
 if (!quiet) {
   console.log(`Report ${path.relative(ROOT, outFile) || outFile}: ${list.length} row(s) ${JSON.stringify(counts)}; src ${srcChanged ? `changed (${srcFiles.length} files)` : "unchanged"}`);
