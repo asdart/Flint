@@ -20,7 +20,9 @@ const cls = (list) => [...new Set(classes(list ?? []))].sort();
 const clsJoin = (list) => cls(list).join(" ");
 
 /** direction from "Webflow changed", "repo changed" and "both ended at the same value". */
-export const direction = (wf, repo, converged) => (wf && repo ? (converged ? "CONVERGED" : "CONFLICT") : wf ? "PULL" : "REPO AHEAD");
+// A repo that already has the new Webflow value is in sync whatever its base value was (a pre-existing difference
+// that Webflow resolved, or an edit made on both sides): CONVERGED, never PULL.
+export const direction = (wf, repo, converged) => (wf && converged ? "CONVERGED" : wf && repo ? "CONFLICT" : wf ? "PULL" : "REPO AHEAD");
 
 const entryAt = (maps, where, id) => {
   const i = where.indexOf(":");
@@ -143,7 +145,17 @@ export class Rows {
     const loc = nme ?? ne ?? be;
     const notes = [...this.componentNote(c)];
     if (c.idChanged) notes.push("Webflow re-created this text run (new element id)");
-    if (!loc) return { webflow: c.new, base: c.base, direction: "PULL", mode: "assisted", edit: null, notes: [...notes, "no repo location in the map (element not mapped): find the text by hand"] };
+    if (!loc) {
+      // Unmapped (a re-created text run in a part of the tree the alignment could not pair): the repo already has the
+      // new text when the page's / component's source file holds it and no longer holds the old one.
+      const src = [this.ctx.newMaps, this.ctx.nowMaps, this.ctx.baseMaps].map((m) => m?.[c.where.startsWith("page:") ? "pages" : "components"]?.[c.where.slice(c.where.indexOf(":") + 1)]?.header?.source).find(Boolean);
+      const file = src?.replace(/:\d+$/, "");
+      const hasNew = file && typeof c.new === "string" && c.new && findString(file, c.new);
+      if (hasNew && !hasNew.partial && hasNew.lines.length && !(typeof c.base === "string" && c.base && (() => { const f = findString(file, c.base); return f.lines.length && !f.partial; })())) {
+        return { webflow: c.new, base: c.base, direction: "CONVERGED", mode: "assisted", edit: null, notes: [...notes, `the repo already has this text (${file}:${hasNew.lines[0]}); the element is not mapped`] };
+      }
+      return { webflow: c.new, base: c.base, direction: "PULL", mode: "assisted", edit: null, notes: [...notes, "no repo location in the map (element not mapped): find the text by hand"] };
+    }
     const repoBase = be ? be.repoText ?? be.text : c.base;
     const repoNow = nowMaps ? (nme ? nme.repoText ?? nme.text : ne ? ne.repoText ?? ne.text : GONE) : repoBase;
     const repoChanged = repoNow === GONE || norm(repoNow) !== norm(repoBase);

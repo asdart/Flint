@@ -484,7 +484,11 @@ Regenerate the stored map after upgrading, or the base values fall back to Webfl
 
 **Classification** (the plan's three-way table): Webflow changed and repo same = `PULL`; both changed and ended at the
 same value = `CONVERGED`; both changed otherwise = `CONFLICT`; repo changed, Webflow same = `REPO AHEAD` (listed, no
-action). Lines of `accepted.json` `style` are subtracted by exact text when the repo and the new Webflow value differ by
+action). **CONVERGED wins over the base:** whenever the repo's value now equals the new Webflow value the row is CONVERGED, even
+when the repo did not change since the base (a pre-existing repo-vs-Webflow difference that Webflow now resolves, such as an attribute
+Webflow added that the repo already renders, or one removed that the repo never rendered). A re-created text run (new id) the alignment
+cannot pair is CONVERGED when the page's / component's source file holds the new text and no longer holds the old one; else PULL
+("find the text by hand"). Lines of `accepted.json` `style` are subtracted by exact text when the repo and the new Webflow value differ by
 exactly that line (the count goes in the footer); Webflow grid defaults are ignored. `signal` and `manifest` changes,
 interactions whose only change is the version counter, and the CMS field schemas a first dump lacked are footer lines,
 not rows.

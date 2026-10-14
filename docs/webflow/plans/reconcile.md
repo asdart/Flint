@@ -800,3 +800,13 @@ All five questions from phase 1 are **resolved** (user decisions 2026-10-11, abo
   `manifest.json` replaces git history.
 - Conflicts on generated files (custom code, utilities, schema): always resolved in the source
   (unchanged).
+
+## Refresh 2026-10-14 (the convergence fix)
+
+After the 2026-10-13 sync the reconcile of dump 20261014T023751Z gave 50 PULL rows that were all the sync's own writes where the repo
+already had the new value (4 attributes Webflow now matches, 45 `data-*` attributes removed that the repo never rendered, one re-created
+Style guide text run). Cause: `direction()` returned PULL whenever the repo had not changed since the base, even when its value already equalled
+the new Webflow value (a pre-existing difference resolved on Webflow); unmapped re-created text runs were always PULL. Fixed in
+`scripts/reconcile/rows.mjs` (converged wins; unmapped text runs are looked up by text in the page's source file) with two regression tests.
+Re-run: 0 rows. Base rebuilt from that dump at 37d440f.
+

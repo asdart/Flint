@@ -102,3 +102,6 @@ before rebuilding. This also clears `refreshedRows` and `repoBase` of earlier pa
 - Deleting anything on Webflow, and publishing, still need the user's explicit yes (rule 12). Reconcile never writes to Webflow.
 - When a result surprises you (a row that should be auto and isn't, a refresh that is refused), read the row's `notes` and the README
   before improvising, and fix the tool or the docs rather than working around it silently.
+- A PULL row whose "Webflow" value is what the repo already renders is a tool bug, not a Webflow edit (found 2026-10-14: 50 rows after a
+  sync that made Webflow match the repo). The rule: repo value now = new Webflow value means CONVERGED, whatever the base repo value was
+  (`direction()` in `scripts/reconcile/rows.mjs`). Check this before asking the user to approve a PULL list that looks like "the sync's own writes".

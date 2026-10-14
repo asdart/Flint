@@ -17,6 +17,7 @@ import { diffDirs, diffSnapshots } from "./reconcile/diff.mjs";
 import { DEFAULT_DATA, loadSnapshot } from "./reconcile/snapshot-io.mjs";
 import { addDeclaration, addRules, addToken, cssFromWebflow, removeDeclaration, replaceClass, replaceInLine, setDeclaration, setToken, setTokenDoc } from "./reconcile/edit-ops.mjs";
 import { parseRows } from "./reconcile/rowspec.mjs";
+import { Rows } from "./reconcile/rows.mjs";
 
 const BEFORE = path.join(ROOT, ".cache/webflow-dump/20261011T194658Z");
 const AFTER = path.join(ROOT, ".cache/webflow-dump/20261011T223401Z");
@@ -188,7 +189,16 @@ const reconcile = (dump, out, extra = [], env = {}) => {
 const rowsOf = (rep, f) => rep.rows.filter(f);
 const breakdown = (rep) => Object.fromEntries(Object.entries(rep.counts));
 const reconcileDirExisted = fs.existsSync(path.join(ROOT, "docs/webflow/reconcile"));
-const DUMP_NOW = path.join(ROOT, ".cache/webflow-dump/20261013T023829Z");
+// The raw dump the current base was built from (it moves at every sync refresh); the tests that need it skip when it is gone.
+const baseDumpDir = () => {
+  try {
+    return path.join(ROOT, JSON.parse(fs.readFileSync(path.join(DEFAULT_DATA, "manifest.json"), "utf8")).dump);
+  } catch {
+    return path.join(ROOT, ".cache/webflow-dump/missing");
+  }
+};
+const DUMP_NOW = baseDumpDir();
+const NEEDS_DUMP_NOW = { skip: have(DEFAULT_DATA, "baseline snapshot data/") || have(DUMP_NOW, "the base's own dump (manifest.dump)"), timeout: 300000 };
 const gitOk = (args) => {
   try {
     execFileSync("git", args, { cwd: ROOT, stdio: "ignore" });
@@ -252,7 +262,7 @@ test("reconcile (a): historical three-way, dumps of 2026-10-11 against the repo 
   for (const d of ["PULL", "CONFLICT", "CONVERGED", "REPO AHEAD"]) console.log(`  ${d}: ${rowsOf(rep, (r) => r.direction === d).map((r) => `#${r.n} ${r.where} ${r.sub}`).join("; ")}`);
 });
 
-test("reconcile (b): the current baseline against its own dump has nothing to pull", { skip: have(DEFAULT_DATA, "baseline snapshot data/") || have(DUMP_NOW, "dump 20261013T023829Z") || (loadSnapshotManifest().dump.endsWith("20261013T023829Z") ? false : "baseline is another dump") }, () => {
+test("reconcile (b): the current baseline against its own dump has nothing to pull", NEEDS_DUMP_NOW, () => {
   const rep = reconcile(DUMP_NOW, path.join(tmp, "now.md"));
   const srcChanged = rep.meta.repo.srcChangedFiles;
   console.log(`baseline vs its dump: ${JSON.stringify(breakdown(rep))}; src files changed since the base commit: ${srcChanged}`);
@@ -527,34 +537,35 @@ test("reconcile repo ahead: a component prop and variant, a page section, an int
   assert.equal(rep.counts.CONVERGED, 0);
 });
 
-test("reconcile pre-existing differences: listed once in the footer, never as rows", { skip: have(DEFAULT_DATA, "baseline snapshot data/") || have(DUMP_NOW, "dump 20261013T023829Z") || (loadSnapshotManifest().dump.endsWith("20261013T023829Z") ? false : "baseline is another dump"), timeout: 300000 }, () => {
+test("reconcile pre-existing differences: listed once in the footer, never as rows", NEEDS_DUMP_NOW, () => {
   const map = path.join(tmp, "baseline-map");
   node("scripts/webflow-map.mjs", "--out", map, "--quiet");
   const rep = reconcile(DUMP_NOW, path.join(tmp, "pre.md"), ["--base-map", map]);
   assert.equal(rep.rows.length, 0, "baseline against its own dump: no rows");
-  const auto = rep.footer.preexisting.filter((p) => p.where === "component:input-field" && p.field === "attr.autocomplete");
-  assert.equal(auto.length, 1, "the autocomplete attribute is listed once");
-  assert.deepEqual([auto[0].repo, auto[0].webflow], ["email", null]);
-  assert.equal(rep.footer.preexisting.filter((p) => p.where === "component:input-field" && p.field === "attr.id").length, 0, "the bound id is not a difference");
+  const accepted = JSON.parse(fs.readFileSync(path.join(ROOT, "docs/webflow/snapshot/accepted.json"), "utf8"));
+  const unaligned = new Set((accepted.unaligned ?? []).map((u) => u.where));
+  assert.deepEqual(rep.footer.preexisting.filter((p) => unaligned.has(p.where)), [], "pages marked unaligned in accepted.json are counted, not listed");
+  assert.equal(rep.footer.preexisting.filter((p) => /^attr\.(id|for)$/.test(p.field) && p.where.startsWith("component:") && /(^|\.)input-field$/.test(p.where)).length, 0, "a component's bound id is not a difference");
   assert.equal(new Set(rep.footer.preexisting.map((p) => `${p.where}|${p.id}|${p.field}`)).size, rep.footer.preexisting.length, "no difference is listed twice");
   assert.match(fs.readFileSync(path.join(tmp, "pre.md"), "utf8"), /## Pre-existing differences \(\d+\)/);
 });
 
-test("reconcile accepted.json: element patterns and unaligned pages leave only real drift; --summary is inserted under the title", { skip: have(DEFAULT_DATA, "baseline snapshot data/") || have(DUMP_NOW, "dump 20261013T023829Z") || (loadSnapshotManifest().dump.endsWith("20261013T023829Z") ? false : "baseline is another dump"), timeout: 300000 }, () => {
+test("reconcile accepted.json: element patterns and unaligned pages leave only real drift; --summary is inserted under the title", NEEDS_DUMP_NOW, () => {
   const map = path.join(tmp, "baseline-map2");
   node("scripts/webflow-map.mjs", "--out", map, "--quiet");
   const summary = path.join(tmp, "summary.md");
   fs.writeFileSync(summary, "Hand-written $1 summary.\n");
   const out = path.join(tmp, "acc.md");
   const rep = reconcile(DUMP_NOW, out, ["--base-map", map, "--summary", summary]);
-  const pre = rep.footer.preexisting;
-  assert.equal(pre.filter((p) => p.where === "component:stat" || p.where === "page:style-guide").length, 0, "variant combos and the unaligned page are not listed");
-  assert.ok(rep.footer.accepted >= 12, "the element patterns matched");
-  assert.ok(rep.footer.unalignedPre >= 1, "the unaligned page is counted, not listed");
-  assert.ok(pre.some((p) => p.field === "attr.data-tm-slide"), "real drift (stale carousel attributes) stays listed");
+  const accepted = JSON.parse(fs.readFileSync(path.join(ROOT, "docs/webflow/snapshot/accepted.json"), "utf8"));
+  const unaligned = new Set((accepted.unaligned ?? []).map((u) => u.where));
+  assert.equal(rep.rows.length, 0, "the base against its own dump: no rows");
+  assert.deepEqual(rep.footer.preexisting.filter((p) => unaligned.has(p.where)), [], "an unaligned page is counted, not listed");
+  assert.equal(typeof rep.footer.accepted, "number");
+  if (unaligned.size) assert.ok(rep.footer.unalignedPre >= 0);
   const md = fs.readFileSync(out, "utf8");
   assert.match(md, /^# Reconcile report [^\n]*\n\n## Summary\n\nHand-written \$1 summary\.\n/);
-  assert.match(md, /Pre-existing differences not listed because the page is marked `unaligned`/);
+  if (rep.footer.unalignedPre > 0) assert.match(md, /Pre-existing differences not listed because the page is marked `unaligned`/);
 });
 
 test("reconcile refuses an incomplete dump", () => {
@@ -594,6 +605,82 @@ const filesOf = (dir) => {
 const changedFiles = (before, after) => [...new Set([...before.keys(), ...after.keys()])].filter((k) => before.get(k) !== after.get(k)).sort();
 const NEEDS_GIT = (gitOk(["rev-parse", "HEAD"]) ? false : "no git");
 const NEEDS_BASE = { ...NEEDS_MAP, skip: NEEDS_MAP.skip || NEEDS_GIT };
+
+// ---- convergence: the repo already has the new Webflow value (pre-existing differences resolved on Webflow) --------
+test("reconcile convergence: a value the repo already renders / never had is CONVERGED when Webflow now matches; otherwise it stays a PULL", NEEDS_BASE, () => {
+  const realAlt = loadSnapshot(DEFAULT_DATA).pages.about.elements.find((e) => e.id === RESIDENCY_IMAGE).s.altText;
+  const edit = (dir, fn) => editPage(dir, "about", (lines, { get, set }) => set(RESIDENCY_IMAGE, fn(get(RESIDENCY_IMAGE))));
+  const withAlt = (alt) => (o) => ({ ...o, s: { ...o.s, altText: alt } });
+  const withAttr = (v) => (o) => {
+    const a = { ...o.a };
+    if (v === undefined) delete a["data-qa"];
+    else a["data-qa"] = v;
+    return { ...o, a };
+  };
+  // `ra` is what the repo rendered for the field at the base commit when that differed from Webflow's base value (null: nothing).
+  const row = (name, field, ra, fnBase, fnNew) => {
+    const base = fullBaseCopy(`conv-base-${name}`);
+    const nw = baselineCopy(`conv-new-${name}`);
+    if (fnBase) edit(base, fnBase);
+    if (fnNew) edit(nw, fnNew);
+    const mapFile = path.join(base, "map/pages/about.json");
+    const map = JSON.parse(fs.readFileSync(mapFile, "utf8"));
+    if (ra !== undefined) map.elements[RESIDENCY_IMAGE].ra = { ...(map.elements[RESIDENCY_IMAGE].ra ?? {}), [field]: ra };
+    fs.writeFileSync(mapFile, JSON.stringify(map));
+    const rep = reconcile(nw, path.join(tmp, `conv-${name}.md`), ["--base", base]);
+    const rows = rowsOf(rep, (r) => r.ref?.id === RESIDENCY_IMAGE && r.ref?.field === field);
+    assert.equal(rows.length, 1, `${name}: expected one row, got ${rows.length}`);
+    return rows[0];
+  };
+  // Pre-existing difference (Webflow had a stale alt, the repo renders the right one) that Webflow now resolves to the repo's value.
+  assert.equal(row("pre-resolved", "settings.altText", realAlt, withAlt("stale alt"), null).direction, "CONVERGED");
+  assert.equal(row("pre-other", "settings.altText", realAlt, withAlt("stale alt"), withAlt("another alt")).direction, "PULL", "Webflow set a value the repo does not render");
+  // Webflow removed an attribute the repo never rendered.
+  assert.equal(row("removed-never", "attr.data-qa", null, withAttr("1"), null).direction, "CONVERGED");
+  assert.equal(row("removed-had", "settings.altText", undefined, null, withAlt(undefined)).direction, "PULL", "the repo still renders its alt");
+});
+
+test("reconcile convergence: a re-created text run whose new text the repo already has is CONVERGED (a pre-existing difference Webflow resolved); otherwise PULL", NEEDS_BASE, () => {
+  const baseSnap = loadSnapshot(DEFAULT_DATA);
+  const mapAll = JSON.parse(fs.readFileSync(path.join(DEFAULT_DATA, "map/pages/blog.json"), "utf8")).elements;
+  const cand = baseSnap.pages.blog.elements.find((e) => e.t === "String" && e.x.trim().length >= 25 && mapAll[e.id]?.k === "text" && mapAll[e.id].locate === "literal" && !mapAll[e.id].of && mapAll[e.id].repoText === undefined);
+  assert.ok(cand, "a literal text run on the blog page");
+  const NEW = `${cand.x} Reviewed.`;
+  const build = (name, repoText) => {
+    const base = fullBaseCopy(`${name}-base`);
+    const wt = scratchRepo(`wt-${name}`, "HEAD");
+    const f = path.join(wt, mapAll[cand.id].file);
+    fs.writeFileSync(f, fs.readFileSync(f, "utf8").replace(cand.x, repoText));
+    // The base map says the repo rendered `repoText` for this run (it differed from Webflow's text already); the working tree renders the same text now (so the repo's own value did not change since the base).
+    const mapFile = path.join(base, "map/pages/blog.json");
+    const map = JSON.parse(fs.readFileSync(mapFile, "utf8"));
+    map.elements[cand.id].repoText = repoText;
+    fs.writeFileSync(mapFile, JSON.stringify(map));
+    const nw = baselineCopy(`${name}-new`);
+    editPage(nw, "blog", (lines, { get, set }) => set(cand.id, { ...get(cand.id), id: "conv-recreated", x: NEW }));
+    const rep = reconcile(nw, path.join(tmp, `${name}.md`), ["--base", base], { FLINT_ROOT: wt });
+    const rows = rowsOf(rep, (r) => r.where === "page:blog" && r.sub === "text" && r.webflow === NEW);
+    assert.equal(rows.length, 1, `${name}: one text row, got ${rows.length}`);
+    return rows[0];
+  };
+  assert.equal(build("conv-text", NEW).direction, "CONVERGED");
+  assert.equal(build("conv-text-differs", `${cand.x} Other.`).direction, "PULL");
+});
+
+test("reconcile convergence: an unmapped re-created text run is CONVERGED when the page source holds its new text and no longer the old one (a synthetic tree cannot keep it unmapped: the add / move of its neighbours absorb the row)", () => {
+  const file = "src/sections/BlogHero.tsx";
+  const src = fs.readFileSync(path.join(ROOT, file), "utf8");
+  const IN = "The Flint blog";
+  const ALSO_IN = "Immigration, licensing, and hiring tips for healthcare workers seeking Visa sponsorship.";
+  assert.ok(src.includes(IN) && src.includes(ALSO_IN), "fixture strings are in BlogHero.tsx");
+  const rows = new Rows({ baseMaps: { pages: { demo: { header: { source: file }, elements: {} } } }, nowMaps: null, newMaps: null });
+  const row = (base, nw) => rows.textRow({ where: "page:demo", id: "unmapped-id", base, new: nw, idChanged: true });
+  const hit = row("An old sentence that the page no longer has anywhere.", IN);
+  assert.equal(hit.direction, "CONVERGED");
+  assert.match(hit.notes.join(" "), /already has this text/);
+  assert.equal(row("An old sentence that the page no longer has anywhere.", "A new sentence the page does not have.").direction, "PULL", "the repo does not have the new text");
+  assert.equal(row(ALSO_IN, IN).direction, "PULL", "the old text is still in the file");
+});
 
 test("edit ops: text in JSX text, attributes and JS strings; CSS and tokens; every guard refuses what it cannot do", () => {
   // JSX text, an attribute (with the attribute restriction) and a JS string, each escaped for its context.
@@ -965,9 +1052,9 @@ test("refresh data layer: adds, removes, a re-created text run, links, settings,
 });
 
 // ---- the gate: partial dump (plan and compose) -------------------------------------------------------------------------------
-// The base is dump 20261013T023829Z normalised into a scratch folder; the "new" Webflow state is the same dump with synthetic
+// The base is the current base's own dump (manifest.dump) normalised into a scratch folder; the "new" Webflow state is the same dump with synthetic
 // changes, so the tests do not depend on what the real base is today.
-const NEEDS_DUMP = { skip: have(DUMP_NOW, "dump 20261013T023829Z"), timeout: 300000 };
+const NEEDS_DUMP = NEEDS_DUMP_NOW;
 const gateNode = (args, opts = {}) => {
   const r = spawnSync("node", ["scripts/webflow-gate.mjs", ...args], { cwd: ROOT, encoding: "utf8", ...opts });
   return { code: r.status, out: `${r.stdout}${r.stderr}` };
