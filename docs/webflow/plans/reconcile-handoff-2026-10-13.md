@@ -29,7 +29,7 @@ passes (23 tests, 3 new `gate:` tests).
 
 ## Open items
 
-1. **Site instruction `rules/flint-contract.md`** on Webflow still says contract 1.13. Not written (Webflow write).
+1. ~~**Site instruction `rules/flint-contract.md`** on Webflow still says contract 1.13.~~ **Done 2026-10-13:** updated to 1.14 (version 9).
 2. `variantStyles` and the site instruction are still missing from the dump; the check that fails a sync writing an unlisted
    variant-style triple is not built.
 3. A partial dump misses an asset or font edit that moves no site timestamp (a full dump finds it).
@@ -40,14 +40,15 @@ passes (23 tests, 3 new `gate:` tests).
 1. Read `.agents/skills/flint-reconcile/SKILL.md` (the "Run a reconcile", "Gate" and "Refresh" sections) and `AGENTS.md` 1.14; say if the
    gate rule is too strict (it stops every sync write on a PULL or CONFLICT row).
 2. Triage the drift list from `docs/webflow/reconcile/2026-10-13.md` (summary):
+   (Done 2026-10-13, see the sync-log row and the report's Follow-up: items 1-6 resolved; carousel attributes removed.)
    1. Footer links "For nurses" / "For facilities": repo stale (`Footer.tsx:11-12`), Webflow has `/candidates` and `/facility-partners`: pull into the repo.
    2. Webinars: Webflow has `/#webinars` and the Home section `id="webinars"`; the repo has `#` and no id: pull into the repo.
    3. 45 stale IX3 carousel attributes on Webflow (`data-tm-slide` x21, `data-how-*` x12, `data-dot-*` x12): remove at a sync (rule 12: confirm).
    4. Newsletter Form message `role="status"` / `role="alert"` missing on Webflow: set in the Designer (MCP can't).
    5. Quote Card photo `draggable="false"` missing on Webflow: `set_attributes` at the next sync.
    6. `UI / Input Field` template has no `autocomplete="email"`: minor.
-3. Next Webflow stage: update the site instruction (`search_instructions`, then `update_instruction`: one line for 1.14), and fix the
-   Style guide sentence (D-66 to D-67, "four" to three fields) in repo and Webflow together.
+3. ~~Next Webflow stage: update the site instruction (`search_instructions`, then `update_instruction`: one line for 1.14), and fix the
+   Style guide sentence (D-66 to D-67, "four" to three fields) in repo and Webflow together.~~ Done 2026-10-13.
 4. Designer: set Image width / height (rule 15) on the new chevron image; confirm the Select Field options (not readable through the
    MCP); delete the scratch Form Select on the Style guide if still there; set the Style guide to noindex.
 5. When you want it committed, say so: the scripts, skills, docs and the report `docs/webflow/reconcile/2026-10-13.md` (+ `.summary.md`) go in.

@@ -143,8 +143,8 @@ export default function StyleGuidePage() {
                 <div className="fk-flex fk-flex-col fk-gap-6">
                   <h2 className="fk-heading-md">Input field</h2>
                   <p className="fk-text-md fk-color-subtle">
-                    Form fields are plain markup per form (roadmap D-66): the Figma FormBody below is four Webflow Form Block fields (select, email,
-                    text, text) styled with the shared fk-input-* classes, each with its own Name, Placeholder, Type and options. UI / Input
+                    Form fields are plain markup per form (roadmap D-67): the Figma FormBody below is three Webflow Form Block fields (email, text,
+                    text) styled with the shared fk-input-* classes, each with its own Name, Placeholder, Type and options. UI / Input
                     Field and UI / Select Field stay on Webflow as templates: place one, unlink it, then set Name / Placeholder / Type. Hover
                     and focus a field to see the states.
                   </p>

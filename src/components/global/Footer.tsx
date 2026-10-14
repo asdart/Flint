@@ -7,15 +7,15 @@ const LINK_GROUPS = [
   {
     title: "Institutional",
     links: [
-      { label: "For nurses", href: "/" },
-      { label: "For facilities", href: "/candidates" },
+      { label: "For nurses", href: "/candidates" },
+      { label: "For facilities", href: "/facility-partners" },
     ],
   },
   {
     title: "Resources",
     links: [
       { label: "Blog", href: "/blog" },
-      { label: "Webinars", href: "#" },
+      { label: "Webinars", href: "/#webinars" },
       { label: "About us", href: "/about" },
       { label: "Brand", href: "#" },
       { label: "Careers", href: "#" },

@@ -24,7 +24,7 @@ export default function Webinar({
   buttonLink = "#webinar-registration",
 }: WebinarProps) {
   return (
-    <section className="fk-section">
+    <section id="webinars" className="fk-section">
       <div className="fk-panel fk-bg-tertiary">
         <img
           className="fk-webinar-bg"
