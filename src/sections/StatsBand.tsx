@@ -9,7 +9,7 @@ type StatsBandProps = {
   variant?: "large" | "default" | "spread";
 };
 
-/** Section / Stats Band. Large (brand-light, 4 stats), Default (tertiary, 3 stats, rings) and Spread (Facility
+/** Section / Stats Band. Large (brand-light, 4 stats), Default (tertiary, 2 or 3 stats, rings; 2 stats stay 2 columns down to tablet, 3 drop to 2 on tablet; 1 column on mobile) and Spread (Facility
  * partners: untitled, 3 stats). One tree for all three: `fk-section > fk-panel > [rings] > fk-container >
  * column > [title] > stats row`. The variants differ by classes on those elements and by the optional children
  * (rings and title), which Webflow hides per variant. */
@@ -30,7 +30,7 @@ export default function StatsBand({ title, stats, variant = "large" }: StatsBand
   }[variant];
   const row = {
     large: "fk-stats-band-grid fk-items-center fk-justify-between fk-gap-8-tablet fk-gap-12-mobile",
-    default: "fk-grid fk-cols-3 fk-cols-2-tablet fk-cols-1-mobile fk-gap-12-tablet fk-gap-16-mobile fk-max-w-container-md",
+    default: `fk-grid ${stats.length === 2 ? "fk-cols-2" : "fk-cols-3 fk-cols-2-tablet"} fk-cols-1-mobile fk-gap-12-tablet fk-gap-16-mobile fk-max-w-container-md`,
     spread: "fk-stats-band-spread fk-max-w-container-md fk-mx-auto",
   }[variant];
 

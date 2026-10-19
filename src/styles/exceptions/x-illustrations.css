@@ -11,6 +11,9 @@
   mask-image: conic-gradient(from 0deg, #000 60deg, transparent 60deg);
 }
 
+/* @orbit-only — everything below belongs to the hero orbit (Candidates only). The orbit-free build
+   (x-illustrations-rows-head.html, for the partner pages) takes the rules ABOVE this marker; the full build takes all. */
+
 /* Hero orbit first paint: with scripting on and motion allowed the avatars start hidden, so the
    assembled ring never flashes before it assembles. The script sets `data-x-ready` on the stage the moment it takes
    over and drives the opacity itself. If it never does (the Motion CDN is blocked), the pieces appear after 4s. With

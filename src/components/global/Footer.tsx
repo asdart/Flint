@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import SmartLink from "../../lib/SmartLink";
 import Button from "../ui/Button";
 
-// Links marked "#" have no destination yet (roadmap backlog).
+// Facebook has no destination yet ("#"). Brand, Careers, X and Cookie settings were removed on Webflow (reconcile 2026-10-18).
 const LINK_GROUPS = [
   {
     title: "Institutional",
@@ -17,18 +17,15 @@ const LINK_GROUPS = [
       { label: "Blog", href: "/blog" },
       { label: "Webinars", href: "/#webinars" },
       { label: "About us", href: "/about" },
-      { label: "Brand", href: "#" },
-      { label: "Careers", href: "#" },
     ],
   },
   {
     title: "Social",
     links: [
-      { label: "Instagram", href: "#" },
-      { label: "LinkedIn", href: "#" },
-      { label: "TikTok", href: "#" },
+      { label: "Instagram", href: "https://www.instagram.com/withflint" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/company/withflint/" },
+      { label: "TikTok", href: "https://www.tiktok.com/@withflint" },
       { label: "Facebook", href: "#" },
-      { label: "X", href: "#" },
     ],
   },
   {
@@ -36,7 +33,6 @@ const LINK_GROUPS = [
     links: [
       { label: "Privacy", href: "/privacy-policy" },
       { label: "Terms", href: "/terms-of-service" },
-      { label: "Cookie settings", href: "#" },
     ],
   },
 ] as const;

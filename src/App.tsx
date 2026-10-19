@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import CandidatesPage from "./pages/CandidatesPage";
+import CaregiverForHirePage from "./pages/CaregiverForHirePage";
+import VitalHealthcareTrainingCenterPage from "./pages/VitalHealthcareTrainingCenterPage";
 import FacilityPartnersPage from "./pages/FacilityPartnersPage";
 import BlogPage from "./pages/BlogPage";
 import AboutPage from "./pages/AboutPage";
@@ -43,6 +45,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/candidates" element={<CandidatesPage />} />
+        <Route path="/caregiver-for-hire" element={<CaregiverForHirePage />} />
+        <Route path="/vital-healthcare-training-center" element={<VitalHealthcareTrainingCenterPage />} />
         <Route path="/facility-partners" element={<FacilityPartnersPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blog" element={<BlogPage />} />

@@ -6,6 +6,11 @@
  * file (with the easings of Motion's `cubicBezier`, no CDN request, D-57) into docs/webflow/custom-code/x-illustrations.html,
  * and the local preview runs the same module.
  *
+ * Two runners share the makers: `xIllustrations` (full, with the hero orbit: Candidates) and
+ * `xIllustrationRows` (the rows only, no `orbit`: /caregiver-for-hire and /vital-healthcare-training-center,
+ * user approval 2026-10-17, for pagespeed). `orbit` is referenced only by the full runner, so the rows
+ * bundle (scripts/build-x-illustrations.mjs, entry x-illustrations-rows-entry.ts) tree-shakes it out.
+ *
  * The static markup is the final frame: it is the first paint, and the whole state under reduced
  * motion (the script does nothing then). Otherwise each illustration puts its pieces in their start
  * state and plays when its panel scrolls into view. One-shot illustrations (send, interview, fees) play
@@ -400,6 +405,10 @@ function orbit(root: HTMLElement, p: Player): Illustration {
   };
 }
 
-const MAKERS = { orbit, send, interview, fees, "case-prep": casePrep };
+const ROW_MAKERS = { send, interview, fees, "case-prep": casePrep };
+const MAKERS = { orbit, ...ROW_MAKERS };
 
 export const xIllustrations = (): Cleanup => runIllustrations(MAKERS);
+
+/* The rows only (no hero orbit): the partner pages. Never references `orbit`, so it is tree-shaken out. */
+export const xIllustrationRows = (): Cleanup => runIllustrations(ROW_MAKERS);

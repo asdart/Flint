@@ -83,7 +83,7 @@ function Step({ title, body, reverse, children }: StepProps) {
  * so `x-illustrations` can animate the parts that moved there (`data-x-illustration` names the panel,
  * `data-x-part` the pieces). Bullets are placeholder copy until the client supplies it (D-38).
  */
-export default function CandidatesHowItWorks() {
+export default function CandidatesHowFlintWorks() {
   return (
     <section className="fk-section">
       <div className="fk-panel fk-bg-white">

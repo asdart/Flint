@@ -1,18 +1,13 @@
 import Footer from "../components/global/Footer";
 import Nav from "../components/global/Nav";
 import { useInteractions } from "../ix/useInteractions";
+import CandidatesCta from "../sections/CandidatesCta";
+import CandidatesFaq from "../sections/CandidatesFaq";
 import CandidatesHero from "../sections/CandidatesHero";
-import CandidatesHowItWorks from "../sections/CandidatesHowItWorks";
-import CtaArc from "../sections/CtaArc";
-import Faq from "../sections/Faq";
+import CandidatesHowFlintWorks from "../sections/CandidatesHowFlintWorks";
+import CandidatesStats from "../sections/CandidatesStats";
 import RoleGrid from "../sections/RoleGrid";
-import StatsBand from "../sections/StatsBand";
 import Testimonials from "../sections/Testimonials";
-
-const STATS = [
-  { value: "1000", suffix: "+", label: "People relocated" },
-  { value: "28", label: "States with Facility Partners" },
-];
 
 // Candidates page at /candidates (Figma 5543:915).
 export default function CandidatesPage() {
@@ -23,22 +18,12 @@ export default function CandidatesPage() {
       <Nav />
       <main id="main">
         <CandidatesHero />
-        <StatsBand
-          variant="default"
-          title={
-            <>
-              Thousands of candidates placed.
-              <br />
-              Millions of lives changed.
-            </>
-          }
-          stats={STATS}
-        />
-        <CandidatesHowItWorks />
+        <CandidatesStats />
+        <CandidatesHowFlintWorks />
         <RoleGrid />
         <Testimonials />
-        <Faq />
-        <CtaArc />
+        <CandidatesFaq />
+        <CandidatesCta />
       </main>
       <Footer />
     </div>

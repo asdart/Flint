@@ -1,22 +1,22 @@
 import { FAQS, faqSchema } from "../content/faqs";
 import { cx } from "../lib/cx";
 
-type FaqProps = {
+type CandidatesFaqProps = {
   title?: string;
   body?: string;
   /** Index of the item that starts open (the Figma design shows the first one open). */
   open?: number;
 };
 
-/** Section / FAQ. Page-level markup (D-17: only Candidates has an FAQ so far), not a component. Motion
+/** Section / Candidates / FAQ (Webflow component, group Candidates). Motion
  * is `ix-faq-toggle`: a click on a question toggles `is-faq-open` on the parts of its item (no parent
  * state reaches a child). The preview also renders the page's `FAQPage` JSON-LD from the same
  * questions; on Webflow it is the page's JSON-LD setting (`seo.md` S-08). */
-export default function Faq({
+export default function CandidatesFaq({
   title = "Frequently asked questions",
   body = "Get answers to the most asked questions about Flint.",
   open = 0,
-}: FaqProps) {
+}: CandidatesFaqProps) {
   return (
     <section className="fk-section">
       <div className="fk-panel fk-bg-brand-light">

@@ -1,7 +1,7 @@
 import ArcStage from "../components/ui/ArcStage";
 import Button from "../components/ui/Button";
 
-type CtaArcProps = {
+type CandidatesCtaProps = {
   title?: string;
   body?: string;
   buttonLabel?: string;
@@ -9,14 +9,14 @@ type CtaArcProps = {
 };
 
 /** Section / CTA, variant Arc (Candidates, Figma 5985:2430, D-34): a centered header over the Home hero's
- * rotating arc of portrait cards, cropped by the panel's bottom edge. Page-level pattern (D-17), no props in
+ * rotating arc of portrait cards, cropped by the panel's bottom edge. Webflow component "Candidates / CTA" (group Candidates), no props in
  * Webflow. The arc is the shared `ArcStage` (`fk-hero-*`, `ix-hero-arc`). */
-export default function CtaArc({
+export default function CandidatesCta({
   title = "It's Time to Find Your Green Card Sponsor",
   body = "Join hundreds of healthcare professionals who have started working towards permanent stability in the US.",
   buttonLabel = "Apply now",
   buttonLink = "https://web.withflint.com/apply",
-}: CtaArcProps) {
+}: CandidatesCtaProps) {
   return (
     <section className="fk-section">
       <div className="fk-panel fk-bg-tertiary is-flush-bottom">

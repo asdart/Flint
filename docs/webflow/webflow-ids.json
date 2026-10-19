@@ -25,7 +25,9 @@
     "/privacy-policy (draft)": "6ac53f98c016f2675f9a7d45",
     "/terms-of-service (draft)": "6ac53f99a916ab237adb7022",
     "/404 (utility page, 2026-10-07)": "6ac5be576246587305b44400",
-    "/thank-you (un-drafted 2026-10-10; recreated 2026-10-10, the first page 6acaa20e7d5a60e3e02bd2fc was corrupt and deleted by the user)": "6acaaf221cc16eca4d04973a"
+    "/thank-you (un-drafted 2026-10-10; recreated 2026-10-10, the first page 6acaa20e7d5a60e3e02bd2fc was corrupt and deleted by the user)": "6acaaf221cc16eca4d04973a",
+    "/caregiver-for-hire": "6ad3868cffbf537337a357bc",
+    "/vital-healthcare-training-center": "6ad387243aff6fe4dce01b6a"
   },
   "components": {
     "UI / Button": {
@@ -236,6 +238,42 @@
         "id": "71b39630-a971-6cb4-afd2-0ef5e3edd312",
         "note": "unlinked on Home and deleted by the user in the Designer (D-59); the hero is Home page markup"
       }
+    },
+    "Candidates / CTA": {
+      "id": "5cacd41c-d3ee-923b-61d8-ac1009e0f17f",
+      "group": "Candidates",
+      "name": "CTA",
+      "props": 0,
+      "variants": ["base"],
+      "userSuppliedId": "6ad385e0ef96acd2cf3b780f",
+      "note": "created in the Designer 2026-10-17 (converted from the Candidates page section); id read back by name 2026-10-17 (Stage D); the id the user supplied is not a component id (Webflow: not found), probably a section or element id"
+    },
+    "Candidates / FAQ": {
+      "id": "1f0a7ea2-ba6e-2d34-5184-fa1307a7f020",
+      "group": "Candidates",
+      "name": "FAQ",
+      "props": 0,
+      "variants": ["base"],
+      "userSuppliedId": "6ad385ceeac978484c8fc8c4",
+      "note": "created in the Designer 2026-10-17 (converted from the Candidates page section); id read back by name 2026-10-17 (Stage D); the id the user supplied is not a component id (Webflow: not found), probably a section or element id"
+    },
+    "Candidates / How Flint works": {
+      "id": "8053eefa-bded-8f7b-d16c-2be884a37850",
+      "group": "Candidates",
+      "name": "How Flint works",
+      "props": 0,
+      "variants": ["base"],
+      "userSuppliedId": "6ad385bb0a7d674acf927192",
+      "note": "created in the Designer 2026-10-17 (converted from the Candidates page section); id read back by name 2026-10-17 (Stage D); the id the user supplied is not a component id (Webflow: not found), probably a section or element id"
+    },
+    "Candidates / Stats": {
+      "id": "85f10962-05ac-508d-f254-fc30e6e7b9db",
+      "group": "Candidates",
+      "name": "Stats",
+      "props": 0,
+      "variants": ["base"],
+      "userSuppliedId": "6ad3858bfa027a1bf6312c7d",
+      "note": "created in the Designer 2026-10-17 (converted from the Candidates page section); id read back by name 2026-10-17 (Stage D); the id the user supplied is not a component id (Webflow: not found), probably a section or element id"
     }
   },
   "collections": {
@@ -1084,6 +1122,14 @@
       "id": "6ac661a3ea1e03b03dbafdb8",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac661a3ea1e03b03dbafdb8_candidate-ring-10.webp"
     },
+    "/assets/candidates/partners/caregiver-for-hire.webp": {
+      "id": "6ad415f41e8e1b5b0b994588",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad415f41e8e1b5b0b994588_caregiver-for-hire.webp"
+    },
+    "/assets/candidates/partners/vital-healthcare-training-center.webp": {
+      "id": "6ad415f8d131b1b7d7a3365f",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad415f8d131b1b7d7a3365f_vital-healthcare-training-center.webp"
+    },
     "_deleted_2026-10-07 (D-56, user confirmed)": "home/candidate-01..10.webp (uncropped Home portraits, replaced by candidates/arc and candidates/ring): ids 6abbebd78b8e492698b557ff, 6abbebd78b8e492698b55814, 6abbebd8ea8009d5390ab284, 6abbebd820c655289b9d7014, 6abbebd8f0ec45724fccb1df, 6abbebd88b8e492698b558a9, 6abbebd820c655289b9d7060, 6abbebd910f8c54b2ab12be4, 6abbebd9113c5daeca1d3dde, 6abbebd9113c5daeca1d3df3",
     "_deleted_2026-10-07": {
       "/assets/country-flag.svg": {
@@ -1527,6 +1573,8 @@
     }
   },
   "styles": {
+    "fk-split-media.is-hero": "f36c90f6-4c9b-2eff-42a7-2af5d5af310f",
+    "fk-split-image.is-top": "7e6ab580-c588-0685-3c35-7fd8f3975963",
     "fk-skip-link": "2a8d1f34-c194-928f-d34f-b90b871089ee",
     "fk-filter-dropdown": "d03c4fb2-049f-c15c-5838-e8ebca3d2d05",
     "fk-filter-dropdown-list": "1e019a64-534d-bf43-68ce-7c05519005d5",

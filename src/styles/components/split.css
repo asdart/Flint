@@ -6,7 +6,9 @@
    - `is-reverse`: the media on the left, desktop only (the DOM order stays copy, media).
    `fk-split-copy`: 480px column (`width-content-sm`), full width up to 580px when stacked; `is-wide` allows 640px.
    `fk-split-media is-photo`: Residency's 632px photo column, 40px lower than the copy. The photo heights
-   (`fk-split-image`) are Figma's, local to that block. */
+   (`fk-split-image`) are Figma's, local to that block.
+   `fk-split-media is-hero`: the same 632px column without the 40px offset (Candidates Partner Hero, centred with the copy).
+   `fk-split-image is-top`: crops a portrait photo from its top. */
 
 .fk-split {
   display: flex;
@@ -32,8 +34,16 @@
   padding-top: var(--space-10);
 }
 
+.fk-split-media.is-hero {
+  flex: 0 1 632px;
+}
+
 .fk-split-image {
   height: 421px;
+}
+
+.fk-split-image.is-top {
+  object-position: top;
 }
 
 @media screen and (max-width: 991px) {
@@ -60,6 +70,11 @@
     flex: none;
     width: 100%;
     padding-top: 0;
+  }
+
+  .fk-split-media.is-hero {
+    flex: none;
+    width: 100%;
   }
 
   .fk-split-image {
