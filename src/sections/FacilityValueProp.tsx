@@ -83,7 +83,7 @@ export default function FacilityValueProp() {
 
             <Row
               title="A stable team of familiar faces"
-              body="No more onboarding new staff every 90 days. Flint placements become familiar faces for your residents — not strangers filling a shift."
+              body="No more onboarding new staff every 90 days. Flint placements become familiar faces for your team — not strangers filling a shift."
               reverse
             >
               <div className="fk-steps-art fk-relative fk-shrink-0 fk-rounded-2xl fk-overflow-clip fk-bg-tertiary" data-x-illustration="network" aria-hidden="true">

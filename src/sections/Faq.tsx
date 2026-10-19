@@ -14,7 +14,7 @@ type FaqProps = {
  * questions; on Webflow it is the page's JSON-LD setting (`seo.md` S-08). */
 export default function Faq({
   title = "Frequently asked questions",
-  body = "Get answers to common questions about our Green Card pathway, candidate vetting, and healthcare placement process.",
+  body = "Get answers to the most asked questions about Flint.",
   open = 0,
 }: FaqProps) {
   return (

@@ -4,7 +4,7 @@ import { cx } from "../lib/cx";
 const STEPS = [
   {
     title: "Apply in 30 Seconds",
-    body: "We’ll reach out to confirm we can support your unique case.",
+    body: "It's easy and there's no obligation or commitment after you apply.",
     tone: "inverse",
     variant: "tertiary",
     scrim: true,
@@ -13,7 +13,7 @@ const STEPS = [
   },
   {
     title: "Meet with Flint",
-    body: "Connect with us and we’ll help find the best facilities for your needs.",
+    body: "We'll meet with you to understand your unique situation and how we can help.",
     tone: "inverse",
     variant: "tertiary",
     scrim: true,
@@ -22,7 +22,7 @@ const STEPS = [
   },
   {
     title: "Interview Directly with Facilities",
-    body: "We present you with facilities. You choose who to interview.",
+    body: "We'll present you with facilities . You choose who to interview with.",
     tone: "default",
     variant: "tertiary",
     scrim: false,
@@ -31,7 +31,7 @@ const STEPS = [
   },
   {
     title: "Relocate",
-    body: "We help with your relocation and license transfer.",
+    body: "We'll help organize and pay for relocation to your new sponsored role. ",
     tone: "default",
     variant: "tertiary",
     scrim: false,
@@ -39,7 +39,7 @@ const STEPS = [
     artSize: null as [number, number] | null,
   },
   {
-    title: "Start work",
+    title: "You Start Work",
     body: "After the probation period, immigration filing begins",
     tone: "default",
     variant: "brand-light",
@@ -48,8 +48,8 @@ const STEPS = [
     artSize: [334, 381] as [number, number] | null,
   },
   {
-    title: "Processing",
-    body: "While your Green card processes you continue to work",
+    title: "You Work Towards Stability",
+    body: "While your green card processes you continue to work and get paid.",
     tone: "inverse",
     variant: "tertiary",
     scrim: true,
@@ -71,7 +71,7 @@ export default function HowItWorks() {
               <h2 className="fk-heading-xl">How Flint works</h2>
             </div>
             <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg fk-color-brand-80">Flint helps eligible healthcare professionals connect with hospitals sponsoring Green Cards.<br/><br/>From step one to day one on the job, Flint is with you every step of the way.</p>
+              <p className="fk-text-lg fk-color-brand-80">Flint helps healthcare professionals connect with hospitals sponsoring ready to sponsor you and hire you full-time.<br/><br/>From step one to day one on the job, Flint is with you every step of the way.</p>
             </div>
           </div>
         </div>

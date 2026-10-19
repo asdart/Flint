@@ -3,32 +3,32 @@ import ServiceCard from "../components/ui/ServiceCard";
 const DEFAULT_ITEMS = [
   {
     icon: "/assets/home/offer-hospital.svg",
-    title: "Matched to the right hospital",
-    body: "We find a facility that fits your specialty, experience, and where you want to live.",
+    title: "Matched to the right facility",
+    body: "We find a facility that fits your role, experience, and where you want to live.",
   },
   {
     icon: "/assets/home/offer-id.svg",
     title: "Your green card, managed",
-    body: "We file and track your permanent residency from day one. Not a visa, not a temp fix.",
+    body: "We file and track your permanent residency from day one. ",
   },
   {
     icon: "/assets/home/offer-travel.svg",
     title: "Relocation support included",
-    body: "Housing help, community links, and a team that understands starting fresh abroad.",
+    body: "You'll work with a team ready to help you find housing, community, and peace of mind in your new home.",
   },
   {
     icon: "/assets/home/offer-dashboard.svg",
     title: "One place for everything",
-    body: "Track your visa status, licensing steps, and hospital match. All in your Flint dashboard.",
+    body: "Track your status, licensing steps, and facility matches. All in your Flint dashboard.",
   },
   {
     icon: "/assets/home/offer-concierge.svg",
-    title: "You're never alone in this",
+    title: "You're never alone",
     body: "A dedicated advisor walks every step with you, from first application to green card approval.",
   },
   {
     icon: "/assets/home/offer-check.svg",
-    title: "We got you covered. No Fees.",
+    title: "Your fees, covered",
     body: "Immigration attorneys, NCLEX, licensing, visa filing, all covered. You pay nothing, ever.",
   },
 ];
@@ -37,12 +37,12 @@ const BENEFITS_ITEMS = [
   {
     icon: "/assets/facility/icon-verified.svg",
     title: "Verified Talent",
-    body: "Every clinician on our platform undergoes a rigorous 5-step credentialing and background check process.",
+    body: "Every healthcare professional from Flint undergoes a rigorous 5-step credentialing and background check process.",
   },
   {
     icon: "/assets/facility/icon-flexible.svg",
     title: "Flexible Staffing",
-    body: "From per-diem shifts to long-term travel contracts and permanent placements, manage it all in one place.",
+    body: "From per-diem shifts to long-term travel contracts and permanent placements, Flint helps you manage it all in one place.",
   },
   {
     icon: "/assets/facility/icon-support.svg",
@@ -79,7 +79,7 @@ export default function FeatureGrid({
   ),
   body = variant === "benefits"
     ? "Experience a partnership that prioritizes quality, reliability, and human support."
-    : "Flint gives you a real path to a green card (and not just another contract).",
+    : "Flint gives you a real path to permanent stability.",
   items = variant === "benefits" ? BENEFITS_ITEMS : DEFAULT_ITEMS,
 }: FeatureGridProps) {
   const benefits = variant === "benefits";

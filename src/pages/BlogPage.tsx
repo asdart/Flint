@@ -4,7 +4,6 @@ import Nav from "../components/global/Nav";
 import { blogIndexSchema } from "../content/schema";
 import { useInteractions } from "../ix/useInteractions";
 import BlogHero from "../sections/BlogHero";
-import Newsletter from "../sections/Newsletter";
 import PostIndex from "../sections/PostIndex";
 
 // Blog at /blog, and the Blog category template at /categories/:slug (same sections, the feed
@@ -18,7 +17,6 @@ export default function BlogPage() {
       <Nav />
       <main id="main">
         <BlogHero />
-        <Newsletter />
         <PostIndex key={slug ?? "all"} category={slug} />
       </main>
       <Footer />

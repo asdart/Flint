@@ -627,6 +627,10 @@ nothing (`repoCommit` still points at the old commit; the diff against it includ
 entry for elements added or moved by a refresh; a restructure the agent did leaves REPO AHEAD rows for component files and page sections
 until the next rebuild.
 
+### Rows a partial refresh cannot take (2026-10-17)
+
+`--refresh` refuses a row when a reconcile against the same dump still shows it as PULL or CONFLICT. Four cases showed up in the first real run, none a repo mistake: a removed text run inside a string, a Webflow structure the repo does not copy on purpose (an extra `strong`), a removed element the map cannot place ("element not mapped"), and a section removed behind a condition. They stay PULL until the sync's rebuild (`--rebuild --yes --commit HEAD`); record them as applied with "Base refreshed: no". A `\n` in a string is one text run, so a Webflow `<br>` between two texts needs a `<br />` in the JSX to converge. Recipes: `flint-reconcile` skill, rules of thumb.
+
 ## Rebuilding the base
 
 `node scripts/webflow-snapshot.mjs <dump-dir> --rebuild` takes a fresh dump and replaces the

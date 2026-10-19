@@ -12,7 +12,6 @@ import Testimonials from "../sections/Testimonials";
 const STATS = [
   { value: "1000", suffix: "+", label: "People relocated" },
   { value: "28", label: "States with Facility Partners" },
-  { value: "500,000+", label: "Patients Served" },
 ];
 
 // Candidates page at /candidates (Figma 5543:915).

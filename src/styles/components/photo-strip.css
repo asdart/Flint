@@ -2,7 +2,7 @@
    fill and clipping are utilities) whose portraits overlap and are cut off by its bottom edge. Every number is a
    Figma canvas value as a percentage of the strip (left, width, height and bottom), so the strip scales with
    the container. `is-p1`…`is-p7` run left to right; their z-order is Figma's (the right-most portraits lowest,
-   then 1, 2, 3 and 4 on top). Hidden on tablet and down with `fk-hidden-tablet` (the title's pills replace it). The two portraits Figma mirrors are
+   then 1, 2, 3 and 4 on top). Shown at every width. The two portraits Figma mirrors are
    mirrored in their files. */
 
 .fk-photo-strip {

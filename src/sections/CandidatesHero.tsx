@@ -62,7 +62,7 @@ export default function CandidatesHero() {
               </div>
               <div className="fk-blur-reveal is-delay-1">
                 <p className="fk-text-lg fk-color-subtle">
-                  Flint helps healthcare professionals on temporary status find sponsored healthcare jobs.
+                  Flint helps healthcare professionals find sponsored healthcare jobs. Apply now to see if you're eligible.
                 </p>
               </div>
               <div className="fk-blur-reveal is-delay-2">

@@ -12,14 +12,8 @@ type WebinarProps = {
  * a video-call mockup: the arc sits behind (`-bg`), the call card in the middle (`-call`) and the
  * participants pill on top (`-participants`); see `classes.md` → `fk-webinar-*`. */
 export default function Webinar({
-  title = (
-    <>
-      Got a question
-      <br />
-      about Flint?
-    </>
-  ),
-  body = "Join our free Q&A webinar",
+  title = "Got questions about Flint?",
+  body = "Join one of our free weekly webinars with Neil to get the answers you need.",
   buttonLabel = "Reserve seat",
   buttonLink = "#webinar-registration",
 }: WebinarProps) {

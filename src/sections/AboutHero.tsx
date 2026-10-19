@@ -15,28 +15,13 @@ const STRIP: Array<[string, number, number]> = [
 
 /**
  * Section / About Hero (Figma 5993:3802 desktop, phone 5974:7520). Page-level markup (D-17: only About has
- * this hero). One `h1`: above 991px the page shows the eyebrow, the title and the strip of seven portraits on a
- * white panel; from Tablet down it is the phone design, a grey panel and a title of four lines with three inline portrait
- * pills (`fk-portrait`, hidden above 991px; they reuse the strip's files, strip 2, 6 and 4, so no new image
- * is uploaded). The Nav is the global fixed one.
+ * this hero). One `h1`: the eyebrow, the title and the strip of seven portraits on a white panel, the same layout
+ * at every width (the strip scales with its container). The Nav is the global fixed one.
  */
 export default function AboutHero() {
-  const pill = (file: string, width: number, height: number, tone: string, crop = false) => (
-    <span className={`fk-portrait ${tone}`}>
-      <img
-        className={crop ? "fk-portrait-image is-crop" : "fk-portrait-image"}
-        src={`/assets/about/${file}.webp`}
-        alt=""
-        width={width}
-        height={height}
-        loading="eager"
-      />
-    </span>
-  );
-
   return (
     <section className="fk-section">
-      <div className="fk-panel is-intro fk-flex-tablet fk-flex-col-tablet fk-justify-center-tablet">
+      <div className="fk-panel is-intro">
         <div className="fk-container">
           <div className="fk-flex fk-flex-col fk-items-center fk-gap-12">
             <div className="fk-section-header is-center is-wide" data-ix="blur-reveal">
@@ -44,15 +29,13 @@ export default function AboutHero() {
                 <p className="fk-eyebrow">About us</p>
               </div>
               <div className="fk-blur-reveal is-delay-1">
-                <h1 className="fk-heading-lg fk-flex-tablet fk-flex-col fk-items-center fk-gap-3">
-                  <span>Building {pill("strip-2", 92, 92, "is-brand", true)} the path</span>{" "}
-                  <span>to permanence for {pill("strip-6", 73, 97, "is-peach")}</span>{" "}
-                  <span>{pill("strip-4", 74, 93, "is-sand")} the nurses</span> <span>America needs</span>
+                <h1 className="fk-heading-lg">
+                  Solving healthcare labor shortages by helping international professionals find long-term stability in the United States.
                 </h1>
               </div>
             </div>
             <div
-              className="fk-photo-strip fk-relative fk-w-full fk-bg-brand-light fk-rounded-lg fk-overflow-clip fk-hidden-tablet"
+              className="fk-photo-strip fk-relative fk-w-full fk-bg-brand-light fk-rounded-lg fk-overflow-clip"
               data-ix="reveal-stagger"
               aria-hidden="true"
             >

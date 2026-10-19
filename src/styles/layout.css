@@ -94,8 +94,7 @@
 
 /* Section / About Hero panel (Figma 5993:3803 desktop, 5974:7521 phone). Desktop: the eyebrow sits 128px from the
    page top, so 112px under the section's own 16px, and the photo strip ends 64px above the next section; the panel
-   has no fill (the strip carries the colour). Tablet and down (the phone design): a 584px panel (still no
-   fill, white like desktop) with its content centred under 64px of top padding. 112px and 584px are local. */
+   has no fill (the strip carries the colour). Same at every width. 112px is local. */
 .fk-panel.is-intro {
   padding-top: 112px;
   padding-bottom: var(--space-16);
@@ -203,12 +202,6 @@
 
   .fk-panel-content {
     gap: var(--space-10);
-  }
-
-  .fk-panel.is-intro {
-    min-height: 584px;
-    padding-top: var(--space-16);
-    padding-bottom: 0;
   }
 
   .fk-panel.is-split {

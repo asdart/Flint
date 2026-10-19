@@ -7,7 +7,7 @@ import FeaturedPost from "../components/global/FeaturedPost";
  */
 export default function BlogHero() {
   const title = "The Flint blog";
-  const body = "Immigration, licensing, and hiring tips for healthcare workers seeking Visa sponsorship.";
+  const body = "Immigration, licensing, and hiring tips for healthcare workers looking for permanent stability in the US.";
 
   return (
     <section className="fk-section">

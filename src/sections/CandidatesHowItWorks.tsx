@@ -1,4 +1,3 @@
-import checkmarkIcon from "../assets/icons/checkmark.svg";
 import { cx } from "../lib/cx";
 
 const NOTICES = [
@@ -60,37 +59,18 @@ const NODES = [
 ] as const;
 
 type StepProps = {
-  number?: string;
   title: string;
   body: string;
   reverse?: boolean;
-  bullets?: string[];
   children: React.ReactNode;
 };
 
-function Step({ number, title, body, reverse, bullets, children }: StepProps) {
+function Step({ title, body, reverse, children }: StepProps) {
   return (
     <div className={cx("fk-split fk-items-center fk-justify-end fk-gap-24 fk-gap-10-tablet fk-w-full", reverse && "is-reverse")} data-ix="reveal">
       <div className="fk-split-copy fk-gap-2">
-        <h3 className="fk-heading-md fk-flex">
-          {number ? <span className="fk-steps-number fk-shrink-0">{number}</span> : null}
-          <span>{title}</span>
-        </h3>
+        <h3 className="fk-heading-md">{title}</h3>
         <p className="fk-text-lg fk-color-subtle">{body}</p>
-        {bullets ? (
-          <div className="fk-pt-4">
-            <ul className="fk-list-none fk-flex fk-flex-col fk-gap-3">
-              {bullets.map((bullet, index) => (
-                <li className="fk-flex fk-items-center fk-gap-3" key={`${bullet}-${index}`}>
-                  <span className="fk-icon-badge is-sm fk-bg-brand-light">
-                    <img className="fk-icon is-sm" src={checkmarkIcon} alt="" width={16} height={16} loading="lazy" />
-                  </span>
-                  <p className="fk-text-md">{bullet}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
       </div>
       {children}
     </div>
@@ -115,16 +95,14 @@ export default function CandidatesHowItWorks() {
               </div>
               <div className="fk-blur-reveal is-delay-1">
                 <p className="fk-text-lg fk-color-brand-80">
-                  See how Flint matches you with facilities, covers cost, and gets you to permanent residency.
+                  See how Flint matches you with facilities, covers cost, and gets you on the path towards permanent stability.
                 </p>
               </div>
             </div>
 
             <Step
-              number="1."
-              title="Apply in under one minute."
+              title="1. Apply in under one minute."
               body={"We’ll reach out directly by calling or texting to learn more about you, your role, and your unique immigration situation."}
-              bullets={["Bullet", "Bullet"]}
             >
               <div className="fk-steps-art fk-relative fk-shrink-0 fk-rounded-2xl fk-overflow-clip fk-bg-brand-light" data-x-illustration="send" aria-hidden="true">
                 <div className="fk-steps-canvas fk-absolute">
@@ -159,9 +137,8 @@ export default function CandidatesHowItWorks() {
             </Step>
 
             <Step
-              number="2."
-              title="Interview directly with Facilities"
-              body={"We’ll connect you directly with facilities ready to sponsor your green card, so you can ask questions and find the right facility for you."}
+              title="2. Interview directly with Facilities"
+              body={"We’ll find the right facilities for you based on your experience and where you want to live. Then, you can choose who to interview with — so you can decide with confidence where you'll work."}
               reverse
             >
               <div className="fk-steps-art fk-relative fk-shrink-0 fk-rounded-2xl fk-overflow-clip fk-bg-tertiary" data-x-illustration="interview" aria-hidden="true">
@@ -192,9 +169,8 @@ export default function CandidatesHowItWorks() {
             </Step>
 
             <Step
-              number="3."
-              title="Save thousands on immigration fees"
-              body="After you're hired, we cover all licensing and immigration costs for you. We even provide a relocation bonus."
+              title="3. Save thousands on immigration fees"
+              body="After you're hired, we cover all licensing and immigration costs for you. We even provide a relocation bonus. You pay nothing. "
             >
               <div className="fk-steps-art fk-relative fk-shrink-0 fk-rounded-2xl fk-overflow-clip fk-bg-brand-light" data-x-illustration="fees">
                 <div className="fk-ring is-panel-left" aria-hidden="true">
@@ -218,7 +194,7 @@ export default function CandidatesHowItWorks() {
             </Step>
 
             <Step
-              title="Work while your green card processes"
+              title="4. Work and earn while your green card processes"
               body="Once you start working, you'll earn your full salary while we process your green card. No hidden fees or deductions."
               reverse
             >
@@ -254,7 +230,7 @@ export default function CandidatesHowItWorks() {
             </Step>
 
             <Step
-              title="Find permanent stability in the US"
+              title="5. Gain permanent stability in the US"
               body="After you earn your green card, what you do and where you go next is up to you."
             >
               <div className="fk-steps-art fk-relative fk-shrink-0 fk-rounded-2xl fk-overflow-clip fk-bg-brand-light" data-x-illustration="portrait">

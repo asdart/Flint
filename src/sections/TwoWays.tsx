@@ -100,13 +100,19 @@ function TwoWaysCard({ variant, eyebrow, title, body, buttonLabel, buttonLink }:
 
 type TwoWaysProps = {
   title?: React.ReactNode;
-  body?: string;
+  body?: React.ReactNode;
 };
 
 /** Section / Two Ways. Each banner runs its own ix-two-ways-card scroll timeline. */
 export default function TwoWays({
   title = "Flint helps healthcare facilities hire.",
-  body = "A fresh opportunity for healthcare professionals.\nA new pool of candidates for facilities.",
+  body = (
+    <>
+      A fresh pathway to stability for healthcare professionals.
+      <br />
+      A new way to hire for facilities.
+    </>
+  ),
 }: TwoWaysProps) {
   return (
     <section className="fk-section">
@@ -126,8 +132,8 @@ export default function TwoWays({
               <TwoWaysCard
                 variant="nurses"
                 eyebrow="For Healthcare Professionals"
-                title="Not just a job. A permanent future."
-                body="Find a healthcare role with a facility ready to sponsor your green card from day one."
+                title="Find your path to permanent stability."
+                body="Discover healthcare roles with facilities ready to sponsor your green card from day one."
                 buttonLabel="See if you qualify"
                 buttonLink="/candidates"
               />
@@ -135,7 +141,7 @@ export default function TwoWays({
                 variant="facilities"
                 eyebrow="For Healthcare Facilities"
                 title="Build a permanent team."
-                body="Put an end to expensive agency staff. Flint connects your facility with licensed and motivated professionals already in the US."
+                body="Put an end to expensive agency staff. Flint connects your facility with licensed professionals already in the US."
                 buttonLabel="Apply as facility"
                 buttonLink="/facility-partners"
               />

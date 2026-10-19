@@ -14,7 +14,7 @@ export default function NotFoundPage() {
         <PageHero
           variant="half-screen"
           title="Page not found"
-          body={"That page doesn't exist or has moved.\nHead back to the home page or read the Flint blog."}
+          body={"That page doesn't exist or has moved.\n"}
           showButton
         />
       </main>

@@ -28,17 +28,8 @@ export default function AboutTeam() {
         <div className="fk-container">
           <div className="fk-flex fk-flex-col fk-gap-16 fk-gap-12-mobile">
             <div className="fk-section-header is-center is-narrow" data-ix="blur-reveal">
-              <div className="fk-blur-reveal">
-                <p className="fk-eyebrow">What makes Flint different</p>
-              </div>
               <div className="fk-blur-reveal is-delay-1">
-                <h2 className="fk-heading-xl">Backed by the best</h2>
-              </div>
-              <div className="fk-blur-reveal is-delay-2">
-                <p className="fk-text-lg fk-color-brand-80">
-                  Investors who saw the same gap we did: a healthcare system in crisis, and a global workforce ready to
-                  fill it, if only someone built the bridge.
-                </p>
+                <h2 className="fk-heading-xl">Who we are</h2>
               </div>
             </div>
             <div className="fk-grid fk-cols-3 fk-cols-1-mobile fk-gap-4 fk-gap-8-mobile fk-w-full" data-ix="reveal-stagger">

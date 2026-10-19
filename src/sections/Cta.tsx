@@ -9,8 +9,8 @@ type CtaProps = {
 
 /** Section / CTA, variant Art: a ring texture and a room photo, both masked, on the right. */
 export default function Cta({
-  title = "It's time to find your green card sponsor",
-  body = "We've helped hundreds of Registered Nurses find a permanent path to stability in the US.\nNow it's your turn. Apply now to check your eligibility.",
+  title = "It's time to build a permanent future",
+  body = "We've helped hundreds of healthcare professionals find a permanent path to stability in the US.\nNow it's your turn. Apply now to check your eligibility.",
   buttonLabel = "Apply now",
   buttonLink = "https://web.withflint.com/apply",
 }: CtaProps) {

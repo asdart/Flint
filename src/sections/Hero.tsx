@@ -12,7 +12,7 @@ export default function Hero() {
               <h1 className="fk-heading-xl">Find Healthcare Jobs with Green Card Sponsorship</h1>
             </div>
             <div className="fk-blur-reveal is-delay-1">
-              <p className="fk-text-lg fk-color-brand-80">Flint helps you secure a sponsored healthcare job, relocate, and work towards your Green Card in the US.</p>
+              <p className="fk-text-lg fk-color-brand-80">Flint is a recruiting company that helps you find a sponsored  job so you can gain permanent stability in the US.</p>
             </div>
             <div className="fk-blur-reveal is-delay-2">
               <div className="fk-section-header-action fk-pt-2-mobile">

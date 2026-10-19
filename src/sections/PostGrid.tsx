@@ -11,7 +11,7 @@ import EmptyState from "../components/ui/EmptyState";
 export default function PostGrid() {
   const posts = latestPosts(3);
   const title = "The Flint blog";
-  const body = "Immigration, licensing, and hiring tips for healthcare workers seeking Visa sponsorship.";
+  const body = "Immigration, licensing, and hiring tips for healthcare workers ready for permanent stability.";
 
   return (
     <section className="fk-section">

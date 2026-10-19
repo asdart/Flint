@@ -7,8 +7,8 @@ import Button from "../ui/Button";
 
 const LINKS = [
   { label: "Home", href: "/" },
-  { label: "Candidates", href: "/candidates" },
-  { label: "Facility partners", href: "/facility-partners" },
+  { label: "Find a Sponsored Job", href: "/candidates" },
+  { label: "Hire Candidates", href: "/facility-partners" },
   { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
 ] as const;

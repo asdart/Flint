@@ -45,8 +45,8 @@ export default function Pricing() {
               </div>
               <div className="fk-blur-reveal is-delay-1">
                 <p className="fk-text-lg fk-color-brand-80">
-                  Get answers to common questions about our Green Card pathway, candidate vetting,
-                  and healthcare placement process.
+                  Here's how Flint is able to connect you to sponsored roles and help relocate — all at no
+                  cost to you.
                 </p>
               </div>
             </div>
@@ -60,13 +60,19 @@ export default function Pricing() {
                     </div>
                     <div className="fk-blur-reveal is-delay-1">
                       <p className="fk-text-lg fk-color-subtle">
-                        Facilities spend a lot of money on temporary agency staff. By hiring you
-                        long-term, they save time and money.
+                        Facilities spend a lot of money hiring short-term and agency staff.{" "}
+                        They would rather hire you long-term to save time and money.
                       </p>
                     </div>
                   </div>
                   <div className="fk-blur-reveal is-delay-2">
                     <ul className="fk-list-none fk-flex fk-flex-col fk-gap-4">
+                      <li className="fk-flex fk-items-center fk-gap-3">
+                        <span className="fk-icon-badge is-sm fk-bg-brand-light">
+                          <img className="fk-icon is-sm" src={checkmarkIcon} alt="" width={16} height={16} />
+                        </span>
+                        <p className="fk-text-md">No costs to apply</p>
+                      </li>
                       <li className="fk-flex fk-items-center fk-gap-3">
                         <span className="fk-icon-badge is-sm fk-bg-brand-light">
                           <img className="fk-icon is-sm" src={checkmarkIcon} alt="" width={16} height={16} />
@@ -87,7 +93,7 @@ export default function Pricing() {
               <div className="fk-pricing-card fk-flex fk-items-center fk-justify-center fk-w-full fk-rounded-2xl fk-bg-tertiary">
                 <div className="fk-flex fk-flex-col" data-ix="reveal-stagger">
                   <div className="fk-flex fk-flex-col fk-items-center fk-justify-center fk-gap-2" data-ix-item>
-                    <p className="fk-text-xs">This is you.</p>
+                    <p className="fk-text-xs">You're a healthcare professional with work authorization.</p>
                     <div className="fk-pricing-avatar-wrapper fk-flex fk-items-center fk-justify-center fk-rounded-full">
                       <img
                         className="fk-pricing-avatar fk-rounded-full fk-bg-sand-100 fk-overflow-clip fk-object-cover"
@@ -106,8 +112,8 @@ export default function Pricing() {
                           <img className="fk-icon is-sm" src={facilityIcon} alt="" width={16} height={16} />
                         </div>
                       }
-                      name="Facility"
-                      detail={["Healthcare facilities need to hire", "They pay Flint to find candidates like you"]}
+                      name="Healthcare Facilities Need to Hire"
+                      detail={["They need people like you to work at their facility", "They pay Flint to find candidates like you to work for them"]}
                     />
                     <PricingBubble
                       icon={
@@ -120,7 +126,7 @@ export default function Pricing() {
                         />
                       }
                       name="Flint"
-                      detail={["Connects you to facilities", "Covers your Green Card + Relocation"]}
+                      detail={["We connect you to facilities ready to sponsor your green card", "Because the facility pay us, we can pay immigration, licensing, and other fees for you"]}
                       isLarger={true}
                     />
                     <PricingBubble
@@ -129,8 +135,8 @@ export default function Pricing() {
                           <img className="fk-icon is-sm" src={facilityIcon} alt="" width={16} height={16} />
                         </div>
                       }
-                      name="Facility"
-                      detail={["Hires you as a full-time employee"]}
+                      name="You Work Directly for the Facility"
+                      detail={["They hire you as a full-time employee as you work towards your green card"]}
                     />
                   </div>
                 </div>

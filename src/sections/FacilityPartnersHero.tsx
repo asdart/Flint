@@ -33,14 +33,12 @@ export default function FacilityPartnersHero() {
           <div className="fk-section-header is-center is-tight" data-ix="blur-reveal-hero">
             <div className="fk-blur-reveal">
               <h1 className="fk-heading-xl fk-color-white">
-                Find Top
-                <br />
-                Healthcare Talent
+                Ready to Eliminate Agency Usage?
               </h1>
             </div>
             <div className="fk-blur-reveal is-delay-1">
               <p className="fk-text-lg fk-color-white">
-                Connect with 100,000+ vetted candidates. We simplify staffing for hospitals, clinics, and care facilities.
+                Flint connects your facility to nurses and licensed professionals already living in the US — ready to work in 9 weeks and guaranteed to stay 3+ years.
               </p>
             </div>
             <div className="fk-blur-reveal is-delay-2">
