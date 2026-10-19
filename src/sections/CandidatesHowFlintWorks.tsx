@@ -5,7 +5,6 @@ const NOTICES = [
     name: "Yuki Tanaka",
     image: "/assets/candidates/steps/send-yuki.webp",
     size: [30, 40],
-    flag: "/assets/flags/cn.svg",
     bg: "fk-bg-sand-100",
     crop: "is-top",
     position: "is-n1",
@@ -14,7 +13,6 @@ const NOTICES = [
     name: "Amara Okafor",
     image: "/assets/candidates/steps/send-amara.webp",
     size: [34, 34],
-    flag: "/assets/flags/ph.svg",
     bg: "fk-bg-sand-100",
     crop: "",
     position: "is-n2",
@@ -23,7 +21,6 @@ const NOTICES = [
     name: "Raj Patel",
     image: "/assets/candidates/steps/send-raj.webp",
     size: [37, 37],
-    flag: "/assets/flags/in.svg",
     bg: "fk-bg-peach-100",
     crop: "",
     position: "is-n3",
@@ -32,7 +29,6 @@ const NOTICES = [
     name: "Kwame Asante",
     image: "/assets/candidates/steps/send-kwame.webp",
     size: [74, 93],
-    flag: "/assets/flags/ng.svg",
     bg: "fk-bg-peach-100",
     crop: "is-face",
     position: "is-n4",
@@ -120,7 +116,6 @@ export default function CandidatesHowFlintWorks() {
                               loading="lazy"
                             />
                           </div>
-                          <img className="fk-flag is-ring fk-steps-notice-flag fk-absolute" src={notice.flag} alt="" width={12} height={12} loading="lazy" />
                         </div>
                         <div className="fk-steps-notice-text fk-flex fk-flex-col fk-justify-center fk-min-w-0">
                           <p className="fk-text-sm fk-color-ink">{notice.name}</p>
@@ -243,7 +238,6 @@ export default function CandidatesHowFlintWorks() {
                   loading="lazy"
                 />
                 <div className="fk-chip is-portrait fk-absolute fk-rounded-lg fk-bg-white fk-shadow-chip">
-                  <img className="fk-flag" src="/assets/flags/mx.svg" alt="" width={20} height={20} loading="lazy" />
                   <p className="fk-text-sm fk-font-medium fk-color-ink">Fabiana</p>
                   <span className="fk-chip-divider fk-shrink-0 fk-self-center" />
                   <p className="fk-text-sm fk-font-medium fk-color-subtle">RN, Maplewood</p>

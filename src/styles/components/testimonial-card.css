@@ -1,5 +1,5 @@
 /* fk-testimonial-card — UI / Testimonial Card. All raw dimensions are local to its 396×488
-   portrait canvas; shared flag sizing and system radius/spacing/colors stay tokenized. Generic
+   portrait canvas; system radius/spacing/colors stay tokenized. Generic
    display/position/overflow/radius/background/color declarations moved to utilities in markup
    (docs/webflow/css-system.md); block classes here keep only fixed sizes, offsets, masks and the
    properties `x-carousel` reads/animates on hover (`-quote` height, `-scrim` opacity). */
@@ -64,12 +64,6 @@
   line-height: 32px;
   font-weight: 400;
   letter-spacing: -0.48px;
-}
-
-.fk-testimonial-card-flag {
-  right: var(--space-8);
-  bottom: var(--space-8);
-  pointer-events: none;
 }
 
 .fk-testimonial-card-person {

@@ -1,4 +1,4 @@
-/* fk-chip — a white person pill: flag, name, a hairline, role (Figma 5918:1109 "Fabiana" on the
+/* fk-chip — a white person pill: name, a hairline, role (Figma 5918:1109 "Fabiana" on the
    last How It Works row; the hero's Clara pill is the hover tooltip of orbit slot 3). It is positioned by its
    combo, so the same pill sits above an orbit avatar or in a photo. Text inside is `fk-text-sm`
    (`-name` in ink, `-role` in subtle, both medium); the hairline is a 1px stone-100 rule, as the

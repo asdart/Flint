@@ -6,16 +6,16 @@
  * size, aspect-correct to the file (contract 1.12, rule 15). The uncropped `/assets/home/candidate-NN.webp` are no longer used.
  */
 export const CANDIDATES = [
-  { arc: "/assets/candidates/arc/candidate-01.webp", ring: "/assets/candidates/ring/candidate-01.webp", name: "Maria", flag: "/assets/flags/ph.svg" },
-  { arc: "/assets/candidates/arc/candidate-02.webp", ring: "/assets/candidates/ring/candidate-02.webp", name: "Chrismene", flag: "/assets/flags/ht.svg" },
-  { arc: "/assets/candidates/arc/candidate-03.webp", ring: "/assets/candidates/ring/candidate-03.webp", name: "Wanjiru", flag: "/assets/flags/ke.svg" },
-  { arc: "/assets/candidates/arc/candidate-04.webp", ring: "/assets/candidates/ring/candidate-04.webp", name: "Kwame", flag: "/assets/flags/gh.svg" },
-  { arc: "/assets/candidates/arc/candidate-05.webp", ring: "/assets/candidates/ring/candidate-05.webp", name: "Emeka", flag: "/assets/flags/ng.svg" },
-  { arc: "/assets/candidates/arc/candidate-06.webp", ring: "/assets/candidates/ring/candidate-06.webp", name: "Ama", flag: "/assets/flags/gh.svg" },
-  { arc: "/assets/candidates/arc/candidate-07.webp", ring: "/assets/candidates/ring/candidate-07.webp", name: "Daniel", flag: "/assets/flags/ke.svg" },
-  { arc: "/assets/candidates/arc/candidate-08.webp", ring: "/assets/candidates/ring/candidate-08.webp", name: "Ngozi", flag: "/assets/flags/ng.svg" },
-  { arc: "/assets/candidates/arc/candidate-09.webp", ring: "/assets/candidates/ring/candidate-09.webp", name: "Linh", flag: "/assets/flags/vn.svg" },
-  { arc: "/assets/candidates/arc/candidate-10.webp", ring: "/assets/candidates/ring/candidate-10.webp", name: "Samuel", flag: "/assets/flags/et.svg" },
+  { arc: "/assets/candidates/arc/candidate-01.webp", ring: "/assets/candidates/ring/candidate-01.webp", name: "Maria" },
+  { arc: "/assets/candidates/arc/candidate-02.webp", ring: "/assets/candidates/ring/candidate-02.webp", name: "Chrismene" },
+  { arc: "/assets/candidates/arc/candidate-03.webp", ring: "/assets/candidates/ring/candidate-03.webp", name: "Wanjiru" },
+  { arc: "/assets/candidates/arc/candidate-04.webp", ring: "/assets/candidates/ring/candidate-04.webp", name: "Kwame" },
+  { arc: "/assets/candidates/arc/candidate-05.webp", ring: "/assets/candidates/ring/candidate-05.webp", name: "Emeka" },
+  { arc: "/assets/candidates/arc/candidate-06.webp", ring: "/assets/candidates/ring/candidate-06.webp", name: "Ama" },
+  { arc: "/assets/candidates/arc/candidate-07.webp", ring: "/assets/candidates/ring/candidate-07.webp", name: "Daniel" },
+  { arc: "/assets/candidates/arc/candidate-08.webp", ring: "/assets/candidates/ring/candidate-08.webp", name: "Ngozi" },
+  { arc: "/assets/candidates/arc/candidate-09.webp", ring: "/assets/candidates/ring/candidate-09.webp", name: "Linh" },
+  { arc: "/assets/candidates/arc/candidate-10.webp", ring: "/assets/candidates/ring/candidate-10.webp", name: "Samuel" },
 ] as const;
 
 /** Largest displayed sizes (CSS px) of the cropped files. */

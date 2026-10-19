@@ -9,7 +9,6 @@ type Testimonial = {
   image: string;
   imageSize: readonly [number, number];
   quote: string;
-  flag: string;
 };
 
 const TESTIMONIALS: Testimonial[] = [
@@ -18,7 +17,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: "CNA, Minnesota",
     image: "/assets/testimonial-photo-3.webp",
     imageSize: [625, 702],
-    flag: "/assets/flags/ke.svg",
     quote: "Flint made everything feel easy. They gave me a path and the support I needed to finally see a permanent future here.",
   },
   {
@@ -26,7 +24,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: "CNA, Wisconsin",
     image: "/assets/testimonial-photo-2.webp",
     imageSize: [625, 814],
-    flag: "/assets/flags/ph.svg",
     quote: "Flint is more than a company — it’s an opportunity. They help people like me turn our experience and skills into a real path to permanent status.",
   },
   {
@@ -34,7 +31,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: "CNA, North Dakota",
     image: "/assets/testimonial-photo-1.webp",
     imageSize: [625, 814],
-    flag: "/assets/flags/ng.svg",
     quote: "I came across Flint by chance, and it felt like a miracle. They provided me a faster path to get permanent status. Flint makes everything so smooth and clear.",
   },
   {
@@ -42,7 +38,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: "CNA, Wisconsin",
     image: "/assets/testimonial-photo-2.webp",
     imageSize: [625, 814],
-    flag: "/assets/flags/ht.svg",
     quote: "I didn\u2019t know the relocation bonus would come that fast. I didn\u2019t go through any stress with the whole process. Flint is always checking on me: how are you doing over there?",
   },
   {
@@ -50,7 +45,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: "CNA, Washington",
     image: "/assets/testimonial-photo-1.webp",
     imageSize: [625, 814],
-    flag: "/assets/flags/gh.svg",
     quote: "Flint made everything easy for me. Where I work and where I live is less than five minutes apart, and my two-bedroom apartment is affordable. It makes life so much easier.",
   },
 ];

@@ -3,14 +3,12 @@ type TestimonialCardProps = {
   quote: string;
   name: string;
   role: string;
-  /** Country flag SVG (prop Flag in Webflow). */
-  flag?: string;
   /** The photo file's intrinsic size, for the `width`/`height` attributes (Webflow holds one static pair on the Image). */
   imageSize?: readonly [number, number];
 };
 
 /** UI / Testimonial Card. Hover motion is `x-carousel`. */
-export default function TestimonialCard({ image, quote, name, role, flag = "/assets/country-flag.svg", imageSize = [625, 814] }: TestimonialCardProps) {
+export default function TestimonialCard({ image, quote, name, role, imageSize = [625, 814] }: TestimonialCardProps) {
   return (
     <article className="fk-testimonial-card fk-relative fk-rounded-2xl fk-bg-white fk-overflow-clip">
       <div className="fk-testimonial-card-media fk-absolute">
@@ -29,16 +27,6 @@ export default function TestimonialCard({ image, quote, name, role, flag = "/ass
         <blockquote className="fk-testimonial-card-quote-text fk-absolute fk-w-full fk-color-white">
           &ldquo;<span>{quote}</span>&rdquo;
         </blockquote>
-      </div>
-      <div className="fk-testimonial-card-flag fk-absolute">
-        <img
-          className="fk-flag is-lg"
-          src={flag}
-          alt=""
-          width={32}
-          height={32}
-          draggable={false}
-        />
       </div>
       <div className="fk-testimonial-card-person fk-absolute fk-flex fk-flex-col fk-gap-1">
         <p className="fk-text-md fk-font-medium fk-color-white">{name}</p>

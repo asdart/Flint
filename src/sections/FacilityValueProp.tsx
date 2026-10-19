@@ -20,7 +20,6 @@ const CANDIDATES = [
     size: [55, 69],
     crop: "is-charlette",
     bg: "fk-bg-sand-100",
-    flag: "/assets/how-it-works/retention-flag-angola.svg",
   },
   {
     name: "Eizle",
@@ -28,7 +27,6 @@ const CANDIDATES = [
     size: [51, 68],
     crop: "is-eizle",
     bg: "fk-bg-brand-foreground",
-    flag: "/assets/how-it-works/retention-flag-mexico.svg",
   },
 ] as const;
 
@@ -198,7 +196,6 @@ export default function FacilityValueProp() {
                                 loading="lazy"
                               />
                             </div>
-                            <img className="fk-flag is-lg" src={candidate.flag} alt="" width={32} height={32} loading="lazy" />
                           </div>
                         </div>
                       </Fragment>

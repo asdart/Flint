@@ -103,13 +103,6 @@
   max-width: none;
 }
 
-.fk-steps-notice-flag {
-  right: 0;
-  bottom: 0;
-  width: 12px;
-  height: 12px;
-}
-
 .fk-steps-notice-text {
   flex: 1 1 0;
 }

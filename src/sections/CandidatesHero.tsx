@@ -10,7 +10,7 @@ const SLOTS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 3, 4, 9];
 
 /**
  * Hover tooltip copy per slot, "role, location" (the legacy hero's `ORBIT_PEOPLE` list by slot). Placeholder copy
- * (D-38): the client replaces it. The name and flag are the slot's portrait; slot 3 is Clara (Kenya flag).
+ * (D-38): the client replaces it. The name is the slot's portrait; slot 3 is Clara.
  */
 const SLOT_ROLES = [
   "RN, Minnesota",
@@ -47,7 +47,6 @@ export default function CandidatesHero() {
                   <img className="fk-orbit-image fk-absolute fk-block fk-w-full fk-h-full fk-object-cover" src={candidate.ring} alt="" width={RING_IMAGE_SIZE[0]} height={RING_IMAGE_SIZE[1]} />
                 </div>
                 <div className="fk-chip is-tooltip fk-absolute fk-rounded-lg fk-bg-white fk-shadow-chip" data-x-part="tooltip">
-                  <img className="fk-flag" src={clara ? "/assets/flags/ke.svg" : candidate.flag} alt="" width={20} height={20} />
                   <p className="fk-text-sm fk-font-medium fk-color-ink">{clara ? "Clara" : candidate.name}</p>
                   <span className="fk-chip-divider fk-shrink-0 fk-self-center" />
                   <p className="fk-text-sm fk-font-medium fk-color-subtle">{SLOT_ROLES[index]}</p>

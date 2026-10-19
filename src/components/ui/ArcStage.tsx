@@ -24,7 +24,6 @@ export default function ArcStage() {
                 loading="lazy"
               />
               <div className="fk-hero-card-chip">
-                <img className="fk-flag" src={candidate.flag} alt="" width={20} height={20} loading="lazy" />
                 <span className="fk-hero-card-name">{candidate.name}</span>
               </div>
             </div>
