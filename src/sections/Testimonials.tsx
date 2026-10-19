@@ -12,23 +12,53 @@ type Testimonial = {
   flag: string;
 };
 
-const QUOTE =
-  "Flint made everything feel easy. After years of uncertainty, they gave me a path and the support I needed to finally see a permanent future here.";
-
 const TESTIMONIALS: Testimonial[] = [
-  { name: "Sarah Mitchell", role: "Registered Nurse", image: "/assets/testimonial-photo-2.webp", imageSize: [625, 814], flag: "/assets/flags/ph.svg", quote: QUOTE },
-  { name: "James Chen", role: "Physical Therapist", image: "/assets/testimonial-photo-1.webp", imageSize: [625, 814], flag: "/assets/flags/ng.svg", quote: QUOTE },
-  { name: "Emily Rodriguez", role: "Nursing Assistant", image: "/assets/testimonial-photo-3.webp", imageSize: [625, 702], flag: "/assets/flags/ke.svg", quote: QUOTE },
-  { name: "Michael Thompson", role: "Medical Technician", image: "/assets/testimonial-photo-3.webp", imageSize: [625, 702], flag: "/assets/flags/gh.svg", quote: QUOTE },
-  { name: "Lisa Park", role: "Lab Specialist", image: "/assets/testimonial-photo-1.webp", imageSize: [625, 814], flag: "/assets/flags/vn.svg", quote: QUOTE },
-  { name: "David Santos", role: "Clinical Coordinator", image: "/assets/testimonial-photo-2.webp", imageSize: [625, 814], flag: "/assets/flags/ht.svg", quote: QUOTE },
-  { name: "Jennifer Adams", role: "Healthcare Administrator", image: "/assets/testimonial-photo-3.webp", imageSize: [625, 702], flag: "/assets/flags/et.svg", quote: QUOTE },
+  {
+    name: "Lucy",
+    role: "CNA, Minnesota",
+    image: "/assets/testimonial-photo-3.webp",
+    imageSize: [625, 702],
+    flag: "/assets/flags/ke.svg",
+    quote: "Flint made everything feel easy. They gave me a path and the support I needed to finally see a permanent future here.",
+  },
+  {
+    name: "Fabiana",
+    role: "CNA, Wisconsin",
+    image: "/assets/testimonial-photo-2.webp",
+    imageSize: [625, 814],
+    flag: "/assets/flags/ph.svg",
+    quote: "Flint is more than a company — it’s an opportunity. They help people like me turn our experience and skills into a real path to permanent status.",
+  },
+  {
+    name: "George",
+    role: "CNA, North Dakota",
+    image: "/assets/testimonial-photo-1.webp",
+    imageSize: [625, 814],
+    flag: "/assets/flags/ng.svg",
+    quote: "I came across Flint by chance, and it felt like a miracle. They provided me a faster path to get permanent status. Flint makes everything so smooth and clear.",
+  },
+  {
+    name: "Temilola",
+    role: "CNA, Wisconsin",
+    image: "/assets/testimonial-photo-2.webp",
+    imageSize: [625, 814],
+    flag: "/assets/flags/ht.svg",
+    quote: "I didn\u2019t know the relocation bonus would come that fast. I didn\u2019t go through any stress with the whole process. Flint is always checking on me: how are you doing over there?",
+  },
+  {
+    name: "Evanson",
+    role: "CNA, Washington",
+    image: "/assets/testimonial-photo-1.webp",
+    imageSize: [625, 814],
+    flag: "/assets/flags/gh.svg",
+    quote: "Flint made everything easy for me. Where I work and where I live is less than five minutes apart, and my two-bedroom apartment is affordable. It makes life so much easier.",
+  },
 ];
 
 /** Three copies in a row: the middle one is the real set, the outer two let the track slide in
  * either direction without running out of cards (`x-carousel`, `data-x-copies="3"`). */
 const RING = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
-const CURRENT = TESTIMONIALS.length + 3;
+const CURRENT = TESTIMONIALS.length + Math.floor(TESTIMONIALS.length / 2);
 
 type TestimonialsProps = {
   title?: React.ReactNode;

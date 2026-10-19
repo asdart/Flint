@@ -1,43 +1,29 @@
 import CarouselDots from "../components/ui/CarouselDots";
 import QuoteCard from "../components/ui/QuoteCard";
 
-/** The first five cards of the Figma slider (5899:3648), copy word for word (typographic apostrophes). Portraits are
- * Home's three testimonial photos, matched to each name (2, 1, 3, 1, 2) so no two neighbours share a face. */
+/** The three administrator quotes (user, 2026-10-19), copy word for word (typographic apostrophes and dashes). Portraits
+ * are 104 × 104 top crops of three cut-out portraits of women, none of them a Testimonial Card photo. */
 const QUOTES = [
   {
     quote:
-      "We serve both military and civilian patients and previously faced high turnover rates, which made maintaining a reliable workforce challenging. Flint provided a solution by filling 12 critical roles with committed, full-time professionals.",
-    image: "/assets/quote-photo-2.webp",
-    name: "Sarah Jennings",
-    role: "Operations Manager, Metro General Hospital",
-  },
-  {
-    quote:
-      "Thanks to the innovative staffing approach, we reduced our hiring time by 40%, allowing us to focus on patient care rather than recruitment.",
+      "My first response when I heard about Flint was: if it’s this easy, why isn’t everybody doing it? We tried everything before this — partnerships with schools, higher wages, travel staff. It truly was that easy. I don’t know why everyone’s not doing it.",
     image: "/assets/quote-photo-1.webp",
-    name: "Michael Thompson",
-    role: "HR Director, Coastal Health System",
+    name: "Samantha Colbenson",
+    role: "Administrator — Good Shepherd Lutheran Services, Rushford MN",
   },
   {
     quote:
-      "By leveraging technology and analytics, we were able to optimize our scheduling and ensure better coverage for our patients.",
+      "When I started we were in the 40s with two units closed. Today we are at 82. Having consistent staff means we can take more residents — and people in our community don’t have to go far away for care anymore.",
+    image: "/assets/quote-photo-2.webp",
+    name: "Tara Marie Adkins",
+    role: "Administrator — Inter-Faith Care Center, Carlton MN",
+  },
+  {
+    quote:
+      "We’ve reduced agency CNAs from 10 down to three in under six months. The financial impact has been huge. And beyond the numbers, the staff actually fit our culture and care about our residents — that’s what agency never gave us.",
     image: "/assets/quote-photo-3.webp",
-    name: "Emily Chen",
-    role: "Director of Operations, City Care Clinic",
-  },
-  {
-    quote:
-      "We recognized that our previous approach was unsustainable, and Flint’s expertise helped us to stabilize our workforce effectively.",
-    image: "/assets/quote-photo-1.webp",
-    name: "Richard Martin",
-    role: "Chief Executive Officer, West Valley Medical Center",
-  },
-  {
-    quote:
-      "Their commitment to understanding our unique challenges has made all the difference in our staffing stability.",
-    image: "/assets/quote-photo-2.webp",
-    name: "Jessica Lee",
-    role: "Nurse Manager, Riverside Hospital",
+    name: "Krista Boley",
+    role: "Administrator — Park Manor, Park Falls WI",
   },
 ];
 
