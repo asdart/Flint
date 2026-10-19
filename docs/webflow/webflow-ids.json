@@ -1137,6 +1137,30 @@
         "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd510f8c54b2ab12917_country-flag.svg",
         "note": "deleted by the user in the Designer 2026-10-07 (unused, Stage G)"
       }
+    },
+    "/assets/og/og-home.jpg": {
+      "id": "6ad65be7191f5571dbdd1a25",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad65be7191f5571dbdd1a25_og-home.jpg"
+    },
+    "/assets/og/og-candidates.jpg": {
+      "id": "6ad65be66a06c855189ceee0",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad65be66a06c855189ceee0_og-candidates.jpg"
+    },
+    "/assets/og/og-facility-partners.jpg": {
+      "id": "6ad65be71c0f283eb8fae156",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad65be71c0f283eb8fae156_og-facility-partners.jpg"
+    },
+    "/assets/og/og-blog.jpg": {
+      "id": "6ad65be7c69cff8a473c96ae",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad65be7c69cff8a473c96ae_og-blog.jpg"
+    },
+    "/assets/og/og-about-a.jpg": {
+      "id": "6ad65be6c4391a0cc10198ad",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad65be6c4391a0cc10198ad_og-about-a.jpg"
+    },
+    "/assets/og/og-about-b.jpg": {
+      "id": "6ad65be731088417fcb75356",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad65be731088417fcb75356_og-about-b.jpg"
     }
   },
   "variableCollections": {
