@@ -1,16 +1,27 @@
 import Modal from "../components/ui/Modal";
 
-/**
- * PLACEHOLDER BIO (user decision, 2026-10-01): Kenton's bio from Figma node 5985:2970 is used for all three
- * founders until the client sends the other two. Replace `BIO` (or give each founder its own `bio`) then.
- */
-const BIO =
-  "Kenton Jarvie didn't set out to build a company — he set out to solve a problem he couldn't stop thinking about. Growing up, he watched his mother immigrate from South Africa to the United States and navigate the grueling, opaque process of building a career in a new country. That experience left a mark. Years later, as he met healthcare workers from around the world — nurses, doctors, specialists — he kept hearing the same story: talented professionals desperate to work in the U.S., trapped in a system that seemed designed to keep them out. In 2024, Kenton co-founded Flint with Anson Kung and Neil Prigge, bringing together their shared frustration into something actionable. As CEO, Kenton leads with a simple belief: the world's best healthcare workers shouldn't be held back by paperwork, bureaucracy, or broken systems. Under his leadership, Flint is building the infrastructure to match international healthcare talent with the American hospitals that need them — faster, more transparently, and more humanely than ever before.";
+/** Final founder bios (client copy, 2026-10-19), one string per paragraph; each paragraph is a `p` in the modal. */
+const BIOS = {
+  kenton: [
+    "Kenton\u2019s reason for building Flint starts at home. His wife is a registered nurse, and through her he\u2019s seen what the healthcare labor shortage looks like up close: the extra shifts, the short-staffed units, and the way burnout follows good nurses from one job to the next. He\u2019s watched how one empty position puts pressure on a whole team, and how that pressure eventually reaches patients.",
+    "Kenton graduated with honors from business school and has founded several businesses. Flint is the one he\u2019s most personally invested in. What drives him isn\u2019t the business model. It\u2019s the belief that nurses deserve fully staffed, stable teams, and that patients deserve the care that comes with that. Flint is his answer to a problem he\u2019s seen from the kitchen table, not just the boardroom.",
+  ],
+  anson: [
+    "Anson grew up watching proof that Flint\u2019s model works. His mother immigrated from Hong Kong and built a 25-year career as a pediatric registered nurse, caring for thousands of children and their families before she recently retired. He saw firsthand how much an internationally educated nurse can give to our healthcare system.",
+    "He also saw how hard it was to get there. Paperwork, delays, and process obstacles too often stand in the way of careers like his mother\u2019s.",
+    "An engineer and entrepreneur at heart, Anson was previously CTO of A&K Robotics and served on the board of BC Rehab. He\u2019s always been drawn to solving real-world problems, and this one is personal. At Flint, he leads facility-side operations, working with hospitals and care facilities so that qualified nurses from around the world can spend less time fighting bureaucracy and more time doing the work they trained for.",
+  ],
+  neil: [
+    "Neil was eight when his family left South Africa for a new life abroad. He often says his parents\u2019 decision to make that move is the most meaningful thing anyone has ever done for him. It opened up opportunities he wouldn\u2019t otherwise have had.",
+    "He made the most of them. Neil graduated with an engineering degree and found his calling in entrepreneurship: spotting problems that matter, building something to solve them, and doing it again. Flint is the venture closest to his heart.",
+    "The move itself wasn\u2019t easy. Starting over in a new country meant real practical challenges that his family had to work through largely on their own. That\u2019s why Flint\u2019s work feels personal to him. Many of the nurses Flint supports are parents making the same brave choice his did, so their children can have the kind of life he\u2019s been given. Neil\u2019s goal is to make the practical side of that journey easier, so families can focus on building their future in the country they\u2019ll come to call home.",
+  ],
+} as const;
 
 const FOUNDERS = [
-  { id: "kenton", name: "Kenton Jarvie", role: "CEO, Co-Founder", image: "team-kenton", size: [711, 711], bio: BIO },
-  { id: "anson", name: "Anson Kung", role: "COO, Co-Founder", image: "team-anson", size: [711, 711], bio: BIO },
-  { id: "neil", name: "Neil Prigge", role: "VP Operations, Co-Founder", image: "team-neil", size: [711, 888], bio: BIO },
+  { id: "kenton", name: "Kenton Jarvie", role: "CEO, Co-Founder", image: "team-kenton", size: [711, 711], bio: BIOS.kenton },
+  { id: "anson", name: "Anson Kung", role: "COO, Co-Founder", image: "team-anson", size: [711, 711], bio: BIOS.anson },
+  { id: "neil", name: "Neil Prigge", role: "VP Operations, Co-Founder", image: "team-neil", size: [711, 888], bio: BIOS.neil },
 ] as const;
 
 /**
@@ -83,7 +94,11 @@ export function AboutTeamModals() {
             <p className="fk-text-lg fk-color-subtle">{founder.role}</p>
           </div>
           <div className="fk-flex fk-flex-col fk-gap-4">
-            <p className="fk-text-lg fk-color-brand-80">{founder.bio}</p>
+            {founder.bio.map((paragraph) => (
+              <p key={paragraph} className="fk-text-lg fk-color-brand-80">
+                {paragraph}
+              </p>
+            ))}
           </div>
         </Modal>
       ))}
