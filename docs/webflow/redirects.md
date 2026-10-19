@@ -19,10 +19,8 @@ The last four are renamed pages and posts found in the live sitemap (2026-10-10 
 | `/referral-noma` | `/candidates` |
 | `/referral-peter-mahowe` | `/candidates` |
 | `/two-rivers-care-training` | `/candidates` |
-| `/vital-healthcare-training-center` | `/candidates` |
 | `/care-connection-flint-page` | `/candidates` |
 | `/excelcna` | `/candidates` |
-| `/caregiver-for-hire` | `/candidates` |
 | `/registered-nurse-sponsorship` | `/candidates` |
 | `/thank-you-overview-rn` | `/thank-you` |
 | `/thank-you-overview` | `/thank-you` |
@@ -37,6 +35,10 @@ The last four are renamed pages and posts found in the live sitemap (2026-10-10 
 
 `/thank-you` is the new Thank You page (`src/pages/ThankYouPage.tsx`, `components.md` → Pages):
 `noindex`, out of the sitemap.
+
+## Not redirected: now live pages (2026-10-18)
+
+`/vital-healthcare-training-center` and `/caregiver-for-hire` were built as pages on 2026-10-17, so they are not redirected (they were rows 9 and 12 above). The CSV ([`redirects.csv`](redirects.csv), 21 rows) was imported into Webflow by the user on 2026-10-18.
 
 ## Not redirected: published instead (user, 2026-10-10)
 

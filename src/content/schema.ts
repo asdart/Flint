@@ -15,9 +15,14 @@ export const ORG_LOGO = {
   height: 512,
 };
 
-/** Social profile URLs. Empty until the client sends them (roadmap P-08 / Backlog): add them here and
- * rebuild; `sameAs` is only emitted when the list is not empty. */
-export const SAME_AS: string[] = [];
+/** Social profile URLs (from the client, 2026-10-18; same as the Footer social links). Rebuild after a
+ * change; `sameAs` is only emitted when the list is not empty. */
+export const SAME_AS: string[] = [
+  "https://www.instagram.com/withflint",
+  "https://www.linkedin.com/company/withflint/",
+  "https://www.tiktok.com/@withflint",
+  "https://www.facebook.com/withflint/",
+];
 
 /** `Organization` + `WebSite`, for every page (exception `x-schema-site`, site head code). */
 export function siteSchema() {

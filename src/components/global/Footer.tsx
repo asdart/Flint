@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import SmartLink from "../../lib/SmartLink";
 import Button from "../ui/Button";
 
-// Facebook has no destination yet ("#"). Brand, Careers, X and Cookie settings were removed on Webflow (reconcile 2026-10-18).
+// Brand, Careers, X and Cookie settings were removed on Webflow (reconcile 2026-10-18).
 const LINK_GROUPS = [
   {
     title: "Institutional",
@@ -25,7 +25,7 @@ const LINK_GROUPS = [
       { label: "Instagram", href: "https://www.instagram.com/withflint" },
       { label: "LinkedIn", href: "https://www.linkedin.com/company/withflint/" },
       { label: "TikTok", href: "https://www.tiktok.com/@withflint" },
-      { label: "Facebook", href: "#" },
+      { label: "Facebook", href: "https://www.facebook.com/withflint/" },
     ],
   },
   {
