@@ -1,7 +1,7 @@
 # 301 redirects (launch)
 
 Legacy `withflint.com` URLs that don't exist on the new site and must redirect when the domain is
-connected (roadmap P-06, `seo.md` S-05). Entered in Webflow at launch (Site settings → Publishing →
+connected (roadmap P-06, `seo.md` S-05). **Status: entered in Webflow (user, confirmed 2026-10-19).** Planned for launch (Site settings → Publishing →
 301 redirects); site settings stay untouched until then (D-62). Paths are relative to
 `https://withflint.com`. Every old path below answered 200 on the live site on 2026-10-10.
 
