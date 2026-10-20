@@ -30,7 +30,7 @@ export default function AboutHero() {
               </div>
               <div className="fk-blur-reveal is-delay-1">
                 <h1 className="fk-heading-lg">
-                  Solving healthcare labor shortages by helping international professionals find long-term stability in the United States.
+                  Solving healthcare labor shortages. Helping professionals find long-term stability in the United States.
                 </h1>
               </div>
             </div>

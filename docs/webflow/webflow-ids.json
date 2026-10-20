@@ -365,7 +365,7 @@
     "siteHead": "<style> x-button-gradient, x-text-rendering, x-blur-reveal; source docs/webflow/custom-code/site-head.html",
     "postsTemplateHead": "<style> x-related-empty + x-article-body on Posts template 6abc6c9673c0a3345b7a94bd (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/post-template-head-style.html",
     "blogPaginationHead": "<style> x-blog-pagination on /blog 6abc95f3d5879b11ae14b088 and Categories template 6abc6c8adc4bd2e2066e91ea (installed 2026-09-30, needs a publish); source docs/webflow/custom-code/blog-pagination.html",
-    "homeFooter": "<script type=module> x-carousel (Motion 13.4.6 from jsDelivr) as Home page footer freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-01, published and tested by the user 2026-10-01); source docs/webflow/custom-code/x-carousel.html (script block only). Testimonial Card prop Flag af54577d-2273-6579-d6e2-409db1057a4c (image asset id) set on the 21 instances in Testimonials",
+    "homeFooter": "<script type=module> x-carousel (Motion 13.4.6 from jsDelivr) as Home page footer freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-01, published and tested by the user 2026-10-01); source docs/webflow/custom-code/x-carousel.html (script block only). Testimonial Card prop Flag af54577d-2273-6579-d6e2-409db1057a4c was removed 2026-10-20 (flag removal, stage 2)",
     "homeHead": "<style> x-modal (reduced motion) as Home page head freeform code 6ab9ba4ceffb3329202448f2 (installed 2026-10-06, was empty, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
     "aboutHead": "<style> x-modal (reduced motion) as About page head freeform code 6abed61fbb91160db13da902 (installed 2026-10-01, needs a publish); source docs/webflow/custom-code/x-modal-head.html",
     "siteScripts": "none applied (get_site_scripts 404, checked 2026-09-30)",
@@ -390,16 +390,16 @@
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0efde9063164981de_do-you-qualify-for-nurse-green-card-sponsorship-in-2026-quick-eligibility-guide.webp"
     },
     "/assets/blog/posts/eb-3-visa-bulletin-september-2026-update.webp": {
-      "id": "6abc6af03f8ed6cc3a8c21da",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af03f8ed6cc3a8c21da_eb-3-visa-bulletin-september-2026-update.webp"
+      "id": "6ad6d0ae4ef837a967be06eb",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0ae4ef837a967be06eb_eb-3-visa-bulletin-september-2026-update.webp"
     },
     "/assets/blog/posts/eb-3-visa-for-nurses-from-india.webp": {
-      "id": "6abc6af0733009277228098d",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0733009277228098d_eb-3-visa-for-nurses-from-india.webp"
+      "id": "6ad6d0ae1af9001b8dfc8a4c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0ae1af9001b8dfc8a4c_eb-3-visa-for-nurses-from-india.webp"
     },
     "/assets/blog/posts/eb-3-visa-for-nurses-from-the-philippines.webp": {
-      "id": "6abc6af0dc4bd2e2066e3172",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af0dc4bd2e2066e3172_eb-3-visa-for-nurses-from-the-philippines.webp"
+      "id": "6ad6d0af1af9001b8dfc8a61",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0af1af9001b8dfc8a61_eb-3-visa-for-nurses-from-the-philippines.webp"
     },
     "/assets/blog/posts/eb-3-visa-for-nurses-timeline-2026-from-application-to-green-card.webp": {
       "id": "6abc6af0c6e41bca87ab7f7a",
@@ -418,44 +418,45 @@
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af1e3ded54f36c5b604_green-card-sponsorship-for-healthcare-workers.webp"
     },
     "/assets/blog/posts/green-card-sponsorship-for-nurses.webp": {
-      "id": "6abc6af13f8ed6cc3a8c22a4",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af13f8ed6cc3a8c22a4_green-card-sponsorship-for-nurses.webp"
+      "id": "6ad6d0af3d2c651e0e777a3c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0af3d2c651e0e777a3c_green-card-sponsorship-for-nurses.webp"
     },
     "/assets/blog/posts/hospitals-that-sponsor-green-card-for-nurses-in-2026.webp": {
       "id": "6abc6af1098417409101f723",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af1098417409101f723_hospitals-that-sponsor-green-card-for-nurses-in-2026.webp"
     },
     "/assets/blog/posts/how-flint-works.webp": {
-      "id": "6abc6af1c6e41bca87ab7fc8",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af1c6e41bca87ab7fc8_how-flint-works.webp"
+      "id": "6ad6d0af6fcfae7ebabff8c0",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0af6fcfae7ebabff8c0_how-flint-works.webp"
     },
     "/assets/blog/posts/how-green-card-sponsorship-for-nurses-actually-works.webp": {
       "id": "6abc6af1efde90631649823a",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af1efde90631649823a_how-green-card-sponsorship-for-nurses-actually-works.webp"
     },
     "/assets/blog/posts/how-hospitals-sponsor-nurses-for-green-cards.webp": {
-      "id": "6abc6af13523e994d763852c",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af13523e994d763852c_how-hospitals-sponsor-nurses-for-green-cards.webp"
+      "id": "6ad6d0af6fcfae7ebabff8d5",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0af6fcfae7ebabff8d5_how-hospitals-sponsor-nurses-for-green-cards.webp"
     },
     "/assets/blog/posts/how-to-apply-for-nurse-green-card-sponsorship-today-step-by-step-eligibility-check.webp": {
       "id": "6abc6af2efde906316498288",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af2efde906316498288_how-to-apply-for-nurse-green-card-sponsorship-today-step-by-step-eligibility-check.webp"
     },
     "/assets/blog/posts/how-to-get-green-card-sponsorship-in-2026.webp": {
-      "id": "6abc6af216e6656f85072887",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af216e6656f85072887_how-to-get-green-card-sponsorship-in-2026.webp"
+      "id": "6ad6d0afd59048bd71f0679c",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0afd59048bd71f0679c_how-to-get-green-card-sponsorship-in-2026.webp",
+      "replacedAsset": "6abc6af216e6656f85072887 (old file, was the Post Card Image default, deleted 2026-10-20)"
     },
     "/assets/blog/posts/is-eb-3-the-best-green-card-path-for-healthcare-workers-in-2026-a-guide-for-cnas-lpns-and-rns.webp": {
-      "id": "6abc6af2b973d1500598d446",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af2b973d1500598d446_is-eb-3-the-best-green-card-path-for-healthcare-workers-in-2026-a-guide-for-cnas-lpns-and-rns.webp"
+      "id": "6ad6d0af582187937a4b5b6d",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0af582187937a4b5b6d_is-eb-3-the-best-green-card-path-for-healthcare-workers-in-2026-a-guide-for-cnas-lpns-and-rns.webp"
     },
     "/assets/blog/posts/is-flint-legit-what-nurses-should-know.webp": {
-      "id": "6abc6af226ff140c11825b1a",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af226ff140c11825b1a_is-flint-legit-what-nurses-should-know.webp"
+      "id": "6ad6d0b0aeac4845707a72ab",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0b0aeac4845707a72ab_is-flint-legit-what-nurses-should-know.webp"
     },
     "/assets/blog/posts/nclex-for-foreign-educated-nurses-what-you-need-to-know.webp": {
-      "id": "6abc6af27330092772280a41",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af27330092772280a41_nclex-for-foreign-educated-nurses-what-you-need-to-know.webp"
+      "id": "6ad6d0b091d7a788806fed02",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6d0b091d7a788806fed02_nclex-for-foreign-educated-nurses-what-you-need-to-know.webp"
     },
     "/assets/blog/posts/nurse-agencies-vs-staffing-companies.webp": {
       "id": "6abc6af3e3ded54f36c5b6a5",
@@ -500,42 +501,6 @@
     "/assets/blog/posts/why-eb-3-is-one-of-the-best-green-card-pathways-for-nurses.webp": {
       "id": "6abc6af5098417409101f7a4",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abc6af5098417409101f7a4_why-eb-3-is-one-of-the-best-green-card-pathways-for-nurses.webp"
-    },
-    "/assets/flags/cn.svg": {
-      "id": "6ac461ef1aa08d2a5a264eaf",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac461ef1aa08d2a5a264eaf_cn.svg"
-    },
-    "/assets/flags/in.svg": {
-      "id": "6ac461ef0d3a9de974edc643",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac461ef0d3a9de974edc643_in.svg"
-    },
-    "/assets/flags/et.svg": {
-      "id": "6abbebd730aee66eee7557ab",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd730aee66eee7557ab_et.svg"
-    },
-    "/assets/flags/gh.svg": {
-      "id": "6abbebd78b8e492698b557ab",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd78b8e492698b557ab_gh.svg"
-    },
-    "/assets/flags/ht.svg": {
-      "id": "6abbebd6e160eb1be8fa91dc",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd6e160eb1be8fa91dc_ht.svg"
-    },
-    "/assets/flags/ke.svg": {
-      "id": "6abbebd7ae6930fca0bcfa45",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7ae6930fca0bcfa45_ke.svg"
-    },
-    "/assets/flags/ng.svg": {
-      "id": "6abbebd7b559bd0f608c0e82",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7b559bd0f608c0e82_ng.svg"
-    },
-    "/assets/flags/ph.svg": {
-      "id": "6abbebd6f0ec45724fccafca",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd6f0ec45724fccafca_ph.svg"
-    },
-    "/assets/flags/vn.svg": {
-      "id": "6abbebd7ae6930fca0bcfa95",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abbebd7ae6930fca0bcfa95_vn.svg"
     },
     "/assets/flint-logo-brand.svg": {
       "id": "6abbebd551427eae6c312cfc",
@@ -913,10 +878,6 @@
       "id": "6abee1d92a13525d675c64fd",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d92a13525d675c64fd_67b2fdb963770efa2f5a0055abb3685d_portrait.webp"
     },
-    "/assets/flags/mx.svg": {
-      "id": "6abee1d9929345cc10cbca92",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abee1d9929345cc10cbca92_mx.svg"
-    },
     "/assets/facility/icon-flexible.svg": {
       "id": "6abfe9f57a28d2677ff0e2c6",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abfe9f57a28d2677ff0e2c6_icon-flexible.svg"
@@ -968,14 +929,6 @@
     "/assets/how-it-works/retention-divider.svg": {
       "id": "6abfe9f79605082323463d9a",
       "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abfe9f79605082323463d9a_retention-divider.svg"
-    },
-    "/assets/how-it-works/retention-flag-angola.svg": {
-      "id": "6abfe9f79605082323463daf",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abfe9f79605082323463daf_retention-flag-angola.svg"
-    },
-    "/assets/how-it-works/retention-flag-mexico.svg": {
-      "id": "6abfe9f79605082323463dc4",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6abfe9f79605082323463dc4_retention-flag-mexico.svg"
     },
     "/assets/network/portrait-01.webp": {
       "id": "6abfe9f75190bb276143c35d",
@@ -1031,16 +984,19 @@
       "note": "Uploaded by the user through the Background Video element (2026-10-02); not an Image asset"
     },
     "/assets/quote-photo-1.webp": {
-      "id": "6ac58728bffedac845e6d3c4",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac58728bffedac845e6d3c4_quote-photo-1.webp"
+      "id": "6ad6cc6d1bfbe093bbb4efc5",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6cc6d1bfbe093bbb4efc5_quote-photo-1.webp",
+      "replacedAsset": "6ac58728bffedac845e6d3c4 (old file, deleted 2026-10-20)"
     },
     "/assets/quote-photo-2.webp": {
-      "id": "6ac58728bffedac845e6d3dc",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac58728bffedac845e6d3dc_quote-photo-2.webp"
+      "id": "6ad6cc6d451777b9363bb201",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6cc6d451777b9363bb201_quote-photo-2.webp",
+      "replacedAsset": "6ac58728bffedac845e6d3dc (old file, was the Quote Card Image default, deleted 2026-10-20)"
     },
     "/assets/quote-photo-3.webp": {
-      "id": "6ac587281d047ac5e57d44db",
-      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ac587281d047ac5e57d44db_quote-photo-3.webp"
+      "id": "6ad6cc6dae34160edcb68ef4",
+      "url": "https://cdn.prod.website-files.com/6ab9ba4aeffb3329202448ee/6ad6cc6dae34160edcb68ef4_quote-photo-3.webp",
+      "replacedAsset": "6ac587281d047ac5e57d44db (old file, deleted 2026-10-20)"
     },
     "/assets/candidates/arc/candidate-01.webp": {
       "id": "6ac661a0688c87007d2535ba",

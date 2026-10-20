@@ -164,7 +164,7 @@ Done in the repo on 2026-09-28. The three collections and their fields exist on 
   1.35 MB total, from 4.1 MB of PNG) and given alt text. They are text banners at about 2.1:1, and
   the card crops them (1.4:1 on desktop), which cuts off the headline: see roadmap P-13. All 32 images
   have been uploaded to the production Webflow Assets and their hosted URLs are in `blog-posts-import.csv`.
-  **Illustrations 2026-10-19 (repo only, not on Webflow yet):** 10 posts got new watercolor illustrations from
+  **Illustrations 2026-10-19 (on Webflow since 2026-10-20 as a staged edit, see below):** 10 posts got new watercolor illustrations from
   Figma (`Blog images`, node `6480:3208`, file `bFJIQUAnqKd2ueYqsV8rRd`), 4:3 instead of the 2.1:1 banners,
   1400 × 1050 WebP (q78 to q90 so each clears the 38 dB gate; 62 to 316 KB; the Philippines source is smaller,
   1200 × 896). Mapped by their layer names, except Figma's second "EB-3 Visa for Nurses from India" layer, whose art
@@ -172,7 +172,11 @@ Done in the repo on 2026-09-28. The three collections and their fields exist on 
   (a map with a route and a clock, an empty hospital corridor) have no direct match and were **not used**:
   `can-i-change-job-during-the-eb-3-green-card-process` and `what-happens-to-your-eb-3-green-card-if-you-get-laid-off`
   still have no image and stay drafts. Alt text is a plain description of the art (the old alts quoted the headlines
-  baked into the banners). Sync: Replace the 10 existing assets, set the alts and the CMS image sizes.
+  baked into the banners). Sync (done 2026-10-20, sync stage 4): the 10 files were uploaded as new site assets (new ids under the same repo keys in
+  `webflow-ids.json`; the old assets stay in the library, unused), their library alt set, and `main-image` (file + alt) set on the 10 Posts items
+  (`update_collection_items`, `isDraft` untouched). The items are published, so the edit is **staged** (`lastUpdated` after `lastPublished`):
+  it shows on the live site only after the user publishes. CMS image boxes are unchanged (card 695 x 200, hero 1400 / 659, `object-fit: cover`):
+  the 4:3 art is cropped in both, so no Designer image size changes (rule 15); whether the crop suits the art is a design question for the user.
 - **Format:** the seed JSON is the preview's data and can be imported through the MCP
   (`create_collection_items`): upload the WebP files first (`scripts/webflow-upload.mjs`), then create
   items with `main-image: { fileId, url, alt }`. For a manual import, `blog-posts-import.csv` has
